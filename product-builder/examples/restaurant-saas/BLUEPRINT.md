@@ -1,6 +1,6 @@
 # Restaurant SaaS — worked example blueprint
 
-> Illustrative. It shows how `PRODUCT-BUILDER.md` turns a request into scope. Generated from real domain data on 2026-09-27: `feature-selection.json` is the unedited output of `kb.py matrix restaurant --requested restaurant.reservations,restaurant.dine_in_orders,restaurant.kitchen_display --json`. A real project would copy this into `~/Projects/<name>/docs/product/` and edit the reasons.
+> Illustrative. It shows how `PRODUCT-BUILDER.md` turns a request into scope. Generated from real domain data on 2026-09-27: `feature-selection.json` is the unedited output of `kb.py matrix restaurant --requested restaurant.reservations,restaurant.dine_in_orders,restaurant.kitchen_display --json`. A real project would copy this into `~/Project/<name>/docs/product/` and edit the reasons.
 
 **Request (verbatim):** "Build a restaurant SaaS with table reservations, waiter ordering, and a kitchen screen."
 **Reading:** restaurant operations SaaS · b2b · mvp · tenancy: multi (assumed — decision 1)

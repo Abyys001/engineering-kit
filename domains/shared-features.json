@@ -1,32 +1,826 @@
 {
   "schema": 1,
-  "last_reviewed": "2026-09-26",
-  "note": "Cross-domain capabilities. Implementation lives in features/ or backend/ (kit_paths); domains depend on these ids instead of redefining them. Implementation status is computed by tools/kb.py from whether kit_paths contain files.",
+  "last_reviewed": "2026-09-27",
+  "note": "Cross-domain capabilities. Implementation lives in features/ or backend/ (kit_paths); domains depend on these ids instead of redefining them. Implementation status is computed by tools/kb.py from whether kit_paths contain files. source_candidates records the reusable upstream material identified in sources/CURATION.md: `paths` are verified to exist on disk, `unverified_paths` are the intended targets inside a clone that is not currently checked out, and `on_disk` says whether that clone is present. A source candidate is never an implementation.",
   "features": [
-    {"id": "shared.auth", "name": "Authentication", "classification": "platform", "description": "Sign-up, sign-in, sessions, password reset, MFA, SSO where needed.", "kit_paths": ["features/auth", "backend/authentication"], "tags": ["identity", "web", "mobile", "backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.users", "name": "User management", "classification": "platform", "description": "User profiles, invitations, activation, deactivation.", "kit_paths": ["features/users"], "tags": ["identity", "admin"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.organizations", "name": "Organizations and multi-tenancy", "classification": "platform", "description": "Tenants/workspaces, membership, tenant isolation, locations/branches under a tenant.", "kit_paths": [], "tags": ["identity", "admin", "backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.permissions", "name": "Roles and permissions", "classification": "platform", "description": "RBAC/ABAC checks enforced by the API on every mutation.", "kit_paths": ["backend/authorization", "backend/permissions"], "tags": ["identity", "admin", "backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.audit_log", "name": "Audit log", "classification": "platform", "description": "Append-only record of who changed what and when.", "kit_paths": ["backend/audit-log"], "tags": ["compliance", "admin", "backend"], "real_time_relevance": "none", "ai_relevance": "low"},
-    {"id": "shared.notifications", "name": "Notifications", "classification": "platform", "description": "In-app, email, SMS, and push delivery with templates and preferences.", "kit_paths": ["features/notifications", "backend/notifications"], "tags": ["communication", "backend"], "real_time_relevance": "medium", "ai_relevance": "low"},
-    {"id": "shared.file_storage", "name": "File upload and storage", "classification": "platform", "description": "Uploads, object storage, signed URLs, virus scanning where needed.", "kit_paths": ["features/file-upload", "backend/file-storage"], "tags": ["document", "backend"], "real_time_relevance": "none", "ai_relevance": "low"},
-    {"id": "shared.search", "name": "Search", "classification": "platform", "description": "Full-text and faceted search across domain records.", "kit_paths": ["features/search"], "tags": ["search"], "real_time_relevance": "none", "ai_relevance": "medium"},
-    {"id": "shared.data_tables", "name": "Filtering and pagination", "classification": "infrastructure", "description": "Server-side list filtering, sorting, and pagination.", "kit_paths": ["features/filtering", "features/pagination"], "tags": ["web", "backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.settings", "name": "Settings", "classification": "platform", "description": "User and tenant preferences and configuration.", "kit_paths": ["features/settings"], "tags": ["admin"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.dashboard", "name": "Dashboard shell", "classification": "platform", "description": "Authenticated app shell and landing workspace; layout varies per product.", "kit_paths": ["features/dashboard"], "tags": ["web", "admin"], "real_time_relevance": "low", "ai_relevance": "none"},
-    {"id": "shared.reporting", "name": "Reporting and analytics", "classification": "platform", "description": "Aggregated metrics, charts, exports.", "kit_paths": [], "tags": ["analytics", "reporting"], "real_time_relevance": "low", "ai_relevance": "medium"},
-    {"id": "shared.billing", "name": "Subscription billing", "classification": "platform", "description": "Plans, subscriptions, invoices for the SaaS operator charging its tenants.", "kit_paths": ["features/billing"], "tags": ["payment", "integration"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.payments", "name": "Payment processing", "classification": "integration", "description": "Charging end customers through a payment provider; refunds; webhooks.", "kit_paths": [], "tags": ["payment", "integration", "compliance"], "real_time_relevance": "low", "ai_relevance": "low"},
-    {"id": "shared.jobs", "name": "Background jobs", "classification": "infrastructure", "description": "Queues, scheduled and retried work (BullMQ).", "kit_paths": ["backend/jobs"], "tags": ["backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.logging", "name": "Logging and observability", "classification": "infrastructure", "description": "Structured logs, correlation IDs, health checks.", "kit_paths": ["backend/logging"], "tags": ["backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.realtime", "name": "Real-time updates", "classification": "infrastructure", "description": "Server push via WebSocket/SSE for live boards, status, chat.", "kit_paths": [], "tags": ["real-time", "backend"], "real_time_relevance": "core", "ai_relevance": "none"},
-    {"id": "shared.i18n", "name": "Internationalization", "classification": "infrastructure", "description": "Translations, locale formats, RTL layout.", "kit_paths": [], "tags": ["web", "mobile"], "real_time_relevance": "none", "ai_relevance": "low"},
-    {"id": "shared.calendar", "name": "Calendar and scheduling UI", "classification": "platform", "description": "Calendar views, time-slot pickers, recurrence.", "kit_paths": [], "tags": ["calendar", "scheduling", "web"], "real_time_relevance": "low", "ai_relevance": "low"},
-    {"id": "shared.messaging", "name": "In-app messaging", "classification": "platform", "description": "Threaded conversations between users or with customers.", "kit_paths": [], "tags": ["communication", "real-time"], "real_time_relevance": "high", "ai_relevance": "medium"},
-    {"id": "shared.ai_assistant", "name": "AI assistant", "classification": "premium", "description": "LLM chat/agent over domain data via the ai-service.", "kit_paths": ["ai/agents", "ai/providers", "ai/rag"], "tags": ["ai"], "real_time_relevance": "medium", "ai_relevance": "core"},
-    {"id": "shared.e_signature", "name": "Document e-signature", "classification": "integration", "description": "Send documents for signature and store signed copies with an audit trail (consents, leases, contracts).", "kit_paths": [], "tags": ["document", "integration", "compliance"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.identity_verification", "name": "Identity verification", "classification": "integration", "description": "Verify a person's identity or run background/KYC checks through a provider.", "kit_paths": [], "tags": ["identity", "integration", "compliance"], "real_time_relevance": "none", "ai_relevance": "low"},
-    {"id": "shared.custom_fields", "name": "Custom fields", "classification": "platform", "description": "Tenant-defined fields on domain records, with validation, filtering, and display.", "kit_paths": [], "tags": ["admin", "backend"], "real_time_relevance": "none", "ai_relevance": "none"},
-    {"id": "shared.import_export", "name": "Data import and export", "classification": "platform", "description": "CSV/XLSX import with validation, bulk export.", "kit_paths": [], "tags": ["document", "admin"], "real_time_relevance": "none", "ai_relevance": "low"}
+    {
+      "id": "shared.auth",
+      "name": "Authentication",
+      "classification": "platform",
+      "description": "Sign-up, sign-in, sessions, password reset, MFA, SSO where needed.",
+      "kit_paths": [
+        "features/auth",
+        "backend/authentication"
+      ],
+      "tags": [
+        "identity",
+        "web",
+        "mobile",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "login-01..05 / signup-01..05 UI blocks",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/blocks/login-01",
+            "source/apps/v4/registry/bases/base/blocks/signup-01"
+          ]
+        },
+        {
+          "source": "sources/backend/nestjs-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/modules/auth",
+            "source/src/common/request/guards/jwt-access.guard.ts",
+            "source/src/common/request/guards/roles.guard.ts"
+          ],
+          "note": "JWT auth module + access/roles guards"
+        },
+        {
+          "source": "sources/dashboards/boxyhq-saas-starter",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "SSO/SAML and SCIM reference (Apache-2.0, Prisma)"
+        }
+      ]
+    },
+    {
+      "id": "shared.users",
+      "name": "User management",
+      "classification": "platform",
+      "description": "User profiles, invitations, activation, deactivation.",
+      "kit_paths": [
+        "features/users"
+      ],
+      "tags": [
+        "identity",
+        "admin"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/kiranism-dashboard-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/features/users"
+          ],
+          "note": "users feature on the product-tables pattern"
+        },
+        {
+          "source": "sources/backend/nestjs-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/modules/user"
+          ],
+          "note": "user module (Prisma -> Drizzle)"
+        }
+      ]
+    },
+    {
+      "id": "shared.organizations",
+      "name": "Organizations and multi-tenancy",
+      "classification": "platform",
+      "description": "Tenants/workspaces, membership, tenant isolation, locations/branches under a tenant.",
+      "kit_paths": [],
+      "tags": [
+        "identity",
+        "admin",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/boxyhq-saas-starter",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "team/tenant model reference; CURATION lists org/team UI as a P1 gap"
+        }
+      ]
+    },
+    {
+      "id": "shared.permissions",
+      "name": "Roles and permissions",
+      "classification": "platform",
+      "description": "RBAC/ABAC checks enforced by the API on every mutation.",
+      "kit_paths": [
+        "backend/authorization",
+        "backend/permissions"
+      ],
+      "tags": [
+        "identity",
+        "admin",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/backend/nestjs-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/common/request/guards/roles.guard.ts"
+          ],
+          "note": "reflector-based roles guard"
+        },
+        {
+          "source": "sources/dashboards/refine",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "headless access-control provider pattern"
+        }
+      ]
+    },
+    {
+      "id": "shared.audit_log",
+      "name": "Audit log",
+      "classification": "platform",
+      "description": "Append-only record of who changed what and when.",
+      "kit_paths": [
+        "backend/audit-log"
+      ],
+      "tags": [
+        "compliance",
+        "admin",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/nextcrm",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [],
+          "note": "AuditTimeline/AuditEntry + diffObjects + cursor-paginated feed"
+        },
+        {
+          "source": "sources/dashboards/refine",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "audit-log provider interface"
+        }
+      ]
+    },
+    {
+      "id": "shared.notifications",
+      "name": "Notifications",
+      "classification": "platform",
+      "description": "In-app, email, SMS, and push delivery with templates and preferences.",
+      "kit_paths": [
+        "features/notifications",
+        "backend/notifications"
+      ],
+      "tags": [
+        "communication",
+        "backend"
+      ],
+      "real_time_relevance": "medium",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "toast surface",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/sonner.tsx"
+          ]
+        },
+        {
+          "source": "sources/web/originui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "notification menu",
+          "unverified_paths": [
+            "source/registry/default/components/navbar-components/notification-menu.tsx"
+          ]
+        },
+        {
+          "source": "sources/dashboards/kiranism-dashboard-starter",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [
+            "source/src/features/notifications"
+          ],
+          "note": "notifications feature folder"
+        },
+        {
+          "source": "sources/backend/novu",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "delivery model + provider abstraction; NOT on disk (fetch:false), MIT outside enterprise/"
+        },
+        {
+          "source": "sources/web/react-email",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "email templating + render pipeline; NOT on disk (fetch:false), MIT"
+        }
+      ]
+    },
+    {
+      "id": "shared.file_storage",
+      "name": "File upload and storage",
+      "classification": "platform",
+      "description": "Uploads, object storage, signed URLs, virus scanning where needed.",
+      "kit_paths": [
+        "features/file-upload",
+        "backend/file-storage"
+      ],
+      "tags": [
+        "document",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/web/kokonutui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "upload UI only; server-side storage is a gap per CURATION",
+          "unverified_paths": [
+            "source/components/kokonutui/file-upload.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.search",
+      "name": "Search",
+      "classification": "platform",
+      "description": "Full-text and faceted search across domain records.",
+      "kit_paths": [
+        "features/search"
+      ],
+      "tags": [
+        "search"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "medium",
+      "source_candidates": [
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "command palette + input group; PostgreSQL FTS backend is a gap",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/command.tsx",
+            "source/apps/v4/registry/bases/base/ui/input-group.tsx"
+          ]
+        },
+        {
+          "source": "sources/web/kokonutui",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "unverified_paths": [
+            "source/components/kokonutui/action-search-bar.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.data_tables",
+      "name": "Filtering and pagination",
+      "classification": "infrastructure",
+      "description": "Server-side list filtering, sorting, and pagination.",
+      "kit_paths": [
+        "features/filtering",
+        "features/pagination"
+      ],
+      "tags": [
+        "web",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/kiranism-dashboard-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/features/products/components/product-tables"
+          ],
+          "note": "nuqs URL-state filters/sort/pagination"
+        },
+        {
+          "source": "sources/web/data-table-filters",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "createTableSchema, faceted filters, filter command palette"
+        },
+        {
+          "source": "sources/web/tablecn",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "server-side table, Notion/Linear-style filters, virtualized scroll"
+        },
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "pagination primitive",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/pagination.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.settings",
+      "name": "Settings",
+      "classification": "platform",
+      "description": "User and tenant preferences and configuration.",
+      "kit_paths": [
+        "features/settings"
+      ],
+      "tags": [
+        "admin"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "no clean source: compose; CURATION lists a settings system as a P1 gap",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/tabs.tsx",
+            "source/apps/v4/registry/bases/base/ui/field.tsx"
+          ]
+        },
+        {
+          "source": "sources/web/originui",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "entry point",
+          "unverified_paths": [
+            "source/registry/default/components/navbar-components/settings-menu.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.dashboard",
+      "name": "Dashboard shell",
+      "classification": "platform",
+      "description": "Authenticated app shell and landing workspace; layout varies per product.",
+      "kit_paths": [
+        "features/dashboard"
+      ],
+      "tags": [
+        "web",
+        "admin"
+      ],
+      "real_time_relevance": "low",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "sidebar + site header + content shell",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/blocks/dashboard-01"
+          ]
+        },
+        {
+          "source": "sources/dashboards/kiranism-dashboard-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/features/overview",
+            "source/src/app/dashboard/layout.tsx"
+          ],
+          "note": "overview feature + shell"
+        },
+        {
+          "source": "sources/dashboards/openterminal",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "react-grid-layout dense widget workspace with persisted layout"
+        }
+      ]
+    },
+    {
+      "id": "shared.reporting",
+      "name": "Reporting and analytics",
+      "classification": "platform",
+      "description": "Aggregated metrics, charts, exports.",
+      "kit_paths": [],
+      "tags": [
+        "analytics",
+        "reporting"
+      ],
+      "real_time_relevance": "low",
+      "ai_relevance": "medium",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/tremor",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [],
+          "note": "chart and KPI component set (Apache-2.0)"
+        },
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "chart primitive",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/chart.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.billing",
+      "name": "Subscription billing",
+      "classification": "platform",
+      "description": "Plans, subscriptions, invoices for the SaaS operator charging its tenants.",
+      "kit_paths": [
+        "features/billing"
+      ],
+      "tags": [
+        "payment",
+        "integration"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/boxyhq-saas-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [],
+          "note": "subscription/billing surface reference (Apache-2.0)"
+        },
+        {
+          "source": "sources/ai/full-stack-ai-agent-template",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "Stripe usage metering pattern"
+        }
+      ]
+    },
+    {
+      "id": "shared.payments",
+      "name": "Payment processing",
+      "classification": "integration",
+      "description": "Charging end customers through a payment provider; refunds; webhooks.",
+      "kit_paths": [],
+      "tags": [
+        "payment",
+        "integration",
+        "compliance"
+      ],
+      "real_time_relevance": "low",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/domains/blnk",
+          "role": "reference",
+          "on_disk": true,
+          "paths": [],
+          "note": "Apache-2.0 double-entry ledger: money movement modelling, not a PSP integration"
+        }
+      ]
+    },
+    {
+      "id": "shared.jobs",
+      "name": "Background jobs",
+      "classification": "infrastructure",
+      "description": "Queues, scheduled and retried work (BullMQ).",
+      "kit_paths": [
+        "backend/jobs"
+      ],
+      "tags": [
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/backend/nestjs-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/common/bullmq/bullmq.module.ts",
+            "source/src/common/cache/services/cache.service.ts"
+          ],
+          "note": "BullMQ connection + Redis cache; no real processor yet"
+        },
+        {
+          "source": "sources/ai/full-stack-ai-agent-template",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "Celery/ARQ Python job patterns"
+        }
+      ]
+    },
+    {
+      "id": "shared.logging",
+      "name": "Logging and observability",
+      "classification": "infrastructure",
+      "description": "Structured logs, correlation IDs, health checks.",
+      "kit_paths": [
+        "backend/logging"
+      ],
+      "tags": [
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/backend/nestjs-starter",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/src/common/logger/services/logger.service.ts",
+            "source/src/common/response/filters/response.exception.filter.ts",
+            "source/src/common/response/interceptors/response.interceptor.ts",
+            "source/src/app/controllers/health.controller.ts"
+          ],
+          "note": "nestjs-pino with redaction + correlation IDs, error envelope, Terminus health"
+        },
+        {
+          "source": "sources/ai/opik",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "LLM tracing/eval patterns; NOT on disk (fetch:false), Apache-2.0, run-or-read"
+        }
+      ]
+    },
+    {
+      "id": "shared.realtime",
+      "name": "Real-time updates",
+      "classification": "infrastructure",
+      "description": "Server push via WebSocket/SSE for live boards, status, chat.",
+      "kit_paths": [],
+      "tags": [
+        "real-time",
+        "backend"
+      ],
+      "real_time_relevance": "core",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/ai/full-stack-ai-agent-template",
+          "role": "alternative",
+          "on_disk": false,
+          "paths": [],
+          "note": "WebSocket streaming pattern"
+        }
+      ]
+    },
+    {
+      "id": "shared.i18n",
+      "name": "Internationalization",
+      "classification": "infrastructure",
+      "description": "Translations, locale formats, RTL layout.",
+      "kit_paths": [],
+      "tags": [
+        "web",
+        "mobile"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/mobile/flutter-structure",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/lib/l10n"
+          ],
+          "note": "Flutter l10n wiring; no web i18n source"
+        }
+      ]
+    },
+    {
+      "id": "shared.calendar",
+      "name": "Calendar and scheduling UI",
+      "classification": "platform",
+      "description": "Calendar views, time-slot pickers, recurrence.",
+      "kit_paths": [],
+      "tags": [
+        "calendar",
+        "scheduling",
+        "web"
+      ],
+      "real_time_relevance": "low",
+      "ai_relevance": "low",
+      "source_candidates": [
+        {
+          "source": "sources/web/schedule-x",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "scheduler, recurrence, list/agenda views (MIT core only)"
+        },
+        {
+          "source": "sources/web/shadcn-ui",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "date picker primitive",
+          "unverified_paths": [
+            "source/apps/v4/registry/bases/base/ui/calendar.tsx"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.messaging",
+      "name": "In-app messaging",
+      "classification": "platform",
+      "description": "Threaded conversations between users or with customers.",
+      "kit_paths": [],
+      "tags": [
+        "communication",
+        "real-time"
+      ],
+      "real_time_relevance": "high",
+      "ai_relevance": "medium",
+      "source_candidates": [
+        {
+          "source": "sources/domains/chatwoot",
+          "role": "reference",
+          "on_disk": true,
+          "paths": [],
+          "note": "conversation/inbox model (MIT core; enterprise/ excluded)"
+        }
+      ]
+    },
+    {
+      "id": "shared.ai_assistant",
+      "name": "AI assistant",
+      "classification": "premium",
+      "description": "LLM chat/agent over domain data via the ai-service.",
+      "kit_paths": [
+        "ai/agents",
+        "ai/providers",
+        "ai/rag"
+      ],
+      "tags": [
+        "ai"
+      ],
+      "real_time_relevance": "medium",
+      "ai_relevance": "core",
+      "source_candidates": [
+        {
+          "source": "sources/ai/shadcn-chatbot-template",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "typed streaming part dispatch, citations",
+          "unverified_paths": [
+            "source/components/chat-message.tsx",
+            "source/components/parts"
+          ]
+        },
+        {
+          "source": "sources/ai/vercel-chatbot",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/components/ai-elements",
+            "source/lib/db/schema.ts"
+          ],
+          "note": "AI elements (Radix) + Drizzle chat schema"
+        },
+        {
+          "source": "sources/ai/assistant-ui",
+          "role": "primary",
+          "on_disk": true,
+          "paths": [
+            "source/packages/react/src/primitives"
+          ],
+          "note": "headless thread/composer/message primitives"
+        },
+        {
+          "source": "sources/ai/agent-elements",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "tool-call cards, streaming markdown"
+        },
+        {
+          "source": "sources/backend/fastapi-full-stack-template",
+          "role": "primary",
+          "on_disk": false,
+          "paths": [],
+          "note": "ai-service starter base; provider abstraction is a gap",
+          "unverified_paths": [
+            "source/backend/app/core/config.py",
+            "source/backend/app/core/security.py",
+            "source/backend/app/api/deps.py"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared.e_signature",
+      "name": "Document e-signature",
+      "classification": "integration",
+      "description": "Send documents for signature and store signed copies with an audit trail (consents, leases, contracts).",
+      "kit_paths": [],
+      "tags": [
+        "document",
+        "integration",
+        "compliance"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": []
+    },
+    {
+      "id": "shared.identity_verification",
+      "name": "Identity verification",
+      "classification": "integration",
+      "description": "Verify a person's identity or run background/KYC checks through a provider.",
+      "kit_paths": [],
+      "tags": [
+        "identity",
+        "integration",
+        "compliance"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "low",
+      "source_candidates": []
+    },
+    {
+      "id": "shared.custom_fields",
+      "name": "Custom fields",
+      "classification": "platform",
+      "description": "Tenant-defined fields on domain records, with validation, filtering, and display.",
+      "kit_paths": [],
+      "tags": [
+        "admin",
+        "backend"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "none",
+      "source_candidates": [
+        {
+          "source": "sources/dashboards/refine",
+          "role": "alternative",
+          "on_disk": true,
+          "paths": [],
+          "note": "headless CRUD field metadata patterns"
+        }
+      ]
+    },
+    {
+      "id": "shared.import_export",
+      "name": "Data import and export",
+      "classification": "platform",
+      "description": "CSV/XLSX import with validation, bulk export.",
+      "kit_paths": [],
+      "tags": [
+        "document",
+        "admin"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "low",
+      "source_candidates": []
+    }
   ]
 }

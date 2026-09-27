@@ -23,7 +23,7 @@
       "license": "MIT (core); the enterprise/ directory ships a separate, non-MIT license file and is not covered by the MIT grant",
       "retrieved": "2026-09-27",
       "version": "b8eb7766f2735d6e3bf5ed3a69cf453b289a4411",
-      "local_path": null,
+      "local_path": "sources/domains/chatwoot/source",
       "notes": "License verified directly from root LICENSE ('Content outside of the above mentioned directories ... available under MIT Expat') plus a separate enterprise/LICENSE file; copy-safe for core code only, never the enterprise/ tree. app/models/message.rb confirms a boolean `private` field (internal notes). app/models/label.rb confirms tags/labels. conversations.status enum: open/resolved/pending/snoozed; sla_policy_id FK + AppliedSla model confirm core (non-enterprise-gated) SLA support. Macro model with actions including change_status/assign_team/send_webhook_event. Article model + portal/category/folder confirm a knowledge base. CsatSurveyResponse model (rating+feedback) confirms CSAT. api/v2/accounts/{reports,live_reports,summary_reports}_controller.rb (core, not enterprise/) confirm reporting/analytics."
     },
     {
@@ -253,8 +253,8 @@
           "osticket",
           "chatwoot"
         ],
-        "confidence": "high",
-        "notes": "Three independent implementations: zammad (explicit Sla model with response_time/update_time), osTicket (SLA model with grace_period), chatwoot (sla_policy_id + AppliedSla, core not enterprise-gated). FreeScout explicitly excluded: no SLA model found in its core AGPL code — confirmed to be one of its paid Modules/ add-ons instead."
+        "confidence": "medium",
+        "notes": "Two full independent implementations: zammad (explicit Sla model with response_time/update_time) and osTicket (SLA model with grace_period). Chatwoot half-counts: the core MIT tree carries the sla_policy_id column and the applied_slas/sla_policies/sla_events tables in db/schema.rb, but the SlaPolicy/AppliedSla/SlaEvent model classes live under enterprise/app/models/ and are not covered by the MIT grant - verified against the checkout on 2026-09-27, correcting an earlier claim that they were core. FreeScout explicitly excluded: SLA is one of its paid Modules/ add-ons, not core AGPL code."
       }
     },
     {
@@ -296,8 +296,8 @@
           "osticket",
           "chatwoot"
         ],
-        "confidence": "high",
-        "notes": "Same three sources as SLA management: zammad's escalation calculation engine, osTicket's FLAG_ESCALATE/FLAG_NOALERTS bitflags, chatwoot's AppliedSla."
+        "confidence": "medium",
+        "notes": "Two independent implementations: zammad's escalation calculation engine and osTicket's FLAG_ESCALATE/FLAG_NOALERTS bitflags. Chatwoot does not corroborate it: its core tree has only sla_activity_message_handler.rb (writes an activity message when sla_policy_id changes); actual breach and escalation logic is enterprise-gated - verified against the checkout on 2026-09-27, correcting an earlier claim that cited chatwoot's AppliedSla as core."
       }
     },
     {
@@ -426,8 +426,8 @@
           "freescout",
           "chatwoot"
         ],
-        "confidence": "medium",
-        "notes": "Two directly confirmed: freescout's explicit TYPE_PHONE enum value, chatwoot's voice channel. Zammad's phone/CTI support was not independently verified this pass, so it is not counted toward this feature's confidence despite being referenced in general product knowledge."
+        "confidence": "low",
+        "notes": "One implementation directly confirmed: freescout's explicit TYPE_PHONE enum value. Chatwoot does not corroborate it: app/models/channel/ carries 11 channel types and none is phone/call - call handling is enterprise-gated - verified against the checkout on 2026-09-27, correcting an earlier claim of a core chatwoot voice channel. Zammad's phone/CTI support was not independently verified this pass."
       }
     },
     {
@@ -742,7 +742,7 @@
           "chatwoot"
         ],
         "confidence": "medium",
-        "notes": "zammad's Trigger model (condition/perform, fully automatic) is the stronger source; chatwoot's Macro (change_status/assign_team/send_webhook_event actions) is agent-triggered rather than fully automatic, so it is weaker evidence for the same underlying capability. Two sources, one strong one weak."
+        "notes": "Two independent implementations, both fully automatic: zammad's Trigger model (condition/perform) and chatwoot's AutomationRule (event_name/conditions/actions) - verified against the checkout on 2026-09-27. An earlier note cited chatwoot's agent-triggered Macro instead, which understated the evidence; Macro grounds support.macros_canned_responses, not this feature."
       }
     },
     {

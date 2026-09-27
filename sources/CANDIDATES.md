@@ -23,11 +23,28 @@ Stack notes: Prisma, Express, SQLite, Casbin, and Temporal sources are pattern r
 | 13 | schedule-x/schedule-x | Calendar | MIT (premium paid) | Scheduler, recurrence, list/agenda views | Free core only |
 | 14 | resend/react-email | Email | MIT | Email primitives, templates, render pipeline | — |
 | 15 | Georgegriff/react-dnd-kit-tailwind-shadcn-ui | Kanban | MIT (verify) | Accessible dnd-kit board | No persistence; compare with Kiranism kanban already local |
-| 16 | fastapi-practices/fastapi_best_architecture | FastAPI | MIT | Layered api/schema/service/crud/model structure, Celery | Casbin dep; last release 2025 |
+| 16 | fastapi-practices/fastapi-best-architecture | FastAPI | MIT | Layered api/schema/service/crud/model structure, Celery | Casbin dep; last release 2025 |
 | 17 | boxyhq/saas-starter-kit | Enterprise SaaS | Apache-2.0 | SSO/SAML, SCIM, audit log | Prisma |
 | 18 | novuhq/novu | Notifications | MIT core (verify EE dirs) | Inbox UI, multi-channel delivery model | Enterprise dirs differ in license |
 | 19 | synergycodes/workflowbuilder | Workflow editor | Apache-2.0 | React Flow editor SDK | Temporal-coupled |
 | 20 | ssoad/flutter_riverpod_clean_architecture | Flutter | MIT (assumed — verify) | Feature-first 4-layer structure | Riverpod 2 → 3 |
+
+## License-cleared, deliberately not on disk
+
+Four candidates were cloned once and discarded. As of 2026-09-27 each has a `SOURCE.md`, a
+`LICENSE.txt` captured at its pinned revision, and a `MANIFEST.json` entry carrying
+`"acquired": false, "fetch": false` — license review is **done**, acquisition is not. Licenses and
+commit dates were confirmed over the GitHub API at the pinned SHA; no repository was cloned.
+`tools/fetch-sources.sh` skips `fetch: false` entries on a bare or category-wide run, so nothing
+here lands on disk by accident. To adopt one, read its `SOURCE.md` **Notes** first — three of the
+four want a sparse checkout, and novu's `enterprise/` tree is proprietary and must be excluded.
+
+| # | Repository | Path | Pinned revision | License (verified) | Acquisition shape |
+|---|---|---|---|---|---|
+| 9 | udecode/plate | `sources/web/plate` | `babb3c2a733f821a33569d288e45da3f54eaf643` | MIT (root + 8 per-package); `packages/diff` dual MIT + Apache-2.0 | Sparse: only the `packages/<name>` a feature needs |
+| 10 | comet-ml/opik | `sources/ai/opik` | `f898372e12782ca6df80aea00acf04b466b45f52` | Apache-2.0 (root + all `sdks/*`); attribution required | Run or read, do not extract; sparse `sdks/python` at most |
+| 14 | resend/react-email | `sources/web/react-email` | `15419ff1f4cd0e32ed2c15a4a9182cc47a200a60` | MIT (root + every per-package `license.md`) | Sparse: `packages/ui`, `packages/render`, `examples/resend` |
+| 18 | novuhq/novu | `sources/backend/novu` | `320a0ce360cdd3c1b8deeedc545b324fe2a6a3ca` | MIT outside `enterprise/`; `enterprise/packages/**` is Novu Proprietary | Sparse, **excluding `enterprise/`**: `packages/providers`, `packages/framework`, `packages/react`, `libs/dal` |
 
 ## Optional
 

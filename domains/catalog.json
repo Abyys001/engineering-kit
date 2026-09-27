@@ -1,0 +1,798 @@
+{
+  "schema": 1,
+  "generated": "2026-09-27",
+  "generator": "tools/kb.py build",
+  "domains": [
+    {
+      "id": "booking",
+      "name": "Booking",
+      "aliases": [
+        "appointment scheduling",
+        "resource scheduling",
+        "calendar booking"
+      ],
+      "description": "Generic appointment and resource scheduling: services, providers/staff or resources, availability rules and exceptions, time-slot booking with buffers and capacity, recurrence, reminders, cancellation policy, and calendar sync. Other domains (restaurant, hospitality) may depend on this instead of duplicating slot/availability logic.",
+      "nace": [
+        "N82.99"
+      ],
+      "maturity": "curated",
+      "last_reviewed": "2026-09-26",
+      "feature_count": 22,
+      "features_by_classification": {
+        "core": 5,
+        "recommended": 5,
+        "common": 9,
+        "optional": 3
+      },
+      "features_by_confidence": {
+        "high": 2,
+        "medium": 17,
+        "low": 3
+      },
+      "entity_count": 13,
+      "role_count": 4,
+      "workflow_count": 2,
+      "state_machine_count": 1,
+      "compliance_count": 1,
+      "integration_count": 5,
+      "standards": [
+        "rfc5545",
+        "pci-dss"
+      ],
+      "implementation_references": [
+        "caldiy",
+        "easyappointments"
+      ],
+      "source_count": 7,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "crm",
+      "name": "CRM",
+      "aliases": [
+        "customer relationship management",
+        "sales CRM"
+      ],
+      "description": "Contacts, companies/accounts, leads, deals/opportunities and pipelines, activities/tasks, email/calendar sync, quotes, segmentation, and forecasting for a B2B sales team.",
+      "nace": [
+        "J62.01"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 19,
+      "features_by_classification": {
+        "core": 5,
+        "common": 9,
+        "recommended": 4,
+        "optional": 1
+      },
+      "features_by_confidence": {
+        "high": 5,
+        "medium": 5,
+        "low": 9
+      },
+      "entity_count": 13,
+      "role_count": 5,
+      "workflow_count": 3,
+      "state_machine_count": 3,
+      "compliance_count": 2,
+      "integration_count": 2,
+      "standards": [
+        "gdpr-2016-679",
+        "can-spam"
+      ],
+      "implementation_references": [
+        "nextcrm",
+        "espocrm",
+        "odoo-crm",
+        "suitecrm",
+        "twenty-crm"
+      ],
+      "source_count": 7,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "ecommerce",
+      "name": "Ecommerce",
+      "aliases": [
+        "online store",
+        "webshop",
+        "direct-to-consumer",
+        "marketplace"
+      ],
+      "description": "Storefront and merchant-admin platform for selling physical or digital products online: catalog, cart, checkout, orders, payments, shipping, and returns.",
+      "nace": [
+        "G47.91"
+      ],
+      "maturity": "curated",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 25,
+      "features_by_classification": {
+        "core": 11,
+        "common": 5,
+        "recommended": 1,
+        "optional": 6,
+        "premium": 2
+      },
+      "features_by_confidence": {
+        "high": 13,
+        "medium": 6,
+        "low": 6
+      },
+      "entity_count": 15,
+      "role_count": 4,
+      "workflow_count": 3,
+      "state_machine_count": 3,
+      "compliance_count": 4,
+      "integration_count": 4,
+      "standards": [
+        "schema-org",
+        "gs1-gtin",
+        "eu-crd",
+        "pci-dss",
+        "gdpr"
+      ],
+      "implementation_references": [
+        "medusa",
+        "saleor",
+        "vendure"
+      ],
+      "source_count": 8,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "education",
+      "name": "Education (LMS / school management)",
+      "aliases": [
+        "learning management system",
+        "school management",
+        "e-learning"
+      ],
+      "description": "Learning management and school/institution administration: courses, enrollment, content delivery, assessment, grading, attendance, and fees.",
+      "nace": [
+        "P85.59",
+        "P85.60"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 28,
+      "features_by_classification": {
+        "core": 10,
+        "recommended": 4,
+        "common": 8,
+        "integration": 2,
+        "optional": 2,
+        "compliance": 1,
+        "premium": 1
+      },
+      "features_by_confidence": {
+        "high": 7,
+        "medium": 18,
+        "low": 3
+      },
+      "entity_count": 21,
+      "role_count": 9,
+      "workflow_count": 7,
+      "state_machine_count": 4,
+      "compliance_count": 5,
+      "integration_count": 8,
+      "standards": [
+        "1edtech-lti",
+        "1edtech-oneroster",
+        "1edtech-qti",
+        "adl-xapi"
+      ],
+      "implementation_references": [
+        "frappe-education",
+        "moodle",
+        "canvas-lms"
+      ],
+      "source_count": 7,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "exchange",
+      "name": "Currency Exchange",
+      "aliases": [
+        "bureau de change",
+        "money exchange",
+        "forex bureau",
+        "remittance counter"
+      ],
+      "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine — see DOMAIN.md for how crypto exchange relates as a different product type.",
+      "nace": [
+        "K64.99"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 18,
+      "features_by_classification": {
+        "core": 8,
+        "common": 6,
+        "compliance": 2,
+        "optional": 2
+      },
+      "features_by_confidence": {
+        "high": 2,
+        "medium": 13,
+        "low": 3
+      },
+      "entity_count": 11,
+      "role_count": 6,
+      "workflow_count": 4,
+      "state_machine_count": 3,
+      "compliance_count": 3,
+      "integration_count": 2,
+      "standards": [
+        "fatf-recommendations",
+        "iso4217",
+        "iso20022",
+        "eu-amld"
+      ],
+      "implementation_references": [
+        "bdc-api",
+        "chfx-odoo-modules"
+      ],
+      "source_count": 6,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "fintech",
+      "name": "Fintech",
+      "aliases": [
+        "digital banking",
+        "neobank",
+        "payments platform",
+        "lending platform",
+        "embedded finance"
+      ],
+      "description": "Digital financial products — customer wallets, accounts, payments, cards, and lending — built on a double-entry ledger with KYC/AML controls.",
+      "nace": [
+        "K64.19",
+        "K64.92",
+        "K66.19"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 29,
+      "features_by_classification": {
+        "core": 8,
+        "common": 9,
+        "recommended": 4,
+        "compliance": 2,
+        "optional": 4,
+        "integration": 2
+      },
+      "features_by_confidence": {
+        "high": 7,
+        "medium": 13,
+        "low": 9
+      },
+      "entity_count": 16,
+      "role_count": 8,
+      "workflow_count": 5,
+      "state_machine_count": 5,
+      "compliance_count": 6,
+      "integration_count": 6,
+      "standards": [
+        "std:fibo",
+        "iso20022",
+        "iso4217",
+        "iso13616-iban",
+        "fatf-recommendations",
+        "eu-amlr",
+        "us-bsa",
+        "eu-psd2",
+        "pci-dss",
+        "gdpr"
+      ],
+      "implementation_references": [
+        "blnk",
+        "apache-fineract",
+        "formance-ledger"
+      ],
+      "source_count": 12,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "general-saas",
+      "name": "General SaaS",
+      "aliases": [
+        "B2B SaaS platform",
+        "SaaS product layer",
+        "multi-tenant SaaS"
+      ],
+      "description": "The cross-cutting product layer every B2B SaaS application needs on top of its vertical features: tenancy and workspaces, onboarding, plans and entitlements, usage metering, team invites, API keys, webhooks, an internal admin console, status/changelog communication, enterprise SSO/SCIM, data export, and feature flags.",
+      "nace": [
+        "J62.01"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 23,
+      "features_by_classification": {
+        "core": 6,
+        "common": 9,
+        "recommended": 3,
+        "optional": 2,
+        "compliance": 1,
+        "infrastructure": 1,
+        "premium": 1
+      },
+      "features_by_confidence": {
+        "high": 2,
+        "medium": 8,
+        "low": 13
+      },
+      "entity_count": 14,
+      "role_count": 6,
+      "workflow_count": 7,
+      "state_machine_count": 7,
+      "compliance_count": 4,
+      "integration_count": 5,
+      "standards": [
+        "gdpr-2016-679",
+        "ccpa-cpra",
+        "soc2-tsc",
+        "iso-27001-2022",
+        "scim-rfc",
+        "oidc-core",
+        "saml-core-2.0"
+      ],
+      "implementation_references": [
+        "boxyhq-saas-starter",
+        "nextcrm",
+        "unleash",
+        "lago-api",
+        "cachet"
+      ],
+      "source_count": 12,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare (clinic / practice management)",
+      "aliases": [
+        "clinic management",
+        "practice management",
+        "EHR",
+        "EMR",
+        "ambulatory care"
+      ],
+      "description": "Clinic and practice management: patients, scheduling, clinical documentation, orders/results, billing, and interoperable health records.",
+      "nace": [
+        "Q86.21",
+        "Q86.22",
+        "Q86.9"
+      ],
+      "maturity": "curated",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 28,
+      "features_by_classification": {
+        "core": 11,
+        "common": 8,
+        "compliance": 2,
+        "recommended": 3,
+        "optional": 3,
+        "premium": 1
+      },
+      "features_by_confidence": {
+        "high": 14,
+        "medium": 10,
+        "low": 4
+      },
+      "entity_count": 24,
+      "role_count": 11,
+      "workflow_count": 8,
+      "state_machine_count": 5,
+      "compliance_count": 8,
+      "integration_count": 10,
+      "standards": [
+        "std:fhir-r4"
+      ],
+      "implementation_references": [
+        "medplum",
+        "openemr",
+        "openmrs-core"
+      ],
+      "source_count": 3,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "hospitality",
+      "name": "Hospitality",
+      "aliases": [
+        "hotel management",
+        "lodging",
+        "property management system",
+        "PMS"
+      ],
+      "description": "Hotel and short-stay lodging operations: property/room/rate setup, availability and reservations, front-desk check-in/out and folio, and distribution to online travel agencies via a channel manager.",
+      "nace": [
+        "I55.10"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-26",
+      "feature_count": 24,
+      "features_by_classification": {
+        "core": 7,
+        "common": 8,
+        "recommended": 5,
+        "optional": 4
+      },
+      "features_by_confidence": {
+        "high": 0,
+        "medium": 13,
+        "low": 11
+      },
+      "entity_count": 18,
+      "role_count": 5,
+      "workflow_count": 5,
+      "state_machine_count": 4,
+      "compliance_count": 3,
+      "integration_count": 6,
+      "standards": [
+        "opentravel-alliance",
+        "htng",
+        "pci-dss",
+        "eu-gdpr"
+      ],
+      "implementation_references": [
+        "frappe-hospitality",
+        "qloapps"
+      ],
+      "source_count": 12,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "logistics",
+      "name": "Logistics",
+      "aliases": [
+        "shipping",
+        "delivery",
+        "3PL",
+        "fleet management",
+        "last-mile delivery",
+        "courier"
+      ],
+      "description": "Shipping, delivery, third-party logistics (3PL), and fleet/dispatch operations: rating and booking shipments across carriers, planning and dispatching routes, tracking parcels and vehicles in real time, and capturing proof of delivery.",
+      "nace": [
+        "H49.41",
+        "H52.10",
+        "H52.29",
+        "H53.10",
+        "H53.20"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 30,
+      "features_by_classification": {
+        "core": 11,
+        "common": 7,
+        "recommended": 5,
+        "optional": 7
+      },
+      "features_by_confidence": {
+        "high": 0,
+        "medium": 6,
+        "low": 24
+      },
+      "entity_count": 26,
+      "role_count": 9,
+      "workflow_count": 8,
+      "state_machine_count": 4,
+      "compliance_count": 3,
+      "integration_count": 7,
+      "standards": [
+        "std:gs1-epcis"
+      ],
+      "implementation_references": [
+        "karrio",
+        "fleetbase"
+      ],
+      "source_count": 2,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing",
+      "aliases": [
+        "MES",
+        "ERP-lite",
+        "shop floor management",
+        "production management"
+      ],
+      "description": "Small-to-mid manufacturing execution and ERP-lite: items and bills of material, routings and work centers, production/work orders with a state machine, material requirements, lot/serial inventory, quality inspection, maintenance, and shop-floor data collection.",
+      "nace": [
+        "C25.62",
+        "C28.29",
+        "C33.12"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 25,
+      "features_by_classification": {
+        "core": 8,
+        "optional": 7,
+        "recommended": 5,
+        "common": 5
+      },
+      "features_by_confidence": {
+        "high": 0,
+        "medium": 8,
+        "low": 17
+      },
+      "entity_count": 16,
+      "role_count": 8,
+      "workflow_count": 6,
+      "state_machine_count": 2,
+      "compliance_count": 2,
+      "integration_count": 2,
+      "standards": [],
+      "implementation_references": [
+        "inventree",
+        "odoo-mrp"
+      ],
+      "source_count": 2,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "project-management",
+      "name": "Project management",
+      "aliases": [
+        "issue tracking",
+        "task management",
+        "agile/scrum tooling",
+        "kanban"
+      ],
+      "description": "Workspaces and projects for planning and tracking work: tasks/issues with statuses and dependencies, kanban boards, sprints/cycles, milestones, time tracking, comments, and reporting.",
+      "nace": [
+        "J62.01",
+        "M70.22"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 26,
+      "features_by_classification": {
+        "core": 7,
+        "common": 7,
+        "recommended": 5,
+        "optional": 7
+      },
+      "features_by_confidence": {
+        "high": 0,
+        "medium": 7,
+        "low": 19
+      },
+      "entity_count": 16,
+      "role_count": 5,
+      "workflow_count": 6,
+      "state_machine_count": 1,
+      "compliance_count": 1,
+      "integration_count": 2,
+      "standards": [],
+      "implementation_references": [
+        "plane",
+        "kanboard"
+      ],
+      "source_count": 2,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "real-estate",
+      "name": "Real Estate",
+      "aliases": [
+        "property listings",
+        "property management",
+        "lettings"
+      ],
+      "description": "Property listing/search for buyers and renters, plus rental property management: leases, tenants, rent collection, and maintenance.",
+      "nace": [
+        "L68.10",
+        "L68.20",
+        "L68.31",
+        "L68.32"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 29,
+      "features_by_classification": {
+        "core": 11,
+        "common": 9,
+        "recommended": 3,
+        "optional": 3,
+        "integration": 1,
+        "compliance": 1,
+        "premium": 1
+      },
+      "features_by_confidence": {
+        "high": 4,
+        "medium": 19,
+        "low": 6
+      },
+      "entity_count": 18,
+      "role_count": 10,
+      "workflow_count": 7,
+      "state_machine_count": 6,
+      "compliance_count": 5,
+      "integration_count": 8,
+      "standards": [
+        "reso-data-dictionary",
+        "schema-org-real-estate"
+      ],
+      "implementation_references": [
+        "openproperty",
+        "movinin",
+        "easy-property-listings"
+      ],
+      "source_count": 5,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "restaurant",
+      "name": "Restaurant",
+      "aliases": [
+        "food service",
+        "dining",
+        "restaurant management"
+      ],
+      "description": "Dine-in, takeout, and delivery food-service operations: floor plan and reservations, menu and kitchen order flow, point-of-sale payment, and the staff/inventory operations behind them.",
+      "nace": [
+        "I56.10"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-26",
+      "feature_count": 25,
+      "features_by_classification": {
+        "core": 6,
+        "common": 12,
+        "recommended": 4,
+        "optional": 3
+      },
+      "features_by_confidence": {
+        "high": 5,
+        "medium": 3,
+        "low": 17
+      },
+      "entity_count": 20,
+      "role_count": 7,
+      "workflow_count": 6,
+      "state_machine_count": 6,
+      "compliance_count": 4,
+      "integration_count": 7,
+      "standards": [
+        "pci-dss",
+        "eu-1169-2011",
+        "us-fda-menu-labeling",
+        "us-dol-flsa-tips"
+      ],
+      "implementation_references": [
+        "frappe-hospitality",
+        "odoo-pos-restaurant",
+        "ury"
+      ],
+      "source_count": 14,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "support",
+      "name": "Support",
+      "aliases": [
+        "customer support",
+        "helpdesk",
+        "ticketing"
+      ],
+      "description": "Tickets/cases, SLAs, queues, assignment, multichannel communication (email, chat, voice), a knowledge base, macros/canned responses, CSAT, escalation, and a customer self-service portal for a customer support team.",
+      "nace": [
+        "J62.01",
+        "N82.20"
+      ],
+      "maturity": "curated",
+      "last_reviewed": "2026-09-27",
+      "feature_count": 18,
+      "features_by_classification": {
+        "core": 5,
+        "common": 8,
+        "optional": 1,
+        "recommended": 4
+      },
+      "features_by_confidence": {
+        "high": 7,
+        "medium": 7,
+        "low": 4
+      },
+      "entity_count": 12,
+      "role_count": 5,
+      "workflow_count": 3,
+      "state_machine_count": 1,
+      "compliance_count": 2,
+      "integration_count": 3,
+      "standards": [
+        "ftc-tsr",
+        "gdpr-2016-679"
+      ],
+      "implementation_references": [
+        "chatwoot",
+        "zammad",
+        "osticket",
+        "freescout"
+      ],
+      "source_count": 6,
+      "implementation_coverage": {
+        "web": 0,
+        "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    }
+  ]
+}

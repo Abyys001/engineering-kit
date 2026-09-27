@@ -20,6 +20,8 @@ None yet. Record each item under an area heading (Web components, Features, Back
 
 Status: **extraction-safe** — copy and adapt, keep the notice · **reference-only** — learn from it, don't copy · **REVIEW_REQUIRED** — licensing issue, don't extract. Details in each `SOURCE.md`.
 
+The `source/` clones are git-ignored. On a fresh checkout, restore them from the pinned revisions in [`sources/MANIFEST.json`](sources/MANIFEST.json) with `tools/fetch-sources.sh`. Sources under `sources/domains/` back the per-industry knowledge in [`domains/INDEX.md`](domains/INDEX.md).
+
 | Source | Path | License | Status | Best for |
 |---|---|---|---|---|
 | shadcn/ui | `sources/web/shadcn-ui` | MIT | extraction-safe | Canonical primitives and blocks (sidebar, dashboard, auth, data table) in Base UI, Radix, and React Aria flavors |
@@ -52,3 +54,13 @@ Status: **extraction-safe** — copy and adapt, keep the notice · **reference-o
 | Schedule-X | `sources/web/schedule-x` | MIT (core; premium plugins absent) | extraction-safe | Calendar/scheduler core, recurrence, ICS, shadcn theme |
 | Full-Stack AI Agent Template | `sources/ai/full-stack-ai-agent-template` | MIT | extraction-safe | PydanticAI agents + tools, RAG on pgvector, WebSocket streaming, observability (fills the Python AI gap) |
 | Refine | `sources/dashboards/refine` | MIT | extraction-safe | Headless data, access-control, audit-log, and live provider contracts |
+| Blnk | `sources/domains/blnk` | Apache-2.0 | reference-only | Double-entry ledger model: ledgers, balances with inflight/queued, accounts, transactions, reconciliation |
+| Chatwoot | `sources/domains/chatwoot` | MIT (core); enterprise/ separately licensed | extraction-safe | Support domain model: conversations, inboxes/teams, 12 channels, knowledge base, macros, automation rules, CSAT |
+| Fleetbase | `sources/domains/fleetbase` | AGPL-3.0 | reference-only | Fleet and dispatch schema via the repo's own generated ERD (orders, payloads, waypoints, proof of delivery) |
+| Frappe Hospitality | `sources/domains/frappe-hospitality` | GPL-3.0 | reference-only | Restaurant and hotel entity models and reservation lifecycles (domain knowledge only — GPL-3.0) |
+| InvenTree | `sources/domains/inventree` | MIT | reference-only | Parts, BOMs, stock with serial/batch, build orders, order status enums, quality inspection |
+| Kanboard | `sources/domains/kanboard` | MIT | reference-only | Deliberately simple task/subtask model — the second independent project-management implementation |
+| Karrio | `sources/domains/karrio` | LGPL-3.0 | reference-only | Multi-carrier shipment/rate/label/tracking model and status enums |
+| Medplum | `sources/domains/medplum` | Apache-2.0 | extraction-safe | FHIR R4 definitions, healthcare React components, synthetic FHIR records, patient-portal reference apps |
+| Odoo (mrp addon) | `sources/domains/odoo-mrp` | LGPL-3.0 | reference-only | Production orders with state machine, BOMs, routings and work centers (addons/mrp only) |
+| Plane | `sources/domains/plane` | AGPL-3.0-only | reference-only | Project-management model: workspaces, grouped issue states, issues, cycles, modules |

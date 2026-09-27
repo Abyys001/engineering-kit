@@ -12,8 +12,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.category_navigation",
@@ -24,8 +24,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.inventory_management",
@@ -36,8 +36,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.cart",
@@ -48,8 +48,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.checkout",
@@ -60,8 +60,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.order_management",
@@ -72,8 +72,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.payments",
@@ -84,8 +84,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.shipping_fulfillment",
@@ -96,8 +96,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.returns_refunds",
@@ -108,8 +108,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.promotions_discounts",
@@ -120,8 +120,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.customer_accounts",
@@ -132,8 +132,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.guest_checkout",
@@ -144,8 +144,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.reviews_ratings",
@@ -156,8 +156,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.tax_calculation",
@@ -168,8 +168,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.multi_currency",
@@ -180,8 +180,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.storefront_search",
@@ -192,8 +192,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.merchant_admin",
@@ -204,8 +204,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.gift_cards",
@@ -216,8 +216,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.wishlist",
@@ -228,8 +228,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.abandoned_cart_recovery",
@@ -240,8 +240,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.product_recommendations",
@@ -252,8 +252,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.discount_stacking_rules",
@@ -264,8 +264,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.order_returns_rma_tracking",
@@ -276,8 +276,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.b2b_pricing",
@@ -288,8 +288,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "ecommerce.marketplace_multi_vendor",
@@ -300,8 +300,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     }
   ]
 }

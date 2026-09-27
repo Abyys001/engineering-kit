@@ -8,7 +8,7 @@
     "forex bureau",
     "remittance counter"
   ],
-  "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine — see DOMAIN.md for how crypto exchange relates as a different product type.",
+  "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine \u2014 see DOMAIN.md for how crypto exchange relates as a different product type.",
   "nace": [
     "K64.99"
   ],
@@ -22,7 +22,7 @@
       "source_type": "implementation",
       "license": "none found (no LICENSE file; all-rights-reserved by default)",
       "retrieved": "2026-09-27",
-      "notes": "Hobby-scale (1 star) TypeORM/Express API for a bureau de change: currency, daily_rate (buy/sell, official/market), purchase/purchasemain (buy transactions with cash-note serial ranges), selling (sell transactions with transaction_ref, buyingrate/soldrate, KYC fields mode_of_id/id_no/id_expirydate/bvn), users. Inspected via `gh api repos/.../contents` (not cloned; no license to extract under). Single implementation — evidence held at low/medium confidence per feature, never 'industry standard' on its own."
+      "notes": "Hobby-scale (1 star) TypeORM/Express API for a bureau de change: currency, daily_rate (buy/sell, official/market), purchase/purchasemain (buy transactions with cash-note serial ranges), selling (sell transactions with transaction_ref, buyingrate/soldrate, KYC fields mode_of_id/id_no/id_expirydate/bvn), users. Inspected via `gh api repos/.../contents` (not cloned; no license to extract under). Single implementation \u2014 evidence held at low/medium confidence per feature, never 'industry standard' on its own."
     },
     {
       "id": "chfx-odoo-modules",
@@ -31,7 +31,7 @@
       "source_type": "implementation",
       "license": "unknown (not stated in repository; verify before any reuse)",
       "retrieved": "2026-09-27",
-      "notes": "Odoo addon modules (`exchange_counter`, `chfx_extension`) with real fields for exchange.branch, exchange.counter (till, linked to an accounting journal and per-currency cash accounts), exchange.session (cashier session on a counter), exchange.transaction (buy/sell with mid_rate vs used_rate vs manual_rate, margin_pct, commission, KYC required/confirmed flags, partner/client link, accounting move), exchange.rate, exchange.remittance. Inspected via `gh api repos/.../contents` (not cloned). Second independent implementation — corroborates branch/counter/session/rate/transaction/remittance as real, separately-modeled concepts."
+      "notes": "Odoo addon modules (`exchange_counter`, `chfx_extension`) with real fields for exchange.branch, exchange.counter (till, linked to an accounting journal and per-currency cash accounts), exchange.session (cashier session on a counter), exchange.transaction (buy/sell with mid_rate vs used_rate vs manual_rate, margin_pct, commission, KYC required/confirmed flags, partner/client link, accounting move), exchange.rate, exchange.remittance. Inspected via `gh api repos/.../contents` (not cloned). Second independent implementation \u2014 corroborates branch/counter/session/rate/transaction/remittance as real, separately-modeled concepts."
     },
     {
       "id": "fatf-recommendations",
@@ -44,7 +44,7 @@
     },
     {
       "id": "iso4217",
-      "title": "ISO 4217 — Currency codes",
+      "title": "ISO 4217 \u2014 Currency codes",
       "url": "https://www.iso.org/iso-4217-currency-codes.html",
       "source_type": "authoritative",
       "license": "ISO copyright; standard summary freely accessible",
@@ -53,7 +53,7 @@
     },
     {
       "id": "iso20022",
-      "title": "ISO 20022 — Universal financial industry message scheme",
+      "title": "ISO 20022 \u2014 Universal financial industry message scheme",
       "url": "https://www.iso20022.org/",
       "source_type": "authoritative",
       "license": "ISO20022.org terms; message definitions freely published",
@@ -68,7 +68,108 @@
       "license": "EU public law (EUR-Lex)",
       "retrieved": "2026-09-27",
       "version": "Regulation (EU) 2024/1624 + Directive (EU) 2024/1640",
-      "notes": "Currency exchange offices are named obliged entities under EU AML law; cited generically — no jurisdiction-specific (e.g. Iranian) rule is asserted anywhere in this domain."
+      "notes": "Currency exchange offices are named obliged entities under EU AML law; cited generically \u2014 no jurisdiction-specific (e.g. Iranian) rule is asserted anywhere in this domain."
+    },
+    {
+      "id": "blnk",
+      "title": "Blnk (open-source double-entry ledger)",
+      "url": "https://github.com/blnkfinance/blnk",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "36ecff3ec7f480c38689ad4e6fedc4b9f172a6ff",
+      "local_path": "sources/domains/blnk/source",
+      "notes": "On-disk clone (see sources/domains/blnk/SOURCE.md). Real double-entry ledger with explicit Transaction, Balance, Identity, and a standalone reconciliation.go engine (reconciliation_matching_test.go, reconciliation_rules_test.go) plus transaction_refunds.go/transaction_refund.go modelling refund as a first-class reversal of a posted transaction. Not bureau-de-change-specific, but a real, on-disk, Apache-2.0 implementation of settlement reconciliation and transaction refund/reversal as domain concepts in a financial ledger."
+    },
+    {
+      "id": "moov-io-watchman",
+      "title": "Moov Watchman (sanctions/PEP screening engine)",
+      "url": "https://github.com/moov-io/watchman",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "02aea27ee1cd87d58ac8b624e9d281b3be0af16b",
+      "notes": "Inspected via `gh api` (not cloned). Actively maintained, production-used open-source sanctions/PEP screening engine: ingests OFAC SDN/Non-SDN, US CSL, FinCEN 311, EU/UK/UN consolidated lists and OpenSanctions data, scores each candidate 0-1 with an inspectable multi-field matcher (name, alias, government ID, DOB, address). Concretely evidences exchange.sanctions_screening and the sanctions_watchlist_screening integration as a real, separately-built concern distinct from generic identity verification."
+    },
+    {
+      "id": "moov-io-customers",
+      "title": "Moov Customers (KYC/CIP customer registry)",
+      "url": "https://github.com/moov-io/customers",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "1fcf6e1fe58f47347cacbd545bffae8f37f4d6b0",
+      "notes": "Inspected via `gh api` (not cloned). A customer registry purpose-built for KYC/Customer Identification Program plus OFAC checks; its own docs (docs/watchman.md) and migrations (create_customer_ofac_searches, create_account_ofac_searches) show identity verification and sanctions screening modelled as linked but distinct concerns, corroborating the same split used in this domain's exchange.kyc_thresholds vs exchange.sanctions_screening."
+    },
+    {
+      "id": "moov-io-ach",
+      "title": "Moov ACH (Automated Clearing House file reader/writer)",
+      "url": "https://github.com/moov-io/ach",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "7ee7ad03d7342e1f651c32db22fc8168c2b97cce",
+      "notes": "Inspected via `gh api` (not cloned). Real, actively maintained reader/writer/validator for US ACH bank-transfer files; evidences the bank_transfer_rail integration as a concrete, separately-implemented concern."
+    },
+    {
+      "id": "moov-io-iso20022",
+      "title": "Moov ISO 20022 (financial messaging library)",
+      "url": "https://github.com/moov-io/iso20022",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "05aa282eb151466fd6b80c431e1cf9b2fada9cdd",
+      "notes": "Inspected via `gh api` (not cloned). Open-source implementation of ISO 20022 message parsing/generation; corroborates the iso20022 authoritative source with a concrete implementation for the bank_transfer_rail integration."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI DSS v4.0.1",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI Security Standards Council public standard",
+      "retrieved": "2026-09-27",
+      "version": "4.0.1 (released 2024-06-11; sole active version since 2024-12-31)",
+      "notes": "Governs any card acquiring/card-funded flow an exchange business adds on top of its cash/bank-transfer core."
+    },
+    {
+      "id": "eu-tfr-2023-1113",
+      "title": "EU Regulation (EU) 2023/1113 \u2014 Transfer of Funds Regulation (recast, 'travel rule')",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/1113/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Regulation (EU) 2023/1113, applicable from 2024-12-30, repealing Regulation (EU) 2015/847",
+      "notes": "Implements FATF Recommendation 16 in the EU: requires complete originator/beneficiary information to accompany a transfer of funds. Directly relevant to exchange.remittance and any bank-rail settlement leg."
+    },
+    {
+      "id": "fincen-msb",
+      "title": "FinCEN \u2014 Money Services Business (MSB) Registration",
+      "url": "https://www.fincen.gov/resources/money-services-business-msb-registration",
+      "source_type": "authoritative",
+      "license": "US federal government public information",
+      "retrieved": "2026-09-27",
+      "version": "31 CFR 1022.380; FinCEN Form 107",
+      "notes": "US currency dealers/exchangers and money transmitters must register with FinCEN as MSBs and maintain an agent list. Cited generically for the US as one jurisdiction's implementation of the obliged-entity concept, not as a universal rule."
+    },
+    {
+      "id": "hmrc-msb-guidance",
+      "title": "HMRC \u2014 Anti-Money Laundering Guidance for Supervised Businesses: Money Service Business sector guidance (AMLG2400)",
+      "url": "https://www.gov.uk/hmrc-internal-manuals/anti-money-laundering-guidance-for-supervised-businesses/amlg2400",
+      "source_type": "authoritative",
+      "license": "UK Open Government Licence",
+      "retrieved": "2026-09-27",
+      "version": "AMLG2400, under the Money Laundering Regulations 2017",
+      "notes": "UK currency exchange, money transmission, and cheque-cashing businesses register with HMRC under MLR 2017 (or need separate FCA authorisation for payment services). Cited generically for the UK, not as a universal rule."
+    },
+    {
+      "id": "wolfsberg-correspondent-banking",
+      "title": "The Wolfsberg Group \u2014 Financial Crime Principles for Correspondent Banking (2022)",
+      "url": "https://wolfsberg-group.org/resources/correspondent-banking/91",
+      "source_type": "authoritative",
+      "license": "Wolfsberg Group public guidance",
+      "retrieved": "2026-09-27",
+      "version": "2022",
+      "notes": "Industry (non-binding) due-diligence principles relevant when an exchange/remittance business relies on a correspondent bank or network partner to settle cross-border transfers."
     }
   ],
   "features": [
@@ -86,7 +187,9 @@
         "customer",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_kyc"
+      ],
       "capabilities": [
         "profile_crud",
         "repeat_customer_lookup"
@@ -130,7 +233,9 @@
       "entities": [
         "currency"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle"
+      ],
       "capabilities": [
         "currency_crud"
       ],
@@ -207,7 +312,7 @@
           "chfx-odoo-modules"
         ],
         "confidence": "medium",
-        "notes": "Both implementations model buy/sell rates explicitly; bdc-api additionally splits official vs market rate. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "notes": "Both implementations model buy/sell rates explicitly; bdc-api additionally splits official vs market rate. Downgraded high\u2192medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
       }
     },
     {
@@ -222,7 +327,9 @@
       "entities": [
         "exchange_rate"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle"
+      ],
       "capabilities": [
         "scheduled_pull",
         "mid_rate_snapshot"
@@ -350,7 +457,7 @@
           "chfx-odoo-modules"
         ],
         "confidence": "medium",
-        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "notes": "Downgraded high\u2192medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
       }
     },
     {
@@ -366,7 +473,9 @@
         "remittance",
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
       "capabilities": [
         "send",
         "receive",
@@ -461,7 +570,10 @@
       "entities": [
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle",
+        "settlement_reconciliation"
+      ],
       "capabilities": [
         "branch_crud",
         "per_branch_rate_override"
@@ -505,7 +617,9 @@
         "staff",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "cash_session_lifecycle"
+      ],
       "capabilities": [
         "staff_crud",
         "shift_assignment"
@@ -548,7 +662,10 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle",
+        "refund_cancellation"
+      ],
       "capabilities": [
         "receipt_generation",
         "duplicate_reprint"
@@ -573,10 +690,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "bdc-api"
+          "bdc-api",
+          "chfx-odoo-modules"
         ],
-        "confidence": "low",
-        "notes": "bdc-api generates a transaction_ref at insert time; receipt printing itself is reasoned inference from that field, not directly observed as a feature."
+        "confidence": "medium",
+        "notes": "bdc-api generates a transaction_ref at insert time; chfx-odoo-modules independently ships an explicit exchange_receipt_report.xml print template (chfx_extension/reports/) alongside an exchange_invoice_report.xml. Two independent implementations corroborate receipt/voucher generation as a real, separately-built feature; raised low -> medium on 2026-09-27."
       }
     },
     {
@@ -592,7 +710,10 @@
         "customer",
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle",
+        "customer_onboarding_kyc"
+      ],
       "capabilities": [
         "threshold_config",
         "id_capture",
@@ -613,7 +734,9 @@
         "compliance",
         "identity"
       ],
-      "integrations": [],
+      "integrations": [
+        "identity_verification_provider"
+      ],
       "compliance": [
         "kyc_thresholds"
       ],
@@ -685,7 +808,9 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
       "capabilities": [
         "append_only_log",
         "actor_attribution"
@@ -728,7 +853,9 @@
         "exchange_transaction",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "settlement_reconciliation"
+      ],
       "capabilities": [
         "daily_summary",
         "margin_report",
@@ -772,7 +899,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
       "capabilities": [
         "remittance_ready_alert",
         "rate_alert"
@@ -814,7 +943,9 @@
         "exchange_request",
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "quote_lifecycle"
+      ],
       "capabilities": [
         "rate_lookup",
         "reserve_for_pickup"
@@ -857,7 +988,9 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
       "capabilities": [
         "commission_rule_config",
         "per_channel_fee"
@@ -885,6 +1018,256 @@
         ],
         "confidence": "medium",
         "notes": "commission_chf and commission_account_id are explicit fields; single implementation."
+      }
+    },
+    {
+      "id": "exchange.sanctions_screening",
+      "name": "Sanctions / PEP Watchlist Screening",
+      "classification": "compliance",
+      "description": "Screen a customer, beneficiary, or counterparty against sanctions, PEP, and other watchlists before or during onboarding and before a remittance is paid out.",
+      "users": [
+        "compliance_officer",
+        "system"
+      ],
+      "entities": [
+        "customer",
+        "screening_match"
+      ],
+      "workflows": [
+        "customer_onboarding_kyc",
+        "sanctions_screening_escalation"
+      ],
+      "capabilities": [
+        "watchlist_match_scoring",
+        "hit_review_queue",
+        "false_positive_clearing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "high",
+      "tags": [
+        "compliance",
+        "identity",
+        "ai"
+      ],
+      "integrations": [
+        "sanctions_watchlist_screening"
+      ],
+      "compliance": [
+        "aml_str"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "moov-io-watchman",
+          "moov-io-customers"
+        ],
+        "confidence": "high",
+        "notes": "FATF Recommendation 6 (targeted financial sanctions) is authoritative; moov-io/watchman is a real, actively-maintained, Apache-2.0 screening engine (OFAC/EU/UK/UN/OpenSanctions, scored matching) and moov-io/customers pairs a KYC registry with the same screening \u2014 two independent implementations plus an authoritative source. Not observed in bdc-api or chfx-odoo-modules, which have KYC capture fields but no screening step."
+      }
+    },
+    {
+      "id": "exchange.settlement_reconciliation",
+      "name": "Settlement & Cash Reconciliation",
+      "classification": "common",
+      "description": "Reconcile a branch's or period's completed transactions and cash positions against bank statements or the accounting ledger, matching entries and flagging discrepancies.",
+      "users": [
+        "branch_manager",
+        "system"
+      ],
+      "entities": [
+        "settlement_batch",
+        "exchange_transaction",
+        "cash_session",
+        "branch"
+      ],
+      "workflows": [
+        "settlement_reconciliation"
+      ],
+      "capabilities": [
+        "auto_matching",
+        "discrepancy_flagging",
+        "manual_match_override"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "backend",
+        "compliance",
+        "reporting"
+      ],
+      "integrations": [
+        "accounting_system",
+        "bank_transfer_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "blnk (on-disk, Apache-2.0) ships a standalone reconciliation.go matching engine with dedicated rule and matching tests; chfx-odoo-modules links every exchange.transaction to an account.move (accounting journal entry) per counter. blnk is a general ledger, not bureau-de-change-specific, so this is corroboration of the reconciliation mechanism, not of a bureau-de-change-specific reconciliation feature; held at medium rather than high."
+      }
+    },
+    {
+      "id": "exchange.refunds_cancellations",
+      "name": "Transaction Refunds & Cancellations",
+      "classification": "common",
+      "description": "Cancel a not-yet-settled exchange request or transaction, or reverse a completed transaction with a refund, restoring the till position.",
+      "users": [
+        "teller",
+        "customer"
+      ],
+      "entities": [
+        "exchange_transaction",
+        "exchange_request"
+      ],
+      "workflows": [
+        "refund_cancellation"
+      ],
+      "capabilities": [
+        "cancel_before_settlement",
+        "post_completion_refund",
+        "till_position_reversal"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "customer",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "bdc-api/chfx-odoo-modules model a pre-settlement draft/voided or draft/cancel state (cancellation); blnk (on-disk, Apache-2.0) separately models a post-completion refund as a first-class transaction reversal (transaction_refunds.go, transaction_refund.go/_test.go). blnk is a general ledger, not a bureau-de-change implementation, so this corroborates the refund mechanism generally rather than this exact vertical; held at medium."
+      }
+    },
+    {
+      "id": "exchange.beneficiary_management",
+      "name": "Remittance Beneficiary Management",
+      "classification": "common",
+      "description": "Save and reuse a remittance recipient's details across multiple sends for a customer, instead of re-entering them every time.",
+      "users": [
+        "customer",
+        "teller"
+      ],
+      "entities": [
+        "beneficiary",
+        "customer",
+        "remittance"
+      ],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
+      "capabilities": [
+        "beneficiary_crud",
+        "beneficiary_lookup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "low",
+        "notes": "chfx-odoo-modules' exchange.remittance model has a plain beneficiary_name text field, not a separate reusable beneficiary entity; a full saved-beneficiary CRUD feature is a reasoned expansion of that one field, evidenced by a single implementation. Not present in bdc-api."
+      }
+    },
+    {
+      "id": "exchange.transaction_limits",
+      "name": "Transaction & Velocity Limits",
+      "classification": "compliance",
+      "description": "Configure per-transaction, daily, and monthly limits on a customer's exchange or remittance activity, distinct from the one-off KYC identity-capture threshold, to catch structuring/velocity patterns.",
+      "users": [
+        "administrator",
+        "compliance_officer"
+      ],
+      "entities": [
+        "customer",
+        "exchange_transaction"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "per_transaction_cap",
+        "daily_monthly_aggregate_cap",
+        "velocity_alerting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "medium",
+      "tags": [
+        "compliance",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [
+        "kyc_thresholds",
+        "aml_str"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from FATF's CDD-threshold and suspicious-activity-monitoring language; neither bdc-api nor chfx-odoo-modules models a configurable limit distinct from the KYC ID-capture threshold, and no separate OSS implementation of velocity limiting was found for this vertical."
       }
     }
   ]

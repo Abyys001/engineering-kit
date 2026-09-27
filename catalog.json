@@ -17,12 +17,12 @@
   "items": [],
   "sources": [
     {
-      "name": "shadcn-ui",
-      "title": "shadcn/ui",
-      "category": "web",
-      "path": "sources/web/shadcn-ui",
-      "repo": "shadcn-ui/ui",
-      "revision": "98a1fe67b439324ddc857f47fbdce056600a4329",
+      "name": "agent-elements",
+      "title": "Agent Elements",
+      "category": "ai",
+      "path": "sources/ai/agent-elements",
+      "repo": "21st-dev/agent-elements",
+      "revision": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
       "license": "MIT",
       "status": "extraction-safe",
       "attribution_required": false,
@@ -31,279 +31,120 @@
         "nextjs",
         "tailwind-v4",
         "base-ui",
-        "radix-ui",
-        "react-aria",
         "shadcn-registry",
-        "sidebar",
-        "dashboard",
-        "data-table",
-        "forms",
-        "charts",
-        "auth-blocks",
-        "command"
+        "ai-sdk",
+        "agent-ui",
+        "tool-rendering",
+        "streaming-markdown"
       ],
       "use_cases": [
-        "base ui primitives",
-        "sidebar layouts",
-        "dashboard shell",
-        "login and signup screens",
-        "data table",
-        "forms",
-        "date picker",
-        "command menu",
-        "charts",
-        "empty state"
+        "agent chat shell",
+        "tool-call cards (bash, edit + diff, search, todo, plan, mcp)",
+        "input bar with attachments",
+        "model picker and mode selector"
       ],
       "caveats": [
-        "monorepo: use apps/v4/registry/bases/<flavor>, not the docs site"
+        "bundled Geist .ttf files in public/fonts have no license file: source Geist separately",
+        "skills/agent-elements/ is upstream agent config: never install"
       ]
     },
     {
-      "name": "originui",
-      "title": "Origin UI",
-      "category": "web",
-      "path": "sources/web/originui",
-      "repo": "shadcn/originui",
-      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "name": "assistant-ui",
+      "title": "assistant-ui",
+      "category": "ai",
+      "path": "sources/ai/assistant-ui",
+      "repo": "assistant-ui/assistant-ui",
+      "revision": "2980cafdf4f894995daa77c34f3db09e74205ff7",
       "license": "MIT",
       "status": "extraction-safe",
       "attribution_required": false,
       "tags": [
         "react",
-        "tailwind-v4",
+        "chat-ui",
+        "headless-primitives",
         "radix-ui",
-        "shadcn-compatible",
-        "date-time",
-        "event-calendar",
-        "file-upload",
-        "timeline",
-        "stepper",
-        "tree",
-        "notifications",
-        "navbar",
-        "pagination",
-        "filters"
+        "ai-sdk",
+        "langgraph",
+        "monorepo"
       ],
       "use_cases": [
-        "advanced inputs",
-        "date and time pickers",
-        "event calendar",
-        "file upload",
-        "activity timeline",
-        "stepper",
-        "tree view",
-        "navbar pieces",
-        "notification menu",
-        "filters"
+        "thread/composer/message compound primitives",
+        "runtime adapters (AI SDK, LangGraph)",
+        "tool-call and generative UI rendering",
+        "human approval flows"
       ],
       "caveats": [
-        "stale fork (2025-07-25); canonical project is origin-space/originui",
-        "components are numbered comp-XXX: search config/components.ts or registry.json tags"
+        "Radix-based: port to Base UI",
+        "packages/cloud is a hosted-service client: don't depend on it",
+        "132 MB monorepo: extract narrowly"
       ]
     },
     {
-      "name": "cult-ui",
-      "title": "Cult UI",
-      "category": "web",
-      "path": "sources/web/cult-ui",
-      "repo": "nolly-studio/cult-ui",
-      "revision": "ee98a5dd2e319b63cc2e707dd968d6af04209b7e",
+      "name": "full-stack-ai-agent-template",
+      "title": "Full-Stack AI Agent Template",
+      "category": "ai",
+      "path": "sources/ai/full-stack-ai-agent-template",
+      "repo": "vstorm-co/full-stack-ai-agent-template",
+      "revision": "3428d9a6214619d3514312886d59a36400747b7d",
       "license": "MIT",
       "status": "extraction-safe",
       "attribution_required": false,
       "tags": [
-        "react",
+        "python",
+        "fastapi",
+        "pydantic-ai",
+        "langchain",
+        "langgraph",
+        "rag",
+        "pgvector",
+        "streaming",
+        "websocket",
+        "tool-calling",
+        "observability",
         "nextjs",
-        "tailwind-v4",
-        "radix-ui",
-        "motion",
-        "cards",
-        "hero-sections",
-        "shaders",
-        "dock",
-        "dynamic-island",
-        "landing",
-        "interactive-controls"
+        "cookiecutter"
       ],
       "use_cases": [
-        "distinctive cards",
-        "shader hero sections",
-        "dock navigation",
-        "floating panels",
-        "auth page",
-        "landing pages"
+        "LLM provider abstraction",
+        "RAG pipeline (ingestion, embeddings, retrieval, reranking)",
+        "WebSocket agent streaming",
+        "agent tool calling",
+        "Logfire/Sentry observability"
       ],
       "caveats": [
-        "no sidebar or topbar components",
-        "bundled font apps/www/fonts/haskoy.ttf has no stated license: don't reuse"
+        "tarball snapshot, no .git: refresh by re-downloading the pinned commit",
+        "cookiecutter template: strip {% if %} conditionals when promoting",
+        "several parallel agent frameworks: pick PydanticAI + pgvector"
       ]
     },
     {
-      "name": "kokonutui",
-      "title": "Kokonut UI",
-      "category": "web",
-      "path": "sources/web/kokonutui",
-      "repo": "kokonut-labs/kokonutui",
-      "revision": "83eec6d982d400a18438001a8efdbac1f159dd43",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "nextjs",
-        "tailwind-v4",
-        "radix-ui",
-        "motion",
-        "dashboard",
-        "saas",
-        "kpi-cards",
-        "ai-chat",
-        "navbar",
-        "file-upload",
-        "search",
-        "hooks"
-      ],
-      "use_cases": [
-        "kpi and activity cards",
-        "ai prompt input",
-        "navbar and toolbar",
-        "file upload",
-        "search bar",
-        "animated drawer and tabs"
-      ],
-      "caveats": []
-    },
-    {
-      "name": "reactbits",
-      "title": "React Bits",
-      "category": "web",
-      "path": "sources/web/reactbits",
-      "repo": "epodak/reactbits",
-      "revision": "cdba9dc374d100f3f719f529ad840f481bc1b743",
-      "license": "MIT + Commons Clause",
-      "status": "REVIEW_REQUIRED",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "tailwind",
-        "gsap",
-        "motion",
-        "three-fiber",
-        "backgrounds",
-        "text-animation",
-        "scroll-effects",
-        "commons-clause"
-      ],
-      "use_cases": [
-        "animated backgrounds (inspiration)",
-        "text animation (inspiration)",
-        "scroll effects (inspiration)"
-      ],
-      "caveats": [
-        "Commons Clause forbids redistribution as part of a component library or UI kit",
-        "stale fork of DavidHDev/react-bits",
-        "bundled .glb models and OFL font carry separate terms"
-      ]
-    },
-    {
-      "name": "tremor",
-      "title": "Tremor",
-      "category": "dashboards",
-      "path": "sources/dashboards/tremor",
-      "repo": "tremorlabs/tremor",
-      "revision": "ca4d588f47820ff3d514d37fa4ee08a4222dec11",
-      "license": "Apache-2.0",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "tailwind-v4",
-        "radix-ui",
-        "recharts",
-        "charts",
-        "kpi",
-        "data-viz",
-        "analytics"
-      ],
-      "use_cases": [
-        "charts",
-        "kpi metrics",
-        "analytics dashboards",
-        "tracker and bar lists"
-      ],
-      "caveats": [
-        "React 18 + Recharts 2: port before use in React 19 apps",
-        "no commits since 2025-10-10"
-      ]
-    },
-    {
-      "name": "next-shadcn-dashboard",
-      "title": "next-shadcn-dashboard",
-      "category": "dashboards",
-      "path": "sources/dashboards/next-shadcn-dashboard",
-      "repo": "shadcndashboard/next-shadcn-dashboard",
-      "revision": "91deb10215bc6b567d881c608a9ad794e894994f",
-      "license": "MIT (README asks for a footer credit)",
-      "status": "REVIEW_REQUIRED",
+      "name": "opik",
+      "title": "Opik",
+      "category": "ai",
+      "path": "sources/ai/opik",
+      "repo": "comet-ml/opik",
+      "revision": "f898372e12782ca6df80aea00acf04b466b45f52",
+      "license": "Apache-2.0 (root LICENSE and all sdks/*/LICENSE)",
+      "status": "license-cleared, not acquired",
       "attribution_required": true,
       "tags": [
-        "nextjs",
-        "react",
-        "base-ui",
-        "tailwind-v4",
-        "sidebar",
-        "app-shell",
-        "data-table",
-        "auth-screens",
-        "admin-template"
+        "ai",
+        "observability",
+        "tracing",
+        "evaluation",
+        "llm-as-judge",
+        "prompt-management"
       ],
       "use_cases": [
-        "app shell reference",
-        "table style variants",
-        "auth screens reference"
+        "LLM trace/span data model reference",
+        "LLM-as-judge evaluation metrics",
+        "prompt versioning",
+        "CI evaluation gates"
       ],
       "caveats": [
-        "README demands a footer link to shadcndashboard.dev",
-        "public/images marketing art has no stated license",
-        "TypeScript ^7 is experimental"
-      ]
-    },
-    {
-      "name": "kiranism-dashboard-starter",
-      "title": "Kiranism next-shadcn-dashboard-starter",
-      "category": "dashboards",
-      "path": "sources/dashboards/kiranism-dashboard-starter",
-      "repo": "Kiranism/next-shadcn-dashboard-starter",
-      "revision": "7705dfc0d13889e45c26a55ad5908da6a7a9a605",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "nextjs",
-        "react",
-        "base-ui",
-        "tailwind-v4",
-        "clerk",
-        "nuqs",
-        "zustand",
-        "tanstack-form",
-        "tanstack-table",
-        "feature-folders",
-        "kbar",
-        "ai-sdk"
-      ],
-      "use_cases": [
-        "web-saas starter base",
-        "url-state data tables",
-        "forms",
-        "command menu",
-        "users feature",
-        "dashboard overview",
-        "kanban"
-      ],
-      "caveats": [
-        "auth and RBAC nav are built on Clerk: replace, don't port",
-        "TanStack Table v8"
+        "not on disk: manifest entry is fetch:false. Decision is run-or-read, not extract",
+        "Apache-2.0 attribution: preserve the NOTICE and copyright on any reuse",
+        "the backend is Java and the frontend React - off-stack for this kit; only sdks/python is adaptation-relevant"
       ]
     },
     {
@@ -375,6 +216,73 @@
       ]
     },
     {
+      "name": "fastapi-best-architecture",
+      "title": "FastAPI Best Architecture",
+      "category": "backend",
+      "path": "sources/backend/fastapi-best-architecture",
+      "repo": "fastapi-practices/fastapi-best-architecture",
+      "revision": "123a44aed02daf5ea60d2a7469625c933d3bb759",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "python",
+        "fastapi",
+        "sqlalchemy2",
+        "alembic",
+        "async",
+        "rbac",
+        "celery",
+        "postgresql",
+        "plugins"
+      ],
+      "use_cases": [
+        "layered api/schema/service/crud/model structure",
+        "RBAC admin (users, roles, menus, data scope)",
+        "async SQLAlchemy 2 + Alembic setup",
+        "app factory and lifespan wiring"
+      ],
+      "caveats": [
+        "MySQL branches: keep the PostgreSQL path only",
+        "comments partly in Chinese"
+      ]
+    },
+    {
+      "name": "fastapi-full-stack-template",
+      "title": "FastAPI full-stack template",
+      "category": "backend",
+      "path": "sources/backend/fastapi-full-stack-template",
+      "repo": "fastapi/full-stack-fastapi-template",
+      "revision": "cb740b656d7a0a6c5e12c7bf8e50343ec94ee9c7",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "python",
+        "fastapi",
+        "pydantic-settings",
+        "jwt",
+        "alembic",
+        "sqlmodel",
+        "docker",
+        "traefik",
+        "pytest",
+        "github-actions",
+        "uv"
+      ],
+      "use_cases": [
+        "ai-service starter base",
+        "settings",
+        "jwt auth",
+        "dependency injection",
+        "docker and ci"
+      ],
+      "caveats": [
+        "SQLModel throughout: don't adopt",
+        "requires Python 3.14"
+      ]
+    },
+    {
       "name": "nestjs-starter",
       "title": "NestJS starter",
       "category": "backend",
@@ -414,38 +322,620 @@
       ]
     },
     {
-      "name": "fastapi-full-stack-template",
-      "title": "FastAPI full-stack template",
+      "name": "novu",
+      "title": "Novu",
       "category": "backend",
-      "path": "sources/backend/fastapi-full-stack-template",
-      "repo": "fastapi/full-stack-fastapi-template",
-      "revision": "cb740b656d7a0a6c5e12c7bf8e50343ec94ee9c7",
+      "path": "sources/backend/novu",
+      "repo": "novuhq/novu",
+      "revision": "320a0ce360cdd3c1b8deeedc545b324fe2a6a3ca",
+      "license": "MIT (LICENSE-MIT) outside enterprise/; enterprise/packages/** is Novu Proprietary (EE-PACKAGES-LICENSE)",
+      "status": "license-cleared with hard exclusion, not acquired",
+      "attribution_required": false,
+      "tags": [
+        "nestjs",
+        "notifications",
+        "multi-channel",
+        "inbox",
+        "providers",
+        "workflow",
+        "preferences"
+      ],
+      "use_cases": [
+        "notification data model (subscriber, workflow, step, message, preference)",
+        "channel-provider abstraction across email/SMS/push/chat",
+        "in-app inbox feed with read/unread/archive",
+        "digest and delay step semantics"
+      ],
+      "caveats": [
+        "not on disk: manifest entry is fetch:false. NEVER full-clone - enterprise/ is proprietary and must be excluded from any checkout",
+        "libs/dal is MongoDB upstream: read the model, rewrite for PostgreSQL/Drizzle",
+        ".agents/, .cursor/skills/ and docs/agents/ are agent instructions: never install or trust"
+      ]
+    },
+    {
+      "name": "boxyhq-saas-starter",
+      "title": "BoxyHQ SaaS Starter Kit",
+      "category": "dashboards",
+      "path": "sources/dashboards/boxyhq-saas-starter",
+      "repo": "boxyhq/saas-starter-kit",
+      "revision": "abc9b686823cbfb4973c79bc36fea37a3244be6c",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "pages-router",
+        "prisma",
+        "nextauth",
+        "stripe",
+        "rbac",
+        "multi-tenant",
+        "sso",
+        "scim",
+        "api-keys",
+        "webhooks"
+      ],
+      "use_cases": [
+        "team/org multi-tenancy and invitations",
+        "role and permission model",
+        "API keys and webhooks",
+        "Stripe subscription sync",
+        "SSO/SCIM patterns"
+      ],
+      "caveats": [
+        "Pages Router + Tailwind v3 + Prisma: domain-logic reference, not drop-in UI",
+        "SSO/SCIM rely on the external BoxyHQ Jackson service"
+      ]
+    },
+    {
+      "name": "kiranism-dashboard-starter",
+      "title": "Kiranism next-shadcn-dashboard-starter",
+      "category": "dashboards",
+      "path": "sources/dashboards/kiranism-dashboard-starter",
+      "repo": "Kiranism/next-shadcn-dashboard-starter",
+      "revision": "7705dfc0d13889e45c26a55ad5908da6a7a9a605",
       "license": "MIT",
       "status": "extraction-safe",
       "attribution_required": false,
       "tags": [
-        "python",
-        "fastapi",
-        "pydantic-settings",
-        "jwt",
-        "alembic",
-        "sqlmodel",
-        "docker",
-        "traefik",
-        "pytest",
-        "github-actions",
-        "uv"
+        "nextjs",
+        "react",
+        "base-ui",
+        "tailwind-v4",
+        "clerk",
+        "nuqs",
+        "zustand",
+        "tanstack-form",
+        "tanstack-table",
+        "feature-folders",
+        "kbar",
+        "ai-sdk"
       ],
       "use_cases": [
-        "ai-service starter base",
-        "settings",
-        "jwt auth",
-        "dependency injection",
-        "docker and ci"
+        "web-saas starter base",
+        "url-state data tables",
+        "forms",
+        "command menu",
+        "users feature",
+        "dashboard overview",
+        "kanban"
       ],
       "caveats": [
-        "SQLModel throughout: don't adopt",
-        "requires Python 3.14"
+        "auth and RBAC nav are built on Clerk: replace, don't port",
+        "TanStack Table v8"
+      ]
+    },
+    {
+      "name": "next-shadcn-dashboard",
+      "title": "next-shadcn-dashboard",
+      "category": "dashboards",
+      "path": "sources/dashboards/next-shadcn-dashboard",
+      "repo": "shadcndashboard/next-shadcn-dashboard",
+      "revision": "91deb10215bc6b567d881c608a9ad794e894994f",
+      "license": "MIT (README asks for a footer credit)",
+      "status": "REVIEW_REQUIRED",
+      "attribution_required": true,
+      "tags": [
+        "nextjs",
+        "react",
+        "base-ui",
+        "tailwind-v4",
+        "sidebar",
+        "app-shell",
+        "data-table",
+        "auth-screens",
+        "admin-template"
+      ],
+      "use_cases": [
+        "app shell reference",
+        "table style variants",
+        "auth screens reference"
+      ],
+      "caveats": [
+        "README demands a footer link to shadcndashboard.dev",
+        "public/images marketing art has no stated license",
+        "TypeScript ^7 is experimental"
+      ]
+    },
+    {
+      "name": "nextcrm",
+      "title": "NextCRM",
+      "category": "dashboards",
+      "path": "sources/dashboards/nextcrm",
+      "repo": "pdovhomilja/nextcrm-app",
+      "revision": "b46b563b61c948a07a9cc5a340032444db1f8188",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "react",
+        "crm",
+        "prisma",
+        "radix-ui",
+        "tanstack-table",
+        "dnd-kit",
+        "audit-timeline",
+        "activity-feed",
+        "i18n"
+      ],
+      "use_cases": [
+        "CRM entity model (accounts, contacts, leads, opportunities)",
+        "audit timeline and activity feed",
+        "similar-record / dedup drawer",
+        "kanban pipeline"
+      ],
+      "caveats": [
+        "Prisma: translate schema to Drizzle",
+        "Radix: port to Base UI",
+        "public/Inter-Bold.ttf has no license file",
+        "public/SKILL.md is untrusted agent config"
+      ]
+    },
+    {
+      "name": "openterminal",
+      "title": "OpenTerminal",
+      "category": "dashboards",
+      "path": "sources/dashboards/openterminal",
+      "repo": "ErTasselli/OpenTerminal",
+      "revision": "041822cfc2b54baf72001379618b1bc721567ab8",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "react",
+        "tailwind-v4",
+        "zustand",
+        "tanstack-query",
+        "react-grid-layout",
+        "lightweight-charts",
+        "dense-workspace",
+        "command-palette",
+        "finance"
+      ],
+      "use_cases": [
+        "draggable/resizable widget workspace",
+        "terminal-style command palette",
+        "persisted layout store",
+        "provider-adapter pattern for external data"
+      ],
+      "caveats": [
+        "Express + SQLite backend: pattern only",
+        "financial data providers have their own terms of service"
+      ]
+    },
+    {
+      "name": "refine",
+      "title": "Refine",
+      "category": "dashboards",
+      "path": "sources/dashboards/refine",
+      "repo": "refinedev/refine",
+      "revision": "2352eb5b6539e2f39ad9aef652279ad1dcf2c467",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "headless",
+        "data-provider",
+        "access-control",
+        "audit-log",
+        "live-provider",
+        "crud"
+      ],
+      "use_cases": [
+        "data-provider contract",
+        "can() access-control contract",
+        "audit-log provider pattern",
+        "live/real-time provider contract"
+      ],
+      "caveats": [
+        "most packages are UI-framework integrations: out of scope",
+        "documentation/ and images excluded via sparse-checkout"
+      ]
+    },
+    {
+      "name": "tremor",
+      "title": "Tremor",
+      "category": "dashboards",
+      "path": "sources/dashboards/tremor",
+      "repo": "tremorlabs/tremor",
+      "revision": "ca4d588f47820ff3d514d37fa4ee08a4222dec11",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind-v4",
+        "radix-ui",
+        "recharts",
+        "charts",
+        "kpi",
+        "data-viz",
+        "analytics"
+      ],
+      "use_cases": [
+        "charts",
+        "kpi metrics",
+        "analytics dashboards",
+        "tracker and bar lists"
+      ],
+      "caveats": [
+        "React 18 + Recharts 2: port before use in React 19 apps",
+        "no commits since 2025-10-10"
+      ]
+    },
+    {
+      "name": "blnk",
+      "title": "Blnk",
+      "category": "domains",
+      "path": "sources/domains/blnk",
+      "repo": "blnkfinance/blnk",
+      "revision": "36ecff3ec7f480c38689ad4e6fedc4b9f172a6ff",
+      "license": "Apache-2.0",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "fintech",
+        "ledger",
+        "double-entry",
+        "balances",
+        "reconciliation",
+        "identity",
+        "go"
+      ],
+      "use_cases": [
+        "production double-entry ledger model: Ledger, Balance, Account, Transaction, Identity",
+        "inflight/queued balance fields and optimistic locking",
+        "multi-way transaction distribution splits",
+        "reconciliation engine shape"
+      ],
+      "caveats": [
+        "Apache-2.0, so promotable after review - kept reference-only because this was a domain-research pass",
+        "Go: domain-model reference, not portable code for our stack"
+      ]
+    },
+    {
+      "name": "chatwoot",
+      "title": "Chatwoot",
+      "category": "domains",
+      "path": "sources/domains/chatwoot",
+      "repo": "chatwoot/chatwoot",
+      "revision": "b8eb7766f2735d6e3bf5ed3a69cf453b289a4411",
+      "license": "MIT (core); enterprise/ separately licensed",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "support",
+        "helpdesk",
+        "tickets",
+        "omnichannel",
+        "knowledge-base",
+        "csat",
+        "automation",
+        "rails",
+        "communication"
+      ],
+      "use_cases": [
+        "support conversation/ticket model and status enum",
+        "inbox and team queue model",
+        "12 core channel types and multichannel unification",
+        "knowledge-base portal/article model",
+        "macros, canned responses, automation rules",
+        "business-hours (WorkingHour) model",
+        "CSAT survey model"
+      ],
+      "caveats": [
+        "enterprise/ is NOT under the MIT grant and is excluded from the checkout - never fetch it",
+        "SLA and voice/call logic is enterprise-only; only the SLA tables exist in the core schema",
+        "Rails/ActiveRecord - domain-model reference, not portable code",
+        "default branch is develop, not main"
+      ]
+    },
+    {
+      "name": "fleetbase",
+      "title": "Fleetbase",
+      "category": "domains",
+      "path": "sources/domains/fleetbase",
+      "repo": "fleetbase/fleetbase",
+      "revision": "4ff6980c6db6f3e8103b3ec425a089aa6d251af4",
+      "license": "AGPL-3.0",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "logistics",
+        "fleet",
+        "dispatch",
+        "routing",
+        "waypoints",
+        "proof-of-delivery",
+        "laravel",
+        "erd"
+      ],
+      "use_cases": [
+        "fleet/dispatch schema via the repo's own generated Mermaid ERD (database.mmd)",
+        "order/payload/waypoint columns: time windows, service time, COD, proof of delivery",
+        "driver and vehicle modelling"
+      ],
+      "caveats": [
+        "AGPL-3.0 copyleft: reference only, never copy code",
+        "the ERD (database.mmd) is the research artifact - the Ember/Laravel package source was not the point of this clone"
+      ]
+    },
+    {
+      "name": "frappe-hospitality",
+      "title": "Frappe Hospitality",
+      "category": "domains",
+      "path": "sources/domains/frappe-hospitality",
+      "repo": "frappe/hospitality",
+      "revision": "2003ff8db7d7fbc453a9d14da0f971b9186a0b4b",
+      "license": "GPL-3.0",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "restaurant",
+        "hospitality",
+        "hotel",
+        "reservations",
+        "menu",
+        "tables",
+        "erp",
+        "doctype"
+      ],
+      "use_cases": [
+        "restaurant entity model: Restaurant, Table, Menu/Menu Item, Reservation, Order Entry",
+        "hotel entity model: Room, Room Type, Room Pricing (rate plan), Room Reservation",
+        "reservation and hotel-stay lifecycle states",
+        "restaurant/hospitality terminology"
+      ],
+      "caveats": [
+        "GPL-3.0 copyleft: domain knowledge only, no code or DocType JSON copied into the kit",
+        "DocTypes are a thin layer over generic ERPNext Customer/Item/Price List/Sales Invoice - not a self-contained domain model"
+      ]
+    },
+    {
+      "name": "inventree",
+      "title": "InvenTree",
+      "category": "domains",
+      "path": "sources/domains/inventree",
+      "repo": "inventree/InvenTree",
+      "revision": "ba848a83aa95bc897ddec9a2a64b270ab464819b",
+      "license": "MIT",
+      "status": "reference-only",
+      "attribution_required": false,
+      "tags": [
+        "manufacturing",
+        "inventory",
+        "bom",
+        "stock",
+        "build-orders",
+        "quality",
+        "django",
+        "state-machine"
+      ],
+      "use_cases": [
+        "Part model with template/variant, assembly/component/trackable flags",
+        "BomItem / BomItemSubstitute (bill of materials)",
+        "StockItem with serial/batch/quantity and StockLocation",
+        "Build / BuildLine / BuildItem (work orders)",
+        "Purchase/Sales/Return/Transfer order status enums",
+        "PartTestTemplate + StockItemTestResult (quality inspection)"
+      ],
+      "caveats": [
+        "MIT, so promotable after review - kept reference-only because this was a domain-research pass",
+        "sparse checkout: src/backend only (Django models, no frontend)"
+      ]
+    },
+    {
+      "name": "kanboard",
+      "title": "Kanboard",
+      "category": "domains",
+      "path": "sources/domains/kanboard",
+      "repo": "kanboard/kanboard",
+      "revision": "cf53b54597b67b60140586c09c2fe6132ead013c",
+      "license": "MIT",
+      "status": "reference-only",
+      "attribution_required": false,
+      "tags": [
+        "project-management",
+        "kanban",
+        "tasks",
+        "subtasks",
+        "time-tracking",
+        "swimlanes",
+        "php"
+      ],
+      "use_cases": [
+        "deliberately simple task model (binary open/closed status) as a second independent implementation",
+        "subtask and subtask time-tracking model",
+        "board/column/swimlane model"
+      ],
+      "caveats": [
+        "MIT, so promotable after review - kept reference-only because this was a domain-research pass, not a kit-implementation one",
+        "PHP: domain-model reference, not portable code"
+      ]
+    },
+    {
+      "name": "karrio",
+      "title": "Karrio",
+      "category": "domains",
+      "path": "sources/domains/karrio",
+      "repo": "karrioapi/karrio",
+      "revision": "deea10f8568b2d48c71bbcc11ec11c62cdaf2a6a",
+      "license": "LGPL-3.0",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "logistics",
+        "shipping",
+        "multi-carrier",
+        "rates",
+        "labels",
+        "tracking",
+        "django",
+        "state-machine"
+      ],
+      "use_cases": [
+        "multi-carrier Shipment model with rate/label/tracking snapshots",
+        "ShipmentStatus / TrackingStatus / OrderStatus enums",
+        "Address/Parcel/Commodity/Pickup/Manifest models",
+        "proof-of-delivery signature and image fields"
+      ],
+      "caveats": [
+        "LGPL-3.0 copyleft: reference only, never copy code",
+        "ee/ (commercial add-ons under LICENSE_EE) is not cloned",
+        "sparse checkout: modules/{manager,orders,core} only"
+      ]
+    },
+    {
+      "name": "medplum",
+      "title": "Medplum",
+      "category": "domains",
+      "path": "sources/domains/medplum",
+      "repo": "medplum/medplum",
+      "revision": "2a810b6f7eaf149c290915f885c3f8423cd5d0ee",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": true,
+      "tags": [
+        "healthcare",
+        "fhir",
+        "react",
+        "typescript",
+        "mantine",
+        "scheduling",
+        "clinical",
+        "synthetic-data",
+        "sdk"
+      ],
+      "use_cases": [
+        "FHIR R4 resource definitions and value sets",
+        "healthcare React components (Scheduler, PatientHeader, ResourceTable, QuestionnaireForm)",
+        "mock/synthetic FHIR records for demos and tests",
+        "patient-portal and intake reference apps",
+        "typed FHIR client"
+      ],
+      "caveats": [
+        "NOTICE file must travel with any extracted code; 'Medplum' is a registered trademark - don't imply endorsement",
+        "sparse checkout: packages/{definitions,react,core,fhirtypes,mock,app}, examples/, postgres/ only",
+        "Mantine-based UI - port to shadcn/Base UI before promotion"
+      ]
+    },
+    {
+      "name": "odoo-mrp",
+      "title": "Odoo (mrp addon)",
+      "category": "domains",
+      "path": "sources/domains/odoo-mrp",
+      "repo": "odoo/odoo",
+      "revision": "9b1a92e38dbae2bb83ad80700ccec0535f8ac68f",
+      "license": "LGPL-3.0",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "manufacturing",
+        "mrp",
+        "production-orders",
+        "routings",
+        "work-centers",
+        "bom",
+        "python"
+      ],
+      "use_cases": [
+        "mrp.production (manufacturing order) fields and state machine",
+        "mrp.bom / mrp.bom.line",
+        "mrp.routing / mrp.workcenter and work-order operations",
+        "second independent implementation cross-checking InvenTree"
+      ],
+      "caveats": [
+        "LGPL-3.0 copyleft: reference only, never copy code",
+        "only addons/mrp is cloned - the rest of the ~17.8 GB monorepo is not; the stock/product models mrp extends are absent",
+        "branch is 20.0"
+      ]
+    },
+    {
+      "name": "plane",
+      "title": "Plane",
+      "category": "domains",
+      "path": "sources/domains/plane",
+      "repo": "makeplane/plane",
+      "revision": "888b0869dc6a3cc993e6f2f289ee81b191139e1f",
+      "license": "AGPL-3.0-only",
+      "status": "reference-only",
+      "attribution_required": true,
+      "tags": [
+        "project-management",
+        "issues",
+        "kanban",
+        "cycles",
+        "modules",
+        "estimates",
+        "django",
+        "state-machine"
+      ],
+      "use_cases": [
+        "Workspace/Project/Member model and role enums",
+        "grouped issue State/StateGroup model (backlog, unstarted, started, completed, cancelled)",
+        "Issue model with parent self-FK, points, labels, links, attachments",
+        "Cycle (sprint) and Module models",
+        "intake/triage and view models"
+      ],
+      "caveats": [
+        "AGPL-3.0 copyleft: reference only, never copy code",
+        "sparse checkout: apps/api only (the live and proxy apps are not cloned)",
+        "branch is preview, not main"
+      ]
+    },
+    {
+      "name": "flutter-riverpod-clean-architecture",
+      "title": "Flutter Riverpod Clean Architecture",
+      "category": "mobile",
+      "path": "sources/mobile/flutter-riverpod-clean-architecture",
+      "repo": "ssoad/flutter_riverpod_clean_architecture",
+      "revision": "7d898f67eced53a212de2beb60241b6dee1f23fa",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "flutter",
+        "dart",
+        "riverpod",
+        "go_router",
+        "clean-architecture",
+        "dio",
+        "hive",
+        "feature-first"
+      ],
+      "use_cases": [
+        "feature slices (data/domain/presentation)",
+        "Dio client + interceptors",
+        "secure storage + cache",
+        "guarded go_router",
+        "shared widget kit"
+      ],
+      "caveats": [
+        "asset folders hold empty placeholders",
+        "regenerate platform dirs with flutter create instead of copying"
       ]
     },
     {
@@ -511,264 +1001,40 @@
       ]
     },
     {
-      "name": "agent-elements",
-      "title": "Agent Elements",
-      "category": "ai",
-      "path": "sources/ai/agent-elements",
-      "repo": "21st-dev/agent-elements",
-      "revision": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "nextjs",
-        "tailwind-v4",
-        "base-ui",
-        "shadcn-registry",
-        "ai-sdk",
-        "agent-ui",
-        "tool-rendering",
-        "streaming-markdown"
-      ],
-      "use_cases": [
-        "agent chat shell",
-        "tool-call cards (bash, edit + diff, search, todo, plan, mcp)",
-        "input bar with attachments",
-        "model picker and mode selector"
-      ],
-      "caveats": [
-        "bundled Geist .ttf files in public/fonts have no license file: source Geist separately",
-        "skills/agent-elements/ is upstream agent config: never install"
-      ]
-    },
-    {
-      "name": "assistant-ui",
-      "title": "assistant-ui",
-      "category": "ai",
-      "path": "sources/ai/assistant-ui",
-      "repo": "assistant-ui/assistant-ui",
-      "revision": "2980cafdf4f894995daa77c34f3db09e74205ff",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "chat-ui",
-        "headless-primitives",
-        "radix-ui",
-        "ai-sdk",
-        "langgraph",
-        "monorepo"
-      ],
-      "use_cases": [
-        "thread/composer/message compound primitives",
-        "runtime adapters (AI SDK, LangGraph)",
-        "tool-call and generative UI rendering",
-        "human approval flows"
-      ],
-      "caveats": [
-        "Radix-based: port to Base UI",
-        "packages/cloud is a hosted-service client: don't depend on it",
-        "132 MB monorepo: extract narrowly"
-      ]
-    },
-    {
-      "name": "openterminal",
-      "title": "OpenTerminal",
-      "category": "dashboards",
-      "path": "sources/dashboards/openterminal",
-      "repo": "ErTasselli/OpenTerminal",
-      "revision": "041822cfc2b54baf72001379618b1bc721567ab8",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "nextjs",
-        "react",
-        "tailwind-v4",
-        "zustand",
-        "tanstack-query",
-        "react-grid-layout",
-        "lightweight-charts",
-        "dense-workspace",
-        "command-palette",
-        "finance"
-      ],
-      "use_cases": [
-        "draggable/resizable widget workspace",
-        "terminal-style command palette",
-        "persisted layout store",
-        "provider-adapter pattern for external data"
-      ],
-      "caveats": [
-        "Express + SQLite backend: pattern only",
-        "financial data providers have their own terms of service"
-      ]
-    },
-    {
-      "name": "nextcrm",
-      "title": "NextCRM",
-      "category": "dashboards",
-      "path": "sources/dashboards/nextcrm",
-      "repo": "pdovhomilja/nextcrm-app",
-      "revision": "b46b563b61c948a07a9cc5a340032444db1f8188",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "nextjs",
-        "react",
-        "crm",
-        "prisma",
-        "radix-ui",
-        "tanstack-table",
-        "dnd-kit",
-        "audit-timeline",
-        "activity-feed",
-        "i18n"
-      ],
-      "use_cases": [
-        "CRM entity model (accounts, contacts, leads, opportunities)",
-        "audit timeline and activity feed",
-        "similar-record / dedup drawer",
-        "kanban pipeline"
-      ],
-      "caveats": [
-        "Prisma: translate schema to Drizzle",
-        "Radix: port to Base UI",
-        "public/Inter-Bold.ttf has no license file",
-        "public/SKILL.md is untrusted agent config"
-      ]
-    },
-    {
-      "name": "boxyhq-saas-starter",
-      "title": "BoxyHQ SaaS Starter Kit",
-      "category": "dashboards",
-      "path": "sources/dashboards/boxyhq-saas-starter",
-      "repo": "boxyhq/saas-starter-kit",
-      "revision": "abc9b686823cbfb4973c79bc36fea37a3244be6c",
-      "license": "Apache-2.0",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "nextjs",
-        "pages-router",
-        "prisma",
-        "nextauth",
-        "stripe",
-        "rbac",
-        "multi-tenant",
-        "sso",
-        "scim",
-        "api-keys",
-        "webhooks"
-      ],
-      "use_cases": [
-        "team/org multi-tenancy and invitations",
-        "role and permission model",
-        "API keys and webhooks",
-        "Stripe subscription sync",
-        "SSO/SCIM patterns"
-      ],
-      "caveats": [
-        "Pages Router + Tailwind v3 + Prisma: domain-logic reference, not drop-in UI",
-        "SSO/SCIM rely on the external BoxyHQ Jackson service"
-      ]
-    },
-    {
-      "name": "fastapi-best-architecture",
-      "title": "FastAPI Best Architecture",
-      "category": "backend",
-      "path": "sources/backend/fastapi-best-architecture",
-      "repo": "fastapi-practices/fastapi-best-architecture",
-      "revision": "123a44aed02daf5ea60d2a7469625c933d3bb759",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "python",
-        "fastapi",
-        "sqlalchemy2",
-        "alembic",
-        "async",
-        "rbac",
-        "celery",
-        "postgresql",
-        "plugins"
-      ],
-      "use_cases": [
-        "layered api/schema/service/crud/model structure",
-        "RBAC admin (users, roles, menus, data scope)",
-        "async SQLAlchemy 2 + Alembic setup",
-        "app factory and lifespan wiring"
-      ],
-      "caveats": [
-        "MySQL branches: keep the PostgreSQL path only",
-        "comments partly in Chinese"
-      ]
-    },
-    {
-      "name": "flutter-riverpod-clean-architecture",
-      "title": "Flutter Riverpod Clean Architecture",
-      "category": "mobile",
-      "path": "sources/mobile/flutter-riverpod-clean-architecture",
-      "repo": "ssoad/flutter_riverpod_clean_architecture",
-      "revision": "7d898f67eced53a212de2beb60241b6dee1f23fa",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "flutter",
-        "dart",
-        "riverpod",
-        "go_router",
-        "clean-architecture",
-        "dio",
-        "hive",
-        "feature-first"
-      ],
-      "use_cases": [
-        "feature slices (data/domain/presentation)",
-        "Dio client + interceptors",
-        "secure storage + cache",
-        "guarded go_router",
-        "shared widget kit"
-      ],
-      "caveats": [
-        "asset folders hold empty placeholders",
-        "regenerate platform dirs with flutter create instead of copying"
-      ]
-    },
-    {
-      "name": "workflowbuilder",
-      "title": "Workflow Builder",
+      "name": "cult-ui",
+      "title": "Cult UI",
       "category": "web",
-      "path": "sources/web/workflowbuilder",
-      "repo": "synergycodes/workflowbuilder",
-      "revision": "052c396cc90aeebe5b8a1055b7625ec43a88a38e",
-      "license": "Apache-2.0",
+      "path": "sources/web/cult-ui",
+      "repo": "nolly-studio/cult-ui",
+      "revision": "ee98a5dd2e319b63cc2e707dd968d6af04209b7e",
+      "license": "MIT",
       "status": "extraction-safe",
       "attribution_required": false,
       "tags": [
         "react",
-        "xyflow",
-        "react-flow",
-        "base-ui",
-        "design-tokens",
-        "workflow-editor",
-        "temporal",
-        "monorepo"
+        "nextjs",
+        "tailwind-v4",
+        "radix-ui",
+        "motion",
+        "cards",
+        "hero-sections",
+        "shaders",
+        "dock",
+        "dynamic-island",
+        "landing",
+        "interactive-controls"
       ],
       "use_cases": [
-        "visual node/workflow editor",
-        "runtime-agnostic execution engine",
-        "Base UI component package",
-        "design token package"
+        "distinctive cards",
+        "shader hero sections",
+        "dock navigation",
+        "floating panels",
+        "auth page",
+        "landing pages"
       ],
       "caveats": [
-        "Temporal backend: pattern only (we use BullMQ)",
-        "README advertises a paid Enterprise Edition; none of it is in this checkout"
+        "no sidebar or topbar components",
+        "bundled font apps/www/fonts/haskoy.ttf has no stated license: don't reuse"
       ]
     },
     {
@@ -803,6 +1069,340 @@
       "caveats": [
         "Radix: port to Base UI",
         "uses babel-plugin-react-compiler"
+      ]
+    },
+    {
+      "name": "dnd-kanban",
+      "title": "Accessible dnd-kit Kanban",
+      "category": "web",
+      "path": "sources/web/dnd-kanban",
+      "repo": "Georgegriff/react-dnd-kit-tailwind-shadcn-ui",
+      "revision": "3e1dbb0b872125191d5f9c3686060f64d304b99e",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "dnd-kit",
+        "kanban",
+        "keyboard-a11y",
+        "tailwind-v3",
+        "radix-ui"
+      ],
+      "use_cases": [
+        "multi-column kanban with keyboard drag",
+        "dnd-kit multiple-containers pattern",
+        "screen-reader announcements"
+      ],
+      "caveats": [
+        "stale (2024-05): React 18, Tailwind v3 — port the logic, not the versions"
+      ]
+    },
+    {
+      "name": "kokonutui",
+      "title": "Kokonut UI",
+      "category": "web",
+      "path": "sources/web/kokonutui",
+      "repo": "kokonut-labs/kokonutui",
+      "revision": "83eec6d982d400a18438001a8efdbac1f159dd43",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "radix-ui",
+        "motion",
+        "dashboard",
+        "saas",
+        "kpi-cards",
+        "ai-chat",
+        "navbar",
+        "file-upload",
+        "search",
+        "hooks"
+      ],
+      "use_cases": [
+        "kpi and activity cards",
+        "ai prompt input",
+        "navbar and toolbar",
+        "file upload",
+        "search bar",
+        "animated drawer and tabs"
+      ],
+      "caveats": []
+    },
+    {
+      "name": "magicui",
+      "title": "Magic UI",
+      "category": "web",
+      "path": "sources/web/magicui",
+      "repo": "magicuidesign/magicui",
+      "revision": "d7207e5692d14c00dceafa8488d6d01f197fa0e4",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "motion",
+        "micro-interactions",
+        "number-ticker",
+        "marquee",
+        "animated-list"
+      ],
+      "use_cases": [
+        "number tickers",
+        "animated notification/feed lists",
+        "subtle reveals",
+        "circular progress",
+        "logo marquees",
+        "file tree"
+      ],
+      "caveats": [
+        "decorative glow/particle/gradient effects conflict with ui-design-policy §7: use only when the product calls for them",
+        "skills/magic-ui/ is upstream agent config: never install"
+      ]
+    },
+    {
+      "name": "originui",
+      "title": "Origin UI",
+      "category": "web",
+      "path": "sources/web/originui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind-v4",
+        "radix-ui",
+        "shadcn-compatible",
+        "date-time",
+        "event-calendar",
+        "file-upload",
+        "timeline",
+        "stepper",
+        "tree",
+        "notifications",
+        "navbar",
+        "pagination",
+        "filters"
+      ],
+      "use_cases": [
+        "advanced inputs",
+        "date and time pickers",
+        "event calendar",
+        "file upload",
+        "activity timeline",
+        "stepper",
+        "tree view",
+        "navbar pieces",
+        "notification menu",
+        "filters"
+      ],
+      "caveats": [
+        "stale fork (2025-07-25); canonical project is origin-space/originui",
+        "components are numbered comp-XXX: search config/components.ts or registry.json tags"
+      ]
+    },
+    {
+      "name": "plate",
+      "title": "Plate",
+      "category": "web",
+      "path": "sources/web/plate",
+      "repo": "udecode/plate",
+      "revision": "babb3c2a733f821a33569d288e45da3f54eaf643",
+      "license": "MIT (root LICENSE; packages/diff is dual MIT + Apache-2.0)",
+      "status": "license-cleared, not acquired",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "slate",
+        "rich-text",
+        "editor",
+        "plugin-architecture",
+        "document"
+      ],
+      "use_cases": [
+        "Notion-style document editing",
+        "comments and suggestions on rich text",
+        "markdown/docx import-export",
+        "table and media blocks"
+      ],
+      "caveats": [
+        "not on disk: manifest entry is fetch:false; a full clone is the wrong shape, sparse-checkout the needed packages/<name>",
+        "Plate Pro is a separate paid product and is not in this repository - never pull it from a paid registry",
+        "packages/diff carries an Apache-2.0 obligation on top of MIT",
+        "upstream .claude/, .agents/, .codex/ and .github/prompts/ are agent instructions: never install or trust"
+      ]
+    },
+    {
+      "name": "react-email",
+      "title": "React Email",
+      "category": "web",
+      "path": "sources/web/react-email",
+      "repo": "resend/react-email",
+      "revision": "15419ff1f4cd0e32ed2c15a4a9182cc47a200a60",
+      "license": "MIT (root LICENSE.md and every per-package license.md)",
+      "status": "license-cleared, not acquired",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "email",
+        "templating",
+        "render",
+        "transactional",
+        "notifications"
+      ],
+      "use_cases": [
+        "transactional email templates as React components",
+        "HTML + plain-text render pipeline for a worker",
+        "provider wiring reference for 16 email senders"
+      ],
+      "caveats": [
+        "not on disk: manifest entry is fetch:false; sparse-checkout packages/ui, packages/render, examples/resend",
+        "confirm the Tailwind major in packages/ui matches the kit's v4 target before promoting",
+        "skills/react-email/ is upstream agent config: never install"
+      ]
+    },
+    {
+      "name": "reactbits",
+      "title": "React Bits",
+      "category": "web",
+      "path": "sources/web/reactbits",
+      "repo": "epodak/reactbits",
+      "revision": "cdba9dc374d100f3f719f529ad840f481bc1b743",
+      "license": "MIT + Commons Clause",
+      "status": "REVIEW_REQUIRED",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind",
+        "gsap",
+        "motion",
+        "three-fiber",
+        "backgrounds",
+        "text-animation",
+        "scroll-effects",
+        "commons-clause"
+      ],
+      "use_cases": [
+        "animated backgrounds (inspiration)",
+        "text animation (inspiration)",
+        "scroll effects (inspiration)"
+      ],
+      "caveats": [
+        "Commons Clause forbids redistribution as part of a component library or UI kit",
+        "stale fork of DavidHDev/react-bits",
+        "bundled .glb models and OFL font carry separate terms"
+      ]
+    },
+    {
+      "name": "schedule-x",
+      "title": "Schedule-X",
+      "category": "web",
+      "path": "sources/web/schedule-x",
+      "repo": "schedule-x/schedule-x",
+      "revision": "0c197b798e97fbadcf8a13166999fca875835db6",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "calendar",
+        "scheduler",
+        "recurrence",
+        "rrule",
+        "ical",
+        "date-picker",
+        "theme-shadcn",
+        "framework-agnostic"
+      ],
+      "use_cases": [
+        "month/week/day/agenda calendar",
+        "recurring events",
+        "ICS import/export",
+        "shadcn-themed calendar"
+      ],
+      "caveats": [
+        "drag-and-drop, resize, drag-to-create, resource scheduler, gantt are paid @sx-premium packages and absent here",
+        "React adapter lives in a separate repo"
+      ]
+    },
+    {
+      "name": "shadcn-ui",
+      "title": "shadcn/ui",
+      "category": "web",
+      "path": "sources/web/shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "98a1fe67b439324ddc857f47fbdce056600a4329",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "radix-ui",
+        "react-aria",
+        "shadcn-registry",
+        "sidebar",
+        "dashboard",
+        "data-table",
+        "forms",
+        "charts",
+        "auth-blocks",
+        "command"
+      ],
+      "use_cases": [
+        "base ui primitives",
+        "sidebar layouts",
+        "dashboard shell",
+        "login and signup screens",
+        "data table",
+        "forms",
+        "date picker",
+        "command menu",
+        "charts",
+        "empty state"
+      ],
+      "caveats": [
+        "monorepo: use apps/v4/registry/bases/<flavor>, not the docs site"
+      ]
+    },
+    {
+      "name": "shadcnspace",
+      "title": "Shadcn Space",
+      "category": "web",
+      "path": "sources/web/shadcnspace",
+      "repo": "shadcnspace/shadcnspace",
+      "revision": "cf4c7dd8d5c832d72049256d5b4ccb3bc1aa0188",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "shadcn-registry",
+        "marketing-blocks",
+        "dashboard",
+        "auth",
+        "motion"
+      ],
+      "use_cases": [
+        "marketing sections (hero, pricing, testimonial, CTA)",
+        "dashboard shell and widgets",
+        "auth screens"
+      ],
+      "caveats": [
+        "both radix-ui and @base-ui/react installed: check imports per block",
+        "zod v3"
       ]
     },
     {
@@ -841,193 +1441,34 @@
       ]
     },
     {
-      "name": "dnd-kanban",
-      "title": "Accessible dnd-kit Kanban",
+      "name": "workflowbuilder",
+      "title": "Workflow Builder",
       "category": "web",
-      "path": "sources/web/dnd-kanban",
-      "repo": "Georgegriff/react-dnd-kit-tailwind-shadcn-ui",
-      "revision": "3e1dbb0b872125191d5f9c3686060f64d304b99e",
-      "license": "MIT",
+      "path": "sources/web/workflowbuilder",
+      "repo": "synergycodes/workflowbuilder",
+      "revision": "052c396cc90aeebe5b8a1055b7625ec43a88a38e",
+      "license": "Apache-2.0",
       "status": "extraction-safe",
       "attribution_required": false,
       "tags": [
         "react",
-        "dnd-kit",
-        "kanban",
-        "keyboard-a11y",
-        "tailwind-v3",
-        "radix-ui"
-      ],
-      "use_cases": [
-        "multi-column kanban with keyboard drag",
-        "dnd-kit multiple-containers pattern",
-        "screen-reader announcements"
-      ],
-      "caveats": [
-        "stale (2024-05): React 18, Tailwind v3 — port the logic, not the versions"
-      ]
-    },
-    {
-      "name": "shadcnspace",
-      "title": "Shadcn Space",
-      "category": "web",
-      "path": "sources/web/shadcnspace",
-      "repo": "shadcnspace/shadcnspace",
-      "revision": "cf4c7dd8d5c832d72049256d5b4ccb3bc1aa0188",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "nextjs",
-        "tailwind-v4",
+        "xyflow",
+        "react-flow",
         "base-ui",
-        "shadcn-registry",
-        "marketing-blocks",
-        "dashboard",
-        "auth",
-        "motion"
+        "design-tokens",
+        "workflow-editor",
+        "temporal",
+        "monorepo"
       ],
       "use_cases": [
-        "marketing sections (hero, pricing, testimonial, CTA)",
-        "dashboard shell and widgets",
-        "auth screens"
+        "visual node/workflow editor",
+        "runtime-agnostic execution engine",
+        "Base UI component package",
+        "design token package"
       ],
       "caveats": [
-        "both radix-ui and @base-ui/react installed: check imports per block",
-        "zod v3"
-      ]
-    },
-    {
-      "name": "magicui",
-      "title": "Magic UI",
-      "category": "web",
-      "path": "sources/web/magicui",
-      "repo": "magicuidesign/magicui",
-      "revision": "d7207e5692d14c00dceafa8488d6d01f197fa0e4",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "nextjs",
-        "tailwind-v4",
-        "motion",
-        "micro-interactions",
-        "number-ticker",
-        "marquee",
-        "animated-list"
-      ],
-      "use_cases": [
-        "number tickers",
-        "animated notification/feed lists",
-        "subtle reveals",
-        "circular progress",
-        "logo marquees",
-        "file tree"
-      ],
-      "caveats": [
-        "decorative glow/particle/gradient effects conflict with ui-design-policy §7: use only when the product calls for them",
-        "skills/magic-ui/ is upstream agent config: never install"
-      ]
-    },
-    {
-      "name": "schedule-x",
-      "title": "Schedule-X",
-      "category": "web",
-      "path": "sources/web/schedule-x",
-      "repo": "schedule-x/schedule-x",
-      "revision": "0c197b798e97fbadcf8a13166999fca875835db6",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "calendar",
-        "scheduler",
-        "recurrence",
-        "rrule",
-        "ical",
-        "date-picker",
-        "theme-shadcn",
-        "framework-agnostic"
-      ],
-      "use_cases": [
-        "month/week/day/agenda calendar",
-        "recurring events",
-        "ICS import/export",
-        "shadcn-themed calendar"
-      ],
-      "caveats": [
-        "drag-and-drop, resize, drag-to-create, resource scheduler, gantt are paid @sx-premium packages and absent here",
-        "React adapter lives in a separate repo"
-      ]
-    },
-    {
-      "name": "full-stack-ai-agent-template",
-      "title": "Full-Stack AI Agent Template",
-      "category": "ai",
-      "path": "sources/ai/full-stack-ai-agent-template",
-      "repo": "vstorm-co/full-stack-ai-agent-template",
-      "revision": "3428d9a6214619d3514312886d59a36400747b7d",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "python",
-        "fastapi",
-        "pydantic-ai",
-        "langchain",
-        "langgraph",
-        "rag",
-        "pgvector",
-        "streaming",
-        "websocket",
-        "tool-calling",
-        "observability",
-        "nextjs",
-        "cookiecutter"
-      ],
-      "use_cases": [
-        "LLM provider abstraction",
-        "RAG pipeline (ingestion, embeddings, retrieval, reranking)",
-        "WebSocket agent streaming",
-        "agent tool calling",
-        "Logfire/Sentry observability"
-      ],
-      "caveats": [
-        "tarball snapshot, no .git: refresh by re-downloading the pinned commit",
-        "cookiecutter template: strip {% if %} conditionals when promoting",
-        "several parallel agent frameworks: pick PydanticAI + pgvector"
-      ]
-    },
-    {
-      "name": "refine",
-      "title": "Refine",
-      "category": "dashboards",
-      "path": "sources/dashboards/refine",
-      "repo": "refinedev/refine",
-      "revision": "2352eb5b6539e2f39ad9aef652279ad1dcf2c467",
-      "license": "MIT",
-      "status": "extraction-safe",
-      "attribution_required": false,
-      "tags": [
-        "react",
-        "headless",
-        "data-provider",
-        "access-control",
-        "audit-log",
-        "live-provider",
-        "crud"
-      ],
-      "use_cases": [
-        "data-provider contract",
-        "can() access-control contract",
-        "audit-log provider pattern",
-        "live/real-time provider contract"
-      ],
-      "caveats": [
-        "most packages are UI-framework integrations: out of scope",
-        "documentation/ and images excluded via sparse-checkout"
+        "Temporal backend: pattern only (we use BullMQ)",
+        "README advertises a paid Enterprise Edition; none of it is in this checkout"
       ]
     }
   ]

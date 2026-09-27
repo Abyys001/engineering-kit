@@ -1,6 +1,6 @@
 # <Product> — blueprint
 
-> Filled per project into `~/Projects/<name>/docs/product/BLUEPRINT.md`. One page. Shown once for approval; then build.
+> Filled per project into `~/Project/<name>/docs/product/BLUEPRINT.md`. One page. Shown once for approval; then build.
 
 **Request (verbatim):** "<…>"
 **Reading:** <product type> · <audience> · <stage> · tenancy: <single|multi>

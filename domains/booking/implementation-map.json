@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "booking",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "mappings": [
     {
       "feature": "booking.services",
@@ -12,7 +12,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -24,7 +24,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -36,7 +36,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -48,7 +48,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -60,7 +60,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -72,7 +72,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -84,7 +84,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -96,7 +96,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -108,7 +108,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -120,7 +120,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -132,7 +132,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -144,7 +144,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -156,7 +156,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -168,7 +168,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -180,7 +180,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -192,7 +192,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -204,7 +204,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -216,7 +216,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -228,7 +228,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -240,7 +240,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -252,7 +252,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     },
     {
@@ -264,7 +264,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
     }
   ]

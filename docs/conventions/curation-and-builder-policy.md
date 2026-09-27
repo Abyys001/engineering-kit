@@ -5,7 +5,7 @@
 You already have my Master Engineering Policy and the local engineering-kit at:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 That policy remains the source of truth for architecture and technology choices.
@@ -19,7 +19,7 @@ Your job now is to populate, organize, curate, and continuously use the engineer
 Turn:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 into a high-quality local engineering library that allows you to:
@@ -49,7 +49,7 @@ It must become a **curated, normalized, production-oriented personal engineering
 Create a dedicated source area inside the engineering-kit:
 
 ```text
-~/Projects/engineering-kit/sources/
+~/Project/engineering-kit/sources/
 ```
 
 Organize it by category:
@@ -764,7 +764,7 @@ Promote curated code into the correct area.
 ### UI Components
 
 ```text
-~/Projects/engineering-kit/components/web/
+~/Project/engineering-kit/components/web/
 ```
 
 Examples:
@@ -782,7 +782,7 @@ Examples:
 ### Features
 
 ```text
-~/Projects/engineering-kit/features/
+~/Project/engineering-kit/features/
 ```
 
 Examples:
@@ -801,7 +801,7 @@ Examples:
 ### Backend
 
 ```text
-~/Projects/engineering-kit/backend/
+~/Project/engineering-kit/backend/
 ```
 
 Examples:
@@ -818,25 +818,25 @@ Examples:
 ### Mobile
 
 ```text
-~/Projects/engineering-kit/mobile/
+~/Project/engineering-kit/mobile/
 ```
 
 ### AI
 
 ```text
-~/Projects/engineering-kit/ai/
+~/Project/engineering-kit/ai/
 ```
 
 ### Starters
 
 ```text
-~/Projects/engineering-kit/starters/
+~/Project/engineering-kit/starters/
 ```
 
 ### Patterns
 
 ```text
-~/Projects/engineering-kit/patterns/
+~/Project/engineering-kit/patterns/
 ```
 
 ---
@@ -1283,7 +1283,7 @@ current project
 Then:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 Never replace working project architecture merely because a newer template exists.
@@ -1339,7 +1339,7 @@ Always prefer:
 ```text
 Current Project
       ↓
-~/Projects/engineering-kit
+~/Project/engineering-kit
       ↓
 Already downloaded source repositories
       ↓
@@ -1409,7 +1409,7 @@ Before adding something:
 Search:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 for similar components/features.
@@ -1429,7 +1429,7 @@ Do not create unnecessary duplicates.
 Create and maintain an index:
 
 ```text
-~/Projects/engineering-kit/INDEX.md
+~/Project/engineering-kit/INDEX.md
 ```
 
 This is extremely important.
@@ -1483,7 +1483,7 @@ Keep the index concise.
 Also maintain:
 
 ```text
-~/Projects/engineering-kit/catalog.json
+~/Project/engineering-kit/catalog.json
 ```
 
 The catalog should contain structured metadata that Claude can search quickly.
@@ -1643,7 +1643,7 @@ Now execute the following:
 1. Inspect the current:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 2. Create:
@@ -1848,25 +1848,25 @@ The objective is to make Claude **think like a senior engineer with a large priv
 The toolbox is:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 The policy is:
 
 ```text
-~/Projects/engineering-kit/docs/conventions/engineering-policy.md
+~/Project/engineering-kit/docs/conventions/engineering-policy.md
 ```
 
 The catalog is:
 
 ```text
-~/Projects/engineering-kit/catalog.json
+~/Project/engineering-kit/catalog.json
 ```
 
 The human-readable index is:
 
 ```text
-~/Projects/engineering-kit/INDEX.md
+~/Project/engineering-kit/INDEX.md
 ```
 
 Always use these as the primary local engineering resources.

@@ -1,6 +1,6 @@
 # Healthcare (clinic / practice management)
 
-Ambulatory clinic and practice management: patient records, scheduling, clinical documentation, orders/results, billing, and interoperable data exchange. Modeled first on FHIR R4 (what production systems, including Medplum, implement today); FHIR R6 mapping is deferred until `knowledge/entities/fhir-r6-resources.json` exists.
+Ambulatory clinic and practice management: patient records, scheduling, clinical documentation, orders/results, billing, and interoperable data exchange. Modeled on FHIR R4 4.0.1 (what production systems, including Medplum, implement today). `knowledge/entities/fhir-r6-resources.json` (R6 6.0.0-snapshot1, pre-release) is present and was consulted for verified R4→R6 element differences only — it carries cardinality and type, not bound ValueSet codes, so every status enum here stays R4. See `## Standards` below.
 
 ## Product types
 Single/multi-provider clinics, specialty practices, telehealth-first practices, and platforms (like Medplum) that let developers build EHR-adjacent apps on a FHIR-native backend.

@@ -2,6 +2,27 @@
 
 How to research and populate one `domains/<domain>/` folder. Contract: [`SCHEMA.md`](SCHEMA.md). Reuse this brief when adding or deepening a domain.
 
+## Two modes
+
+**New domain** — produce all 11 files from scratch.
+
+**Deepening pass** (what the priority queue is doing now) — the 11 files already exist and validate. Your job is to
+raise their quality against `tools/kb.py gaps <domain>`, which prints the exact blockers. In priority order:
+
+1. **Corroborate.** Most features sit at `low` confidence because one source backs them. Find a second and third
+   independent source, add it to `feature-map.json`'s `sources` array, extend the feature's `provenance.sources`,
+   and only then raise confidence. Never raise confidence without adding a source. The gate wants ≤30% `low`.
+2. **Workflows.** Features with no workflow are the biggest structural hole. Add workflows that are real processes
+   with an actor, a trigger, ordered steps, and — where the lifecycle is genuinely stateful — a `state_machine`.
+   A workflow per feature is wrong; one workflow usually spans several features.
+3. **Fill the thin files.** Entities with no relationships, features with no `users`/`entities`, features with no
+   dependency edge, integrations and compliance items that the domain obviously has but the files don't record.
+4. **Re-check classification and platforms** against Phase 6/14 of the brief: `core` is a high bar, and not
+   everything is mobile.
+
+Leave a feature at `low` confidence rather than inventing a second source. An honest `partial` domain beats a
+`curated` one built on one repository.
+
 ## Output
 
 All 11 files in `SCHEMA.md`, plus one synthetic example at `knowledge/synthetic-examples/<domain>/<name>.json`: a fabricated, obviously fake payload for the domain's main entity and its state transitions. Use `example.com` emails, `+1-555-01xx` phones, and invented names. Never use real customer or business data.
@@ -21,16 +42,32 @@ Done means `python3 tools/kb.py validate <domain>` reports 0 errors.
 
 ## Implementation references
 
-- `implementation-map.json`: the kit's `features/`, `backend/`, `mobile/`, and `ai/` folders are currently **empty**, so no `implementations` paths exist. Status is `reference` when a local `sources/…` clone covers the feature, otherwise `unknown`. Never claim `partial` or better without real kit files.
-- You may clone **at most two** high-value domain reference repositories per domain, into `sources/domains/<name>/source/`, and only when `gh api repos/OWNER/REPO --jq .size` is under 200000 (KB). For larger monorepos, use a sparse checkout of the model/domain directories only. Clone command:
+- `implementation-map.json`: the kit's `features/`, `backend/`, `components/`, `patterns/`, `ai/`, `mobile/`, and `starters/`
+  folders are currently **empty**, so no `implementations` paths exist and nothing may be called available.
+  Status vocabulary (full list in `SCHEMA.md`):
+  - `reference` — no kit code, but a local clone under `sources/` covers the feature. `references` must list real paths.
+  - `missing` — assessed, and neither kit code nor a local source covers it. This is the correct default now, not `unknown`.
+  - `not_required` — knowledge-only, or deliberately never built here. `notes` must say why.
+  - `unknown` — only for a feature you genuinely did not assess.
+  - `partial`/`curated`/`tested`/`production_ready` — need real files under a kit folder. Not reachable in this phase.
+- Run `ls sources/*/*/source` first: only some sources are on disk, and a `SOURCE.md` without a `source/` directory
+  means the repo was license-reviewed but deliberately not downloaded. Only an on-disk clone justifies `reference`.
 
-  ```bash
-  git clone -q --depth 1 --filter=blob:none --no-checkout https://github.com/OWNER/REPO.git sources/domains/<name>/source
-  git -C sources/domains/<name>/source sparse-checkout set --no-cone '/*' '!.claude/' '!CLAUDE.md' '!**/CLAUDE.md' '!AGENTS.md' '!**/AGENTS.md' '!.mcp.json' '!.cursor/' '!.cursorrules' '!.windsurf/' '!.github/copilot-instructions.md' '!.agents/' '!.codex/' '!.gemini/'
-  git -C sources/domains/<name>/source checkout -q
-  ```
+## No new downloads
 
-- Every clone gets `sources/domains/<name>/SOURCE.md` in the same format as `sources/backend/nestjs-starter/SOURCE.md` (URL, license, author, acquired date, revision SHA from `git rev-parse HEAD`, useful for, where things live, do not copy, status), plus `LICENSE.txt`. **GPL/AGPL/LGPL/SSPL/BSL/commercial or unclear license ⇒ status `reference-only`**: learn from it, never copy its code into the kit.
+This pass is **research and normalisation, not acquisition**. Do not clone anything, and do not run
+`tools/fetch-sources.sh` — a bare run clones every absent source. Disk is the binding constraint.
+
+Read upstream files without cloning:
+
+```bash
+gh api repos/OWNER/REPO --jq '.full_name, .license.spdx_id, .pushed_at'
+gh api "repos/OWNER/REPO/git/trees/HEAD?recursive=1" --jq '.tree[].path' | grep -i model   # map the data model
+gh api "repos/OWNER/REPO/contents/PATH?ref=SHA" --jq .content | base64 -d                  # read one file
+```
+
+Record the exact ref you read (`gh api repos/OWNER/REPO/commits/HEAD --jq .sha`) in the source's `version` field.
+If a source genuinely must land on disk, stop and say so in your report — do not clone it yourself.
 
 ## Safety
 

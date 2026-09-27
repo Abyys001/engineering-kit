@@ -2,5 +2,256 @@
   "schema": 1,
   "domain": "support",
   "last_reviewed": "2026-09-27",
-  "mappings": []
+  "mappings": [
+    {
+      "feature": "support.ticket_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Chatwoot's Conversation model (enum status: open/resolved/pending/snoozed, enum priority: low/medium/high/urgent) grounds the status lifecycle (MIT, not copied)."
+    },
+    {
+      "feature": "support.ticket_queues",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Chatwoot's Inbox (polymorphic belongs_to :channel) and Team models group conversations into queues (MIT, not copied)."
+    },
+    {
+      "feature": "support.assignment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models",
+        "sources/domains/chatwoot/source/app/controllers/api/v1"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Conversation belongs_to :assignee (User), and conversations/assignments_controller.rb + assignable_agents_controller.rb implement (re)assignment (MIT, not copied)."
+    },
+    {
+      "feature": "support.sla_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/db/schema.rb"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; core db/schema.rb has conversations.sla_policy_id plus applied_slas/sla_policies/sla_events tables, confirming the SLA data model at the schema level. The SlaPolicy/AppliedSla/SlaEvent classes themselves live under enterprise/app/models and are excluded from this checkout (not MIT) - grounding here is schema-only, not the enforcement logic."
+    },
+    {
+      "feature": "support.escalation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Not grounded in this checkout: the only core artifact touching SLA is app/models/concerns/sla_activity_message_handler.rb, which just writes an activity-message string when sla_policy_id changes. The actual breach/escalation logic (SlaPolicy, AppliedSla, SlaEvent) lives under Chatwoot's enterprise/ directory, which was deliberately excluded (non-MIT). Do not guess at escalation behavior from the concern alone."
+    },
+    {
+      "feature": "support.email_channel",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/channel"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Channel::Email model (app/models/channel/email.rb) confirms the email channel, core, not copied."
+    },
+    {
+      "feature": "support.chat_channel",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/channel"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Channel::WebWidget model (app/models/channel/web_widget.rb) confirms the live-chat widget channel, core, not copied."
+    },
+    {
+      "feature": "support.voice_channel",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Not grounded in this checkout: app/models/channel/ contains Api, Email, FacebookPage, Instagram, Line, Sms, Telegram, Tiktok, TwilioSms, TwitterProfile, WebWidget, Whatsapp - no voice/phone channel. Chatwoot's call handling lives under enterprise/, excluded from this checkout (non-MIT); do not guess at its shape."
+    },
+    {
+      "feature": "support.knowledge_base",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Article (belongs_to :portal, optional :category, draft/published status, locale) plus Portal, Category, and Folder models confirm a full help-center knowledge base, core, not copied."
+    },
+    {
+      "feature": "support.macros_canned_responses",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Macro (personal/global visibility, JSONB multi-step actions including change_status/assign_team/send_webhook_event) and the separate, simpler CannedResponse (short_code -> content) model both confirmed, core, not copied."
+    },
+    {
+      "feature": "support.csat_surveys",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; CsatSurveyResponse model (rating 1-5, feedback_message, csat_review_notes, linked to conversation/message/contact/assigned_agent) confirms CSAT, core, not copied."
+    },
+    {
+      "feature": "support.customer_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/controllers/api/v1/widget",
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; widget/conversations_controller.rb#index lets a contact fetch their own conversation, and Portal hosts the public help-center - narrower than a logged-in ticket-tracking portal (Chatwoot's is anonymous/widget-identified, not account-login based), but real, core, not copied."
+    },
+    {
+      "feature": "support.internal_notes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/message.rb"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Message has a boolean private column (scope :chat filters private: false) distinct from customer-visible replies - the ticket-level internal-notes mechanism, core, not copied. A separate Note model exists but is belongs_to :contact (contact-level, not conversation-level)."
+    },
+    {
+      "feature": "support.tagging_categorization",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/label.rb"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Label model (account-scoped title/color) tags conversations via account.conversations.tagged_with(title), core, not copied."
+    },
+    {
+      "feature": "support.business_hours",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/working_hour.rb"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; WorkingHour model (per-inbox day_of_week, open_hour/close_hour, open_all_day/closed_all_day, .open_now?) confirms business hours, core (not enterprise), not copied."
+    },
+    {
+      "feature": "support.ticket_automation_rules",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models/automation_rule.rb"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; AutomationRule model (event_name plus JSONB conditions/actions, fully automatic, core not enterprise) confirms trigger-based automation, not copied."
+    },
+    {
+      "feature": "support.reporting_analytics",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/controllers/api/v2/accounts"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; reports_controller.rb, live_reports_controller.rb, summary_reports_controller.rb, and year_in_reviews_controller.rb confirmed under api/v2 (core, not enterprise), not copied."
+    },
+    {
+      "feature": "support.multichannel_unification",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot/source/app/models"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Inbox's polymorphic belongs_to :channel spans 11 channel types, and ContactInbox links one Contact to many inboxes/channels into a single conversation list, core, not copied."
+    }
+  ]
 }

@@ -66,12 +66,14 @@ hospitality) was identified in this research pass.
 KDS = kitchen display system; KOT = kitchen order ticket (printed equivalent of a KDS ticket); "86" = mark an item
 unavailable; cover = one seated guest; check/bill = the payable total for a table.
 
-## Maturity: curated
+## Maturity: partial
 25 features, 3 independent open-source implementations cross-referenced (Frappe Hospitality, Odoo
-point_of_sale/pos_restaurant, URY), plus 4 authoritative compliance/standards sources — clears the tool's
-`curated` bar (≥10 features, ≥3 sources). Not `reviewed`: single research pass, no second-reviewer pass, and
-several features (reservations, waitlist, inventory, recipes, staff shifts, loyalty, reviews, delivery) rest on
-one or zero corroborating implementations and are marked `low` confidence accordingly — see `sources.md`.
+point_of_sale/pos_restaurant, URY), plus 4 authoritative compliance/standards sources. Not `curated`: 17 of 25
+features (68%) rest on one or zero corroborating implementations and carry `low` confidence — reservations,
+waitlist, inventory, recipes, staff shifts, loyalty, reviews, delivery among them — which fails the `curated`
+bar's ≤30% low-confidence ceiling (`tools/kb.py validate`), even though the feature and source counts clear it.
+Raising this to `curated` needs corroborating implementations for those features, not more prose. See
+`sources.md`.
 
 ## Relationship to `booking`
 Restaurant reservations are time-boxed, capacity-bound bookings — conceptually the same shape as the generic

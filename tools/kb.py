@@ -4,12 +4,14 @@
   kb.py validate [domain ...]        check schemas, references, cycles, paths
   kb.py build                        regenerate domains/{catalog,features,search-index}.json and INDEX.md
   kb.py find [--domain D] [--tag T] [--platform P] [--role R] [--entity E]
-             [--classification C] [--text S]
+             [--integration I] [--compliance C] [--classification C] [--text S]
   kb.py order FEATURE_ID ... [--with-enhances]
                                      dependency closure in build order
   kb.py order --domain D [--classes core,common]
   kb.py matrix DOMAIN --requested ID,ID [--json]
                                      starting feature matrix with scope levels
+  kb.py check-sources                cross-check MANIFEST.json, catalog.json, SOURCE.md, and disk
+  kb.py gaps [domain ...] [--json]   per-domain quality-gate facts and what is missing
   kb.py check-selection FILE         check a project's feature-selection.json
 
 Contract: domains/_schema/SCHEMA.md.
@@ -35,7 +37,10 @@ CLASSIFICATIONS = {"core", "common", "recommended", "optional", "premium", "comp
 LEVELS = {"none", "low", "medium", "high", "core"}
 CONFIDENCE = {"high", "medium", "low"}
 SOURCE_TYPES = {"authoritative", "implementation", "secondary"}
-IMPL_STATUS = ["unknown", "reference", "partial", "curated", "tested", "production_ready"]
+IMPL_STATUS = ["unknown", "missing", "not_required", "reference", "partial", "curated",
+               "tested", "production_ready"]
+# "available" in prose = any of partial/curated/tested/production_ready (a real kit path exists).
+IMPL_AVAILABLE = {"partial", "curated", "tested", "production_ready"}
 MATURITY = {"researching", "partial", "curated", "reviewed"}
 DEP_TYPES = {"requires", "enhances"}
 REL_TYPES = {"has_one", "has_many", "belongs_to", "many_to_many"}
@@ -44,6 +49,9 @@ COMPLIANCE_KINDS = {"regulation", "standard", "certification", "guideline"}
 PLATFORM_KEYS = ["web", "mobile", "admin", "customer_portal", "backend", "ai", "real_time"]
 IMPL_KEYS = ["web", "backend", "mobile", "ai"]
 FOUNDATION = ["shared.auth", "shared.users", "shared.permissions"]
+# Project scope levels (product-builder/PRODUCT-BUILDER.md §2). DOMAIN_EXPECTED is "the industry usually
+# has this", which is never the same as "the client asked for it".
+SCOPES = {"IN_SCOPE", "DEPENDENCY", "DOMAIN_EXPECTED", "PROPOSED", "OPTIONAL", "OUT_OF_SCOPE", "BLOCKED"}
 
 
 def load(path: Path):
@@ -56,9 +64,24 @@ def domain_ids() -> list[str]:
                   if p.is_dir() and not p.name.startswith("_") and (p / "feature-map.json").exists())
 
 
+def domain_md_maturity(d: str) -> str | None:
+    """The maturity asserted by a '## Maturity: <value>' heading in DOMAIN.md, if it has one."""
+    path = DOMAINS / d / "DOMAIN.md"
+    if not path.exists():
+        return None
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## Maturity:"):
+            return line.split(":", 1)[1].strip().strip("`").lower()
+    return None
+
+
 def has_files(rel: str) -> bool:
+    """Whether a kit path holds real content. `.gitkeep` markers on the not-yet-promoted
+    directories don't count, or every empty area would read as implemented."""
     p = KIT / rel
-    return p.is_file() or (p.is_dir() and any(f.is_file() for f in p.rglob("*")))
+    if p.is_file():
+        return True
+    return p.is_dir() and any(f.is_file() and not f.name.startswith(".") for f in p.rglob("*"))
 
 
 class Report:
@@ -86,6 +109,28 @@ def load_domain(d: str, rep: Report) -> dict | None:
             except json.JSONDecodeError as e:
                 rep.err(f"{d}/{name}", f"invalid JSON: {e}")
     return out if "feature-map.json" in out else None
+
+
+def check_shared_candidates(shared: dict, rep: Report) -> None:
+    """source_candidates must point at real source folders, and on_disk must not be stale."""
+    for f in shared.get("features", []):
+        for c in f.get("source_candidates", []):
+            w = f"shared/{f['id']}/candidate/{c.get('source')}"
+            src = KIT / c.get("source", "")
+            if not src.is_dir():
+                rep.err(w, "source folder does not exist")
+                continue
+            if not (src / "SOURCE.md").exists():
+                rep.err(w, "source folder has no SOURCE.md")
+            on_disk = (src / "source").is_dir()
+            if c.get("on_disk") != on_disk:
+                rep.err(w, f"on_disk is {c.get('on_disk')} but source/ {'exists' if on_disk else 'does not exist'}")
+            for rel in c.get("paths", []):
+                if not (src / rel).exists():
+                    rep.err(w, f"verified path {rel} does not exist")
+            for rel in c.get("unverified_paths", []):
+                if (src / rel).exists():
+                    rep.err(w, f"{rel} is listed unverified but now exists - move it to paths")
 
 
 def all_feature_ids(domains: dict[str, dict], shared: dict) -> set[str]:
@@ -144,6 +189,7 @@ def validate(only: list[str]) -> Report:
     for s in standards["standards"]:
         if s.get("status") in {"acquired", "partial"} and not (s.get("local_path") and has_files(s["local_path"])):
             rep.err(f"standards/{s['id']}", f"status {s['status']} but {s.get('local_path')} is empty")
+    check_shared_candidates(shared, rep)
     seen_shared: set[str] = set()
     for f in shared["features"]:
         if f["id"] in seen_shared:
@@ -184,6 +230,12 @@ def validate(only: list[str]) -> Report:
                 rep.err(f"{d}/{name}", "missing last_reviewed")
         if fm.get("maturity") not in MATURITY:
             rep.err(f"{d}/feature-map", f"bad maturity {fm.get('maturity')!r}")
+        # DOMAIN.md is the prose twin of feature-map.json; a stale "## Maturity: x" heading there
+        # is how an over-claim survives a re-review, so the two must agree.
+        doc_maturity = domain_md_maturity(d)
+        if doc_maturity and doc_maturity != fm.get("maturity"):
+            rep.err(f"{d}/DOMAIN.md", f"'## Maturity: {doc_maturity}' contradicts "
+                                     f"feature-map maturity {fm.get('maturity')!r}")
         local_src = {}
         for s in fm.get("sources", []):
             if s.get("id") in local_src:
@@ -359,10 +411,14 @@ def validate(only: list[str]) -> Report:
             for p in m.get("references", []):
                 if not (KIT / p).exists():
                     rep.err(w, f"reference path {p} does not exist")
-            if m.get("status") in {"partial", "curated", "tested", "production_ready"} and not paths:
+            if m.get("status") in IMPL_AVAILABLE and not paths:
                 rep.err(w, f"status {m['status']} needs implementation paths")
             if m.get("status") == "reference" and not m.get("references"):
                 rep.err(w, "status reference needs references")
+            if m.get("status") in {"missing", "not_required"} and paths:
+                rep.err(w, f"status {m['status']} must not carry implementation paths")
+            if m.get("status") == "not_required" and not m.get("notes"):
+                rep.err(w, "status not_required needs notes saying why")
         for fid in dfeats - mapped:
             rep.warn(f"{d}/impl", f"{fid} has no implementation-map entry")
     return rep
@@ -371,7 +427,13 @@ def validate(only: list[str]) -> Report:
 # ---------- build ----------
 
 def impl_status_shared(f: dict) -> str:
-    return "partial" if any(has_files(p) for p in f.get("kit_paths", [])) else "unknown"
+    """Same honesty rule as a domain feature: kit files mean partial, an on-disk source means reference."""
+    if any(has_files(p) for p in f.get("kit_paths", [])):
+        return "partial"
+    if any(c.get("paths") or (KIT / c["source"] / "source").is_dir()
+           for c in f.get("source_candidates", [])):
+        return "reference"
+    return "missing"
 
 
 def build() -> None:
@@ -392,6 +454,7 @@ def build() -> None:
         ents = load(DOMAINS / d / "entities.json")["entities"]
         wfs = load(DOMAINS / d / "workflows.json")["workflows"]
         comp = load(DOMAINS / d / "compliance.json")["items"]
+        ints = load(DOMAINS / d / "integrations.json")["integrations"]
         for e in deps:
             if e["to"] in shared_domains:
                 shared_domains[e["to"]].add(d)
@@ -409,7 +472,7 @@ def build() -> None:
             "features_by_confidence": {c: sum(1 for f in feats if f["provenance"]["confidence"] == c) for c in ("high", "medium", "low")},
             "entity_count": len(ents), "role_count": len(roles), "workflow_count": len(wfs),
             "state_machine_count": sum(1 for w in wfs if w.get("state_machine")),
-            "compliance_count": len(comp),
+            "compliance_count": len(comp), "integration_count": len(ints),
             "standards": std_refs + [f"{s['id']}" for s in fm.get("sources", []) if s["source_type"] == "authoritative"],
             "implementation_references": [s["id"] for s in fm.get("sources", []) if s["source_type"] == "implementation"],
             "source_count": len(fm.get("sources", [])),
@@ -423,6 +486,7 @@ def build() -> None:
                 "description": f["description"], "tags": f.get("tags", []),
                 "platforms": f["platforms"], "users": [u for u in f.get("users", []) if u in role_names],
                 "entities": f.get("entities", []), "workflows": f.get("workflows", []),
+                "integrations": f.get("integrations", []), "compliance": f.get("compliance", []),
                 "ai_relevance": f["ai_relevance"], "real_time_relevance": f["real_time_relevance"],
                 "depends_on": [e["to"] for e in deps if e["from"] == f["id"] and e["type"] == "requires"],
                 "enhanced_by": [e["to"] for e in deps if e["from"] == f["id"] and e["type"] == "enhances"],
@@ -434,6 +498,7 @@ def build() -> None:
             index.append({"kind": "feature", "id": f["id"], "domain": d,
                           "keys": sorted(set(f.get("tags", []) + f.get("users", []) + f.get("entities", [])
                                              + f.get("workflows", []) + f.get("capabilities", [])
+                                             + f.get("integrations", []) + f.get("compliance", [])
                                              + [k for k, v in f["platforms"].items() if v]
                                              + [f["classification"], m.get("status", "unknown")]
                                              + [s for s in f["provenance"]["sources"]]))})
@@ -444,6 +509,14 @@ def build() -> None:
                           "keys": e.get("related_features", []) + [m["concept"] for m in e.get("standard_mapping", [])]})
         for w in wfs:
             index.append({"kind": "workflow", "id": f"{d}:{w['id']}", "domain": d, "keys": w.get("features", []) + w.get("entities", [])})
+        for i in ints:
+            index.append({"kind": "integration", "id": f"{d}:{i['id']}", "domain": d,
+                          "keys": sorted(set([i.get("category", ""), i.get("classification", "")]
+                                             + i.get("protocols", []) + i.get("related_features", [])))})
+        for c in comp:
+            index.append({"kind": "compliance", "id": f"{d}:{c['id']}", "domain": d,
+                          "keys": sorted(set([c.get("kind", ""), c.get("jurisdiction", "")]
+                                             + c.get("affected_features", [])))})
         for s in fm.get("sources", []):
             index.append({"kind": "source", "id": f"{d}:{s['id']}", "domain": d, "keys": [s["source_type"], s.get("license", "")]})
     shared_out = []
@@ -498,6 +571,121 @@ def write_index_md(catalog: list[dict], shared: list[dict], standards: dict, tod
     (DOMAINS / "INDEX.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+# ---------- gap analysis ----------
+
+PRIORITY = ["exchange", "fintech", "restaurant", "hospitality", "logistics", "ecommerce", "crm",
+            "booking", "support", "healthcare", "real-estate", "education", "project-management",
+            "manufacturing", "general-saas"]
+
+
+def gate(d: str) -> dict:
+    """Quality-gate facts for one domain. Every number is counted, never asserted."""
+    fm = load(DOMAINS / d / "feature-map.json")
+    feats = fm["features"]
+    ents = load(DOMAINS / d / "entities.json")["entities"]
+    roles = load(DOMAINS / d / "roles.json")["roles"]
+    wfs = load(DOMAINS / d / "workflows.json")["workflows"]
+    ints = load(DOMAINS / d / "integrations.json")["integrations"]
+    comp = load(DOMAINS / d / "compliance.json")["items"]
+    edges = load(DOMAINS / d / "dependencies.json")["edges"]
+    impl = {m["feature"]: m for m in load(DOMAINS / d / "implementation-map.json")["mappings"]}
+    srcs = fm.get("sources", [])
+
+    fids = {f["id"] for f in feats}
+    low = [f["id"] for f in feats if f["provenance"]["confidence"] == "low"]
+    single = [f["id"] for f in feats if len(f["provenance"]["sources"]) < 2]
+    no_wf = [f["id"] for f in feats if not f.get("workflows")]
+    no_ent = [f["id"] for f in feats if not f.get("entities")]
+    no_user = [f["id"] for f in feats if not f.get("users")]
+    no_dep = sorted(fids - {e["from"] for e in edges} - {e["to"] for e in edges})
+    unmapped = sorted(fids - set(impl))
+    ent_no_rel = [e["id"] for e in ents if not e.get("relationships")]
+    wf_no_sm = [w["id"] for w in wfs if not w.get("state_machine")]
+    by_class: dict[str, int] = {}
+    for f in feats:
+        by_class[f["classification"]] = by_class.get(f["classification"], 0) + 1
+    st: dict[str, int] = {}
+    for m in impl.values():
+        st[m["status"]] = st.get(m["status"], 0) + 1
+    # A domain cites a registered standard as "std:<id>" from knowledge/standards/standards.json
+    # rather than duplicating it into its own sources array - those count too (SCHEMA.md, "IDs").
+    std_refs = sorted({s for it in list(feats) + list(ents) + list(wfs) + list(ints) + list(comp)
+                       for s in it.get("provenance", {}).get("sources", []) if s.startswith("std:")})
+    authoritative = [s["id"] for s in srcs if s["source_type"] == "authoritative"] + std_refs
+    on_disk = [s["id"] for s in srcs if s.get("local_path") and has_files(s["local_path"])]
+    total_sources = len(srcs) + len(std_refs)
+
+    pct_low = round(100 * len(low) / len(feats), 1) if feats else 0.0
+    blockers = []
+    if len(feats) < 10:
+        blockers.append(f"only {len(feats)} features (gate: >=10)")
+    if total_sources < 3:
+        blockers.append(f"only {total_sources} sources (gate: >=3)")
+    if pct_low > 30:
+        blockers.append(f"{pct_low}% low-confidence features (gate: <=30%)")
+    if not wfs:
+        blockers.append("no workflows")
+    if not ents:
+        blockers.append("no entities")
+    if not roles:
+        blockers.append("no roles")
+    if not edges:
+        blockers.append("no dependency edges")
+    if not ints:
+        blockers.append("no integrations")
+    if unmapped:
+        blockers.append(f"{len(unmapped)} features with no implementation-map entry")
+    if not authoritative:
+        blockers.append("no authoritative source")
+    return {
+        "domain": d, "maturity": fm["maturity"], "last_reviewed": fm["last_reviewed"],
+        "features": len(feats), "by_classification": by_class,
+        "entities": len(ents), "roles": len(roles), "workflows": len(wfs),
+        "state_machines": sum(1 for w in wfs if w.get("state_machine")),
+        "integrations": len(ints), "compliance": len(comp), "dependency_edges": len(edges),
+        "requires_edges": sum(1 for e in edges if e["type"] == "requires"),
+        "sources": total_sources, "domain_sources": len(srcs), "standard_refs": std_refs,
+        "authoritative_sources": authoritative, "sources_on_disk": on_disk,
+        "impl_status": st, "impl_available": sum(v for k, v in st.items() if k in IMPL_AVAILABLE),
+        "pct_low_confidence": pct_low,
+        "features_single_source": single, "features_low_confidence": low,
+        "features_without_workflow": no_wf, "features_without_entities": no_ent,
+        "features_without_users": no_user, "features_without_dependency_edge": no_dep,
+        "features_unmapped": unmapped,
+        "entities_without_relationships": ent_no_rel, "workflows_without_state_machine": wf_no_sm,
+        "gate_blockers": blockers, "gate_pass": not blockers,
+    }
+
+
+def cmd_gaps(a: argparse.Namespace) -> None:
+    ids = a.domains or [d for d in PRIORITY if d in domain_ids()]
+    rows = [gate(d) for d in ids]
+    if a.json:
+        print(json.dumps({"schema": 1, "generated": date.today().isoformat(),
+                          "generator": "tools/kb.py gaps", "domains": rows}, indent=2))
+        return
+    print("| # | Domain | Mat | Feat | Ent | Role | WF | SM | Intg | Comp | Dep | Src | Disk | Impl avail | Low-conf | Gate |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+    for i, r in enumerate(rows, 1):
+        print(f"| {i} | {r['domain']} | {r['maturity'][:4]} | {r['features']} | {r['entities']} | {r['roles']} | "
+              f"{r['workflows']} | {r['state_machines']} | {r['integrations']} | {r['compliance']} | "
+              f"{r['dependency_edges']} | {r['sources']} | {len(r['sources_on_disk'])} | {r['impl_available']} | "
+              f"{r['pct_low_confidence']}% | {'PASS' if r['gate_pass'] else 'BLOCKED'} |")
+    for r in rows:
+        if a.verbose or not r["gate_pass"]:
+            print(f"\n### {r['domain']} — {r['maturity']}")
+            for b in r["gate_blockers"]:
+                print(f"  blocker: {b}")
+            for k in ("features_without_workflow", "features_without_entities", "features_without_users",
+                      "features_without_dependency_edge", "features_unmapped", "features_low_confidence",
+                      "entities_without_relationships", "workflows_without_state_machine"):
+                v = r[k]
+                if v:
+                    shown = ", ".join(v[:6]) + (f" … (+{len(v) - 6})" if len(v) > 6 else "")
+                    print(f"  {k}: {len(v)} — {shown}")
+            print(f"  impl_status: {r['impl_status']}")
+
+
 # ---------- query ----------
 
 def load_features_index() -> dict:
@@ -510,7 +698,7 @@ def load_features_index() -> dict:
 def cmd_find(a: argparse.Namespace) -> None:
     data = load_features_index()
     rows = data["domain_features"] + ([{**f, "platforms": {}, "users": [], "entities": []} for f in data["shared"]]
-                                      if not (a.role or a.entity or a.platform) else [])
+                                      if not (a.role or a.entity or a.platform or a.integration or a.compliance) else [])
     for f in rows:
         if a.domain and f["domain"] != a.domain and a.domain not in f.get("domains", []):
             continue
@@ -521,6 +709,10 @@ def cmd_find(a: argparse.Namespace) -> None:
         if a.role and a.role not in f["users"]:
             continue
         if a.entity and a.entity not in f["entities"]:
+            continue
+        if a.integration and a.integration not in f.get("integrations", []):
+            continue
+        if a.compliance and a.compliance not in f.get("compliance", []):
             continue
         if a.classification and f["classification"] != a.classification:
             continue
@@ -549,24 +741,40 @@ def cmd_order(a: argparse.Namespace) -> None:
     unknown = [r for r in roots if r not in feats]
     if unknown:
         sys.exit(f"unknown features: {', '.join(unknown)}")
+    why: dict[str, str] = {r: "selected" for r in roots}
+
+    # Two passes, because `enhances` says "better with", not "needed first". It widens the
+    # selection but must not constrain order: a mutual pair (kitchen_display *requires*
+    # dine_in_orders, dine_in_orders *enhanced by* kitchen_display) is correct modelling and
+    # must not read as an unbuildable cycle. Only `requires` cycles are real.
+    selected: set[str] = set()
+    stack = list(roots)
+    while stack:
+        n = stack.pop()
+        if n in selected:
+            continue
+        selected.add(n)
+        for m, t in graph.get(n, []):
+            if t == "requires" or a.with_enhances:
+                why.setdefault(m, f"{t} by {n}")
+                stack.append(m)
+
     order: list[str] = []
     state: dict[str, int] = {}
-    why: dict[str, str] = {r: "selected" for r in roots}
 
     def visit(n: str) -> None:
         if state.get(n) == 2:
             return
         if state.get(n) == 1:
-            sys.exit(f"cycle at {n}")
+            sys.exit(f"requires cycle at {n} — fix dependencies.json")
         state[n] = 1
         for m, t in graph.get(n, []):
-            if t == "requires" or a.with_enhances:
-                why.setdefault(m, f"{t} by {n}")
+            if t == "requires" and m in selected:
                 visit(m)
         state[n] = 2
         order.append(n)
 
-    for r in roots:
+    for r in sorted(selected):
         visit(r)
     shared_first = [n for n in order if n.startswith("shared.")] + [n for n in order if not n.startswith("shared.")]
     for i, n in enumerate(shared_first, 1):
@@ -623,8 +831,11 @@ def cmd_matrix(a: argparse.Namespace) -> None:
             scope, reason = "IN_SCOPE", "requested"
         elif fid in pulled:
             scope, reason = "DEPENDENCY", "required by " + ", ".join(sorted(pulled[fid]))
-        elif cls in {"core", "common"} or fid in enhancing:
-            scope, reason = "PROPOSED", f"{cls} for {a.domain}" + (" · enhances in-scope work" if fid in enhancing else "")
+        elif cls in {"core", "common"}:
+            # The industry usually has it. Still not requested: propose, never assume.
+            scope, reason = "DOMAIN_EXPECTED", f"{cls} for {a.domain}" + (" · enhances in-scope work" if fid in enhancing else "")
+        elif fid in enhancing:
+            scope, reason = "PROPOSED", f"{cls} · enhances in-scope work"
         else:
             scope, reason = "OPTIONAL", cls
         plat = [k for k, v in f.get("platforms", {}).items() if v]
@@ -645,6 +856,58 @@ def cmd_matrix(a: argparse.Namespace) -> None:
               f"{', '.join(r['compliance']) or '—'} |")
 
 
+def cmd_check_sources(a: argparse.Namespace) -> None:
+    """Cross-check sources/MANIFEST.json, catalog.json, each SOURCE.md, and what is on disk."""
+    man = {s["path"]: s for s in load(KIT / "sources" / "MANIFEST.json")["sources"]}
+    cat = {e["path"]: e for e in load(KIT / "catalog.json")["sources"]}
+    rep = Report()
+
+    for p in sorted(set(man) - set(cat)):
+        rep.err(p, "in sources/MANIFEST.json but not catalog.json")
+    for p in sorted(set(cat) - set(man)):
+        rep.err(p, "in catalog.json but not sources/MANIFEST.json")
+
+    for p in sorted(set(man) & set(cat)):
+        for f in ("repo", "revision"):
+            if man[p].get(f) != cat[p].get(f):
+                rep.err(p, f"{f} differs: manifest {man[p].get(f)!r} vs catalog {cat[p].get(f)!r}")
+
+    for p, s in sorted(man.items()):
+        d = KIT / p
+        rev = s.get("revision") or ""
+        if len(rev) != 40 or not all(c in "0123456789abcdef" for c in rev):
+            rep.err(p, f"revision {rev!r} is not a 40-char commit sha")
+        sm = d / "SOURCE.md"
+        if not sm.exists():
+            rep.err(p, "no SOURCE.md")
+        elif rev and rev not in sm.read_text(encoding="utf-8"):
+            rep.err(p, "SOURCE.md does not carry the manifest revision")
+        # A source with no license at all legitimately has no LICENSE.txt; anything else must.
+        lic = (s.get("license") or "").lower()
+        if not (d / "LICENSE.txt").exists() and "none" not in lic and lic:
+            rep.err(p, "no LICENSE.txt")
+        on_disk = (d / "source").is_dir()
+        if s.get("fetch") is False and on_disk:
+            rep.warn(p, 'fetch:false but source/ is on disk')
+        if s.get("acquired") is False and on_disk:
+            rep.warn(p, 'acquired:false but source/ is on disk - update the manifest')
+
+    for sm in sorted((KIT / "sources").rglob("SOURCE.md")):
+        rel = sm.parent.relative_to(KIT).as_posix()
+        if rel not in man:
+            rep.err(rel, "has a SOURCE.md but no manifest entry")
+    for stub in sorted((KIT / "sources").rglob(".revision")):
+        rep.err(stub.parent.relative_to(KIT).as_posix(),
+                ".revision stub left behind - the revision belongs in SOURCE.md and MANIFEST.json")
+
+    for w in rep.warnings:
+        print("warning:", w)
+    for e in rep.errors:
+        print("error:", e)
+    print(f"{len(rep.errors)} error(s), {len(rep.warnings)} warning(s)")
+    sys.exit(1 if rep.errors else 0)
+
+
 def cmd_check_selection(a: argparse.Namespace) -> None:
     graph, feats = dependency_graph()
     sel = load(Path(a.file))
@@ -656,6 +919,8 @@ def cmd_check_selection(a: argparse.Namespace) -> None:
             errors.append(f"{fid}: not in the catalog (use custom.<name> for asks without a match)")
         if f.get("requested") and f.get("scope") not in {"IN_SCOPE", "BLOCKED", "OUT_OF_SCOPE"}:
             errors.append(f"{fid}: requested but scope is {f.get('scope')}")
+        if f.get("scope") not in SCOPES:
+            errors.append(f"{fid}: unknown scope {f.get('scope')!r} (expected one of {', '.join(sorted(SCOPES))})")
         if f.get("scope") == "DEPENDENCY" and not f.get("required_by"):
             errors.append(f"{fid}: DEPENDENCY needs required_by")
         if f.get("scope") == "BLOCKED" and not f.get("blocked_by"):
@@ -678,7 +943,8 @@ def main() -> None:
     v.add_argument("--quiet-warnings", action="store_true")
     sub.add_parser("build")
     f = sub.add_parser("find")
-    for k in ("domain", "tag", "platform", "role", "entity", "classification", "text"):
+    for k in ("domain", "tag", "platform", "role", "entity", "integration", "compliance",
+              "classification", "text"):
         f.add_argument(f"--{k}")
     o = sub.add_parser("order")
     o.add_argument("features", nargs="*")
@@ -690,6 +956,11 @@ def main() -> None:
     m.add_argument("--requested", help="comma-separated feature ids explicitly asked for")
     m.add_argument("--json", action="store_true", help="emit feature-selection.json-shaped output")
     m.add_argument("--project")
+    sub.add_parser("check-sources")
+    g = sub.add_parser("gaps")
+    g.add_argument("domains", nargs="*", help="default: all domains in priority order")
+    g.add_argument("--json", action="store_true")
+    g.add_argument("--verbose", action="store_true", help="per-domain detail even when the gate passes")
     c = sub.add_parser("check-selection")
     c.add_argument("file", help="a project's feature-selection.json")
     a = ap.parse_args()
@@ -710,6 +981,10 @@ def main() -> None:
         cmd_order(a)
     elif a.cmd == "matrix":
         cmd_matrix(a)
+    elif a.cmd == "gaps":
+        cmd_gaps(a)
+    elif a.cmd == "check-sources":
+        cmd_check_sources(a)
     elif a.cmd == "check-selection":
         cmd_check_selection(a)
 

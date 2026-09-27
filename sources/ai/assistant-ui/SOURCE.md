@@ -8,7 +8,7 @@
 | License | MIT — `LICENSE.txt` (root `LICENSE`, copyright AgentbaseAI Inc.); per-package MIT licenses found in `python/assistant-stream/LICENSE` (Simon Farshid) and `python/assistant-ui-sync-server-api/LICENSE` (AgentbaseAI Inc.) — no conflicting terms |
 | Author / organization | AgentbaseAI Inc. |
 | Acquired | 2026-09-26 |
-| Revision | `2980cafdf4f894995daa77c34f3db09e74205ff` (committed 2026-09-26) |
+| Revision | `2980cafdf4f894995daa77c34f3db09e74205ff7` (committed 2026-09-26) |
 | Attribution required | License notice only |
 | Status | extraction-safe — plain MIT throughout; no Commons Clause / enterprise carve-outs found |
 

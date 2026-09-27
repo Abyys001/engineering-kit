@@ -129,6 +129,176 @@
       ],
       "status": "reference",
       "notes": "Stripe subscription status enum includes 'trialing'; no dedicated trial UI/logic found."
+    },
+    {
+      "feature": "general-saas.onboarding_flow",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No onboarding wizard or first-run setup step found in boxyhq-saas-starter (checked pages/, components/onboarding not present); new teams land directly on the dashboard."
+    },
+    {
+      "feature": "general-saas.plans_entitlements",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Service (features: String[]) + Price + Subscription models define plan tiers and the active subscription per team; no feature-gating or usage/seat-limit enforcement logic found (models/subscription.ts only syncs Stripe status)."
+    },
+    {
+      "feature": "general-saas.usage_metering",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No usage-event model or metering code in boxyhq-saas-starter; Lago (billing API) has the relevant BillableMetric/Event/DailyUsage models but is not cloned on disk (sources/MANIFEST.json has no local_path for it), so no citable path exists."
+    },
+    {
+      "feature": "general-saas.admin_console",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No staff-only cross-tenant console or impersonation route found in boxyhq-saas-starter (grepped for impersonat/super-admin/platform-admin); delete-team.js is an operator CLI script, not an admin console UI."
+    },
+    {
+      "feature": "general-saas.status_page",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Cachet models the public status/incident page shape but is not cloned on disk (sources/MANIFEST.json has no local_path for it), so no citable path exists; nothing in boxyhq-saas-starter or nextcrm implements a status page."
+    },
+    {
+      "feature": "general-saas.changelog",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No changelog/release-notes model or feed found in either cloned repo."
+    },
+    {
+      "feature": "general-saas.data_export",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No tenant-wide data export/backup job in boxyhq-saas-starter; nextcrm's actions/reports/export-csv.ts only serializes report chart data points, not a tenant data export."
+    },
+    {
+      "feature": "general-saas.feature_flags",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Unleash has the relevant FeatureToggle/IFeatureStrategy model but is not cloned on disk (sources/MANIFEST.json has no local_path for it), so no citable path exists; no flag system found in boxyhq-saas-starter or nextcrm."
+    },
+    {
+      "feature": "general-saas.seat_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "TeamMember (boxyhq-saas-starter prisma/schema.prisma) has no seat count, seat limit, or pending-vs-active seat field; Subscription has no quantity field either."
+    },
+    {
+      "feature": "general-saas.custom_roles",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "boxyhq-saas-starter's Role is a fixed enum (ADMIN/OWNER/MEMBER) with a hardcoded permission map (lib/permissions.ts); no per-workspace role/permission authoring found."
+    },
+    {
+      "feature": "general-saas.workspace_deletion_export",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "models/team.ts deleteTeam() is a plain prisma.team.delete (hard delete, no soft-delete field, no export offer, no grace period)."
+    },
+    {
+      "feature": "general-saas.public_api_rate_limiting",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No rate limiting in boxyhq-saas-starter (checked by grep); nextcrm's lib/enrichment/rate-limit.ts is a per-IP Upstash limiter for one outbound enrichment endpoint, not per-key/per-plan limiting on the platform's own public API."
+    },
+    {
+      "feature": "general-saas.sandbox_environment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No test-mode workspace or synthetic-data sandbox found in either cloned repo (nextcrm's e2b references are a code-execution sandbox for AI enrichment, unrelated to this feature)."
+    },
+    {
+      "feature": "general-saas.data_residency",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No region-pinning or data-residency control found in either cloned repo."
     }
   ]
 }

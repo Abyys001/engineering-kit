@@ -12,8 +12,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.currency_master",
@@ -24,8 +24,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.rate_management",
@@ -36,8 +36,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.rate_feed_ingestion",
@@ -48,8 +48,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.exchange_requests",
@@ -60,8 +60,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.buy_sell_transactions",
@@ -72,8 +72,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.remittance",
@@ -84,8 +84,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.till_cash_management",
@@ -96,8 +96,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.branch_management",
@@ -108,8 +108,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.staff_management",
@@ -120,8 +120,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.receipts_payments",
@@ -132,8 +132,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.kyc_thresholds",
@@ -144,8 +144,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.aml_reporting",
@@ -156,8 +156,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.audit_log",
@@ -168,8 +168,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.reports_analytics",
@@ -180,8 +180,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.notifications",
@@ -192,8 +192,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.online_ordering",
@@ -204,8 +204,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "exchange.commission_management",
@@ -216,8 +216,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     }
   ]
 }

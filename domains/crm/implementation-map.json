@@ -240,6 +240,32 @@
       ],
       "status": "reference",
       "notes": "import-targets.ts and import-products.ts actions with dedicated tests."
+    },
+    {
+      "feature": "crm.lead_conversion",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Leads itself has no convert action; the closest analog is crm_Targets, which nextcrm converts via actions/crm/targets/convert-target.ts (creates crm_Accounts + crm_Contacts) and actions/crm/targets/convert-target-to-deal.ts (adds a crm_Opportunities record), with lineage preserved on crm_Targets.converted_at/converted_account_id/converted_contact_id."
+    },
+    {
+      "feature": "crm.forecasting",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No forecast model or weighted-pipeline calculation in nextcrm: actions/reports/sales.ts getPipelineValue/getRevenue sum opportunity budgets unweighted by crm_Opportunities_Sales_Stages.probability, and no MRR/recurring-revenue reporting exists (crm_Products.is_recurring is a per-product billing flag, not tied to forecasting)."
     }
   ]
 }

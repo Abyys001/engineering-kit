@@ -69,14 +69,14 @@ PMS = property management system; ARI = availability, rate, inventory (the data 
 OTA = online travel agency; folio = a guest's itemized in-stay charge ledger; night audit = the end-of-day
 close/reconciliation/date-rollover process; RMS = revenue management system.
 
-## Maturity: curated
+## Maturity: partial
 24 features, 2 independent open-source implementations cross-referenced (Frappe Hospitality, QloApps) plus 4
-authoritative/standards-adjacent sources (PCI DSS, GDPR, OTA, HTNG) and 6 secondary sources — clears the tool's
-`curated` bar (≥10 features, ≥3 sources). Not `reviewed`: only two implementations were available (most restaurant
-research had three), so most features cap at `medium` confidence, and several front/back-of-house operational
-features (folio as a distinct ledger, housekeeping, night audit, add-on services, cancellation rules, channel
-manager, connecting rooms, loyalty, reviews, dynamic pricing) rest on one or zero implementations and are marked
-`low` — see `sources.md`.
+authoritative/standards-adjacent sources (PCI DSS, GDPR, OTA, HTNG) and 6 secondary sources. Not `curated`: only
+two implementations were available (restaurant research had three), so 11 of 24 features (46%) carry `low`
+confidence — folio as a distinct ledger, housekeeping, night audit, add-on services, cancellation rules, channel
+manager, connecting rooms, loyalty, reviews, dynamic pricing among them — which fails the `curated` bar's ≤30%
+low-confidence ceiling (`tools/kb.py validate`). A third independent property-management implementation is the
+missing input. See `sources.md`.
 
 ## Relationship to `booking`
 Hotel reservations are date-range, capacity-bound bookings — the same shape as `booking.*`'s generic slot/

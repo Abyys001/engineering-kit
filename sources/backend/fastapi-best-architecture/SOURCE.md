@@ -2,8 +2,8 @@
 
 | Field | Value |
 |---|---|
-| Source URL | https://github.com/fastapi-practices/fastapi_best_architecture |
-| GitHub repository | `fastapi-practices/fastapi_best_architecture` (owner fastapi-practices, Organization repo) |
+| Source URL | https://github.com/fastapi-practices/fastapi-best-architecture |
+| GitHub repository | `fastapi-practices/fastapi-best-architecture` (owner fastapi-practices, Organization repo) |
 | Category | backend |
 | License | MIT — `LICENSE.txt` (root `LICENSE`); no other license files found in the checkout |
 | Author / organization | Wu Clan (xiaowu) |

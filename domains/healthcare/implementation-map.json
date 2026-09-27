@@ -86,8 +86,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "healthcare.telehealth",
@@ -98,8 +98,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "healthcare.encounters",
@@ -168,7 +168,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "DoseSpot packages were excluded from the sparse checkout."
     },
     {
@@ -365,8 +365,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "healthcare.patient_invoicing",
@@ -377,8 +377,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "healthcare.no_show_prediction",
@@ -389,8 +389,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     }
   ]
 }

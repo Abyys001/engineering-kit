@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "restaurant",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "mappings": [
     {
       "feature": "restaurant.tables",
@@ -40,7 +40,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -66,7 +66,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -92,7 +92,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -104,7 +104,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -130,7 +130,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -142,7 +142,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -154,7 +154,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -166,7 +166,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -178,7 +178,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -190,7 +190,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -202,7 +202,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -214,7 +214,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -226,7 +226,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -238,7 +238,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -250,7 +250,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -262,7 +262,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -274,7 +274,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -286,7 +286,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -298,7 +298,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     },
     {
@@ -310,7 +310,7 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
+      "status": "missing",
       "notes": "No kit implementation and no local reference clone covers this feature yet."
     }
   ]

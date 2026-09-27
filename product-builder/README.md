@@ -18,4 +18,4 @@ python3 tools/kb.py order restaurant.reservations --with-enhances   # dependency
 python3 tools/kb.py validate && python3 tools/kb.py build           # after editing domains/
 ```
 
-Filled project files live in the project (`~/Projects/<name>/docs/product/`), never here.
+Filled project files live in the project (`~/Project/<name>/docs/product/`), never here.

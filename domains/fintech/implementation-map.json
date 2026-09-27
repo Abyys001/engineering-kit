@@ -26,8 +26,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.ledger_accounts",
@@ -94,8 +94,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.card_issuing",
@@ -106,8 +106,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.card_controls",
@@ -118,8 +118,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.lending_origination",
@@ -130,8 +130,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.loan_servicing",
@@ -142,8 +142,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.interest_accrual",
@@ -154,8 +154,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.credit_scoring",
@@ -166,8 +166,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.statements",
@@ -178,8 +178,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.fee_management",
@@ -190,8 +190,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.limits_management",
@@ -202,8 +202,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.fraud_monitoring",
@@ -214,8 +214,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.aml_transaction_monitoring",
@@ -226,8 +226,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.sanctions_screening",
@@ -238,8 +238,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.dispute_management",
@@ -250,8 +250,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.reconciliation",
@@ -290,8 +290,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.bill_pay",
@@ -302,8 +302,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.savings_goals",
@@ -314,8 +314,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.spend_analytics",
@@ -326,8 +326,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.virtual_accounts",
@@ -338,8 +338,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.open_banking_connectivity",
@@ -350,8 +350,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     },
     {
       "feature": "fintech.webhooks_events",
@@ -362,8 +362,8 @@
         "ai": []
       },
       "references": [],
-      "status": "unknown",
-      "notes": ""
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
     }
   ]
 }

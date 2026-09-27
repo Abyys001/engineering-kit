@@ -38,8 +38,12 @@ All JSON files start with `"schema": 1`, `"domain": "<id>"`, `"last_reviewed": "
 | `ai_relevance`, `real_time_relevance` | `none` · `low` · `medium` · `high` · `core` |
 | `confidence` | `high` (authoritative source, or ≥3 independent implementations) · `medium` (2 independent sources) · `low` (one source or reasoned inference) |
 | `source_type` | `authoritative` · `implementation` · `secondary` |
-| implementation `status` | `unknown` · `reference` · `partial` · `curated` · `tested` · `production_ready` (only after the kit quality gate) |
+| implementation `status` | `unknown` (not yet assessed) · `missing` (assessed: no reusable kit implementation) · `not_required` (knowledge-only or deliberately never built here — `notes` must say why) · `reference` (no kit code, but a local source under `sources/` informs it — `references` required) · `partial` · `curated` · `tested` · `production_ready` (only after the kit quality gate) |
+
+"Available" is not a stored value: it means any of `partial`/`curated`/`tested`/`production_ready`, i.e. a real path under `features/`, `backend/`, `components/`, `patterns/`, `ai/`, `mobile/`, or `starters/` exists. A source repository existing under `sources/` is `reference`, never available. `missing` and `not_required` must carry no implementation paths.
 | `maturity` (domain) | `researching` · `partial` · `curated` (≥10 features, ≥3 sources, ≤30% low-confidence features, publisher sources actually checked) · `reviewed` (a human has reviewed it) |
+
+A domain's `DOMAIN.md` may restate its maturity as a `## Maturity: <value>` heading. When it does, the validator requires the two to agree — prose is not allowed to claim a level the catalog does not.
 | dependency `type` | `requires` (cannot work without) · `enhances` (better with, not needed) |
 
 ## feature-map.json

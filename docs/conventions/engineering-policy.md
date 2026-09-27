@@ -33,22 +33,22 @@ My primary development environment is:
 
 * OS: Kali Linux
 * Shell/environment: Linux
-* Main project directory: `~/Projects`
+* Main project directory: `~/Project`
 
 All of my software projects are stored inside:
 
 ```text
-~/Projects
+~/Project
 ```
 
-Treat `~/Projects` as the main workspace.
+Treat `~/Project` as the main workspace.
 
 Do not create project source code randomly outside this workspace unless I explicitly request it.
 
 When starting a new project, prefer creating it under:
 
 ```text
-~/Projects/<project-name>
+~/Project/<project-name>
 ```
 
 ---
@@ -60,7 +60,7 @@ Create and maintain a dedicated reusable engineering library inside my Projects 
 The default location is:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 This directory is extremely important.
@@ -72,7 +72,7 @@ Create this directory if it does not already exist.
 Initial structure:
 
 ```text
-~/Projects/engineering-kit/
+~/Project/engineering-kit/
 │
 ├── README.md
 │
@@ -153,7 +153,7 @@ Preferred order:
 
 ```text
 1. Current project
-2. ~/Projects/engineering-kit
+2. ~/Project/engineering-kit
 3. Existing installed/project dependencies
 4. Official documentation
 5. Internet / external repositories
@@ -165,7 +165,7 @@ Do NOT immediately search the internet for a solution that may already exist loc
 Do NOT regenerate code that already exists inside:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 Before implementing a reusable feature, inspect the relevant local directories.
@@ -173,10 +173,10 @@ Before implementing a reusable feature, inspect the relevant local directories.
 Examples:
 
 ```text
-~/Projects/engineering-kit/components/web
-~/Projects/engineering-kit/features
-~/Projects/engineering-kit/backend
-~/Projects/engineering-kit/ai
+~/Project/engineering-kit/components/web
+~/Project/engineering-kit/features
+~/Project/engineering-kit/backend
+~/Project/engineering-kit/ai
 ```
 
 ---
@@ -216,7 +216,7 @@ More consistency
 Before writing implementation code for a common feature:
 
 1. Search the current project.
-2. Search `~/Projects/engineering-kit`.
+2. Search `~/Project/engineering-kit`.
 3. Find the closest existing template/component/module.
 4. Read only the relevant files.
 5. Copy/adapt the implementation into the current project.
@@ -240,7 +240,7 @@ If I say:
 Search for:
 
 ```text
-~/Projects/engineering-kit/components/web/
+~/Project/engineering-kit/components/web/
 ```
 
 and identify the closest Sidebar/AppShell/Navigation implementation.
@@ -252,8 +252,8 @@ If I say:
 Search:
 
 ```text
-~/Projects/engineering-kit/features/users/
-~/Projects/engineering-kit/features/auth/
+~/Project/engineering-kit/features/users/
+~/Project/engineering-kit/features/auth/
 ```
 
 If I say:
@@ -263,7 +263,7 @@ If I say:
 Search:
 
 ```text
-~/Projects/engineering-kit/backend/logging/
+~/Project/engineering-kit/backend/logging/
 ```
 
 If I say:
@@ -273,8 +273,8 @@ If I say:
 Search:
 
 ```text
-~/Projects/engineering-kit/ai/
-~/Projects/engineering-kit/starters/ai-service/
+~/Project/engineering-kit/ai/
+~/Project/engineering-kit/starters/ai-service/
 ```
 
 Do not rebuild functionality from scratch when an appropriate template exists.
@@ -731,7 +731,7 @@ This is one of the most important rules.
 Before implementing a common feature:
 
 1. Search the existing project.
-2. Search `~/Projects/engineering-kit`.
+2. Search `~/Project/engineering-kit`.
 3. Identify the closest existing implementation.
 4. Reuse it.
 5. Modify only what is necessary.
@@ -842,7 +842,7 @@ When I ask you to implement something:
 2. Identify the technology category.
 3. Identify the correct stack from this document.
 4. Search the existing project for reusable code.
-5. Search `~/Projects/engineering-kit` for reusable templates/components.
+5. Search `~/Project/engineering-kit` for reusable templates/components.
 6. Reuse the closest implementation.
 7. Modify only what is necessary.
 8. Follow existing project conventions.
@@ -1032,7 +1032,7 @@ If, during project development, we create something that is:
 consider promoting it into:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 But do not automatically copy every project-specific implementation into the kit.
@@ -1046,7 +1046,7 @@ The kit should contain reusable engineering assets, not project-specific busines
 When using:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 do not modify the shared template merely to satisfy one project.
@@ -1073,12 +1073,12 @@ When I ask to create a new project:
 
 1. Determine the project type.
 2. Select the correct stack.
-3. Check `~/Projects/engineering-kit/starters/`.
+3. Check `~/Project/engineering-kit/starters/`.
 4. Select the closest starter.
 5. Copy/adapt the starter into:
 
 ```text
-~/Projects/<project-name>
+~/Project/<project-name>
 ```
 
 6. Remove unnecessary example/demo code.
@@ -1091,7 +1091,7 @@ Do not initialize every new project completely from scratch when a suitable star
 
 # 36. PROJECT DISCOVERY RULE
 
-When working inside `~/Projects`, assume that other projects may contain useful patterns, but do not blindly copy project-specific code.
+When working inside `~/Project`, assume that other projects may contain useful patterns, but do not blindly copy project-specific code.
 
 You may inspect previous projects to discover:
 
@@ -1104,7 +1104,7 @@ You may inspect previous projects to discover:
 However, prefer the cleaned and generalized version in:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 for actual reuse.
@@ -1164,8 +1164,8 @@ When persistent memory is available:
 
 * Save the important stack decisions from this document.
 * Save the location and purpose of the engineering-kit:
-  `~/Projects/engineering-kit`
-* Remember that `~/Projects` is my main workspace.
+  `~/Project/engineering-kit`
+* Remember that `~/Project` is my main workspace.
 * Prefer these decisions in future conversations.
 * Do not rely on older conflicting stack preferences.
 * When an older memory conflicts with this document, this document wins.
@@ -1186,13 +1186,13 @@ After reading and accepting this policy, perform the following setup task:
 1. Inspect:
 
 ```text
-~/Projects
+~/Project
 ```
 
 2. Create:
 
 ```text
-~/Projects/engineering-kit
+~/Project/engineering-kit
 ```
 
 if it does not exist.
@@ -1202,7 +1202,7 @@ if it does not exist.
 4. Create a concise:
 
 ```text
-~/Projects/engineering-kit/README.md
+~/Project/engineering-kit/README.md
 ```
 
 that explains:
@@ -1225,7 +1225,7 @@ that explains:
 After setup, report exactly:
 
 * what directories were created
-* whether `~/Projects/engineering-kit` already existed
+* whether `~/Project/engineering-kit` already existed
 * what was created
 * any problems or permission issues encountered
 

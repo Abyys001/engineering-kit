@@ -38,14 +38,15 @@ Governing policies still apply and win on conflict: stack and reuse (`docs/conve
 |---|---|---|
 | `IN_SCOPE` | Explicitly requested (classification in the project becomes `requested`) | yes |
 | `DEPENDENCY` | Required (`requires` edge) by something in scope, or clearly necessary supporting infrastructure (auth, permissions, the entities a workflow touches) | yes — list it in the blueprint |
-| `PROPOSED` | Not requested, but `core`/`common` for the domain, or an `enhances` target of high value | no — propose; build only once accepted |
+| `DOMAIN_EXPECTED` | Not requested, but `core`/`common` for the domain — the catalog says products of this type usually have it | no — propose; build only once accepted |
+| `PROPOSED` | Not requested and not domain-expected, but an `enhances` target of high value to what *is* in scope | no — propose; build only once accepted |
 | `OPTIONAL` | `recommended`/`optional`/`premium` features worth mentioning | no — mention briefly, don't build |
 | `OUT_OF_SCOPE` | Considered and excluded (say why in one line) | no |
 | `BLOCKED` | Wanted but blocked on a human decision, credentials, a contract, or compliance review | no — list the blocker |
 
-**Never auto-invent client scope.** The catalog's `core` label means "products of this type usually have it", not "the client asked for it". Obvious supporting infrastructure is `DEPENDENCY`; loyalty programs, delivery, AI receptionists, and the like are `PROPOSED` or `OPTIONAL`.
+**Never auto-invent client scope.** The catalog's `core` label means "products of this type usually have it", not "the client asked for it". Obvious supporting infrastructure is `DEPENDENCY`; a domain `core`/`common` feature nobody asked for is `DOMAIN_EXPECTED`; loyalty programs, delivery, AI receptionists, and the like are `OPTIONAL`.
 
-When the request is vague ("a restaurant SaaS"), the product's defining capabilities — the domain's `core` features — are the reasonable reading of the request: mark them `IN_SCOPE` with an assumption line in the blueprint, and keep `common` and below as `PROPOSED`/`OPTIONAL`.
+When the request is vague ("a restaurant SaaS"), the product's defining capabilities — the domain's `core` features — are the reasonable reading of the request: mark them `IN_SCOPE` with an assumption line in the blueprint, and keep `common` as `DOMAIN_EXPECTED` and everything below it as `PROPOSED`/`OPTIONAL`.
 
 ## 3. Feature matrix
 
@@ -116,4 +117,4 @@ Say "X is a common capability in this type of product", never "this industry alw
 | `templates/blueprint.md` | The one-page blueprint shown to the user |
 | `examples/` | Worked examples generated from real domain data |
 
-A project stores its filled files in `~/Projects/<name>/docs/product/` (not in the kit).
+A project stores its filled files in `~/Project/<name>/docs/product/` (not in the kit).
