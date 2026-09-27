@@ -8,11 +8,11 @@
     "forex bureau",
     "remittance counter"
   ],
-  "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine \u2014 see DOMAIN.md for how crypto exchange relates as a different product type.",
+  "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine — see DOMAIN.md for how crypto exchange relates as a different product type.",
   "nace": [
     "K64.99"
   ],
-  "maturity": "partial",
+  "maturity": "curated",
   "last_reviewed": "2026-09-27",
   "sources": [
     {
@@ -22,7 +22,7 @@
       "source_type": "implementation",
       "license": "none found (no LICENSE file; all-rights-reserved by default)",
       "retrieved": "2026-09-27",
-      "notes": "Hobby-scale (1 star) TypeORM/Express API for a bureau de change: currency, daily_rate (buy/sell, official/market), purchase/purchasemain (buy transactions with cash-note serial ranges), selling (sell transactions with transaction_ref, buyingrate/soldrate, KYC fields mode_of_id/id_no/id_expirydate/bvn), users. Inspected via `gh api repos/.../contents` (not cloned; no license to extract under). Single implementation \u2014 evidence held at low/medium confidence per feature, never 'industry standard' on its own."
+      "notes": "Hobby-scale (1 star) TypeORM/Express API for a bureau de change: currency, daily_rate (buy/sell, official/market), purchase/purchasemain (buy transactions with cash-note serial ranges), selling (sell transactions with transaction_ref, buyingrate/soldrate, KYC fields mode_of_id/id_no/id_expirydate/bvn), users. Inspected via `gh api repos/.../contents` (not cloned; no license to extract under). Single implementation — evidence held at low/medium confidence per feature, never 'industry standard' on its own."
     },
     {
       "id": "chfx-odoo-modules",
@@ -31,7 +31,7 @@
       "source_type": "implementation",
       "license": "unknown (not stated in repository; verify before any reuse)",
       "retrieved": "2026-09-27",
-      "notes": "Odoo addon modules (`exchange_counter`, `chfx_extension`) with real fields for exchange.branch, exchange.counter (till, linked to an accounting journal and per-currency cash accounts), exchange.session (cashier session on a counter), exchange.transaction (buy/sell with mid_rate vs used_rate vs manual_rate, margin_pct, commission, KYC required/confirmed flags, partner/client link, accounting move), exchange.rate, exchange.remittance. Inspected via `gh api repos/.../contents` (not cloned). Second independent implementation \u2014 corroborates branch/counter/session/rate/transaction/remittance as real, separately-modeled concepts."
+      "notes": "Odoo addon modules (`exchange_counter`, `chfx_extension`) with real fields for exchange.branch, exchange.counter (till, linked to an accounting journal and per-currency cash accounts), exchange.session (cashier session on a counter), exchange.transaction (buy/sell with mid_rate vs used_rate vs manual_rate, margin_pct, commission, KYC required/confirmed flags, partner/client link, accounting move), exchange.rate, exchange.remittance. Inspected via `gh api repos/.../contents` (not cloned). Second independent implementation — corroborates branch/counter/session/rate/transaction/remittance as real, separately-modeled concepts."
     },
     {
       "id": "fatf-recommendations",
@@ -44,7 +44,7 @@
     },
     {
       "id": "iso4217",
-      "title": "ISO 4217 \u2014 Currency codes",
+      "title": "ISO 4217 — Currency codes",
       "url": "https://www.iso.org/iso-4217-currency-codes.html",
       "source_type": "authoritative",
       "license": "ISO copyright; standard summary freely accessible",
@@ -53,7 +53,7 @@
     },
     {
       "id": "iso20022",
-      "title": "ISO 20022 \u2014 Universal financial industry message scheme",
+      "title": "ISO 20022 — Universal financial industry message scheme",
       "url": "https://www.iso20022.org/",
       "source_type": "authoritative",
       "license": "ISO20022.org terms; message definitions freely published",
@@ -68,7 +68,7 @@
       "license": "EU public law (EUR-Lex)",
       "retrieved": "2026-09-27",
       "version": "Regulation (EU) 2024/1624 + Directive (EU) 2024/1640",
-      "notes": "Currency exchange offices are named obliged entities under EU AML law; cited generically \u2014 no jurisdiction-specific (e.g. Iranian) rule is asserted anywhere in this domain."
+      "notes": "Currency exchange offices are named obliged entities under EU AML law; cited generically — no jurisdiction-specific (e.g. Iranian) rule is asserted anywhere in this domain."
     },
     {
       "id": "blnk",
@@ -133,7 +133,7 @@
     },
     {
       "id": "eu-tfr-2023-1113",
-      "title": "EU Regulation (EU) 2023/1113 \u2014 Transfer of Funds Regulation (recast, 'travel rule')",
+      "title": "EU Regulation (EU) 2023/1113 — Transfer of Funds Regulation (recast, 'travel rule')",
       "url": "https://eur-lex.europa.eu/eli/reg/2023/1113/oj",
       "source_type": "authoritative",
       "license": "EU public law (EUR-Lex)",
@@ -143,7 +143,7 @@
     },
     {
       "id": "fincen-msb",
-      "title": "FinCEN \u2014 Money Services Business (MSB) Registration",
+      "title": "FinCEN — Money Services Business (MSB) Registration",
       "url": "https://www.fincen.gov/resources/money-services-business-msb-registration",
       "source_type": "authoritative",
       "license": "US federal government public information",
@@ -153,7 +153,7 @@
     },
     {
       "id": "hmrc-msb-guidance",
-      "title": "HMRC \u2014 Anti-Money Laundering Guidance for Supervised Businesses: Money Service Business sector guidance (AMLG2400)",
+      "title": "HMRC — Anti-Money Laundering Guidance for Supervised Businesses: Money Service Business sector guidance (AMLG2400)",
       "url": "https://www.gov.uk/hmrc-internal-manuals/anti-money-laundering-guidance-for-supervised-businesses/amlg2400",
       "source_type": "authoritative",
       "license": "UK Open Government Licence",
@@ -163,7 +163,7 @@
     },
     {
       "id": "wolfsberg-correspondent-banking",
-      "title": "The Wolfsberg Group \u2014 Financial Crime Principles for Correspondent Banking (2022)",
+      "title": "The Wolfsberg Group — Financial Crime Principles for Correspondent Banking (2022)",
       "url": "https://wolfsberg-group.org/resources/correspondent-banking/91",
       "source_type": "authoritative",
       "license": "Wolfsberg Group public guidance",
@@ -211,7 +211,10 @@
         "identity"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "msb_registration_us",
+        "msb_registration_uk"
+      ],
       "provenance": {
         "sources": [
           "chfx-odoo-modules",
@@ -312,7 +315,7 @@
           "chfx-odoo-modules"
         ],
         "confidence": "medium",
-        "notes": "Both implementations model buy/sell rates explicitly; bdc-api additionally splits official vs market rate. Downgraded high\u2192medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "notes": "Both implementations model buy/sell rates explicitly; bdc-api additionally splits official vs market rate. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
       }
     },
     {
@@ -457,7 +460,7 @@
           "chfx-odoo-modules"
         ],
         "confidence": "medium",
-        "notes": "Downgraded high\u2192medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
       }
     },
     {
@@ -687,7 +690,9 @@
         "customer"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "pci_dss"
+      ],
       "provenance": {
         "sources": [
           "bdc-api",
@@ -738,7 +743,9 @@
         "identity_verification_provider"
       ],
       "compliance": [
-        "kyc_thresholds"
+        "kyc_thresholds",
+        "msb_registration_us",
+        "msb_registration_uk"
       ],
       "provenance": {
         "sources": [
@@ -786,7 +793,9 @@
       ],
       "integrations": [],
       "compliance": [
-        "aml_str"
+        "aml_str",
+        "msb_registration_us",
+        "msb_registration_uk"
       ],
       "provenance": {
         "sources": [
@@ -831,7 +840,9 @@
         "compliance"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "msb_registration_us"
+      ],
       "provenance": {
         "sources": [
           "chfx-odoo-modules"
@@ -967,7 +978,9 @@
         "web"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "pci_dss"
+      ],
       "provenance": {
         "sources": [
           "bdc-api"
@@ -1062,7 +1075,8 @@
         "sanctions_watchlist_screening"
       ],
       "compliance": [
-        "aml_str"
+        "aml_str",
+        "msb_registration_uk"
       ],
       "provenance": {
         "sources": [
@@ -1071,7 +1085,7 @@
           "moov-io-customers"
         ],
         "confidence": "high",
-        "notes": "FATF Recommendation 6 (targeted financial sanctions) is authoritative; moov-io/watchman is a real, actively-maintained, Apache-2.0 screening engine (OFAC/EU/UK/UN/OpenSanctions, scored matching) and moov-io/customers pairs a KYC registry with the same screening \u2014 two independent implementations plus an authoritative source. Not observed in bdc-api or chfx-odoo-modules, which have KYC capture fields but no screening step."
+        "notes": "FATF Recommendation 6 (targeted financial sanctions) is authoritative; moov-io/watchman is a real, actively-maintained, Apache-2.0 screening engine (OFAC/EU/UK/UN/OpenSanctions, scored matching) and moov-io/customers pairs a KYC registry with the same screening — two independent implementations plus an authoritative source. Not observed in bdc-api or chfx-odoo-modules, which have KYC capture fields but no screening step."
       }
     },
     {
@@ -1236,7 +1250,9 @@
         "customer",
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_kyc"
+      ],
       "capabilities": [
         "per_transaction_cap",
         "daily_monthly_aggregate_cap",

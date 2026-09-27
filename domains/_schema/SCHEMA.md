@@ -1,6 +1,6 @@
 # Domain knowledge schema (v1)
 
-Contract for every `domains/<domain>/` folder. `tools/kb.py validate` enforces it; `tools/kb.py build` regenerates `domains/catalog.json`, `domains/features.json`, `domains/search-index.json`, and `domains/INDEX.md` from these files. Never hand-edit the generated files.
+Contract for every `domains/<domain>/` folder. `tools/kb.py validate` enforces it; `tools/kb.py build` regenerates `domains/catalog.json`, `domains/features.json`, `domains/search-index.json`, `domains/INDEX.md`, and every domain's `FEATURES.md` from these files. Never hand-edit the generated files.
 
 Domain knowledge is a **reasoning aid, not a scope list**: a feature's presence here never means a client asked for it (see `product-builder/PRODUCT-BUILDER.md`).
 
@@ -9,7 +9,7 @@ Domain knowledge is a **reasoning aid, not a scope list**: a feature's presence 
 | File | Contents |
 |---|---|
 | `DOMAIN.md` | Human summary, ≤150 lines: description, product types, users, workflows, core/common/optional capabilities, compliance-sensitive areas, integrations, entities, UI patterns, mobile, AI, standards, terminology |
-| `FEATURES.md` | Human table of the features in `feature-map.json`, grouped by classification |
+| `FEATURES.md` | **Generated** by `kb.py build` from `feature-map.json` + `implementation-map.json` — a table grouped by classification. Never hand-edit it; the validator errors when it has drifted |
 | `feature-map.json` | Domain metadata, the domain's **source registry**, and feature records |
 | `entities.json` | Conceptual entities (not a DB schema) |
 | `roles.json` | Domain roles (knowledge, not app permissions) |

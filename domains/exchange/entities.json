@@ -435,6 +435,164 @@
         "confidence": "high",
         "notes": "The reporting obligation is authoritative; the case-entity shape is reasoned, not sourced from an OSS implementation."
       }
+    },
+    {
+      "id": "beneficiary",
+      "name": "Beneficiary / Payee",
+      "description": "The named recipient of an outbound remittance, held as a reusable record so a returning customer does not re-key payout details.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "has_many",
+          "target": "remittance"
+        },
+        {
+          "type": "belongs_to",
+          "target": "currency",
+          "note": "payout currency"
+        }
+      ],
+      "important_fields": [
+        "full_name",
+        "payout_method",
+        "account_identifier",
+        "destination_country",
+        "relationship_to_sender"
+      ],
+      "states": [
+        "active",
+        "screening_hold",
+        "blocked"
+      ],
+      "related_features": [
+        "exchange.beneficiary_management",
+        "exchange.remittance"
+      ],
+      "standard_mapping": [
+        {
+          "source": "iso20022",
+          "concept": "Creditor / CreditorAccount (pacs.008)",
+          "note": "ISO 20022 customer credit transfer carries the payee and payee account as distinct elements"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "iso20022",
+          "eu-tfr-2023-1113",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "EU Regulation 2023/1113 requires payee name and account identifier to accompany a transfer, which is what makes this a first-class record rather than a field on the remittance."
+      }
+    },
+    {
+      "id": "screening_match",
+      "name": "Screening Match",
+      "description": "A candidate hit raised when a customer or beneficiary is screened against a sanctions, PEP, or adverse-media list, together with the analyst's disposition.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "belongs_to",
+          "target": "beneficiary",
+          "note": "either a customer or a beneficiary is screened"
+        },
+        {
+          "type": "belongs_to",
+          "target": "staff",
+          "note": "the compliance officer who dispositioned it"
+        }
+      ],
+      "important_fields": [
+        "screened_name",
+        "list_source",
+        "match_score",
+        "disposition",
+        "reviewed_at"
+      ],
+      "states": [
+        "open",
+        "in_review",
+        "true_match",
+        "false_positive",
+        "escalated"
+      ],
+      "related_features": [
+        "exchange.sanctions_screening",
+        "exchange.aml_reporting"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "moov-io-watchman",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": "Watchman models a scored search result against OFAC/consolidated lists; FATF R.6/R.7 require targeted financial sanctions screening. The disposition states are the common review pattern, not a standard's vocabulary."
+      }
+    },
+    {
+      "id": "settlement_batch",
+      "name": "Settlement Batch",
+      "description": "A group of transactions settled together against a bank account or network partner, then reconciled line-by-line to the counterparty statement.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "exchange_transaction"
+        },
+        {
+          "type": "has_many",
+          "target": "remittance"
+        },
+        {
+          "type": "belongs_to",
+          "target": "branch"
+        },
+        {
+          "type": "belongs_to",
+          "target": "currency"
+        }
+      ],
+      "important_fields": [
+        "settlement_date",
+        "currency",
+        "expected_total",
+        "statement_total",
+        "variance",
+        "status"
+      ],
+      "states": [
+        "open",
+        "submitted",
+        "settled",
+        "reconciled",
+        "disputed"
+      ],
+      "related_features": [
+        "exchange.settlement_reconciliation",
+        "exchange.reports_analytics"
+      ],
+      "standard_mapping": [
+        {
+          "source": "iso20022",
+          "concept": "camt.053 BankToCustomerStatement",
+          "note": "the counterparty statement a batch is reconciled against"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "iso20022",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Blnk models balances and reconciliation over a double-entry ledger; ISO 20022 camt.053 is the statement format. The batch grouping itself is the common operational pattern."
+      }
     }
   ]
 }

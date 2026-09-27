@@ -4892,9 +4892,14 @@
         "customer",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_kyc"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "msb_registration_us",
+        "msb_registration_uk"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [],
@@ -4931,7 +4936,9 @@
       "entities": [
         "currency"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -5013,7 +5020,9 @@
       "entities": [
         "exchange_rate"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle"
+      ],
       "integrations": [
         "rate_source"
       ],
@@ -5150,7 +5159,9 @@
         "remittance",
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
       "integrations": [
         "remittance_network"
       ],
@@ -5237,7 +5248,10 @@
       "entities": [
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_update_lifecycle",
+        "settlement_reconciliation"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -5275,7 +5289,9 @@
         "staff",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "cash_session_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -5316,9 +5332,14 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle",
+        "refund_cancellation"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "pci_dss"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [
@@ -5326,7 +5347,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/exchange/feature-map.json"
     },
     {
@@ -5356,10 +5377,17 @@
         "customer",
         "exchange_transaction"
       ],
-      "workflows": [],
-      "integrations": [],
+      "workflows": [
+        "exchange_transaction_lifecycle",
+        "customer_onboarding_kyc"
+      ],
+      "integrations": [
+        "identity_verification_provider"
+      ],
       "compliance": [
-        "kyc_thresholds"
+        "kyc_thresholds",
+        "msb_registration_us",
+        "msb_registration_uk"
       ],
       "ai_relevance": "none",
       "real_time_relevance": "medium",
@@ -5403,7 +5431,9 @@
       ],
       "integrations": [],
       "compliance": [
-        "aml_str"
+        "aml_str",
+        "msb_registration_us",
+        "msb_registration_uk"
       ],
       "ai_relevance": "medium",
       "real_time_relevance": "medium",
@@ -5442,9 +5472,13 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "msb_registration_us"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "low",
       "depends_on": [
@@ -5483,7 +5517,9 @@
         "exchange_transaction",
         "branch"
       ],
-      "workflows": [],
+      "workflows": [
+        "settlement_reconciliation"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -5525,7 +5561,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -5567,9 +5605,13 @@
         "exchange_request",
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "quote_lifecycle"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "pci_dss"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "medium",
       "depends_on": [
@@ -5606,7 +5648,9 @@
       "entities": [
         "exchange_transaction"
       ],
-      "workflows": [],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -5617,6 +5661,250 @@
       "enhanced_by": [],
       "implementation_status": "missing",
       "confidence": "medium",
+      "path": "domains/exchange/feature-map.json"
+    },
+    {
+      "id": "exchange.sanctions_screening",
+      "name": "Sanctions / PEP Watchlist Screening",
+      "domain": "exchange",
+      "classification": "compliance",
+      "description": "Screen a customer, beneficiary, or counterparty against sanctions, PEP, and other watchlists before or during onboarding and before a remittance is paid out.",
+      "tags": [
+        "compliance",
+        "identity",
+        "ai"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "users": [
+        "compliance_officer",
+        "system"
+      ],
+      "entities": [
+        "customer",
+        "screening_match"
+      ],
+      "workflows": [
+        "customer_onboarding_kyc",
+        "sanctions_screening_escalation"
+      ],
+      "integrations": [
+        "sanctions_watchlist_screening"
+      ],
+      "compliance": [
+        "aml_str",
+        "msb_registration_uk"
+      ],
+      "ai_relevance": "medium",
+      "real_time_relevance": "high",
+      "depends_on": [
+        "exchange.customer_management"
+      ],
+      "enhanced_by": [
+        "exchange.beneficiary_management",
+        "exchange.aml_reporting"
+      ],
+      "implementation_status": "missing",
+      "confidence": "high",
+      "path": "domains/exchange/feature-map.json"
+    },
+    {
+      "id": "exchange.settlement_reconciliation",
+      "name": "Settlement & Cash Reconciliation",
+      "domain": "exchange",
+      "classification": "common",
+      "description": "Reconcile a branch's or period's completed transactions and cash positions against bank statements or the accounting ledger, matching entries and flagging discrepancies.",
+      "tags": [
+        "core",
+        "backend",
+        "compliance",
+        "reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "users": [
+        "branch_manager",
+        "system"
+      ],
+      "entities": [
+        "settlement_batch",
+        "exchange_transaction",
+        "cash_session",
+        "branch"
+      ],
+      "workflows": [
+        "settlement_reconciliation"
+      ],
+      "integrations": [
+        "accounting_system",
+        "bank_transfer_rail"
+      ],
+      "compliance": [],
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "depends_on": [
+        "exchange.buy_sell_transactions",
+        "exchange.branch_management"
+      ],
+      "enhanced_by": [
+        "exchange.remittance",
+        "exchange.reports_analytics"
+      ],
+      "implementation_status": "reference",
+      "confidence": "medium",
+      "path": "domains/exchange/feature-map.json"
+    },
+    {
+      "id": "exchange.refunds_cancellations",
+      "name": "Transaction Refunds & Cancellations",
+      "domain": "exchange",
+      "classification": "common",
+      "description": "Cancel a not-yet-settled exchange request or transaction, or reverse a completed transaction with a refund, restoring the till position.",
+      "tags": [
+        "common",
+        "customer",
+        "payment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "users": [
+        "teller",
+        "customer"
+      ],
+      "entities": [
+        "exchange_transaction",
+        "exchange_request"
+      ],
+      "workflows": [
+        "refund_cancellation"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "depends_on": [
+        "exchange.buy_sell_transactions",
+        "exchange.audit_log"
+      ],
+      "enhanced_by": [
+        "exchange.till_cash_management",
+        "exchange.commission_management"
+      ],
+      "implementation_status": "reference",
+      "confidence": "medium",
+      "path": "domains/exchange/feature-map.json"
+    },
+    {
+      "id": "exchange.beneficiary_management",
+      "name": "Remittance Beneficiary Management",
+      "domain": "exchange",
+      "classification": "common",
+      "description": "Save and reuse a remittance recipient's details across multiple sends for a customer, instead of re-entering them every time.",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "users": [
+        "customer",
+        "teller"
+      ],
+      "entities": [
+        "beneficiary",
+        "customer",
+        "remittance"
+      ],
+      "workflows": [
+        "remittance_lifecycle"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "depends_on": [
+        "exchange.customer_management",
+        "exchange.remittance"
+      ],
+      "enhanced_by": [],
+      "implementation_status": "missing",
+      "confidence": "low",
+      "path": "domains/exchange/feature-map.json"
+    },
+    {
+      "id": "exchange.transaction_limits",
+      "name": "Transaction & Velocity Limits",
+      "domain": "exchange",
+      "classification": "compliance",
+      "description": "Configure per-transaction, daily, and monthly limits on a customer's exchange or remittance activity, distinct from the one-off KYC identity-capture threshold, to catch structuring/velocity patterns.",
+      "tags": [
+        "compliance",
+        "backend"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "users": [
+        "administrator",
+        "compliance_officer"
+      ],
+      "entities": [
+        "customer",
+        "exchange_transaction"
+      ],
+      "workflows": [
+        "customer_onboarding_kyc"
+      ],
+      "integrations": [],
+      "compliance": [
+        "kyc_thresholds",
+        "aml_str"
+      ],
+      "ai_relevance": "low",
+      "real_time_relevance": "medium",
+      "depends_on": [
+        "exchange.customer_management",
+        "exchange.buy_sell_transactions"
+      ],
+      "enhanced_by": [
+        "exchange.kyc_thresholds"
+      ],
+      "implementation_status": "missing",
+      "confidence": "low",
       "path": "domains/exchange/feature-map.json"
     },
     {

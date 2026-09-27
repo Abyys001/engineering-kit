@@ -54,6 +54,132 @@
         "confidence": "medium",
         "notes": ""
       }
+    },
+    {
+      "id": "identity_verification_provider",
+      "name": "Identity Verification Provider",
+      "category": "identity",
+      "purpose": "Verify a customer's identity document (and, where used, a liveness/biometric check) during customer due diligence, instead of relying only on a visual check at the counter.",
+      "examples": [
+        "Onfido",
+        "Sumsub",
+        "Jumio",
+        "a national eID gateway"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "exchange.online_ordering"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "moov-io-customers"
+        ],
+        "confidence": "medium",
+        "notes": "FATF R.10 requires identification and verification using reliable independent source documents or data; outsourcing that to a provider is common practice, not a requirement. Vendors named as examples only."
+      }
+    },
+    {
+      "id": "sanctions_watchlist_screening",
+      "name": "Sanctions / PEP Watchlist Screening",
+      "category": "compliance",
+      "purpose": "Screen customer and beneficiary names against sanctions, PEP, and adverse-media lists, and re-screen on list updates.",
+      "examples": [
+        "OFAC SDN and Consolidated Sanctions lists",
+        "EU Consolidated Financial Sanctions List",
+        "UN Security Council Consolidated List",
+        "UK OFSI list",
+        "moov-io/watchman (self-hosted)"
+      ],
+      "protocols": [
+        "REST",
+        "bulk file download"
+      ],
+      "related_features": [
+        "exchange.sanctions_screening",
+        "exchange.aml_reporting",
+        "exchange.beneficiary_management"
+      ],
+      "classification": "compliance",
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "moov-io-watchman",
+          "eu-amld"
+        ],
+        "confidence": "high",
+        "notes": "FATF R.6/R.7 require targeted financial sanctions screening; the published lists are the authoritative data. Whether it is bought or self-hosted is the product's choice."
+      }
+    },
+    {
+      "id": "bank_transfer_rail",
+      "name": "Bank Transfer Rail",
+      "category": "payments",
+      "purpose": "Move settlement funds and remittance payouts over a bank payment rail, and ingest the resulting statement for reconciliation.",
+      "examples": [
+        "SEPA Credit Transfer",
+        "ACH (NACHA)",
+        "domestic wire / RTGS",
+        "SWIFT via a correspondent bank"
+      ],
+      "protocols": [
+        "ISO 20022 (pacs.008, pacs.002, camt.053)",
+        "NACHA ACH file",
+        "SFTP",
+        "REST"
+      ],
+      "related_features": [
+        "exchange.settlement_reconciliation",
+        "exchange.remittance",
+        "exchange.receipts_payments"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "iso20022",
+          "moov-io-ach",
+          "moov-io-iso20022",
+          "wolfsberg-correspondent-banking"
+        ],
+        "confidence": "high",
+        "notes": "ISO 20022 defines the message set and NACHA the ACH file format; moov-io/ach and moov-io/iso20022 are Apache-2.0 implementations of both. A bureau that only handles physical cash may use none of these."
+      }
+    },
+    {
+      "id": "accounting_system",
+      "name": "Accounting / General Ledger",
+      "category": "accounting",
+      "purpose": "Post daily takings, margin, commission, and settlement variances into the books, so the exchange system is not the accounting system of record.",
+      "examples": [
+        "Xero",
+        "QuickBooks",
+        "Odoo Accounting",
+        "a CSV/journal export into any GL"
+      ],
+      "protocols": [
+        "REST",
+        "CSV/journal export"
+      ],
+      "related_features": [
+        "exchange.settlement_reconciliation",
+        "exchange.reports_analytics",
+        "exchange.commission_management"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules",
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": "chfx-odoo-modules sits inside an accounting suite, so the posting is implicit; blnk shows the double-entry side. A file export is the low end of this integration and is near-universal."
+      }
     }
   ]
 }

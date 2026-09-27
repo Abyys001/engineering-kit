@@ -209,6 +209,490 @@
         "confidence": "high",
         "notes": "Obligation is authoritative; the specific case workflow is reasoned, not sourced from an OSS implementation."
       }
+    },
+    {
+      "id": "customer_onboarding_kyc",
+      "name": "Customer Onboarding and Due Diligence",
+      "actor": "teller",
+      "trigger": "A new customer transacts at or above the identification threshold, or opens an account for recurring business.",
+      "steps": [
+        "Capture the customer's name and identifying details",
+        "Capture and verify an identity document (in person, or through an identity-verification provider)",
+        "Screen the name against sanctions, PEP, and adverse-media lists",
+        "Record the purpose of the relationship and, where required, source of funds",
+        "Assign a risk rating and apply the matching due-diligence level",
+        "Activate the customer, or hold them pending compliance review"
+      ],
+      "entities": [
+        "customer",
+        "screening_match"
+      ],
+      "features": [
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "exchange.sanctions_screening",
+        "exchange.transaction_limits"
+      ],
+      "state_machine": {
+        "entity": "customer",
+        "initial": "active",
+        "terminal": [
+          "blocked"
+        ],
+        "states": [
+          "active",
+          "flagged",
+          "blocked"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "flagged",
+            "event": "screening_hit_or_risk_trigger"
+          },
+          {
+            "from": "flagged",
+            "to": "active",
+            "event": "cleared_by_compliance"
+          },
+          {
+            "from": "flagged",
+            "to": "blocked",
+            "event": "confirmed_match_or_refused"
+          },
+          {
+            "from": "active",
+            "to": "blocked",
+            "event": "blocked_by_compliance"
+          }
+        ]
+      },
+      "notifications": [
+        "compliance_review_required"
+      ],
+      "integrations": [
+        "identity_verification_provider",
+        "sanctions_watchlist_screening"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "eu-amld",
+          "moov-io-customers"
+        ],
+        "confidence": "high",
+        "notes": "Step order follows FATF R.10 customer due diligence and R.6/R.7 targeted financial sanctions; EU Regulation 2024/1624 makes currency-exchange offices obliged entities. The three customer states are the implementation pattern, not a standard's vocabulary."
+      }
+    },
+    {
+      "id": "sanctions_screening_escalation",
+      "name": "Screening Match Review and Escalation",
+      "actor": "compliance_officer",
+      "trigger": "A screening run raises a candidate match on a customer or beneficiary, or a watchlist update re-flags an existing record.",
+      "steps": [
+        "Open the candidate match and compare identifying data against the list entry",
+        "Record a disposition: false positive, or a genuine match",
+        "On a genuine match, freeze the customer or beneficiary and stop the pending transaction",
+        "Escalate to the nominated officer and consider a suspicious-activity report",
+        "File the decision and the evidence for audit"
+      ],
+      "entities": [
+        "screening_match",
+        "customer",
+        "beneficiary",
+        "aml_report"
+      ],
+      "features": [
+        "exchange.sanctions_screening",
+        "exchange.aml_reporting",
+        "exchange.audit_log"
+      ],
+      "state_machine": {
+        "entity": "screening_match",
+        "initial": "open",
+        "terminal": [
+          "true_match",
+          "false_positive"
+        ],
+        "states": [
+          "open",
+          "in_review",
+          "true_match",
+          "false_positive",
+          "escalated"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "in_review",
+            "event": "assign"
+          },
+          {
+            "from": "in_review",
+            "to": "false_positive",
+            "event": "discount"
+          },
+          {
+            "from": "in_review",
+            "to": "true_match",
+            "event": "confirm"
+          },
+          {
+            "from": "in_review",
+            "to": "escalated",
+            "event": "escalate"
+          },
+          {
+            "from": "escalated",
+            "to": "true_match",
+            "event": "confirm"
+          },
+          {
+            "from": "escalated",
+            "to": "false_positive",
+            "event": "discount"
+          }
+        ]
+      },
+      "notifications": [
+        "screening_match_raised",
+        "customer_frozen"
+      ],
+      "integrations": [
+        "sanctions_watchlist_screening"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "moov-io-watchman"
+        ],
+        "confidence": "medium",
+        "notes": "FATF R.6/R.7 require screening and freezing without delay; the review/disposition states are the common four-eyes pattern seen in Watchman's scored results, not a prescribed lifecycle."
+      }
+    },
+    {
+      "id": "quote_lifecycle",
+      "name": "Rate Quote and Expiry",
+      "actor": "customer",
+      "trigger": "A customer asks what a given amount will cost, online or at the counter.",
+      "steps": [
+        "Read the current buy/sell rate for the pair",
+        "Apply the configured margin and any commission",
+        "Present the all-in amount with an explicit validity window",
+        "Hold the quoted rate until it expires or the customer accepts",
+        "On acceptance, convert the quote into a transaction at the quoted rate",
+        "On expiry, require a fresh quote rather than re-pricing silently"
+      ],
+      "entities": [
+        "exchange_request",
+        "exchange_rate",
+        "currency"
+      ],
+      "features": [
+        "exchange.exchange_requests",
+        "exchange.rate_management",
+        "exchange.online_ordering",
+        "exchange.commission_management"
+      ],
+      "state_machine": {
+        "entity": "exchange_request",
+        "initial": "quoted",
+        "terminal": [
+          "expired",
+          "converted"
+        ],
+        "states": [
+          "quoted",
+          "expired",
+          "converted"
+        ],
+        "transitions": [
+          {
+            "from": "quoted",
+            "to": "converted",
+            "event": "accept"
+          },
+          {
+            "from": "quoted",
+            "to": "expired",
+            "event": "validity_window_elapsed"
+          }
+        ]
+      },
+      "notifications": [
+        "quote_issued",
+        "quote_expiring"
+      ],
+      "integrations": [
+        "rate_source"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations price against a stored rate; the explicit expiry window is the operational control that makes a quote distinct from a transaction. No authoritative source prescribes the validity period."
+      }
+    },
+    {
+      "id": "remittance_lifecycle",
+      "name": "Outbound Remittance Lifecycle",
+      "actor": "teller",
+      "trigger": "A customer sends money to a named beneficiary in another country.",
+      "steps": [
+        "Select or create the beneficiary and confirm payout method and destination",
+        "Screen sender and beneficiary, and attach the originator/payee data the transfer must carry",
+        "Quote the rate and total cost including fees",
+        "Collect funds and record the remittance",
+        "Transmit to the network partner or bank rail",
+        "Track to payout, then notify the sender",
+        "Handle non-payout: cancel and refund, or return the funds"
+      ],
+      "entities": [
+        "remittance",
+        "beneficiary",
+        "customer",
+        "exchange_transaction"
+      ],
+      "features": [
+        "exchange.remittance",
+        "exchange.beneficiary_management",
+        "exchange.notifications",
+        "exchange.sanctions_screening"
+      ],
+      "state_machine": {
+        "entity": "remittance",
+        "initial": "initiated",
+        "terminal": [
+          "paid_out",
+          "cancelled"
+        ],
+        "states": [
+          "initiated",
+          "in_transit",
+          "ready_for_pickup",
+          "paid_out",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "initiated",
+            "to": "in_transit",
+            "event": "transmit"
+          },
+          {
+            "from": "initiated",
+            "to": "cancelled",
+            "event": "cancel_before_transmission"
+          },
+          {
+            "from": "in_transit",
+            "to": "ready_for_pickup",
+            "event": "arrived_at_payout_agent"
+          },
+          {
+            "from": "in_transit",
+            "to": "paid_out",
+            "event": "credited_to_account"
+          },
+          {
+            "from": "in_transit",
+            "to": "cancelled",
+            "event": "returned_by_partner"
+          },
+          {
+            "from": "ready_for_pickup",
+            "to": "paid_out",
+            "event": "collected"
+          },
+          {
+            "from": "ready_for_pickup",
+            "to": "cancelled",
+            "event": "unclaimed_and_returned"
+          }
+        ]
+      },
+      "notifications": [
+        "remittance_sent",
+        "ready_for_pickup",
+        "remittance_paid_out",
+        "remittance_returned"
+      ],
+      "integrations": [
+        "remittance_network",
+        "bank_transfer_rail",
+        "sanctions_watchlist_screening"
+      ],
+      "provenance": {
+        "sources": [
+          "eu-tfr-2023-1113",
+          "iso20022",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "EU Regulation 2023/1113 (and FATF R.16) require originator and payee information to travel with the transfer, which fixes the screening step's position. States are those already recorded on the remittance entity, corroborated by the cash-pickup model in chfx-odoo-modules; only one implementation source backs the pickup branch."
+      }
+    },
+    {
+      "id": "settlement_reconciliation",
+      "name": "Settlement and Reconciliation",
+      "actor": "branch_manager",
+      "trigger": "End of day, or the agreed settlement cycle with a bank or network partner.",
+      "steps": [
+        "Group the period's transactions and remittances into a settlement batch per currency",
+        "Compute the expected position from the ledger",
+        "Submit or receive settlement over the bank rail",
+        "Ingest the counterparty statement",
+        "Match statement lines to batch lines and compute the variance",
+        "Investigate and dispute unmatched lines",
+        "Post the settled totals and any variance to the general ledger"
+      ],
+      "entities": [
+        "settlement_batch",
+        "exchange_transaction",
+        "remittance",
+        "cash_session"
+      ],
+      "features": [
+        "exchange.settlement_reconciliation",
+        "exchange.branch_management",
+        "exchange.reports_analytics",
+        "exchange.receipts_payments"
+      ],
+      "state_machine": {
+        "entity": "settlement_batch",
+        "initial": "open",
+        "terminal": [
+          "reconciled",
+          "disputed"
+        ],
+        "states": [
+          "open",
+          "submitted",
+          "settled",
+          "reconciled",
+          "disputed"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "submitted",
+            "event": "submit_for_settlement"
+          },
+          {
+            "from": "submitted",
+            "to": "settled",
+            "event": "funds_confirmed"
+          },
+          {
+            "from": "settled",
+            "to": "reconciled",
+            "event": "statement_fully_matched"
+          },
+          {
+            "from": "settled",
+            "to": "disputed",
+            "event": "variance_found"
+          },
+          {
+            "from": "disputed",
+            "to": "reconciled",
+            "event": "variance_resolved"
+          }
+        ]
+      },
+      "notifications": [
+        "settlement_submitted",
+        "reconciliation_variance"
+      ],
+      "integrations": [
+        "bank_transfer_rail",
+        "accounting_system"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "iso20022",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Blnk provides the double-entry balance and reconciliation model; ISO 20022 camt.053 is the statement being matched. The batch states are the common operational pattern, not a standard's vocabulary."
+      }
+    },
+    {
+      "id": "refund_cancellation",
+      "name": "Refund and Cancellation of a Completed Transaction",
+      "actor": "branch_manager",
+      "trigger": "A completed transaction was keyed wrong, the customer withdraws, or a remittance could not be paid out.",
+      "steps": [
+        "Locate the original transaction and check it is still reversible under policy",
+        "Require an authorising role and a stated reason",
+        "Post a compensating reversal rather than editing the original record",
+        "Adjust the till or bank position for the currency actually moved",
+        "Reverse any commission earned",
+        "Issue the refund to the customer and record the receipt",
+        "Leave both the original and the reversal visible in the audit trail"
+      ],
+      "entities": [
+        "exchange_transaction",
+        "till",
+        "remittance",
+        "settlement_batch"
+      ],
+      "features": [
+        "exchange.refunds_cancellations",
+        "exchange.receipts_payments",
+        "exchange.till_cash_management",
+        "exchange.audit_log",
+        "exchange.commission_management"
+      ],
+      "state_machine": {
+        "entity": "exchange_transaction",
+        "initial": "draft",
+        "terminal": [
+          "completed",
+          "voided"
+        ],
+        "states": [
+          "draft",
+          "completed",
+          "voided"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "completed",
+            "event": "confirm"
+          },
+          {
+            "from": "draft",
+            "to": "voided",
+            "event": "cancel"
+          },
+          {
+            "from": "completed",
+            "to": "voided",
+            "event": "reverse_with_authorisation"
+          }
+        ]
+      },
+      "notifications": [
+        "refund_issued",
+        "reversal_authorised"
+      ],
+      "integrations": [
+        "accounting_system"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Compensating-entry reversal rather than mutation is the double-entry rule Blnk enforces (an immutable ledger); the authorisation requirement and reversibility window are policy, and no authoritative source fixes them."
+      }
     }
   ]
 }

@@ -3561,9 +3561,12 @@
         "chfx-odoo-modules",
         "core",
         "customer",
+        "customer_onboarding_kyc",
         "customer_portal",
         "identity",
         "missing",
+        "msb_registration_uk",
+        "msb_registration_us",
         "profile_crud",
         "repeat_customer_lookup",
         "teller",
@@ -3585,6 +3588,7 @@
         "currency_crud",
         "iso4217",
         "missing",
+        "rate_update_lifecycle",
         "teller",
         "web"
       ]
@@ -3629,6 +3633,7 @@
         "mid_rate_snapshot",
         "missing",
         "rate_source",
+        "rate_update_lifecycle",
         "real-time",
         "real_time",
         "scheduled_pull",
@@ -3702,6 +3707,7 @@
         "payment",
         "receive",
         "remittance",
+        "remittance_lifecycle",
         "remittance_network",
         "send",
         "teller",
@@ -3746,6 +3752,8 @@
         "location",
         "missing",
         "per_branch_rate_override",
+        "rate_update_lifecycle",
+        "settlement_reconciliation",
         "web"
       ]
     },
@@ -3760,6 +3768,7 @@
         "bdc-api",
         "branch",
         "branch_manager",
+        "cash_session_lifecycle",
         "chfx-odoo-modules",
         "common",
         "missing",
@@ -3777,14 +3786,18 @@
         "admin",
         "backend",
         "bdc-api",
+        "chfx-odoo-modules",
         "common",
         "customer",
         "customer_portal",
         "document",
         "duplicate_reprint",
         "exchange_transaction",
+        "exchange_transaction_lifecycle",
         "missing",
+        "pci_dss",
         "receipt_generation",
+        "refund_cancellation",
         "teller",
         "web"
       ]
@@ -3800,13 +3813,18 @@
         "compliance",
         "compliance_officer",
         "customer",
+        "customer_onboarding_kyc",
         "enhanced_due_diligence",
         "exchange_transaction",
+        "exchange_transaction_lifecycle",
         "fatf-recommendations",
         "id_capture",
         "identity",
+        "identity_verification_provider",
         "kyc_thresholds",
         "missing",
+        "msb_registration_uk",
+        "msb_registration_us",
         "teller",
         "threshold_config",
         "web"
@@ -3828,6 +3846,8 @@
         "exchange_transaction",
         "fatf-recommendations",
         "missing",
+        "msb_registration_uk",
+        "msb_registration_us",
         "str_case_management",
         "system",
         "threshold_flagging",
@@ -3849,7 +3869,9 @@
         "compliance_officer",
         "core",
         "exchange_transaction",
+        "exchange_transaction_lifecycle",
         "missing",
+        "msb_registration_us",
         "web"
       ]
     },
@@ -3872,6 +3894,7 @@
         "margin_report",
         "missing",
         "reporting",
+        "settlement_reconciliation",
         "web"
       ]
     },
@@ -3889,6 +3912,7 @@
         "optional",
         "rate_alert",
         "real_time",
+        "remittance_lifecycle",
         "remittance_ready_alert",
         "system",
         "web"
@@ -3908,6 +3932,8 @@
         "missing",
         "mobile",
         "optional",
+        "pci_dss",
+        "quote_lifecycle",
         "rate_lookup",
         "reserve_for_pickup",
         "web"
@@ -3926,8 +3952,137 @@
         "commission_rule_config",
         "common",
         "exchange_transaction",
+        "exchange_transaction_lifecycle",
         "missing",
         "per_channel_fee",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "exchange.sanctions_screening",
+      "domain": "exchange",
+      "keys": [
+        "admin",
+        "ai",
+        "aml_str",
+        "backend",
+        "compliance",
+        "compliance_officer",
+        "customer",
+        "customer_onboarding_kyc",
+        "false_positive_clearing",
+        "fatf-recommendations",
+        "hit_review_queue",
+        "identity",
+        "missing",
+        "moov-io-customers",
+        "moov-io-watchman",
+        "msb_registration_uk",
+        "real_time",
+        "sanctions_screening_escalation",
+        "sanctions_watchlist_screening",
+        "screening_match",
+        "system",
+        "watchlist_match_scoring",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "exchange.settlement_reconciliation",
+      "domain": "exchange",
+      "keys": [
+        "accounting_system",
+        "admin",
+        "auto_matching",
+        "backend",
+        "bank_transfer_rail",
+        "blnk",
+        "branch",
+        "branch_manager",
+        "cash_session",
+        "chfx-odoo-modules",
+        "common",
+        "compliance",
+        "core",
+        "discrepancy_flagging",
+        "exchange_transaction",
+        "manual_match_override",
+        "reference",
+        "reporting",
+        "settlement_batch",
+        "settlement_reconciliation",
+        "system",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "exchange.refunds_cancellations",
+      "domain": "exchange",
+      "keys": [
+        "admin",
+        "backend",
+        "bdc-api",
+        "blnk",
+        "cancel_before_settlement",
+        "chfx-odoo-modules",
+        "common",
+        "customer",
+        "exchange_request",
+        "exchange_transaction",
+        "payment",
+        "post_completion_refund",
+        "reference",
+        "refund_cancellation",
+        "teller",
+        "till_position_reversal",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "exchange.beneficiary_management",
+      "domain": "exchange",
+      "keys": [
+        "admin",
+        "backend",
+        "beneficiary",
+        "beneficiary_crud",
+        "beneficiary_lookup",
+        "chfx-odoo-modules",
+        "common",
+        "customer",
+        "customer_portal",
+        "missing",
+        "remittance",
+        "remittance_lifecycle",
+        "teller",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "exchange.transaction_limits",
+      "domain": "exchange",
+      "keys": [
+        "admin",
+        "administrator",
+        "aml_str",
+        "backend",
+        "compliance",
+        "compliance_officer",
+        "customer",
+        "customer_onboarding_kyc",
+        "daily_monthly_aggregate_cap",
+        "exchange_transaction",
+        "fatf-recommendations",
+        "kyc_thresholds",
+        "missing",
+        "per_transaction_cap",
+        "real_time",
+        "velocity_alerting",
         "web"
       ]
     },
@@ -4092,6 +4247,35 @@
       ]
     },
     {
+      "kind": "entity",
+      "id": "exchange:beneficiary",
+      "domain": "exchange",
+      "keys": [
+        "exchange.beneficiary_management",
+        "exchange.remittance",
+        "Creditor / CreditorAccount (pacs.008)"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "exchange:screening_match",
+      "domain": "exchange",
+      "keys": [
+        "exchange.sanctions_screening",
+        "exchange.aml_reporting"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "exchange:settlement_batch",
+      "domain": "exchange",
+      "keys": [
+        "exchange.settlement_reconciliation",
+        "exchange.reports_analytics",
+        "camt.053 BankToCustomerStatement"
+      ]
+    },
+    {
       "kind": "workflow",
       "id": "exchange:exchange_transaction_lifecycle",
       "domain": "exchange",
@@ -4135,6 +4319,93 @@
       ]
     },
     {
+      "kind": "workflow",
+      "id": "exchange:customer_onboarding_kyc",
+      "domain": "exchange",
+      "keys": [
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "exchange.sanctions_screening",
+        "exchange.transaction_limits",
+        "customer",
+        "screening_match"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "exchange:sanctions_screening_escalation",
+      "domain": "exchange",
+      "keys": [
+        "exchange.sanctions_screening",
+        "exchange.aml_reporting",
+        "exchange.audit_log",
+        "screening_match",
+        "customer",
+        "beneficiary",
+        "aml_report"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "exchange:quote_lifecycle",
+      "domain": "exchange",
+      "keys": [
+        "exchange.exchange_requests",
+        "exchange.rate_management",
+        "exchange.online_ordering",
+        "exchange.commission_management",
+        "exchange_request",
+        "exchange_rate",
+        "currency"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "exchange:remittance_lifecycle",
+      "domain": "exchange",
+      "keys": [
+        "exchange.remittance",
+        "exchange.beneficiary_management",
+        "exchange.notifications",
+        "exchange.sanctions_screening",
+        "remittance",
+        "beneficiary",
+        "customer",
+        "exchange_transaction"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "exchange:settlement_reconciliation",
+      "domain": "exchange",
+      "keys": [
+        "exchange.settlement_reconciliation",
+        "exchange.branch_management",
+        "exchange.reports_analytics",
+        "exchange.receipts_payments",
+        "settlement_batch",
+        "exchange_transaction",
+        "remittance",
+        "cash_session"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "exchange:refund_cancellation",
+      "domain": "exchange",
+      "keys": [
+        "exchange.refunds_cancellations",
+        "exchange.receipts_payments",
+        "exchange.till_cash_management",
+        "exchange.audit_log",
+        "exchange.commission_management",
+        "exchange_transaction",
+        "till",
+        "remittance",
+        "settlement_batch"
+      ]
+    },
+    {
       "kind": "integration",
       "id": "exchange:rate_source",
       "domain": "exchange",
@@ -4156,6 +4427,63 @@
         "exchange.remittance",
         "payments",
         "proprietary partner APIs"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "exchange:identity_verification_provider",
+      "domain": "exchange",
+      "keys": [
+        "REST",
+        "common",
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "exchange.online_ordering",
+        "identity",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "exchange:sanctions_watchlist_screening",
+      "domain": "exchange",
+      "keys": [
+        "REST",
+        "bulk file download",
+        "compliance",
+        "exchange.aml_reporting",
+        "exchange.beneficiary_management",
+        "exchange.sanctions_screening"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "exchange:bank_transfer_rail",
+      "domain": "exchange",
+      "keys": [
+        "ISO 20022 (pacs.008, pacs.002, camt.053)",
+        "NACHA ACH file",
+        "REST",
+        "SFTP",
+        "common",
+        "exchange.receipts_payments",
+        "exchange.remittance",
+        "exchange.settlement_reconciliation",
+        "payments"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "exchange:accounting_system",
+      "domain": "exchange",
+      "keys": [
+        "CSV/journal export",
+        "REST",
+        "accounting",
+        "common",
+        "exchange.commission_management",
+        "exchange.reports_analytics",
+        "exchange.settlement_reconciliation"
       ]
     },
     {
@@ -4190,6 +4518,43 @@
         "exchange.customer_management",
         "exchange.kyc_thresholds",
         "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "exchange:msb_registration_us",
+      "domain": "exchange",
+      "keys": [
+        "United States (FinCEN)",
+        "exchange.aml_reporting",
+        "exchange.audit_log",
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "exchange:msb_registration_uk",
+      "domain": "exchange",
+      "keys": [
+        "United Kingdom (HMRC as supervisor; FCA for payment/e-money permissions)",
+        "exchange.aml_reporting",
+        "exchange.customer_management",
+        "exchange.kyc_thresholds",
+        "exchange.sanctions_screening",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "exchange:pci_dss",
+      "domain": "exchange",
+      "keys": [
+        "exchange.online_ordering",
+        "exchange.receipts_payments",
+        "global (card-network contractual, not statutory)",
+        "standard"
       ]
     },
     {
@@ -4244,6 +4609,96 @@
       "keys": [
         "authoritative",
         "EU public law (EUR-Lex)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:blnk",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:moov-io-watchman",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:moov-io-customers",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:moov-io-ach",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:moov-io-iso20022",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:pci-dss",
+      "domain": "exchange",
+      "keys": [
+        "authoritative",
+        "PCI Security Standards Council public standard"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:eu-tfr-2023-1113",
+      "domain": "exchange",
+      "keys": [
+        "authoritative",
+        "EU public law (EUR-Lex)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:fincen-msb",
+      "domain": "exchange",
+      "keys": [
+        "authoritative",
+        "US federal government public information"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:hmrc-msb-guidance",
+      "domain": "exchange",
+      "keys": [
+        "authoritative",
+        "UK Open Government Licence"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:wolfsberg-correspondent-banking",
+      "domain": "exchange",
+      "keys": [
+        "authoritative",
+        "Wolfsberg Group public guidance"
       ]
     },
     {

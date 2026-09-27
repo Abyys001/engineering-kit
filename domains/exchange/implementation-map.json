@@ -218,6 +218,73 @@
       "references": [],
       "status": "missing",
       "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+    },
+    {
+      "feature": "exchange.settlement_reconciliation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source/reconciliation.go",
+        "sources/domains/blnk/source/ledger.go",
+        "sources/domains/blnk/source/balance.go"
+      ],
+      "status": "reference",
+      "notes": "Blnk (Apache-2.0, on disk) implements statement matching and reconciliation over an immutable double-entry ledger. Go, so it is a model reference for our NestJS/Drizzle side, not portable code."
+    },
+    {
+      "feature": "exchange.refunds_cancellations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source/transaction.go",
+        "sources/domains/blnk/source/ledger.go"
+      ],
+      "status": "reference",
+      "notes": "Blnk's immutable-ledger model is the reference for reversal by compensating entry rather than mutation. The authorisation and reversibility policy has no source."
+    },
+    {
+      "feature": "exchange.sanctions_screening",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "moov-io/watchman (Apache-2.0) is the identified reference but is NOT on disk and was deliberately not downloaded. Screening needs list ingestion plus fuzzy name matching, neither of which exists in the kit."
+    },
+    {
+      "feature": "exchange.beneficiary_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No reusable implementation in the kit and no local source under `sources/` covers it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+    },
+    {
+      "feature": "exchange.transaction_limits",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Threshold configuration and cumulative-window aggregation; nothing in the kit or on disk covers it. Jurisdiction-specific thresholds stay a human-review item in compliance.json."
     }
   ]
 }

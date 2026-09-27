@@ -70,6 +70,78 @@
         "confidence": "high",
         "notes": ""
       }
+    },
+    {
+      "id": "msb_registration_us",
+      "name": "MSB Registration and Program Requirements (US)",
+      "kind": "regulation",
+      "version": "31 CFR Chapter X (FinCEN); registration via FinCEN Form 107",
+      "jurisdiction": "United States (FinCEN)",
+      "scope": "A business that exchanges currency above the de minimis threshold is a money services business: it must register with FinCEN, renew that registration, maintain a written AML program with a designated compliance officer and independent review, keep records, and file the required reports. Whether a given operation is in scope, and the current de minimis figure, must be confirmed against FinCEN's own guidance.",
+      "affected_features": [
+        "exchange.aml_reporting",
+        "exchange.kyc_thresholds",
+        "exchange.customer_management",
+        "exchange.audit_log"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only to US-facing operations. Nothing in this kit registers a business or constitutes an AML program; building the features below is not evidence of compliance.",
+      "url": "https://www.fincen.gov/resources/money-services-business-msb",
+      "provenance": {
+        "sources": [
+          "fincen-msb",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": "Sourced from FinCEN's own MSB resource page. Thresholds and scope tests were not transcribed here on purpose — they change and are the reviewer's job."
+      }
+    },
+    {
+      "id": "msb_registration_uk",
+      "name": "MSB Registration and Supervision (UK)",
+      "kind": "regulation",
+      "version": "Money Laundering Regulations 2017 as amended; HMRC guidance AMLG2400 (MSB sector)",
+      "jurisdiction": "United Kingdom (HMRC as supervisor; FCA for payment/e-money permissions)",
+      "scope": "Currency exchange offices are supervised money service businesses: registration with HMRC, a risk assessment, customer due diligence, record keeping, and reporting. HMRC's MSB sector guidance sets out what supervisors expect to see.",
+      "affected_features": [
+        "exchange.aml_reporting",
+        "exchange.kyc_thresholds",
+        "exchange.customer_management",
+        "exchange.sanctions_screening"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only to UK-facing operations. Registration, fitness-and-propriety tests, and any FCA permission are outside anything software can satisfy.",
+      "url": "https://www.gov.uk/hmrc-internal-manuals/anti-money-laundering-guidance",
+      "provenance": {
+        "sources": [
+          "hmrc-msb-guidance",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": "HMRC guidance is published under the Open Government Licence. Specific obligations were not transcribed verbatim; the URL is the authority."
+      }
+    },
+    {
+      "id": "pci_dss",
+      "name": "PCI DSS — Cardholder Data",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual, not statutory)",
+      "scope": "Applies only where the product accepts, processes, transmits, or stores payment-card data — an online order-ahead flow taking a card, or a counter terminal integrated into the product. A cash-only bureau is out of scope. The cheapest posture is to never let card data touch the application (hosted fields or a terminal that tokenises), which changes which SAQ applies.",
+      "affected_features": [
+        "exchange.receipts_payments",
+        "exchange.online_ordering"
+      ],
+      "requires_human_review": true,
+      "notes": "Scope and the applicable Self-Assessment Questionnaire depend on how cards are taken; a QSA or the acquiring bank decides, not this catalog. Implementing tokenisation is not the same as being validated.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "pci-dss"
+        ],
+        "confidence": "high",
+        "notes": "Version 4.0.1 is the current published revision at the PCI SSC document library."
+      }
     }
   ]
 }

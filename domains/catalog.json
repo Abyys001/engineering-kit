@@ -223,37 +223,47 @@
       "nace": [
         "K64.99"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
-      "feature_count": 18,
+      "feature_count": 23,
       "features_by_classification": {
         "core": 8,
-        "common": 6,
-        "compliance": 2,
+        "common": 9,
+        "compliance": 4,
         "optional": 2
       },
       "features_by_confidence": {
-        "high": 2,
-        "medium": 13,
-        "low": 3
+        "high": 3,
+        "medium": 16,
+        "low": 4
       },
-      "entity_count": 11,
+      "entity_count": 14,
       "role_count": 6,
-      "workflow_count": 4,
-      "state_machine_count": 3,
-      "compliance_count": 3,
-      "integration_count": 2,
+      "workflow_count": 10,
+      "state_machine_count": 9,
+      "compliance_count": 6,
+      "integration_count": 6,
       "standards": [
         "fatf-recommendations",
         "iso4217",
         "iso20022",
-        "eu-amld"
+        "eu-amld",
+        "pci-dss",
+        "eu-tfr-2023-1113",
+        "fincen-msb",
+        "hmrc-msb-guidance",
+        "wolfsberg-correspondent-banking"
       ],
       "implementation_references": [
         "bdc-api",
-        "chfx-odoo-modules"
+        "chfx-odoo-modules",
+        "blnk",
+        "moov-io-watchman",
+        "moov-io-customers",
+        "moov-io-ach",
+        "moov-io-iso20022"
       ],
-      "source_count": 6,
+      "source_count": 16,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,

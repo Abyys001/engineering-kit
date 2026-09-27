@@ -152,6 +152,102 @@
       "to": "shared.notifications",
       "type": "requires",
       "reason": "Customer alerts are delivered through the shared notification channel."
+    },
+    {
+      "from": "exchange.sanctions_screening",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "There has to be a customer record to screen."
+    },
+    {
+      "from": "exchange.sanctions_screening",
+      "to": "exchange.beneficiary_management",
+      "type": "enhances",
+      "reason": "Screening the payee as well as the sender only applies once beneficiaries are stored."
+    },
+    {
+      "from": "exchange.sanctions_screening",
+      "to": "exchange.aml_reporting",
+      "type": "enhances",
+      "reason": "A confirmed match is a common trigger for a suspicious-activity report, but screening stands alone."
+    },
+    {
+      "from": "exchange.beneficiary_management",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "A beneficiary belongs to a sending customer."
+    },
+    {
+      "from": "exchange.beneficiary_management",
+      "to": "exchange.remittance",
+      "type": "requires",
+      "reason": "Stored payout details only exist to serve remittances."
+    },
+    {
+      "from": "exchange.settlement_reconciliation",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "A settlement batch groups completed transactions."
+    },
+    {
+      "from": "exchange.settlement_reconciliation",
+      "to": "exchange.branch_management",
+      "type": "requires",
+      "reason": "Settlement is per branch/entity position."
+    },
+    {
+      "from": "exchange.settlement_reconciliation",
+      "to": "exchange.remittance",
+      "type": "enhances",
+      "reason": "Remittance payouts settle through the same batch when the product sends money."
+    },
+    {
+      "from": "exchange.settlement_reconciliation",
+      "to": "exchange.reports_analytics",
+      "type": "enhances",
+      "reason": "Variance reporting is where reconciliation output is read."
+    },
+    {
+      "from": "exchange.refunds_cancellations",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "There must be a completed transaction to reverse."
+    },
+    {
+      "from": "exchange.refunds_cancellations",
+      "to": "exchange.audit_log",
+      "type": "requires",
+      "reason": "A reversal is only defensible if both entries stay visible."
+    },
+    {
+      "from": "exchange.refunds_cancellations",
+      "to": "exchange.till_cash_management",
+      "type": "enhances",
+      "reason": "The till position needs adjusting when cash actually moved."
+    },
+    {
+      "from": "exchange.refunds_cancellations",
+      "to": "exchange.commission_management",
+      "type": "enhances",
+      "reason": "Commission earned on the original is reversed with it, where commission is used."
+    },
+    {
+      "from": "exchange.transaction_limits",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "Limits are applied per customer and per risk rating."
+    },
+    {
+      "from": "exchange.transaction_limits",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "A limit is evaluated against transaction amounts."
+    },
+    {
+      "from": "exchange.transaction_limits",
+      "to": "exchange.kyc_thresholds",
+      "type": "enhances",
+      "reason": "Thresholds and limits are configured together but are separate controls."
     }
   ]
 }
