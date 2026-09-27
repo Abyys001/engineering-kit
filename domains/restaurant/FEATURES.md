@@ -10,41 +10,41 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 |---|---|---|---|---|---|---|---|
 | `restaurant.dine_in_orders` Dine-in order taking | Capture an order against a table/seat, send to kitchen, and track status through to billing. | high | web, mobile, admin, backend, real_time | high | low | reference | frappe-hospitality, odoo-pos-restaurant, ury |
 | `restaurant.kitchen_display` Kitchen display system (KDS) | Route order tickets to kitchen stations, track prep status, and flag delayed items in real time. | medium | web, mobile, backend, real_time | core | medium | missing | odoo-pos-restaurant, ury |
-| `restaurant.menu` Menu management | Categories, items, prices, and availability windows for a restaurant's sellable menu. | high | web, mobile, admin, customer_portal, backend | low | medium | reference | frappe-hospitality, odoo-pos-restaurant, ury |
+| `restaurant.menu` Menu management | Categories, items, prices, and availability windows for a restaurant's sellable menu. | high | web, admin, customer_portal, backend | low | medium | reference | frappe-hospitality, odoo-pos-restaurant, ury |
 | `restaurant.payments` In-restaurant payment capture | Charge a table's bill through a payment provider; supports pay-at-table and receipt printing. | high | web, mobile, admin, backend | medium | low | reference | frappe-hospitality, odoo-pos-restaurant, ury |
-| `restaurant.reservations` Table reservations | Book a table for a date/time and party size; capacity and time-window conflict checking. | low | web, mobile, admin, customer_portal, backend | medium | medium | reference | frappe-hospitality |
+| `restaurant.reservations` Table reservations | Book a table for a date/time and party size; capacity and time-window conflict checking. | medium | web, mobile, admin, customer_portal, backend | medium | medium | reference | frappe-hospitality, satisfecho-pos |
 | `restaurant.tables` Tables and floor plan | Define dining areas, tables, and seating capacity; visual floor-plan layout with per-table status (available, occupied, reserved, cleaning). | high | web, mobile, admin, backend, real_time | medium | low | reference | frappe-hospitality, odoo-pos-restaurant, ury |
 
-## Common (12)
+## Common (11)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `restaurant.delivery_orders` Delivery orders | Orders fulfilled by delivery to a customer address, with own or third-party couriers. | low | web, mobile, admin, customer_portal, backend, real_time | medium | low | missing | wikipedia-online-food-ordering |
-| `restaurant.inventory` Ingredient inventory | Track stock levels of ingredients and supplies used to prepare menu items. | low | web, mobile, admin, backend | low | medium | missing | wikipedia-point-of-sale |
-| `restaurant.menu_allergen_labeling` Allergen and nutrition labelling | Flag allergens and (where required) publish calorie/nutrition information per menu item. | high | web, mobile, admin, customer_portal, backend | none | none | missing | eu-1169-2011, us-fda-menu-labeling |
-| `restaurant.menu_modifiers` Menu modifiers and variants | Add-ons, size options, ingredient substitutions, and combo choices attached to a menu item. | medium | web, mobile, admin, backend | none | none | missing | odoo-pos-restaurant, ury |
-| `restaurant.online_ordering` Online ordering | Customer-facing web/app storefront for takeout and delivery ordering against the live menu. | low | web, mobile, admin, customer_portal, backend | low | none | missing | wikipedia-online-food-ordering |
-| `restaurant.pos_integration` POS integration | Connect to or embed a point-of-sale system for order capture and payment settlement. | low | web, mobile, admin, backend | medium | none | missing | frappe-hospitality, odoo-pos-restaurant, ury |
-| `restaurant.recipes` Recipes and yield | Bill-of-materials per menu item: ingredient quantities and yield, used to cost dishes and deplete stock. | low | web, mobile, admin, backend | none | low | missing | wikipedia-point-of-sale |
+| `restaurant.inventory` Ingredient inventory | Track stock levels of ingredients and supplies used to prepare menu items. | high | web, admin, backend | low | medium | missing | satisfecho-pos, restopos, flutter-pos-system |
+| `restaurant.menu_allergen_labeling` Allergen and nutrition labelling | Flag allergens and (where required) publish calorie/nutrition information per menu item. | high | web, admin, customer_portal, backend | none | none | missing | eu-1169-2011, us-fda-menu-labeling |
+| `restaurant.menu_modifiers` Menu modifiers and variants | Add-ons, size options, ingredient substitutions, and combo choices attached to a menu item. | medium | web, admin, backend | none | none | missing | odoo-pos-restaurant, ury |
+| `restaurant.online_ordering` Online ordering | Customer-facing web/app storefront for takeout and delivery ordering against the live menu. | medium | web, mobile, admin, customer_portal, backend | low | none | missing | satisfecho-pos, enatega-food-delivery-multivendor |
+| `restaurant.pos_integration` POS integration | Connect to or embed a point-of-sale system for order capture and payment settlement. | medium | web, admin, backend | medium | none | missing | frappe-hospitality, odoo-pos-restaurant, ury, square-nodejs-sdk |
+| `restaurant.recipes` Recipes and yield | Bill-of-materials per menu item: ingredient quantities and yield, used to cost dishes and deplete stock. | medium | web, admin, backend | none | low | missing | satisfecho-pos, flutter-pos-system |
 | `restaurant.split_bills` Split bills | Divide a table's bill by item, by seat, or evenly across a party. | medium | web, mobile, admin, backend | low | none | missing | odoo-pos-restaurant, ury |
-| `restaurant.staff_shifts` Staff shift scheduling | Plan and publish staff work shifts and track clock-in/clock-out. | low | web, mobile, admin, backend | none | low | missing | wikipedia-point-of-sale |
-| `restaurant.takeout_orders` Takeout / pickup orders | Orders placed for customer pickup rather than dine-in; no table assignment. | low | web, mobile, admin, customer_portal, backend | medium | none | missing | ury |
-| `restaurant.tips` Tips and gratuity | Capture tip amount at payment and record it against the server/order for payout and reporting. | low | web, mobile, admin, backend | none | none | missing | frappe-hospitality |
-| `restaurant.waitlist` Walk-in waitlist | Queue walk-in parties without a reservation; estimated wait time and notify-when-ready. | low | web, mobile, admin, customer_portal, backend | medium | low | missing | frappe-hospitality |
+| `restaurant.staff_shifts` Staff shift scheduling | Plan and publish staff work shifts and track clock-in/clock-out. | high | web, mobile, admin, backend | none | low | missing | satisfecho-pos, restopos, square-nodejs-sdk |
+| `restaurant.takeout_orders` Takeout / pickup orders | Orders placed for customer pickup rather than dine-in; no table assignment. | medium | web, mobile, admin, customer_portal, backend | medium | none | missing | ury, restopos |
+| `restaurant.tips` Tips and gratuity | Capture tip amount at payment and record it against the server/order for payout and reporting. | high | web, mobile, admin, backend | none | none | missing | frappe-hospitality, satisfecho-pos, enatega-food-delivery-multivendor |
+| `restaurant.waitlist` Walk-in waitlist | Queue walk-in parties without a reservation; estimated wait time and notify-when-ready. | medium | web, mobile, admin, customer_portal, backend | medium | low | missing | frappe-hospitality, satisfecho-pos |
 
-## Recommended (4)
-
-| Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
-|---|---|---|---|---|---|---|---|
-| `restaurant.loyalty` Loyalty and rewards | Points, punch cards, or tiered rewards tied to a guest's order history. | low | web, mobile, admin, customer_portal, backend | none | medium | missing | ury, wikipedia-loyalty-program |
-| `restaurant.qr_code_table_ordering` QR code table ordering | Guests scan a table QR code to view the menu and order from their own device. | low | web, mobile, admin, customer_portal, backend | medium | none | missing | wikipedia-online-food-ordering |
-| `restaurant.reviews` Customer reviews and ratings | Collect and display post-visit ratings/feedback tied to an order or visit. | low | web, mobile, admin, customer_portal, backend | none | medium | missing | wikipedia-customer-review |
-| `restaurant.third_party_delivery_integration` Third-party delivery marketplace integration | Publish menu and receive orders from delivery marketplaces (e.g. aggregator apps). | low | web, mobile, admin, backend | low | none | missing | wikipedia-online-food-ordering |
-
-## Optional (3)
+## Recommended (3)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `restaurant.gift_cards` Gift cards | Sell and redeem stored-value gift cards. | low | web, mobile, admin, customer_portal, backend | none | none | missing | wikipedia-gift-card |
-| `restaurant.multi_location_management` Multi-location management | Manage menus, pricing, and reporting across a chain of restaurant locations from one account. | low | web, mobile, admin, backend | none | none | missing | frappe-hospitality |
+| `restaurant.qr_code_table_ordering` QR code table ordering | Guests scan a table QR code to view the menu and order from their own device. | medium | web, mobile, admin, customer_portal, backend | medium | none | missing | satisfecho-pos, wikipedia-online-food-ordering |
+| `restaurant.reviews` Customer reviews and ratings | Collect and display post-visit ratings/feedback tied to an order or visit. | medium | web, mobile, admin, customer_portal, backend | none | medium | missing | satisfecho-pos, enatega-food-delivery-multivendor |
+| `restaurant.third_party_delivery_integration` Third-party delivery marketplace integration | Publish menu and receive orders from delivery marketplaces (e.g. aggregator apps). | medium | web, admin, backend | low | none | missing | satisfecho-pos, wikipedia-online-food-ordering |
+
+## Optional (5)
+
+| Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
+|---|---|---|---|---|---|---|---|
+| `restaurant.delivery_orders` Delivery orders | Orders fulfilled by delivery to a customer address, with own or third-party couriers. | medium | web, mobile, admin, customer_portal, backend, real_time | medium | low | missing | satisfecho-pos, enatega-food-delivery-multivendor, wikipedia-online-food-ordering |
+| `restaurant.gift_cards` Gift cards | Sell and redeem stored-value gift cards. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | opensourcepos, wikipedia-gift-card |
+| `restaurant.loyalty` Loyalty and rewards | Points, punch cards, or tiered rewards tied to a guest's order history. | high | web, mobile, admin, customer_portal, backend | none | medium | missing | satisfecho-pos, restopos, square-nodejs-sdk |
+| `restaurant.multi_location_management` Multi-location management | Manage menus, pricing, and reporting across a chain of restaurant locations from one account. | high | web, admin, backend | none | none | missing | frappe-hospitality, restopos, square-nodejs-sdk |
 | `restaurant.self_service_kiosk` Self-service kiosk ordering | In-store kiosk for customers to browse the menu, order, and pay without staff assistance. | low | web, admin, backend | low | none | missing | wikipedia-interactive-kiosk |

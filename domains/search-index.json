@@ -770,8 +770,11 @@
         "backend",
         "contact",
         "core",
+        "data_subject_request",
+        "duplicate_detection_merge",
         "espocrm",
         "gdpr_crm",
+        "gdpr_data_subject_rights",
         "mobile",
         "nextcrm",
         "odoo-crm",
@@ -779,6 +782,8 @@
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
+        "twenty-crm",
         "web"
       ]
     },
@@ -791,6 +796,7 @@
         "backend",
         "company",
         "core",
+        "duplicate_detection_merge",
         "espocrm",
         "mobile",
         "nextcrm",
@@ -799,6 +805,8 @@
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
+        "twenty-crm",
         "web"
       ]
     },
@@ -809,10 +817,13 @@
       "keys": [
         "ai",
         "backend",
+        "campaign_execution",
         "core",
         "espocrm",
         "gdpr_crm",
+        "gdpr_data_subject_rights",
         "lead",
+        "lead_assignment_routing",
         "lead_lifecycle",
         "marketing_user",
         "mobile",
@@ -821,6 +832,8 @@
         "reference",
         "sales_rep",
         "staff",
+        "suitecrm",
+        "twenty-crm",
         "web"
       ]
     },
@@ -837,9 +850,12 @@
         "espocrm",
         "lead",
         "lead_lifecycle",
+        "nextcrm",
+        "odoo-crm",
         "reference",
         "sales_rep",
         "staff",
+        "suitecrm",
         "web",
         "workflow"
       ]
@@ -856,14 +872,18 @@
         "deal",
         "deal_lifecycle",
         "espocrm",
+        "forecast_review",
         "mobile",
         "nextcrm",
         "odoo-crm",
         "pipeline_stage",
+        "quote_to_won_deal",
         "reference",
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
+        "twenty-crm",
         "web",
         "workflow"
       ]
@@ -874,10 +894,12 @@
       "domain": "crm",
       "keys": [
         "activity",
+        "activity_follow_up_cycle",
         "backend",
         "calendar_provider",
         "core",
         "espocrm",
+        "forecast_review",
         "mobile",
         "nextcrm",
         "odoo-crm",
@@ -885,7 +907,9 @@
         "sales_rep",
         "scheduling",
         "staff",
+        "suitecrm",
         "task",
+        "twenty-crm",
         "web"
       ]
     },
@@ -895,19 +919,24 @@
       "domain": "crm",
       "keys": [
         "activity",
+        "activity_follow_up_cycle",
         "backend",
         "common",
         "company",
         "contact",
         "deal",
         "document",
+        "email_thread_sync",
         "espocrm",
+        "gdpr_data_subject_rights",
         "mobile",
         "nextcrm",
         "reference",
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
+        "twenty-crm",
         "web"
       ]
     },
@@ -916,16 +945,21 @@
       "id": "crm.record_assignment",
       "domain": "crm",
       "keys": [
+        "activity_follow_up_cycle",
         "admin",
         "backend",
         "common",
         "company",
         "deal",
+        "espocrm",
         "lead",
+        "lead_assignment_routing",
         "nextcrm",
+        "odoo-crm",
         "reference",
         "sales_manager",
         "staff",
+        "suitecrm",
         "web"
       ]
     },
@@ -939,6 +973,7 @@
         "communication",
         "email_message",
         "email_provider",
+        "email_thread_sync",
         "espocrm",
         "nextcrm",
         "reference",
@@ -958,11 +993,13 @@
         "calendar_provider",
         "mobile",
         "nextcrm",
+        "odoo-crm",
         "recommended",
         "reference",
         "sales_rep",
         "scheduling",
         "staff",
+        "suitecrm",
         "web"
       ]
     },
@@ -975,8 +1012,11 @@
         "analytics",
         "backend",
         "campaign",
+        "campaign_execution",
         "common",
+        "eprivacy_direct_marketing",
         "espocrm",
+        "gdpr_consent_demonstrability",
         "marketing_user",
         "nextcrm",
         "reference",
@@ -992,8 +1032,11 @@
         "admin",
         "analytics",
         "backend",
+        "campaign_execution",
         "common",
+        "eprivacy_direct_marketing",
         "espocrm",
+        "gdpr_consent_demonstrability",
         "marketing_user",
         "nextcrm",
         "reference",
@@ -1012,14 +1055,17 @@
         "deal",
         "document",
         "nextcrm",
+        "odoo-crm",
         "payment",
         "quote",
         "quote_approval",
+        "quote_to_won_deal",
         "recommended",
         "reference",
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
         "web"
       ]
     },
@@ -1034,11 +1080,14 @@
         "deal",
         "document",
         "nextcrm",
+        "odoo-crm",
         "product",
+        "quote_to_won_deal",
         "reference",
         "sales_manager",
         "sales_rep",
         "staff",
+        "suitecrm",
         "web"
       ]
     },
@@ -1051,11 +1100,14 @@
         "backend",
         "deal",
         "lead",
+        "lead_assignment_routing",
         "nextcrm",
+        "odoo-crm",
         "recommended",
         "reference",
         "sales_manager",
         "staff",
+        "suitecrm",
         "system",
         "web",
         "workflow"
@@ -1071,6 +1123,7 @@
         "analytics",
         "backend",
         "deal",
+        "forecast_review",
         "management",
         "missing",
         "nextcrm",
@@ -1088,10 +1141,12 @@
         "backend",
         "company",
         "nextcrm",
+        "odoo-crm",
         "optional",
         "reference",
         "sales_manager",
         "staff",
+        "suitecrm",
         "web"
       ]
     },
@@ -1104,13 +1159,17 @@
         "analytics",
         "backend",
         "common",
+        "data_subject_request",
         "deal",
+        "forecast_review",
         "lead",
         "management",
         "nextcrm",
+        "odoo-crm",
         "reference",
         "reporting",
         "sales_manager",
+        "suitecrm",
         "web"
       ]
     },
@@ -1122,11 +1181,80 @@
         "admin",
         "backend",
         "common",
+        "data_subject_request",
         "document",
+        "duplicate_detection_merge",
+        "espocrm",
+        "gdpr_data_subject_rights",
         "marketing_user",
         "nextcrm",
+        "odoo-crm",
         "product",
         "reference",
+        "sales_ops_admin",
+        "segment",
+        "suitecrm",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "crm.duplicate_detection_merge",
+      "domain": "crm",
+      "keys": [
+        "admin",
+        "ai",
+        "backend",
+        "common",
+        "company",
+        "contact",
+        "data_enrichment",
+        "duplicate_detection_merge",
+        "fuzzy_matching",
+        "gdpr_crm",
+        "gdpr_data_subject_rights",
+        "lead",
+        "lead_capture_forms",
+        "nextcrm",
+        "odoo-crm",
+        "record_merge",
+        "reference",
+        "sales_ops_admin",
+        "sales_rep",
+        "search",
+        "suitecrm",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "crm.consent_preferences",
+      "domain": "crm",
+      "keys": [
+        "admin",
+        "backend",
+        "campaign",
+        "campaign_execution",
+        "can-spam",
+        "can_spam",
+        "communication",
+        "compliance",
+        "consent_audit_trail",
+        "contact",
+        "customer_portal",
+        "data_subject_request",
+        "eprivacy_direct_marketing",
+        "espocrm",
+        "gdpr-2016-679",
+        "gdpr_consent_demonstrability",
+        "gdpr_crm",
+        "gdpr_data_subject_rights",
+        "lead",
+        "marketing_email",
+        "marketing_user",
+        "missing",
+        "opt_out_suppression",
         "sales_ops_admin",
         "segment",
         "web"
@@ -1297,6 +1425,15 @@
       ]
     },
     {
+      "kind": "entity",
+      "id": "crm:consent_record",
+      "domain": "crm",
+      "keys": [
+        "crm.consent_preferences",
+        "crm.campaign_management"
+      ]
+    },
+    {
       "kind": "workflow",
       "id": "crm:lead_lifecycle",
       "domain": "crm",
@@ -1330,6 +1467,123 @@
       ]
     },
     {
+      "kind": "workflow",
+      "id": "crm:lead_assignment_routing",
+      "domain": "crm",
+      "keys": [
+        "crm.record_assignment",
+        "crm.leads",
+        "crm.pipeline_automation",
+        "lead",
+        "contact",
+        "company"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:activity_follow_up_cycle",
+      "domain": "crm",
+      "keys": [
+        "crm.activities_tasks",
+        "crm.contact_timeline",
+        "crm.record_assignment",
+        "activity",
+        "task",
+        "contact",
+        "deal",
+        "lead"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:email_thread_sync",
+      "domain": "crm",
+      "keys": [
+        "crm.email_sync",
+        "crm.contact_timeline",
+        "email_message",
+        "contact",
+        "lead",
+        "deal"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:campaign_execution",
+      "domain": "crm",
+      "keys": [
+        "crm.campaign_management",
+        "crm.segmentation",
+        "crm.consent_preferences",
+        "crm.leads",
+        "campaign",
+        "segment",
+        "contact",
+        "lead",
+        "consent_record"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:duplicate_detection_merge",
+      "domain": "crm",
+      "keys": [
+        "crm.duplicate_detection_merge",
+        "crm.data_import",
+        "crm.contacts",
+        "crm.companies_accounts",
+        "lead",
+        "contact",
+        "company",
+        "activity"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:data_subject_request",
+      "domain": "crm",
+      "keys": [
+        "crm.consent_preferences",
+        "crm.contacts",
+        "crm.data_import",
+        "crm.reports_dashboards",
+        "contact",
+        "lead",
+        "consent_record",
+        "email_message",
+        "activity"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:quote_to_won_deal",
+      "domain": "crm",
+      "keys": [
+        "crm.quotes",
+        "crm.deal_products",
+        "crm.deals_pipelines",
+        "quote",
+        "product",
+        "deal",
+        "contact",
+        "company"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "crm:forecast_review",
+      "domain": "crm",
+      "keys": [
+        "crm.forecasting",
+        "crm.deals_pipelines",
+        "crm.reports_dashboards",
+        "crm.activities_tasks",
+        "deal",
+        "pipeline_stage",
+        "activity"
+      ]
+    },
+    {
       "kind": "integration",
       "id": "crm:email_provider",
       "domain": "crm",
@@ -1357,6 +1611,91 @@
       ]
     },
     {
+      "kind": "integration",
+      "id": "crm:telephony",
+      "domain": "crm",
+      "keys": [
+        "REST",
+        "SIP",
+        "common",
+        "communication",
+        "crm.activities_tasks",
+        "crm.contact_timeline",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "crm:lead_capture_forms",
+      "domain": "crm",
+      "keys": [
+        "HTTP POST",
+        "REST",
+        "acquisition",
+        "common",
+        "crm.campaign_management",
+        "crm.duplicate_detection_merge",
+        "crm.leads",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "crm:marketing_email",
+      "domain": "crm",
+      "keys": [
+        "REST",
+        "SMTP",
+        "common",
+        "communication",
+        "crm.campaign_management",
+        "crm.consent_preferences",
+        "crm.segmentation",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "crm:data_enrichment",
+      "domain": "crm",
+      "keys": [
+        "REST",
+        "crm.companies_accounts",
+        "crm.duplicate_detection_merge",
+        "crm.leads",
+        "data",
+        "optional"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "crm:accounting_invoicing",
+      "domain": "crm",
+      "keys": [
+        "CSV export",
+        "REST",
+        "accounting",
+        "crm.deal_products",
+        "crm.deals_pipelines",
+        "crm.quotes",
+        "recommended"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "crm:public_api_webhooks",
+      "domain": "crm",
+      "keys": [
+        "GraphQL",
+        "REST",
+        "crm.data_import",
+        "crm.pipeline_automation",
+        "crm.record_assignment",
+        "platform",
+        "webhooks"
+      ]
+    },
+    {
       "kind": "compliance",
       "id": "crm:gdpr_crm",
       "domain": "crm",
@@ -1376,6 +1715,44 @@
         "United States",
         "crm.campaign_management",
         "crm.email_sync",
+        "crm.segmentation",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "crm:gdpr_data_subject_rights",
+      "domain": "crm",
+      "keys": [
+        "European Union / EEA",
+        "crm.consent_preferences",
+        "crm.contact_timeline",
+        "crm.contacts",
+        "crm.data_import",
+        "crm.leads",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "crm:gdpr_consent_demonstrability",
+      "domain": "crm",
+      "keys": [
+        "European Union / EEA",
+        "crm.campaign_management",
+        "crm.consent_preferences",
+        "crm.segmentation",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "crm:eprivacy_direct_marketing",
+      "domain": "crm",
+      "keys": [
+        "European Union / EEA (transposed into national law, so the detail differs per member state)",
+        "crm.campaign_management",
+        "crm.consent_preferences",
         "crm.segmentation",
         "regulation"
       ]
@@ -4718,6 +5095,7 @@
         "customer_portal",
         "gdpr",
         "identity",
+        "kyc_onboarding_lifecycle",
         "mobile",
         "party",
         "profile_crud",
@@ -4765,6 +5143,7 @@
       "domain": "fintech",
       "keys": [
         "account",
+        "account_closure_workflow",
         "admin",
         "administrator",
         "apache-fineract",
@@ -4804,6 +5183,7 @@
         "spend",
         "top_up",
         "wallet",
+        "wallet_funding_and_withdrawal_workflow",
         "web"
       ]
     },
@@ -4850,6 +5230,7 @@
         "common",
         "customer",
         "customer_portal",
+        "internal_transfer_and_p2p_workflow",
         "mobile",
         "own_account_move",
         "p2p_move",
@@ -4873,6 +5254,7 @@
         "customer_portal",
         "handle_lookup",
         "instant_settlement",
+        "internal_transfer_and_p2p_workflow",
         "iso20022",
         "missing",
         "mobile",
@@ -4895,12 +5277,15 @@
         "apache-fineract",
         "backend",
         "card",
+        "card_issuance_lifecycle",
         "card_issuing_processor",
         "common",
         "customer",
         "customer_portal",
+        "emvco-specifications",
         "missing",
         "mobile",
+        "moov-io-iso8583",
         "pan_tokenization",
         "payment",
         "pci_dss",
@@ -4919,15 +5304,18 @@
         "apache-fineract",
         "backend",
         "card",
+        "card_issuance_lifecycle",
         "card_issuing_processor",
         "common",
         "customer",
         "customer_portal",
         "freeze",
+        "iso18245-mcc",
         "limit_override",
         "mcc_block",
         "missing",
         "mobile",
+        "moov-io-iso8583",
         "pci_dss",
         "web"
       ]
@@ -4997,10 +5385,10 @@
         "capitalization",
         "daily_accrual",
         "finance_ops",
+        "interest_accrual_workflow",
         "ledger_entry",
         "loan",
         "missing",
-        "mobile",
         "recommended",
         "web"
       ]
@@ -5019,9 +5407,10 @@
         "credit_bureau",
         "internal_scoring_model",
         "loan",
+        "loan_lifecycle",
         "loan_officer",
         "missing",
-        "mobile",
+        "moov-io-metro2",
         "party",
         "recommended",
         "risk_analyst",
@@ -5048,6 +5437,7 @@
         "pdf_generation",
         "period_close",
         "statement",
+        "statement_generation_workflow",
         "web"
       ]
     },
@@ -5064,10 +5454,10 @@
         "backend",
         "common",
         "fee",
+        "fee_assessment_workflow",
         "fee_schedule",
         "finance_ops",
         "missing",
-        "mobile",
         "payment",
         "waiver",
         "web"
@@ -5097,6 +5487,7 @@
         "real_time",
         "tier_based_limits",
         "velocity_check",
+        "wallet_funding_and_withdrawal_workflow",
         "web"
       ]
     },
@@ -5111,13 +5502,16 @@
         "backend",
         "compliance",
         "core",
+        "eu-psd2",
         "fraud_alert",
+        "fraud_alert_triage_workflow",
         "fraud_engine",
         "missing",
         "ml_scoring",
-        "mobile",
+        "moov-io-iso8583",
         "party",
         "payment",
+        "payment_lifecycle",
         "psd2_sca",
         "real-time",
         "real_time",
@@ -5142,9 +5536,9 @@
         "eu-amlr",
         "eu_amlr",
         "fatf-recommendations",
+        "fraud_alert_triage_workflow",
         "fraud_engine",
         "missing",
-        "mobile",
         "party",
         "pattern_detection",
         "payment",
@@ -5169,9 +5563,9 @@
         "eu_amlr",
         "fatf-recommendations",
         "kyc_case",
+        "kyc_onboarding_lifecycle",
         "kyc_provider",
         "missing",
-        "mobile",
         "party",
         "periodic_rescreen",
         "system",
@@ -5201,6 +5595,8 @@
         "payment",
         "payment_rail",
         "pci_dss",
+        "reg-e-efta",
+        "reg_e",
         "support_agent",
         "web"
       ]
@@ -5218,7 +5614,6 @@
         "discrepancy_reporting",
         "finance_ops",
         "ledger_entry",
-        "mobile",
         "payment_rail",
         "reconciliation_run",
         "reconciliation_workflow",
@@ -5240,6 +5635,7 @@
         "customer_portal",
         "finance_ops",
         "fx_conversion",
+        "fx_conversion_workflow",
         "iso4217",
         "ledger_entry",
         "mobile",
@@ -5260,8 +5656,10 @@
         "customer",
         "customer_portal",
         "iso20022",
+        "mandate_recurring_payment_workflow",
         "missing",
         "mobile",
+        "moov-io-ach",
         "optional",
         "party",
         "payment",
@@ -5283,8 +5681,10 @@
         "biller_directory",
         "customer",
         "customer_portal",
+        "mandate_recurring_payment_workflow",
         "missing",
         "mobile",
+        "moov-io-ach",
         "one_off_payment",
         "optional",
         "party",
@@ -5298,6 +5698,7 @@
       "id": "fintech.savings_goals",
       "domain": "fintech",
       "keys": [
+        "actual-budget",
         "admin",
         "apache-fineract",
         "auto_round_up",
@@ -5308,6 +5709,7 @@
         "missing",
         "mobile",
         "optional",
+        "savings_goal_workflow",
         "wallet",
         "web"
       ]
@@ -5317,6 +5719,7 @@
       "id": "fintech.spend_analytics",
       "domain": "fintech",
       "keys": [
+        "actual-budget",
         "admin",
         "ai",
         "analytics",
@@ -5324,11 +5727,13 @@
         "backend",
         "customer",
         "customer_portal",
+        "iso18245-mcc",
         "merchant_categorization",
         "missing",
         "mobile",
         "optional",
         "payment",
+        "spend_insights_workflow",
         "trend_insights",
         "web"
       ]
@@ -5343,6 +5748,7 @@
         "auto_allocation",
         "backend",
         "customer",
+        "customer_portal",
         "dedicated_number_issuance",
         "finance_ops",
         "iso13616-iban",
@@ -5351,6 +5757,7 @@
         "party",
         "payment_rail",
         "recommended",
+        "virtual_account_provisioning_workflow",
         "web"
       ]
     },
@@ -5367,10 +5774,12 @@
         "compliance",
         "consent_management",
         "customer",
+        "customer_portal",
         "eu-psd2",
         "integration",
         "missing",
         "mobile",
+        "open_banking_consent_workflow",
         "party",
         "payment_rail",
         "pisp_api",
@@ -5391,14 +5800,14 @@
         "event_delivery",
         "integration",
         "missing",
-        "mobile",
         "payment",
         "real_time",
         "retry_backoff",
         "signature_verification",
         "system",
         "web",
-        "webhook_delivery"
+        "webhook_delivery",
+        "webhook_delivery_workflow"
       ]
     },
     {
@@ -5634,6 +6043,7 @@
       "keys": [
         "fintech.kyc_onboarding",
         "fintech.sanctions_screening",
+        "fintech.party_management",
         "party",
         "kyc_case"
       ]
@@ -5656,6 +6066,7 @@
       "keys": [
         "fintech.lending_origination",
         "fintech.loan_servicing",
+        "fintech.credit_scoring",
         "loan",
         "loan_schedule"
       ]
@@ -5678,6 +6089,168 @@
         "fintech.reconciliation",
         "reconciliation_run",
         "ledger_entry"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:card_issuance_lifecycle",
+      "domain": "fintech",
+      "keys": [
+        "fintech.card_issuing",
+        "fintech.card_controls",
+        "card",
+        "wallet"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:wallet_funding_and_withdrawal_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.wallets",
+        "fintech.limits_management",
+        "wallet",
+        "account",
+        "payment",
+        "limit"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:internal_transfer_and_p2p_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.internal_transfers",
+        "fintech.p2p_transfers",
+        "transfer",
+        "wallet",
+        "party"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:interest_accrual_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.interest_accrual",
+        "account",
+        "loan",
+        "ledger_entry"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:statement_generation_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.statements",
+        "statement",
+        "account",
+        "ledger_entry"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:fee_assessment_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.fee_management",
+        "fee",
+        "account",
+        "payment"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:fraud_alert_triage_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.fraud_monitoring",
+        "fintech.aml_transaction_monitoring",
+        "fraud_alert",
+        "payment",
+        "party"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:fx_conversion_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.multi_currency_ledger",
+        "account",
+        "ledger_entry",
+        "payment"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:mandate_recurring_payment_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.recurring_payments",
+        "fintech.bill_pay",
+        "payment",
+        "party"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:savings_goal_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.savings_goals",
+        "wallet"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:spend_insights_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.spend_analytics",
+        "payment"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:virtual_account_provisioning_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.virtual_accounts",
+        "account",
+        "party"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:open_banking_consent_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.open_banking_connectivity",
+        "account",
+        "party"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:webhook_delivery_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.webhooks_events",
+        "payment",
+        "account"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "fintech:account_closure_workflow",
+      "domain": "fintech",
+      "keys": [
+        "fintech.ledger_accounts",
+        "account",
+        "party",
+        "card"
       ]
     },
     {
@@ -5828,6 +6401,17 @@
       ]
     },
     {
+      "kind": "compliance",
+      "id": "fintech:reg_e",
+      "domain": "fintech",
+      "keys": [
+        "United States",
+        "fintech.dispute_management",
+        "fintech.payments",
+        "regulation"
+      ]
+    },
+    {
       "kind": "source",
       "id": "fintech:blnk",
       "domain": "fintech",
@@ -5933,6 +6517,69 @@
       "keys": [
         "authoritative",
         "EU public law (EUR-Lex)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:moov-io-iso8583",
+      "domain": "fintech",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:moov-io-metro2",
+      "domain": "fintech",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:moov-io-ach",
+      "domain": "fintech",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:actual-budget",
+      "domain": "fintech",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:iso18245-mcc",
+      "domain": "fintech",
+      "keys": [
+        "authoritative",
+        "ISO copyright; standard summary freely accessible"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:reg-e-efta",
+      "domain": "fintech",
+      "keys": [
+        "authoritative",
+        "US public law, CFPB-administered (eCFR)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "fintech:emvco-specifications",
+      "domain": "fintech",
+      "keys": [
+        "authoritative",
+        "EMVCo published specifications (free registration to access some documents)"
       ]
     },
     {
@@ -8104,6 +8751,7 @@
         "property",
         "property_configuration",
         "property_manager",
+        "property_setup_workflow",
         "qloapps",
         "reference",
         "web"
@@ -8124,6 +8772,7 @@
         "frappe-hospitality",
         "mobile",
         "property_manager",
+        "property_setup_workflow",
         "qloapps",
         "reference",
         "revenue_manager",
@@ -8141,11 +8790,14 @@
         "core",
         "frappe-hospitality",
         "housekeeper",
+        "maintenance_engineer",
         "mobile",
         "property_manager",
+        "property_setup_workflow",
         "qloapps",
         "reference",
         "room",
+        "room_maintenance_workflow",
         "room_status_tracking",
         "staff",
         "web"
@@ -8162,8 +8814,8 @@
         "customer_portal",
         "date_ranged_pricing",
         "frappe-hospitality",
-        "mobile",
         "qloapps",
+        "rate_and_restriction_management_workflow",
         "rate_plan",
         "reference",
         "revenue_manager",
@@ -8180,6 +8832,7 @@
         "availability_check",
         "backend",
         "calendar",
+        "channel_ari_sync_workflow",
         "channel_manager",
         "core",
         "customer_portal",
@@ -8189,6 +8842,7 @@
         "property_manager",
         "qloapps",
         "real_time",
+        "reservation_lifecycle",
         "reservation_room_stay",
         "revenue_manager",
         "room",
@@ -8219,6 +8873,7 @@
         "reservation",
         "reservation_lifecycle",
         "reservation_room_stay",
+        "reservations_agent",
         "web"
       ]
     },
@@ -8265,8 +8920,10 @@
         "identity",
         "missing",
         "mobile",
+        "post_stay_engagement_workflow",
         "profile_management",
         "qloapps",
+        "reservation_lifecycle",
         "web"
       ]
     },
@@ -8282,6 +8939,8 @@
         "folio",
         "folio_billing_workflow",
         "front_desk_agent",
+        "guesthub",
+        "hotelio",
         "missing",
         "mobile",
         "payment",
@@ -8325,13 +8984,14 @@
         "common",
         "customer_portal",
         "missing",
-        "mobile",
         "qloapps",
+        "rate_and_restriction_management_workflow",
         "rate_plan",
         "rate_restriction",
         "restriction_enforcement",
         "revenue_manager",
-        "web"
+        "web",
+        "woopms"
       ]
     },
     {
@@ -8341,6 +9001,7 @@
       "keys": [
         "admin",
         "backend",
+        "cancellation_and_no_show_workflow",
         "cancellation_policy",
         "common",
         "customer_portal",
@@ -8352,7 +9013,8 @@
         "refund_calculation",
         "reservation",
         "revenue_manager",
-        "web"
+        "web",
+        "woopms"
       ]
     },
     {
@@ -8395,6 +9057,7 @@
         "frappe-hospitality",
         "mobile",
         "property_manager",
+        "property_setup_workflow",
         "qloapps",
         "reference",
         "room_type",
@@ -8406,11 +9069,13 @@
       "id": "hospitality.add_on_services",
       "domain": "hospitality",
       "keys": [
+        "add_on_and_upsell_workflow",
         "add_on_service",
         "admin",
         "backend",
         "customer",
         "customer_portal",
+        "frappe-hospitality",
         "front_desk_agent",
         "guest",
         "missing",
@@ -8442,6 +9107,7 @@
         "mobile",
         "qloapps",
         "reservation",
+        "reservation_lifecycle",
         "web"
       ]
     },
@@ -8459,6 +9125,7 @@
         "missing",
         "mobile",
         "optional",
+        "property_setup_workflow",
         "qloapps",
         "room",
         "room_linking",
@@ -8472,10 +9139,13 @@
       "keys": [
         "admin",
         "backend",
+        "cross_property_oversight_workflow",
         "cross_property_reporting",
         "frappe-hospitality",
+        "general_manager",
         "missing",
         "mobile",
+        "owner",
         "property",
         "property_manager",
         "qloapps",
@@ -8521,6 +9191,7 @@
         "mobile",
         "night_audit_run",
         "night_audit_workflow",
+        "night_auditor",
         "property_manager",
         "recommended",
         "reporting",
@@ -8549,6 +9220,7 @@
         "reservation",
         "reservation_lifecycle",
         "reservation_room_stay",
+        "reservations_agent",
         "web"
       ]
     },
@@ -8563,10 +9235,12 @@
         "customer_portal",
         "guest",
         "guest_profile",
+        "guesthub",
         "missing",
         "mobile",
         "optional",
         "points_accrual",
+        "post_stay_engagement_workflow",
         "property_manager",
         "web",
         "wikipedia-loyalty-program"
@@ -8587,7 +9261,9 @@
         "missing",
         "mobile",
         "optional",
+        "post_stay_engagement_workflow",
         "property_manager",
+        "qloapps",
         "web",
         "wikipedia-customer-review"
       ]
@@ -8604,6 +9280,7 @@
         "missing",
         "mobile",
         "optional",
+        "rate_and_restriction_management_workflow",
         "rate_plan",
         "revenue_manager",
         "web",
@@ -8663,6 +9340,56 @@
         "hospitality.properties",
         "hospitality.room_types",
         "hospitality.multi_property_management"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "hospitality:owner",
+      "domain": "hospitality",
+      "keys": [
+        "administration",
+        "hospitality.multi_property_management",
+        "hospitality.properties"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "hospitality:general_manager",
+      "domain": "hospitality",
+      "keys": [
+        "management",
+        "hospitality.properties",
+        "hospitality.multi_property_management",
+        "hospitality.night_audit"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "hospitality:reservations_agent",
+      "domain": "hospitality",
+      "keys": [
+        "staff",
+        "hospitality.reservations",
+        "hospitality.group_bookings",
+        "hospitality.booking_voucher_confirmation"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "hospitality:maintenance_engineer",
+      "domain": "hospitality",
+      "keys": [
+        "staff",
+        "hospitality.rooms"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "hospitality:night_auditor",
+      "domain": "hospitality",
+      "keys": [
+        "staff",
+        "hospitality.night_audit"
       ]
     },
     {
@@ -8731,7 +9458,8 @@
       "domain": "hospitality",
       "keys": [
         "hospitality.guest_profiles",
-        "hospitality.loyalty_program"
+        "hospitality.loyalty_program",
+        "hospitality.guest_reviews"
       ]
     },
     {
@@ -8821,6 +9549,10 @@
       "keys": [
         "hospitality.reservations",
         "hospitality.front_desk_checkin_checkout",
+        "hospitality.availability_inventory",
+        "hospitality.guest_profiles",
+        "hospitality.booking_voucher_confirmation",
+        "hospitality.group_bookings",
         "reservation",
         "reservation_room_stay",
         "guest_profile",
@@ -8853,6 +9585,7 @@
       "domain": "hospitality",
       "keys": [
         "hospitality.channel_manager",
+        "hospitality.availability_inventory",
         "channel",
         "reservation",
         "rate_plan"
@@ -8868,6 +9601,86 @@
         "folio",
         "payment",
         "deposit"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:property_setup_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.properties",
+        "hospitality.room_types",
+        "hospitality.rooms",
+        "hospitality.amenities",
+        "hospitality.connecting_rooms",
+        "property",
+        "room_type",
+        "room",
+        "amenity"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:rate_and_restriction_management_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.rate_plans",
+        "hospitality.rate_restrictions",
+        "hospitality.dynamic_pricing",
+        "rate_plan",
+        "rate_restriction"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:cancellation_and_no_show_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.cancellation_policies",
+        "hospitality.reservations",
+        "cancellation_policy",
+        "reservation",
+        "deposit"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:add_on_and_upsell_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.add_on_services",
+        "add_on_service",
+        "reservation",
+        "folio"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:cross_property_oversight_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.multi_property_management",
+        "property"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:post_stay_engagement_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.guest_reviews",
+        "hospitality.loyalty_program",
+        "guest_profile"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "hospitality:room_maintenance_workflow",
+      "domain": "hospitality",
+      "keys": [
+        "hospitality.rooms",
+        "hospitality.availability_inventory",
+        "room"
       ]
     },
     {
@@ -9079,6 +9892,33 @@
       "keys": [
         "secondary",
         "CC BY-SA 4.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "hospitality:woopms",
+      "domain": "hospitality",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 (verified from repository LICENSE file)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "hospitality:hotelio",
+      "domain": "hospitality",
+      "keys": [
+        "implementation",
+        "MIT (verified from repository LICENSE file)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "hospitality:guesthub",
+      "domain": "hospitality",
+      "keys": [
+        "implementation",
+        "none found (no LICENSE file in the repository; all-rights-reserved by default; verify before any reuse)"
       ]
     },
     {
@@ -13286,6 +14126,7 @@
         "staff",
         "table",
         "table_status_tracking",
+        "table_turn_lifecycle",
         "ury",
         "web"
       ]
@@ -13306,7 +14147,7 @@
         "manager",
         "menu",
         "menu_item",
-        "mobile",
+        "menu_item_lifecycle",
         "odoo-pos-restaurant",
         "pricing",
         "reference",
@@ -13325,8 +14166,8 @@
         "cashier",
         "common",
         "menu_item",
+        "menu_item_lifecycle",
         "missing",
-        "mobile",
         "modifier",
         "modifier_group",
         "odoo-pos-restaurant",
@@ -13359,6 +14200,7 @@
         "reference",
         "reservation",
         "reservation_lifecycle",
+        "satisfecho-pos",
         "sms_gateway",
         "staff",
         "table",
@@ -13380,6 +14222,7 @@
         "host",
         "missing",
         "mobile",
+        "satisfecho-pos",
         "sms_gateway",
         "staff",
         "table",
@@ -13455,13 +14298,13 @@
         "integration",
         "manager",
         "missing",
-        "mobile",
         "odoo-pos-restaurant",
         "order",
         "order_sync",
         "payment",
         "payment_sync",
         "pos",
+        "square-nodejs-sdk",
         "ury",
         "web"
       ]
@@ -13527,12 +14370,14 @@
         "billing_and_payment_lifecycle",
         "cashier",
         "common",
+        "enatega-food-delivery-multivendor",
         "frappe-hospitality",
         "labor_tip_regulations",
         "missing",
         "mobile",
         "payment",
         "payment_gateway",
+        "satisfecho-pos",
         "server",
         "staff",
         "tip_capture",
@@ -13558,6 +14403,7 @@
         "order_item",
         "pickup_scheduling",
         "pos",
+        "restopos",
         "ury",
         "web"
       ]
@@ -13579,13 +14425,17 @@
         "delivery_dispatch_lifecycle",
         "delivery_driver",
         "delivery_marketplace",
+        "delivery_marketplace_integration_lifecycle",
+        "enatega-food-delivery-multivendor",
         "missing",
         "mobile",
+        "optional",
         "order",
         "order_fulfillment_lifecycle",
         "order_item",
         "real-time",
         "real_time",
+        "satisfecho-pos",
         "web",
         "wikipedia-online-food-ordering"
       ]
@@ -13598,15 +14448,16 @@
         "admin",
         "backend",
         "delivery_marketplace",
+        "delivery_marketplace_integration_lifecycle",
         "integration",
         "manager",
         "menu",
         "menu_sync",
         "missing",
-        "mobile",
         "order",
         "order_import",
         "recommended",
+        "satisfecho-pos",
         "web",
         "wikipedia-online-food-ordering"
       ]
@@ -13619,17 +14470,19 @@
         "admin",
         "backend",
         "common",
+        "flutter-pos-system",
         "inventory",
+        "inventory_depletion_workflow",
         "inventory_item",
         "kitchen_staff",
         "low_stock_alerts",
         "manager",
         "missing",
-        "mobile",
+        "restopos",
+        "satisfecho-pos",
         "staff",
         "stock_tracking",
-        "web",
-        "wikipedia-point-of-sale"
+        "web"
       ]
     },
     {
@@ -13642,16 +14495,17 @@
         "backend",
         "common",
         "costing",
+        "flutter-pos-system",
+        "inventory_depletion_workflow",
         "inventory_item",
         "kitchen_staff",
         "manager",
         "menu_item",
         "missing",
-        "mobile",
         "recipe",
+        "satisfecho-pos",
         "staff",
-        "web",
-        "wikipedia-point-of-sale"
+        "web"
       ]
     },
     {
@@ -13665,13 +14519,16 @@
         "manager",
         "missing",
         "mobile",
+        "restopos",
+        "satisfecho-pos",
         "scheduling",
         "shift",
         "shift_planning",
+        "square-nodejs-sdk",
         "staff",
+        "staff_shift_lifecycle",
         "time_tracking",
-        "web",
-        "wikipedia-point-of-sale"
+        "web"
       ]
     },
     {
@@ -13685,15 +14542,18 @@
         "customer_portal",
         "guest",
         "loyalty_account",
+        "loyalty_program_lifecycle",
         "manager",
         "missing",
         "mobile",
+        "optional",
         "points_accrual",
         "recommended",
         "redemption",
-        "ury",
-        "web",
-        "wikipedia-loyalty-program"
+        "restopos",
+        "satisfecho-pos",
+        "square-nodejs-sdk",
+        "web"
       ]
     },
     {
@@ -13705,14 +14565,16 @@
         "backend",
         "customer",
         "customer_portal",
+        "enatega-food-delivery-multivendor",
         "feedback_collection",
         "manager",
         "missing",
         "mobile",
         "recommended",
         "review",
-        "web",
-        "wikipedia-customer-review"
+        "review_lifecycle",
+        "satisfecho-pos",
+        "web"
       ]
     },
     {
@@ -13727,14 +14589,15 @@
         "common",
         "customer",
         "customer_portal",
+        "enatega-food-delivery-multivendor",
         "menu",
         "missing",
         "mobile",
         "order",
         "order_fulfillment_lifecycle",
         "payment_gateway",
-        "web",
-        "wikipedia-online-food-ordering"
+        "satisfecho-pos",
+        "web"
       ]
     },
     {
@@ -13753,8 +14616,8 @@
         "eu_food_information_regulation",
         "manager",
         "menu_item",
+        "menu_item_lifecycle",
         "missing",
-        "mobile",
         "us-fda-menu-labeling",
         "us_fda_menu_labeling",
         "web"
@@ -13775,6 +14638,7 @@
         "order",
         "order_fulfillment_lifecycle",
         "recommended",
+        "satisfecho-pos",
         "self_order",
         "table",
         "web",
@@ -13791,8 +14655,11 @@
         "cashier",
         "customer",
         "customer_portal",
+        "gift_card",
+        "gift_card_lifecycle",
         "missing",
         "mobile",
+        "opensourcepos",
         "optional",
         "payment",
         "payment_gateway",
@@ -13833,9 +14700,10 @@
         "frappe-hospitality",
         "manager",
         "missing",
-        "mobile",
         "optional",
         "restaurant_location",
+        "restopos",
+        "square-nodejs-sdk",
         "web"
       ]
     },
@@ -14093,6 +14961,14 @@
       ]
     },
     {
+      "kind": "entity",
+      "id": "restaurant:gift_card",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.gift_cards"
+      ]
+    },
+    {
       "kind": "workflow",
       "id": "restaurant:reservation_lifecycle",
       "domain": "restaurant",
@@ -14157,6 +15033,94 @@
       "keys": [
         "restaurant.delivery_orders",
         "delivery",
+        "order"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:table_turn_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.tables",
+        "table",
+        "order",
+        "reservation"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:menu_item_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.menu",
+        "restaurant.menu_modifiers",
+        "restaurant.menu_allergen_labeling",
+        "menu_item",
+        "modifier_group",
+        "modifier"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:staff_shift_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.staff_shifts",
+        "shift"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:loyalty_program_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.loyalty",
+        "loyalty_account",
+        "guest",
+        "payment"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:review_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.reviews",
+        "review",
+        "guest",
+        "order"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:gift_card_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.gift_cards",
+        "gift_card",
+        "payment",
+        "guest"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:inventory_depletion_workflow",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.inventory",
+        "restaurant.recipes",
+        "order_item",
+        "recipe",
+        "inventory_item"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "restaurant:delivery_marketplace_integration_lifecycle",
+      "domain": "restaurant",
+      "keys": [
+        "restaurant.third_party_delivery_integration",
+        "restaurant.delivery_orders",
         "order"
       ]
     },
@@ -14417,6 +15381,60 @@
       "keys": [
         "secondary",
         "CC BY-SA 4.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:satisfecho-pos",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "AGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:enatega-food-delivery-multivendor",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:restopos",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:flutter-pos-system",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:opensourcepos",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "restaurant:square-nodejs-sdk",
+      "domain": "restaurant",
+      "keys": [
+        "implementation",
+        "MIT"
       ]
     },
     {

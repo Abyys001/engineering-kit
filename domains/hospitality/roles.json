@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "hospitality",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "roles": [
     {
       "id": "guest",
@@ -137,6 +137,137 @@
           "qloapps"
         ],
         "confidence": "medium"
+      }
+    },
+    {
+      "id": "owner",
+      "name": "Owner",
+      "experience": "administration",
+      "description": "Owns the property/business; sets strategic direction and reviews overall performance, typically not involved in day-to-day operations.",
+      "responsibilities": [
+        "Approve major rate/investment decisions",
+        "Review consolidated financial and occupancy performance",
+        "Delegate day-to-day operations to a general manager"
+      ],
+      "related_features": [
+        "hospitality.multi_property_management",
+        "hospitality.properties"
+      ],
+      "common_permissions": [
+        "report:view",
+        "property:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "low",
+        "notes": "No implementation models an 'owner' account distinct from an administrator; inferred from common hotel-industry organizational structure (an owner/investor role separate from operational management)."
+      }
+    },
+    {
+      "id": "general_manager",
+      "name": "General manager",
+      "experience": "management",
+      "description": "Runs the property day-to-day: oversees all departments, staffing, and the night audit/close process.",
+      "responsibilities": [
+        "Oversee front desk, housekeeping, and maintenance operations",
+        "Review the night audit and resolve exceptions",
+        "Manage staffing and departmental performance"
+      ],
+      "related_features": [
+        "hospitality.properties",
+        "hospitality.multi_property_management",
+        "hospitality.night_audit"
+      ],
+      "common_permissions": [
+        "property:manage",
+        "report:view",
+        "night_audit:review"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "No implementation models a distinct 'general manager' account (both inspected PMSs use a flat administrator/staff split); inferred from standard hotel organizational structure."
+      }
+    },
+    {
+      "id": "reservations_agent",
+      "name": "Reservations agent",
+      "experience": "staff",
+      "description": "Takes bookings by phone, email, or a call center \u2014 as distinct from the front desk agent who handles in-person arrivals \u2014 and manages group/block reservations.",
+      "responsibilities": [
+        "Create and modify reservations remotely (phone/email/OTA)",
+        "Quote rates and availability to prospective guests",
+        "Coordinate group and block bookings"
+      ],
+      "related_features": [
+        "hospitality.reservations",
+        "hospitality.group_bookings",
+        "hospitality.booking_voucher_confirmation"
+      ],
+      "common_permissions": [
+        "reservation:create",
+        "reservation:update"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low",
+        "notes": "QloApps and Frappe Hospitality both model a single staff/administrator role for all reservation handling, with no separate reservations-office account; a distinct reservations agent is common hotel-industry staffing practice (call center or reservations office, distinct from front-desk arrivals staff) but not evidenced in either implementation's data model."
+      }
+    },
+    {
+      "id": "maintenance_engineer",
+      "name": "Maintenance / engineering",
+      "experience": "staff",
+      "description": "Repairs and maintains rooms and property infrastructure; takes rooms out of order and returns them to service.",
+      "responsibilities": [
+        "Diagnose and repair reported room issues",
+        "Mark rooms out of order and back in service",
+        "Perform preventive maintenance"
+      ],
+      "related_features": [
+        "hospitality.rooms"
+      ],
+      "common_permissions": [
+        "room:update_status"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low",
+        "notes": "QloApps models a room 'temporarily inactive' status but no dedicated maintenance role or work-order entity; a separate maintenance/engineering role is common hotel-industry staffing practice, reasoned rather than directly evidenced."
+      }
+    },
+    {
+      "id": "night_auditor",
+      "name": "Night auditor",
+      "experience": "staff",
+      "description": "Runs the end-of-day close: posts room charges, reconciles payments, and rolls the business date forward, typically on the overnight shift.",
+      "responsibilities": [
+        "Post the day's room charges to open folios",
+        "Reconcile payments against transactions",
+        "Roll the business date forward and resolve no-shows"
+      ],
+      "related_features": [
+        "hospitality.night_audit"
+      ],
+      "common_permissions": [
+        "night_audit:run",
+        "folio:post_charge"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-night-audit"
+        ],
+        "confidence": "low",
+        "notes": "Not present as a distinct account/role in either inspected implementation (neither has a night-audit module at all); 'night auditor' is a standard, named job title in hotel operations per the existing secondary source. Smaller properties often have the front desk agent on the night shift perform this role instead of a dedicated hire."
       }
     }
   ]

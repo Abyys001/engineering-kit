@@ -22,7 +22,8 @@
       ],
       "features": [
         "fintech.kyc_onboarding",
-        "fintech.sanctions_screening"
+        "fintech.sanctions_screening",
+        "fintech.party_management"
       ],
       "state_machine": {
         "entity": "kyc_case",
@@ -176,7 +177,8 @@
       ],
       "features": [
         "fintech.lending_origination",
-        "fintech.loan_servicing"
+        "fintech.loan_servicing",
+        "fintech.credit_scoring"
       ],
       "state_machine": {
         "entity": "loan",
@@ -244,7 +246,8 @@
       ],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-metro2"
         ],
         "confidence": "medium",
         "notes": ""
@@ -381,6 +384,699 @@
       ],
       "provenance": {
         "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "card_issuance_lifecycle",
+      "name": "Card Issuance & Control Lifecycle",
+      "actor": "customer",
+      "trigger": "A party requests a virtual or physical card, or an administrator issues one at account opening.",
+      "steps": [
+        "Customer or administrator requests a card",
+        "Card issuing processor creates and tokenizes the card (PAN)",
+        "Physical card is shipped and activated by the customer, or a virtual card is activated immediately",
+        "Customer sets spend limits, merchant-category restrictions, or freezes the card as needed",
+        "Card expires at term end or is cancelled by the customer/administrator"
+      ],
+      "entities": [
+        "card",
+        "wallet"
+      ],
+      "features": [
+        "fintech.card_issuing",
+        "fintech.card_controls"
+      ],
+      "state_machine": {
+        "entity": "card",
+        "initial": "requested",
+        "terminal": [
+          "expired",
+          "cancelled"
+        ],
+        "states": [
+          "requested",
+          "issued",
+          "active",
+          "frozen",
+          "expired",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "requested",
+            "to": "issued",
+            "event": "processor_issues"
+          },
+          {
+            "from": "issued",
+            "to": "active",
+            "event": "activate"
+          },
+          {
+            "from": "active",
+            "to": "frozen",
+            "event": "freeze"
+          },
+          {
+            "from": "frozen",
+            "to": "active",
+            "event": "unfreeze"
+          },
+          {
+            "from": "active",
+            "to": "expired",
+            "event": "expire"
+          },
+          {
+            "from": "active",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "frozen",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "card_issued",
+        "card_activated",
+        "card_frozen"
+      ],
+      "integrations": [
+        "card_issuing_processor"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "moov-io-iso8583",
+          "emvco-specifications"
+        ],
+        "confidence": "medium",
+        "notes": "Lifecycle stages reasoned from card-issuing-processor conventions (Marqeta/Galileo/Lithic-style APIs), corroborated by EMVCo's card-personalization specs and moov-io/iso8583's authorization message model; not directly modeled in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "wallet_funding_and_withdrawal_workflow",
+      "name": "Wallet Funding & Withdrawal",
+      "actor": "customer",
+      "trigger": "Customer tops up a wallet from an external source or withdraws wallet balance to an external account.",
+      "steps": [
+        "Customer initiates a top-up or withdrawal",
+        "Platform checks per-transaction, daily, and velocity limits",
+        "Request is routed to the payment rail (inbound top-up or outbound withdrawal)",
+        "Ledger posts the balancing double-entry once the rail confirms",
+        "Wallet balance reflects the updated total"
+      ],
+      "entities": [
+        "wallet",
+        "account",
+        "payment",
+        "limit"
+      ],
+      "features": [
+        "fintech.wallets",
+        "fintech.limits_management"
+      ],
+      "state_machine": {
+        "entity": "payment",
+        "initial": "initiated",
+        "terminal": [
+          "completed",
+          "failed",
+          "reversed"
+        ],
+        "states": [
+          "initiated",
+          "pending",
+          "completed",
+          "failed",
+          "reversed"
+        ],
+        "transitions": [
+          {
+            "from": "initiated",
+            "to": "pending",
+            "event": "submit"
+          },
+          {
+            "from": "pending",
+            "to": "completed",
+            "event": "settle"
+          },
+          {
+            "from": "pending",
+            "to": "failed",
+            "event": "decline"
+          },
+          {
+            "from": "completed",
+            "to": "reversed",
+            "event": "reverse"
+          }
+        ]
+      },
+      "notifications": [
+        "topup_completed",
+        "withdrawal_completed",
+        "limit_exceeded"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": "Reuses the payment state machine for the top-up/withdrawal leg; wallet-level funding pattern corroborated by Blnk's balance/transaction model and Fineract's savings-account deposit/withdrawal APIs."
+      }
+    },
+    {
+      "id": "internal_transfer_and_p2p_workflow",
+      "name": "Internal & P2P Transfer",
+      "actor": "customer",
+      "trigger": "Customer moves money between their own wallets/accounts, or sends money to another party by handle, phone number, or account identifier.",
+      "steps": [
+        "Customer selects source and destination (own account, or another party's handle)",
+        "Platform resolves the recipient handle for P2P transfers",
+        "Platform validates transfer limits",
+        "Ledger posts the same-platform balancing entries",
+        "Both parties are notified of the completed transfer"
+      ],
+      "entities": [
+        "transfer",
+        "wallet",
+        "party"
+      ],
+      "features": [
+        "fintech.internal_transfers",
+        "fintech.p2p_transfers"
+      ],
+      "state_machine": {
+        "entity": "transfer",
+        "initial": "pending",
+        "terminal": [
+          "completed",
+          "failed"
+        ],
+        "states": [
+          "pending",
+          "completed",
+          "failed"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "completed",
+            "event": "settle"
+          },
+          {
+            "from": "pending",
+            "to": "failed",
+            "event": "fail"
+          }
+        ]
+      },
+      "notifications": [
+        "transfer_sent",
+        "transfer_received"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "iso20022"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "interest_accrual_workflow",
+      "name": "Interest Accrual",
+      "actor": "system",
+      "trigger": "Scheduled daily or monthly job runs against interest-bearing balances and outstanding loan principal.",
+      "steps": [
+        "Identify interest-bearing accounts and loans due for accrual",
+        "Compute accrued interest for the period",
+        "Post accrual to the ledger",
+        "Capitalize accrued interest into principal/balance on the scheduled date"
+      ],
+      "entities": [
+        "account",
+        "loan",
+        "ledger_entry"
+      ],
+      "features": [
+        "fintech.interest_accrual"
+      ],
+      "notifications": [
+        "interest_posted"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": "Fineract's savings/loan accrual jobs are the primary evidence; no second OSS implementation reviewed for this specific workflow."
+      }
+    },
+    {
+      "id": "statement_generation_workflow",
+      "name": "Statement Generation",
+      "actor": "system",
+      "trigger": "Scheduled period-end job (typically monthly) generates statements for active accounts.",
+      "steps": [
+        "Identify accounts due for a period-end statement",
+        "Aggregate ledger entries within the statement period",
+        "Compute opening and closing balances",
+        "Render and store the statement document",
+        "Notify the customer that a new statement is available"
+      ],
+      "entities": [
+        "statement",
+        "account",
+        "ledger_entry"
+      ],
+      "features": [
+        "fintech.statements"
+      ],
+      "state_machine": {
+        "entity": "statement",
+        "initial": "generated",
+        "terminal": [
+          "delivered"
+        ],
+        "states": [
+          "generated",
+          "delivered"
+        ],
+        "transitions": [
+          {
+            "from": "generated",
+            "to": "delivered",
+            "event": "deliver"
+          }
+        ]
+      },
+      "notifications": [
+        "statement_ready"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fee_assessment_workflow",
+      "name": "Fee Assessment",
+      "actor": "system",
+      "trigger": "A chargeable event occurs: a payment, card transaction, or period close matches a fee schedule.",
+      "steps": [
+        "Match the triggering event to a fee schedule",
+        "Compute the fee amount (flat, percentage, or tiered)",
+        "Assess the fee against the account",
+        "Post the fee as a ledger entry",
+        "Finance ops can waive an assessed fee on request"
+      ],
+      "entities": [
+        "fee",
+        "account",
+        "payment"
+      ],
+      "features": [
+        "fintech.fee_management"
+      ],
+      "notifications": [
+        "fee_assessed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fraud_alert_triage_workflow",
+      "name": "Fraud Alert Triage",
+      "actor": "risk_analyst",
+      "trigger": "The fraud/risk scoring engine flags a payment above its risk threshold.",
+      "steps": [
+        "System scores the transaction in real time and opens a fraud alert",
+        "Risk analyst triages the alert queue",
+        "Analyst clears the alert, confirms fraud, or escalates to compliance for AML review",
+        "Confirmed fraud blocks the card/party and closes the alert"
+      ],
+      "entities": [
+        "fraud_alert",
+        "payment",
+        "party"
+      ],
+      "features": [
+        "fintech.fraud_monitoring",
+        "fintech.aml_transaction_monitoring"
+      ],
+      "state_machine": {
+        "entity": "fraud_alert",
+        "initial": "open",
+        "terminal": [
+          "cleared",
+          "confirmed_fraud"
+        ],
+        "states": [
+          "open",
+          "cleared",
+          "confirmed_fraud"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "cleared",
+            "event": "clear"
+          },
+          {
+            "from": "open",
+            "to": "confirmed_fraud",
+            "event": "confirm"
+          }
+        ]
+      },
+      "notifications": [
+        "fraud_alert_opened",
+        "fraud_confirmed"
+      ],
+      "integrations": [
+        "fraud_engine"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "moov-io-iso8583",
+          "eu-psd2"
+        ],
+        "confidence": "medium",
+        "notes": "Real-time scoring/triage pattern reasoned from industry-standard fraud architecture, corroborated by moov-io/iso8583's authorization/response-code model and PSD2 SCA's transaction-risk-analysis provisions; not directly modeled in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "fx_conversion_workflow",
+      "name": "FX Conversion",
+      "actor": "system",
+      "trigger": "A payment or transfer crosses currencies on a multi-currency ledger.",
+      "steps": [
+        "Quote an FX rate for the conversion",
+        "Lock the rate for the transaction",
+        "Convert the amount",
+        "Post ledger entries in both source and destination currencies",
+        "Settle the converted amount"
+      ],
+      "entities": [
+        "account",
+        "ledger_entry",
+        "payment"
+      ],
+      "features": [
+        "fintech.multi_currency_ledger"
+      ],
+      "notifications": [],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "iso4217"
+        ],
+        "confidence": "medium",
+        "notes": "Per-currency balance model corroborated by Blnk; currency-code terminology from ISO 4217. FX-rate-locking mechanics are reasoned, not directly observed in the source reviewed."
+      }
+    },
+    {
+      "id": "mandate_recurring_payment_workflow",
+      "name": "Mandate & Recurring Payment",
+      "actor": "customer",
+      "trigger": "Customer sets up a standing order, subscription-style recurring payment, or a one-off bill payment to a registered biller.",
+      "steps": [
+        "Customer defines the payee/biller and recurrence rule (or a one-off amount for bill pay)",
+        "Platform validates the mandate against available funds and limits",
+        "Payment executes automatically on each due date (or immediately for bill pay)",
+        "Failed executions are retried with backoff",
+        "Customer can cancel the standing mandate at any time"
+      ],
+      "entities": [
+        "payment",
+        "party"
+      ],
+      "features": [
+        "fintech.recurring_payments",
+        "fintech.bill_pay"
+      ],
+      "notifications": [
+        "recurring_payment_executed",
+        "recurring_payment_failed"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "iso20022",
+          "moov-io-ach"
+        ],
+        "confidence": "medium",
+        "notes": "ISO 20022 standing-order message types and moov-io/ach's NACHA-standard ACH file support corroborate the payment-rail mechanics; the recurrence/mandate scheduling itself is reasoned, not directly modeled in either source."
+      }
+    },
+    {
+      "id": "savings_goal_workflow",
+      "name": "Savings Goal",
+      "actor": "customer",
+      "trigger": "Customer creates a savings goal (a labeled sub-balance, or 'pot') with a target amount.",
+      "steps": [
+        "Customer creates a goal with a target amount and optional deadline",
+        "Customer funds the goal via manual transfer or an automatic round-up rule",
+        "Platform tracks progress toward the target",
+        "Customer withdraws from or marks the goal complete"
+      ],
+      "entities": [
+        "wallet"
+      ],
+      "features": [
+        "fintech.savings_goals"
+      ],
+      "notifications": [
+        "goal_target_reached"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "actual-budget"
+        ],
+        "confidence": "medium",
+        "notes": "Neobank 'pot'/goal framing corroborated by Actual Budget's category goal-template feature (MIT-licensed, inspected via API, not cloned); Fineract's savings-product model supports the underlying labeled-balance pattern."
+      }
+    },
+    {
+      "id": "spend_insights_workflow",
+      "name": "Spend Insights Generation",
+      "actor": "system",
+      "trigger": "Scheduled job runs after new transactions post, to categorize and summarize spend.",
+      "steps": [
+        "Fetch newly posted payments",
+        "Match each payment to a merchant category (MCC)",
+        "Categorize the transaction",
+        "Aggregate spend trends for the period",
+        "Surface insights to the customer"
+      ],
+      "entities": [
+        "payment"
+      ],
+      "features": [
+        "fintech.spend_analytics"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "actual-budget",
+          "iso18245-mcc"
+        ],
+        "confidence": "medium",
+        "notes": "Merchant categorization corroborated by ISO 18245 MCC codes and Actual Budget's category-based spending reports (MIT-licensed, inspected via API, not cloned)."
+      }
+    },
+    {
+      "id": "virtual_account_provisioning_workflow",
+      "name": "Virtual Account Provisioning",
+      "actor": "administrator",
+      "trigger": "A party needs a dedicated incoming-funds identifier separate from their primary account number.",
+      "steps": [
+        "Administrator or system requests a virtual account number for the party",
+        "Platform allocates a number from its account-numbering pool",
+        "Number is linked to the party's underlying ledger account",
+        "Incoming funds referencing the virtual number are auto-allocated to that account"
+      ],
+      "entities": [
+        "account",
+        "party"
+      ],
+      "features": [
+        "fintech.virtual_accounts"
+      ],
+      "notifications": [],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "iso13616-iban",
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "open_banking_consent_workflow",
+      "name": "Open Banking Consent",
+      "actor": "customer",
+      "trigger": "A third-party provider requests access to account information or payment initiation under PSD2.",
+      "steps": [
+        "Customer is redirected to authenticate with the platform",
+        "Customer grants a scoped consent (account information and/or payment initiation)",
+        "Third-party provider calls the AISP or PISP API within the granted scope",
+        "Customer can view and revoke active consents at any time"
+      ],
+      "entities": [
+        "account",
+        "party"
+      ],
+      "features": [
+        "fintech.open_banking_connectivity"
+      ],
+      "notifications": [
+        "consent_granted",
+        "consent_revoked"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "eu-psd2"
+        ],
+        "confidence": "high",
+        "notes": "Directly defined by PSD2 and its SCA RTS (AISP/PISP consent-and-access model)."
+      }
+    },
+    {
+      "id": "webhook_delivery_workflow",
+      "name": "Webhook Delivery",
+      "actor": "system",
+      "trigger": "A subscribed lifecycle event occurs (payment, account, or card state change).",
+      "steps": [
+        "Build the event payload",
+        "Sign the payload",
+        "Attempt delivery to the partner's registered endpoint",
+        "Retry with exponential backoff on failure",
+        "Mark the event delivered or move it to a dead-letter queue after max retries"
+      ],
+      "entities": [
+        "payment",
+        "account"
+      ],
+      "features": [
+        "fintech.webhooks_events"
+      ],
+      "notifications": [],
+      "integrations": [
+        "webhook_delivery"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "account_closure_workflow",
+      "name": "Account Closure",
+      "actor": "customer",
+      "trigger": "Customer or administrator requests to close a ledger account.",
+      "steps": [
+        "Verify the account balance is zero (or transfer/withdraw the remainder)",
+        "Settle any pending transactions",
+        "Revoke or cancel cards linked to the account",
+        "Close the account",
+        "Retain records for the regulatory retention period"
+      ],
+      "entities": [
+        "account",
+        "party",
+        "card"
+      ],
+      "features": [
+        "fintech.ledger_accounts"
+      ],
+      "state_machine": {
+        "entity": "account",
+        "initial": "active",
+        "terminal": [
+          "closed"
+        ],
+        "states": [
+          "active",
+          "dormant",
+          "closed"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "dormant",
+            "event": "mark_dormant"
+          },
+          {
+            "from": "active",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "dormant",
+            "to": "closed",
+            "event": "close"
+          }
+        ]
+      },
+      "notifications": [
+        "account_closed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
           "blnk"
         ],
         "confidence": "medium",

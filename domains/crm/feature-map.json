@@ -31,9 +31,9 @@
       "source_type": "implementation",
       "license": "AGPL-3.0",
       "retrieved": "2026-09-27",
-      "version": "LICENSE.txt read in full (root)",
+      "version": "4c2d735ea5b038245a0a9bf73a3718688b7b0d37",
       "local_path": null,
-      "notes": "License corrected from an initial GPL-3.0 assumption to the actual AGPL-3.0 after reading LICENSE.txt directly; reference-only, never copy code. Directly read application/Espo/Modules/Crm/Resources/metadata/entityDefs/: confirmed core entities Account, Contact, Lead, Opportunity, Campaign, TargetList, Task, Call, Meeting, Document, Case. Read Opportunity.json (stage/probability/amount/closeDate) and Lead.json (status/source/opportunityAmount/targetLists/convertedAt/createdOpportunity — explicit lead-conversion fields) directly. No native Quote or forecasting entity found in core."
+      "notes": "AGPL-3.0, reference-only. Read over the GitHub API: `application/Espo/Modules/Crm/Resources/metadata/entityDefs/Lead.json` — `status` options are exactly ['New','Assigned','In Process','Converted','Recycled','Dead'], plus `convertedAt` and `createdAccount`/`createdContact`/`createdOpportunity` links, which is direct evidence for the lead state machine and for conversion producing three records; `Opportunity.json` — `stage` options ['Prospecting','Qualification','Proposal','Negotiation','Closed Won','Closed Lost']; `assignedUser` field. Notably its core has NO Quote, Product, Report or Workflow entityDef (those are the paid Advanced Pack), so Espo is deliberately NOT cited for those features."
     },
     {
       "id": "odoo-crm",
@@ -42,20 +42,20 @@
       "source_type": "implementation",
       "license": "LGPL-3.0 (per addon manifest; Odoo licenses per-addon, not repo-wide)",
       "retrieved": "2026-09-27",
-      "version": "addons/crm/__manifest__.py: 'license': 'LGPL-3' (no local clone; raw file reads only)",
+      "version": "18.0 @ fb88e6d9198b63fe8f19f45490588702e016e8ab",
       "local_path": null,
-      "notes": "Reference-only, never copy code. models/crm_lead.py: unified crm.lead model (a `type` field distinguishes lead vs opportunity), stage_id, probability/automated_probability (ML-assisted forecasting), recurring_revenue/MRR fields, dedicated forecast_graph/forecast_pivot views — the strongest forecasting evidence found in this research pass. Quotes belong to Odoo's separate `sale` addon (not inspected) — not attributed to the crm addon."
+      "notes": "LGPL-3.0 per addon manifest, reference-only. Read over the GitHub API at branch 18.0: `addons/crm/models/crm_lead.py` (`type` lead/opportunity selection, `date_conversion`, `stage_id`, `user_id`, `team_id`, `probability`, `lost_reason_id`), `addons/crm/models/` listing (`crm_team.py`, `crm_team_member.py`, `crm_lead_scoring_frequency.py`, `crm_stage.py`), `odoo/addons/base/models/res_partner.py` (`parent_id` 'Related Company' + `child_ids` + `commercial_partner_id` — the account hierarchy), and the presence of the `sale` (with `sale_order.py`/`sale_order_line.py`), `base_automation`, `base_import`, `board`, `spreadsheet_dashboard`, `google_calendar`, `microsoft_calendar` and `mass_mailing` addons."
     },
     {
       "id": "suitecrm",
       "title": "SuiteCRM",
-      "url": "https://github.com/salesagility/SuiteCRM",
+      "url": "https://github.com/SuiteCRM/SuiteCRM",
       "source_type": "implementation",
       "license": "AGPL-3.0",
       "retrieved": "2026-09-27",
-      "version": "LICENSE.txt read in full (root)",
+      "version": "hotfix",
       "local_path": null,
-      "notes": "License verified directly from LICENSE.txt (plain AGPL-3.0). Reference-only, never copy code. Module/entity-level detail was NOT independently re-verified this session (an API call for the module listing timed out and was not retried) — cited here for license facts only; no feature-level claims in this domain are attributed to SuiteCRM."
+      "notes": "AGPL-3.0, reference-only: read for its data model, never copied. `salesagility/SuiteCRM` redirects to `SuiteCRM/SuiteCRM`. Read over the GitHub API (not cloned): `modules/` listing, `modules/Accounts/vardefs.php` (`parent_id` + `member_of` account hierarchy), `modules/Leads/vardefs.php` (`converted` flag, comment 'Has Lead been converted to a Contact'), `include/SugarObjects/implements/assignable/vardefs.php` (`assigned_user_id` on every assignable module). The AOS_* modules (Quotes, Products, Products_Quotes, Line_Item_Groups, Invoices, Contracts, PDF_Templates), AOR_* reporting modules, and AOW_* workflow modules are in core, which is what makes quotes, line items, reporting and automation corroborated rather than assumed."
     },
     {
       "id": "twenty-crm",
@@ -64,9 +64,9 @@
       "source_type": "implementation",
       "license": "Mixed: AGPL-3.0 with an \"Application Exception\" for APIs/webhooks/manifests, plus separately MIT-licensed SDK/UI packages, plus commercially-licensed enterprise files",
       "retrieved": "2026-09-27",
-      "version": "LICENSE file read in full (root)",
+      "version": "741d216a75af0939d7ee8edf91b3ff16f61abda5",
       "local_path": null,
-      "notes": "License verified directly from the repo's LICENSE file (mixed, non-trivial — not a single SPDX id). Reference-only, never copy code. Schema/field-level detail was not retrieved (path 404'd); cited here for license facts only, no feature-level claims in this domain are attributed to Twenty."
+      "notes": "License is NOASSERTION on GitHub (AGPL-3.0 with an enterprise carve-out) — reference-only, and verify the carve-out before any reuse. Read over the GitHub API: `packages/twenty-server/src/modules/{person,company,opportunity,note,task}/standard-objects/*.workspace-entity.ts` — a modern CRM that still ships exactly person, company, opportunity, note and task as standard objects, with `note-target`/`task-target` join entities behind the activity timeline. Cited as a third corroboration of the core object set only."
     },
     {
       "id": "gdpr-2016-679",
@@ -104,7 +104,10 @@
       "entities": [
         "contact"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge",
+        "data_subject_request"
+      ],
       "platforms": {
         "web": true,
         "mobile": true,
@@ -122,13 +125,16 @@
       ],
       "integrations": [],
       "compliance": [
-        "gdpr_crm"
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
       ],
       "provenance": {
         "sources": [
           "nextcrm",
           "espocrm",
-          "odoo-crm"
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm"
         ],
         "confidence": "high",
         "notes": "Three independent implementations confirm a dedicated contact entity distinct from company/account."
@@ -146,7 +152,9 @@
       "entities": [
         "company"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge"
+      ],
       "platforms": {
         "web": true,
         "mobile": true,
@@ -168,7 +176,9 @@
         "sources": [
           "nextcrm",
           "espocrm",
-          "odoo-crm"
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm"
         ],
         "confidence": "high",
         "notes": "Three independent implementations. nextcrm's crm_Accounts.member_of field additionally confirms parent-account hierarchy."
@@ -187,7 +197,9 @@
         "lead"
       ],
       "workflows": [
-        "lead_lifecycle"
+        "lead_lifecycle",
+        "lead_assignment_routing",
+        "campaign_execution"
       ],
       "platforms": {
         "web": true,
@@ -206,13 +218,16 @@
       ],
       "integrations": [],
       "compliance": [
-        "gdpr_crm"
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
       ],
       "provenance": {
         "sources": [
           "nextcrm",
           "espocrm",
-          "odoo-crm"
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm"
         ],
         "confidence": "high",
         "notes": "Three independent implementations, each with lead source/status/type lookups."
@@ -254,10 +269,13 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "espocrm"
+          "espocrm",
+          "suitecrm",
+          "odoo-crm",
+          "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "EspoCRM's Lead.json explicitly has convertedAt and createdOpportunity fields, confirming a formal conversion action. NextCRM has both Lead and Opportunity models with an assigned_accounts FK on Lead, but no explicit convert action was found — single strong source only."
+        "confidence": "high",
+        "notes": "Verified in three independent implementations: EspoCRM Lead.status includes 'Converted' with convertedAt and createdAccount/createdContact/createdOpportunity links; SuiteCRM Leads.vardefs has a `converted` flag documented as 'Has Lead been converted to a Contact (and other Sugar objects)'; Odoo crm.lead carries a lead/opportunity `type` plus `date_conversion`. The three-record outcome (account + contact + opportunity) is Espo's explicit model."
       }
     },
     {
@@ -274,7 +292,9 @@
         "pipeline_stage"
       ],
       "workflows": [
-        "deal_lifecycle"
+        "deal_lifecycle",
+        "quote_to_won_deal",
+        "forecast_review"
       ],
       "platforms": {
         "web": true,
@@ -298,10 +318,12 @@
         "sources": [
           "nextcrm",
           "espocrm",
-          "odoo-crm"
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm"
         ],
         "confidence": "high",
-        "notes": "Three independent implementations: nextcrm (crm_Opportunities + crm_Opportunities_Sales_Stages), EspoCRM (Opportunity.stage/probability/amount/closeDate), Odoo (crm.lead unified model with stage_id/probability). Status values differ per product (nextcrm: ACTIVE/INACTIVE/PENDING/CLOSED via enum, not an explicit WON/LOST) — the domain's deal_lifecycle state machine synthesizes a common open/won/lost pattern across sources rather than copying one verbatim."
+        "notes": "Stage vocabularies were read directly: EspoCRM Opportunity.stage is ['Prospecting','Qualification','Proposal','Negotiation','Closed Won','Closed Lost']; Odoo separates stage_id (crm.stage) from probability and lost_reason_id. Twenty ships opportunity as a standard object."
       }
     },
     {
@@ -316,7 +338,10 @@
         "activity",
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "activity_follow_up_cycle",
+        "forecast_review"
+      ],
       "platforms": {
         "web": true,
         "mobile": true,
@@ -341,10 +366,12 @@
         "sources": [
           "nextcrm",
           "espocrm",
-          "odoo-crm"
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm"
         ],
         "confidence": "high",
-        "notes": "nextcrm (crm_Activities polymorphic links + Tasks), EspoCRM (Task/Call/Meeting entities), Odoo (activity mixin pattern standard across Odoo CRM leads). Three independent implementations."
+        "notes": "Corroborated across four: SuiteCRM Calls/Meetings/Tasks modules, Odoo mail_activity, Twenty's task and note standard objects with task-target/note-target join entities, plus EspoCRM and nextcrm."
       }
     },
     {
@@ -362,7 +389,10 @@
         "deal",
         "activity"
       ],
-      "workflows": [],
+      "workflows": [
+        "activity_follow_up_cycle",
+        "email_thread_sync"
+      ],
       "platforms": {
         "web": true,
         "mobile": true,
@@ -379,14 +409,18 @@
         "document"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_data_subject_rights"
+      ],
       "provenance": {
         "sources": [
           "nextcrm",
-          "espocrm"
+          "espocrm",
+          "twenty-crm",
+          "suitecrm"
         ],
-        "confidence": "medium",
-        "notes": "nextcrm's polymorphic DocumentsToOpportunities/DocumentsToContacts/DocumentsToLeads join tables plus crm_Activities give a unified-timeline shape; EspoCRM's Call/Meeting/Task tied to any parent record is the same pattern. Two independent sources."
+        "confidence": "high",
+        "notes": "Twenty's `note-target` and `task-target` join entities are the clearest evidence that the timeline is a polymorphic association rather than a log table; SuiteCRM's activity panels and EspoCRM's stream corroborate."
       }
     },
     {
@@ -402,7 +436,10 @@
         "deal",
         "company"
       ],
-      "workflows": [],
+      "workflows": [
+        "lead_assignment_routing",
+        "activity_follow_up_cycle"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -422,10 +459,13 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "espocrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "nextcrm has an assigned_to/assigned_to_user relation on both crm_Leads and crm_Opportunities, confirming manual assignment. Round-robin or territory-based auto-assignment logic was not found — single source, plain assignment only."
+        "confidence": "high",
+        "notes": "Verified in three independent implementations: SuiteCRM puts `assigned_user_id` in the shared assignable SugarObjects template so every module has it; EspoCRM has `assignedUser` on Lead; Odoo crm.lead has both `user_id` and `team_id`, with `crm_team_member.py` for team-level assignment. Team/round-robin routing is Odoo-specific and is the weaker half of this claim."
       }
     },
     {
@@ -439,7 +479,9 @@
       "entities": [
         "email_message"
       ],
-      "workflows": [],
+      "workflows": [
+        "email_thread_sync"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -502,10 +544,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's CalendarConnection + crm_CalendarEvents models (Google OAuth, iCalUID). Not cross-referenced against a second implementation this pass."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM has Calendar and CalendarAccount modules; Odoo ships separate `google_calendar` and `microsoft_calendar` addons alongside `calendar`. Two provider-specific addons rather than one standard is itself the finding — CalDAV/iCalendar is the protocol, but bidirectional sync is per-provider in practice."
       }
     },
     {
@@ -519,7 +563,9 @@
       "entities": [
         "campaign"
       ],
-      "workflows": [],
+      "workflows": [
+        "campaign_execution"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -536,7 +582,10 @@
         "analytics"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
       "provenance": {
         "sources": [
           "nextcrm",
@@ -558,7 +607,9 @@
       "entities": [
         "segment"
       ],
-      "workflows": [],
+      "workflows": [
+        "campaign_execution"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -575,7 +626,10 @@
         "analytics"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
       "provenance": {
         "sources": [
           "nextcrm",
@@ -599,7 +653,8 @@
         "deal"
       ],
       "workflows": [
-        "quote_approval"
+        "quote_approval",
+        "quote_to_won_deal"
       ],
       "platforms": {
         "web": true,
@@ -621,10 +676,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "No dedicated Quote entity found in any source. nextcrm assembles the equivalent from crm_Opportunities.approval_status (explicit code comment: 'SOW/quote approval — CSO approves before the quote is sent') plus crm_OpportunityLineItems plus a separate Invoices model. Odoo's real quoting lives in its `sale` addon, not `crm` (not inspected, not attributed here). Single, partial source — often a bolt-on rather than core CRM."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM ships AOS_Quotes (with AOS_PDF_Templates) in core; Odoo models this as sale.order in the `sale` addon. EspoCRM core has no Quote entity — quotes are in its paid Advanced Pack — so this is not universal, hence `recommended`."
       }
     },
     {
@@ -640,7 +697,9 @@
         "product",
         "deal"
       ],
-      "workflows": [],
+      "workflows": [
+        "quote_to_won_deal"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -660,10 +719,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's crm_Products/crm_ProductCategories/crm_AccountProducts/crm_OpportunityLineItems models, including CSV product import."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM has AOS_Products, AOS_Products_Quotes and AOS_Line_Item_Groups; Odoo has sale_order_line.py plus product_template/product_product. Line-item grouping is SuiteCRM-specific detail, not a general expectation."
       }
     },
     {
@@ -679,7 +740,9 @@
         "deal",
         "lead"
       ],
-      "workflows": [],
+      "workflows": [
+        "lead_assignment_routing"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -700,10 +763,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's crm_FunnelSettings (kill_after_days, recycle_after_days, 5-step cadence_touch offsets, care_checkin/referral/quarter timers) — a concrete but singular example of pipeline automation configuration."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM ships AOW_WorkFlow with AOW_Conditions and AOW_Actions in core; Odoo provides the generic `base_automation` addon and, for scoring, `crm_lead_scoring_frequency.py`. EspoCRM's equivalent is paid, so automation is `recommended`, not expected."
       }
     },
     {
@@ -717,7 +782,9 @@
       "entities": [
         "deal"
       ],
-      "workflows": [],
+      "workflows": [
+        "forecast_review"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -774,10 +841,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's crm_Accounts.member_of field. No rollup-reporting logic was found, only the relationship field."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM Accounts has `parent_id` plus a `member_of` link; Odoo res.partner has `parent_id` ('Related Company'), `child_ids` and a derived `commercial_partner_id`. EspoCRM core has no account parent link at all, which is why this stays `medium` and `optional` rather than common."
       }
     },
     {
@@ -792,7 +861,10 @@
         "deal",
         "lead"
       ],
-      "workflows": [],
+      "workflows": [
+        "data_subject_request",
+        "forecast_review"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -813,10 +885,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's crm_Report_Config + crm_Report_Schedule (cron-scheduled reports). Depends on shared.reporting for the underlying aggregation/chart/export engine."
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: SuiteCRM ships AOR_Reports, AOR_Charts and AOR_Scheduled_Reports in core; Odoo provides the `board` and `spreadsheet_dashboard` addons. Overlaps `shared.reporting` — this feature is the CRM-specific report set (pipeline, forecast, activity), not a reporting engine."
       }
     },
     {
@@ -832,7 +906,10 @@
         "segment",
         "product"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge",
+        "data_subject_request"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -849,13 +926,140 @@
         "document"
       ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_data_subject_rights"
+      ],
       "provenance": {
         "sources": [
+          "suitecrm",
+          "espocrm",
+          "odoo-crm",
           "nextcrm"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: nextcrm's ImportTargetsModal/import-targets.ts (targets/segments) and ImportProductsDialog/import-products.ts (products), each with dedicated tests. Contact-specific import was not found, so the feature is scoped to what was actually confirmed. Depends on shared.import_export for the generic CSV mapping/validation engine."
+        "confidence": "high",
+        "notes": "Verified in three independent implementations: SuiteCRM has an `Import` module, EspoCRM an `Import` entityDef in its core (not the paid pack), Odoo the `base_import` addon. Overlaps `shared.import_export`; kept here because CRM import carries domain-specific duplicate handling."
+      }
+    },
+    {
+      "id": "crm.duplicate_detection_merge",
+      "name": "Duplicate Detection and Merge",
+      "classification": "common",
+      "description": "Surface probable duplicate leads, contacts, or accounts and merge them into one surviving record, carrying related activity across.",
+      "users": [
+        "sales_rep",
+        "sales_ops_admin"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company"
+      ],
+      "workflows": [
+        "duplicate_detection_merge"
+      ],
+      "capabilities": [
+        "fuzzy_matching",
+        "record_merge"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "ranking probable duplicates for a human to confirm",
+        "suggesting which field value survives a merge"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "admin",
+        "backend",
+        "search",
+        "workflow"
+      ],
+      "integrations": [
+        "lead_capture_forms",
+        "data_enrichment"
+      ],
+      "compliance": [
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "suitecrm",
+          "nextcrm"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations verified: Odoo crm.lead computes `duplicate_lead_ids` via `_compute_potential_lead_duplicates` (matching on the company email domain among other rules); SuiteCRM ships a `MergeRecords` module. Matching heuristics differ per product, so only the existence of the capability is corroborated, not any particular algorithm."
+      }
+    },
+    {
+      "id": "crm.consent_preferences",
+      "name": "Consent and Marketing Preferences",
+      "classification": "compliance",
+      "description": "Record the lawful basis or consent behind holding a contact, and their opt-in/opt-out state per channel, so outbound sending can be suppressed at source.",
+      "users": [
+        "marketing_user",
+        "sales_ops_admin"
+      ],
+      "entities": [
+        "contact",
+        "lead",
+        "segment",
+        "campaign"
+      ],
+      "workflows": [
+        "data_subject_request",
+        "campaign_execution"
+      ],
+      "capabilities": [
+        "opt_out_suppression",
+        "consent_audit_trail"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "admin",
+        "backend",
+        "communication"
+      ],
+      "integrations": [
+        "marketing_email"
+      ],
+      "compliance": [
+        "gdpr_crm",
+        "can_spam",
+        "gdpr_data_subject_rights",
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679",
+          "can-spam",
+          "espocrm"
+        ],
+        "confidence": "high",
+        "notes": "Authoritative: GDPR Art. 6 (lawful basis) and Art. 21 (right to object) require the basis and the objection to be recorded and honoured; CAN-SPAM requires a working opt-out honoured within ten business days. EspoCRM's TargetList carries opt-out state, corroborating that suppression is modelled at the recipient rather than per send."
       }
     }
   ]

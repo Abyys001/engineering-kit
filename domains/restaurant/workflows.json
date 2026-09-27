@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "restaurant",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "workflows": [
     {
       "id": "reservation_lifecycle",
@@ -81,9 +81,10 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       }
     },
     {
@@ -150,9 +151,10 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       }
     },
     {
@@ -453,10 +455,460 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-online-food-ordering"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
+        ],
+        "confidence": "medium",
+        "notes": "Replaces the earlier wikipedia-only reasoned inference; both satisfecho/pos's courier pickup/deliver status actions and Enatega's rider app model this lifecycle concretely."
+      }
+    },
+    {
+      "id": "table_turn_lifecycle",
+      "name": "Table turn and floor status lifecycle",
+      "actor": "host",
+      "trigger": "A party is seated at a table",
+      "steps": [
+        "Mark table occupied when a party is seated",
+        "Table remains occupied through ordering and service",
+        "Mark table needing cleaning once the party pays and leaves",
+        "Clean and mark the table available for the next turn",
+        "Alternatively hold a table as reserved ahead of an upcoming booking"
+      ],
+      "entities": [
+        "table",
+        "order",
+        "reservation"
+      ],
+      "features": [
+        "restaurant.tables"
+      ],
+      "state_machine": {
+        "entity": "table",
+        "initial": "available",
+        "terminal": [],
+        "states": [
+          "available",
+          "occupied",
+          "reserved",
+          "cleaning"
+        ],
+        "transitions": [
+          {
+            "from": "available",
+            "to": "reserved",
+            "event": "hold_for_reservation"
+          },
+          {
+            "from": "reserved",
+            "to": "occupied",
+            "event": "seat_party"
+          },
+          {
+            "from": "available",
+            "to": "occupied",
+            "event": "seat_walk_in"
+          },
+          {
+            "from": "occupied",
+            "to": "cleaning",
+            "event": "party_leaves"
+          },
+          {
+            "from": "cleaning",
+            "to": "available",
+            "event": "cleaned"
+          },
+          {
+            "from": "reserved",
+            "to": "available",
+            "event": "release_hold"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "menu_item_lifecycle",
+      "name": "Menu item authoring and availability lifecycle",
+      "actor": "manager",
+      "trigger": "Manager creates or updates a menu item, or the kitchen runs out of one mid-service",
+      "steps": [
+        "Create or edit a menu item: name, price, course, allergens",
+        "Attach modifier groups and options",
+        "Publish the item as active on the menu",
+        "Kitchen or manager marks the item unavailable ('86 it') when stock runs out mid-service",
+        "Item is hidden from POS, KDS, and online ordering while 86'd",
+        "Reactivate once restocked, or discontinue permanently"
+      ],
+      "entities": [
+        "menu_item",
+        "modifier_group",
+        "modifier"
+      ],
+      "features": [
+        "restaurant.menu",
+        "restaurant.menu_modifiers",
+        "restaurant.menu_allergen_labeling"
+      ],
+      "state_machine": {
+        "entity": "menu_item",
+        "initial": "active",
+        "terminal": [
+          "discontinued"
+        ],
+        "states": [
+          "active",
+          "86'd",
+          "discontinued"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "86'd",
+            "event": "mark_86"
+          },
+          {
+            "from": "86'd",
+            "to": "active",
+            "event": "restock"
+          },
+          {
+            "from": "active",
+            "to": "discontinued",
+            "event": "discontinue"
+          },
+          {
+            "from": "86'd",
+            "to": "discontinued",
+            "event": "discontinue"
+          }
+        ]
+      },
+      "notifications": [
+        "item_unavailable"
+      ],
+      "integrations": [
+        "pos"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "staff_shift_lifecycle",
+      "name": "Staff shift scheduling and clock-in lifecycle",
+      "actor": "manager",
+      "trigger": "Manager schedules a staff member for a shift",
+      "steps": [
+        "Manager schedules a shift for a staff member",
+        "Staff clocks in at (or near) the scheduled start, often via a QR/PIN kiosk",
+        "Staff works the shift; sales and tips accrue against it",
+        "Staff clocks out at the end of the shift",
+        "Manager reviews attendance and reconciles cash/tips for cash-up"
+      ],
+      "entities": [
+        "shift"
+      ],
+      "features": [
+        "restaurant.staff_shifts"
+      ],
+      "state_machine": {
+        "entity": "shift",
+        "initial": "scheduled",
+        "terminal": [
+          "clocked_out",
+          "no_show"
+        ],
+        "states": [
+          "scheduled",
+          "clocked_in",
+          "clocked_out",
+          "no_show"
+        ],
+        "transitions": [
+          {
+            "from": "scheduled",
+            "to": "clocked_in",
+            "event": "clock_in"
+          },
+          {
+            "from": "clocked_in",
+            "to": "clocked_out",
+            "event": "clock_out"
+          },
+          {
+            "from": "scheduled",
+            "to": "no_show",
+            "event": "mark_no_show"
+          }
+        ]
+      },
+      "notifications": [
+        "shift_reminder"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "satisfecho-pos",
+          "restopos"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "loyalty_program_lifecycle",
+      "name": "Loyalty accrual and redemption lifecycle",
+      "actor": "customer",
+      "trigger": "Guest joins the restaurant's loyalty program",
+      "steps": [
+        "Guest joins the loyalty program",
+        "Points or credit accrue automatically at payment",
+        "Guest views balance and tier in a customer portal or wallet pass",
+        "Guest redeems points for a reward at checkout",
+        "Account may be suspended for inactivity or fraud"
+      ],
+      "entities": [
+        "loyalty_account",
+        "guest",
+        "payment"
+      ],
+      "features": [
+        "restaurant.loyalty"
+      ],
+      "state_machine": {
+        "entity": "loyalty_account",
+        "initial": "active",
+        "terminal": [],
+        "states": [
+          "active",
+          "suspended"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "suspended",
+            "event": "suspend"
+          },
+          {
+            "from": "suspended",
+            "to": "active",
+            "event": "reinstate"
+          }
+        ]
+      },
+      "notifications": [
+        "points_earned",
+        "reward_available"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "satisfecho-pos",
+          "restopos"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "review_lifecycle",
+      "name": "Post-visit review lifecycle",
+      "actor": "customer",
+      "trigger": "Guest completes a visit or order",
+      "steps": [
+        "System requests a review after the visit/order completes",
+        "Guest submits a rating and comment",
+        "Review is published, or flagged for moderation if it trips a filter",
+        "Manager may respond to or resolve a flagged review"
+      ],
+      "entities": [
+        "review",
+        "guest",
+        "order"
+      ],
+      "features": [
+        "restaurant.reviews"
+      ],
+      "state_machine": {
+        "entity": "review",
+        "initial": "submitted",
+        "terminal": [
+          "published"
+        ],
+        "states": [
+          "submitted",
+          "published",
+          "flagged"
+        ],
+        "transitions": [
+          {
+            "from": "submitted",
+            "to": "published",
+            "event": "approve"
+          },
+          {
+            "from": "submitted",
+            "to": "flagged",
+            "event": "flag"
+          },
+          {
+            "from": "flagged",
+            "to": "published",
+            "event": "resolve_and_approve"
+          }
+        ]
+      },
+      "notifications": [
+        "review_request"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "gift_card_lifecycle",
+      "name": "Gift card issuance and redemption lifecycle",
+      "actor": "cashier",
+      "trigger": "Guest purchases a gift card",
+      "steps": [
+        "Cashier or online storefront issues a gift card for a purchased value",
+        "Card is activated once payment for it settles",
+        "Guest redeems balance against a bill at payment",
+        "Balance depletes with each partial redemption",
+        "Card expires per policy if unused"
+      ],
+      "entities": [
+        "gift_card",
+        "payment",
+        "guest"
+      ],
+      "features": [
+        "restaurant.gift_cards"
+      ],
+      "state_machine": {
+        "entity": "gift_card",
+        "initial": "issued",
+        "terminal": [
+          "redeemed",
+          "expired"
+        ],
+        "states": [
+          "issued",
+          "active",
+          "redeemed",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "issued",
+            "to": "active",
+            "event": "activate"
+          },
+          {
+            "from": "active",
+            "to": "redeemed",
+            "event": "fully_redeem"
+          },
+          {
+            "from": "active",
+            "to": "expired",
+            "event": "expire"
+          }
+        ]
+      },
+      "notifications": [
+        "gift_card_issued"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "opensourcepos"
         ],
         "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "notes": "Single implementation for the underlying entity; state shape beyond issued/redeemed is reasoned inference."
+      }
+    },
+    {
+      "id": "inventory_depletion_workflow",
+      "name": "Recipe-driven inventory depletion",
+      "actor": "kitchen_staff",
+      "trigger": "An order item is fired to the kitchen",
+      "steps": [
+        "Look up the recipe (Bill of Materials) for the fired menu item",
+        "Deduct each ingredient's quantity from stock on hand",
+        "Compare remaining stock to the reorder level",
+        "Flag low/out-of-stock ingredients and optionally 86 dependent menu items",
+        "Receive a purchase order from a supplier to replenish stock"
+      ],
+      "entities": [
+        "order_item",
+        "recipe",
+        "inventory_item"
+      ],
+      "features": [
+        "restaurant.inventory",
+        "restaurant.recipes"
+      ],
+      "notifications": [
+        "low_stock_alert"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "satisfecho-pos",
+          "restopos",
+          "flutter-pos-system"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "delivery_marketplace_integration_lifecycle",
+      "name": "Third-party delivery marketplace connection lifecycle",
+      "actor": "manager",
+      "trigger": "Manager connects a third-party delivery marketplace account",
+      "steps": [
+        "Manager selects a marketplace provider and enters credentials",
+        "Platform tests the connection and stores a webhook ingest endpoint",
+        "Marketplace sends new orders to the webhook as they are placed",
+        "Order is created in the restaurant's own order flow from the delivery payload",
+        "Order status changes are synced back to the marketplace"
+      ],
+      "entities": [
+        "order"
+      ],
+      "features": [
+        "restaurant.third_party_delivery_integration",
+        "restaurant.delivery_orders"
+      ],
+      "notifications": [],
+      "integrations": [
+        "delivery_marketplace"
+      ],
+      "provenance": {
+        "sources": [
+          "satisfecho-pos"
+        ],
+        "confidence": "low",
+        "notes": "Single implementation observed (satisfecho/pos's delivery_integration_routes.py, with a concrete Uber Eats/Glovo/Deliveroo provider catalog and webhook ingest)."
       }
     }
   ]

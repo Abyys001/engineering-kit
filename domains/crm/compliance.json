@@ -47,6 +47,77 @@
         ],
         "confidence": "high"
       }
+    },
+    {
+      "id": "gdpr_data_subject_rights",
+      "name": "GDPR — Data Subject Rights and Response Deadline",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679, Arts. 12, 15-17, 21",
+      "jurisdiction": "European Union / EEA",
+      "scope": "A person in the CRM can demand a copy of what is held (Art. 15), correction (Art. 16), erasure (Art. 17), and can object to processing for direct marketing at any time (Art. 21(2)) — after which marketing must stop. Art. 12(3) sets one month to respond, extendable to three for complex cases. This is separate from the lawful-basis question in `gdpr_crm`: it is the operational obligation a CRM must be able to execute.",
+      "affected_features": [
+        "crm.consent_preferences",
+        "crm.contacts",
+        "crm.leads",
+        "crm.contact_timeline",
+        "crm.data_import"
+      ],
+      "requires_human_review": true,
+      "notes": "Erasing a contact outright can be counterproductive: the suppression record is what prevents them being re-imported and re-mailed, and Art. 21(3) requires the objection to be honoured going forward. How to reconcile that is a decision for counsel, not a default.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "high",
+        "notes": "Article numbers read from the consolidated EUR-Lex text."
+      }
+    },
+    {
+      "id": "gdpr_consent_demonstrability",
+      "name": "GDPR — Demonstrable Consent and Withdrawal",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679, Art. 7",
+      "jurisdiction": "European Union / EEA",
+      "scope": "Where consent is the lawful basis, the controller must be able to demonstrate that it was given (Art. 7(1)) and must make withdrawal as easy as giving it (Art. 7(3)). In CRM terms a boolean flag is not enough: what is needed is when, how, and for what the consent was captured, and when it was withdrawn.",
+      "affected_features": [
+        "crm.consent_preferences",
+        "crm.campaign_management",
+        "crm.segmentation"
+      ],
+      "requires_human_review": true,
+      "notes": "Whether consent or legitimate interest is the right basis for B2B outreach varies by member state and is explicitly not decided here.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "eprivacy_direct_marketing",
+      "name": "ePrivacy Directive — Unsolicited Electronic Marketing",
+      "kind": "regulation",
+      "version": "Directive 2002/58/EC as amended by 2009/136/EC, Art. 13",
+      "jurisdiction": "European Union / EEA (transposed into national law, so the detail differs per member state)",
+      "scope": "Art. 13 makes unsolicited commercial email and SMS subject to prior consent, with a narrow 'soft opt-in' for existing customers on similar products. It is transposed nationally, so the operative rule is the member state's law, not the Directive text.",
+      "affected_features": [
+        "crm.campaign_management",
+        "crm.consent_preferences",
+        "crm.segmentation"
+      ],
+      "requires_human_review": true,
+      "notes": "This sits on top of GDPR rather than replacing it, and is a common source of confusion: satisfying GDPR's lawful-basis test does not by itself make a marketing send lawful. National transposition must be checked. The successor ePrivacy Regulation has not been cited here because its status was not verified in this pass.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32002L0058",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium",
+        "notes": "Cited at medium: the Directive and its Art. 13 subject matter are well established, but no national transposition was read in this pass and the ePrivacy Regulation's current status was not verified."
+      }
     }
   ]
 }

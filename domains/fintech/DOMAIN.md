@@ -1,5 +1,7 @@
 # Fintech
 
+## Maturity: curated
+
 Digital financial products — customer wallets, accounts, payments, cards, and lending — built on a double-entry ledger with KYC/AML controls. Covers neobanks, embedded-finance/BaaS platforms, and standalone lending products. NACE: K64.19 (other monetary intermediation), K64.92 (other credit granting), K66.19 (activities auxiliary to financial services).
 
 ## Product types

@@ -8,23 +8,23 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.fraud_monitoring` Fraud / Risk Monitoring | Score transactions in real time against fraud rules/models and flag or block suspicious activity. | low | web, mobile, admin, backend, ai, real_time | core | high | missing | apache-fineract |
+| `fintech.fraud_monitoring` Fraud / Risk Monitoring | Score transactions in real time against fraud rules/models and flag or block suspicious activity. | medium | web, admin, backend, ai, real_time | core | high | missing | apache-fineract, moov-io-iso8583, eu-psd2 |
 | `fintech.kyc_onboarding` KYC / Onboarding | Capture identity documents, run identity verification, and produce a risk rating before a party can transact. | high | web, mobile, admin, customer_portal, backend, ai | low | high | missing | blnk, apache-fineract, fatf-recommendations |
 | `fintech.ledger_accounts` Ledger Accounts (Double-Entry) | Post every balance movement as a balanced double-entry to an immutable ledger; accounts are a view over ledger entries. | high | web, mobile, admin, customer_portal, backend | medium | none | reference | blnk, apache-fineract, formance-ledger |
 | `fintech.limits_management` Limits Management | Enforce per-transaction, daily, and velocity limits on payments, transfers, and card spend. | medium | web, mobile, admin, customer_portal, backend, real_time | high | low | missing | apache-fineract, fatf-recommendations |
 | `fintech.party_management` Party / Customer Management | Maintain customer and counterparty profiles (individuals and organizations) as the root record every account, wallet, and payment attaches to. | high | web, mobile, admin, customer_portal, backend | none | low | reference | blnk, apache-fineract, std:fibo |
 | `fintech.payments` Payments | Move money into or out of the platform over a payment rail (card, ACH, SEPA, wire) with a lifecycle from initiation to settlement. | high | web, mobile, admin, customer_portal, backend, real_time | high | low | reference | blnk, apache-fineract, formance-ledger, iso20022 |
-| `fintech.reconciliation` Reconciliation | Match internal ledger entries against external settlement/processor/bank statements and surface discrepancies. | medium | web, mobile, admin, backend | none | low | reference | blnk |
+| `fintech.reconciliation` Reconciliation | Match internal ledger entries against external settlement/processor/bank statements and surface discrepancies. | medium | web, admin, backend | none | low | reference | blnk |
 | `fintech.wallets` Wallets | Stored-value balances a party can hold, fund, and spend from, backed by ledger accounts. | medium | web, mobile, admin, customer_portal, backend | high | none | reference | blnk, apache-fineract |
 
 ## Common (9)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.card_controls` Card Controls | Freeze/unfreeze a card and set per-card spend limits or merchant-category restrictions. | low | web, mobile, admin, customer_portal, backend | medium | none | missing | apache-fineract |
-| `fintech.card_issuing` Card Issuing | Issue virtual or physical debit/prepaid cards linked to a wallet or account. | low | web, mobile, admin, customer_portal, backend | medium | none | missing | apache-fineract |
-| `fintech.dispute_management` Dispute / Chargeback Management | Let a customer dispute a transaction and route it through investigation to resolution, including card-network chargebacks. | low | web, mobile, admin, customer_portal, backend | none | low | missing | apache-fineract |
-| `fintech.fee_management` Fee Management | Define fee schedules (flat, percentage, tiered) and assess them against payments, cards, or accounts. | medium | web, mobile, admin, backend | none | none | missing | apache-fineract |
+| `fintech.card_controls` Card Controls | Freeze/unfreeze a card and set per-card spend limits or merchant-category restrictions. | medium | web, mobile, admin, customer_portal, backend | medium | none | missing | apache-fineract, moov-io-iso8583, iso18245-mcc |
+| `fintech.card_issuing` Card Issuing | Issue virtual or physical debit/prepaid cards linked to a wallet or account. | medium | web, mobile, admin, customer_portal, backend | medium | none | missing | apache-fineract, moov-io-iso8583, emvco-specifications |
+| `fintech.dispute_management` Dispute / Chargeback Management | Let a customer dispute a transaction and route it through investigation to resolution, including card-network chargebacks. | medium | web, mobile, admin, customer_portal, backend | none | low | missing | apache-fineract, reg-e-efta |
+| `fintech.fee_management` Fee Management | Define fee schedules (flat, percentage, tiered) and assess them against payments, cards, or accounts. | medium | web, admin, backend | none | none | missing | apache-fineract |
 | `fintech.internal_transfers` Internal Transfers | Move money between two wallets or accounts on the same platform without leaving the ledger. | medium | web, mobile, admin, customer_portal, backend, real_time | high | none | reference | blnk |
 | `fintech.lending_origination` Lending Origination | Take a loan application, underwrite it against credit/risk data, and approve or reject. | medium | web, mobile, admin, customer_portal, backend, ai | low | high | missing | apache-fineract |
 | `fintech.loan_servicing` Loan Servicing | Disburse approved loans, generate repayment schedules, apply payments, and track arrears. | medium | web, mobile, admin, customer_portal, backend | none | low | missing | apache-fineract |
@@ -35,30 +35,30 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.credit_scoring` Credit Scoring | Compute or fetch a creditworthiness score to support lending decisions and limit setting. | low | web, mobile, admin, backend, ai | low | high | missing | apache-fineract |
-| `fintech.interest_accrual` Interest Accrual | Accrue and post interest on interest-bearing balances (savings) or outstanding loan principal on a schedule. | medium | web, mobile, admin, backend | none | none | missing | apache-fineract |
+| `fintech.credit_scoring` Credit Scoring | Compute or fetch a creditworthiness score to support lending decisions and limit setting. | medium | web, admin, backend, ai | low | high | missing | apache-fineract, moov-io-metro2 |
+| `fintech.interest_accrual` Interest Accrual | Accrue and post interest on interest-bearing balances (savings) or outstanding loan principal on a schedule. | medium | web, admin, backend | none | none | missing | apache-fineract |
 | `fintech.multi_currency_ledger` Multi-Currency Ledger | Hold and post balances in more than one currency per party, with FX conversion at transaction time. | medium | web, mobile, admin, customer_portal, backend | medium | none | reference | blnk, iso4217 |
-| `fintech.virtual_accounts` Virtual Account Numbers | Issue a dedicated account number per customer or purpose that routes incoming funds into the right ledger account automatically. | medium | web, mobile, admin, backend | low | none | missing | iso13616-iban |
+| `fintech.virtual_accounts` Virtual Account Numbers | Issue a dedicated account number per customer or purpose that routes incoming funds into the right ledger account automatically. | medium | web, mobile, admin, customer_portal, backend | low | none | missing | iso13616-iban |
 
 ## Optional (4)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.bill_pay` Bill Pay | Pay a registered biller (utility, telecom, government) from a wallet or account. | low | web, mobile, admin, customer_portal, backend | low | none | missing | apache-fineract |
-| `fintech.recurring_payments` Recurring Payments | Schedule standing orders or subscription-style payments that execute automatically on a recurrence rule. | low | web, mobile, admin, customer_portal, backend | low | none | missing | iso20022 |
-| `fintech.savings_goals` Savings Goals | Let a customer set aside money in a labeled sub-balance ('pot') toward a target amount. | low | web, mobile, admin, customer_portal, backend | none | low | missing | apache-fineract |
-| `fintech.spend_analytics` Spend Analytics | Categorize a customer's transactions and surface spending insights and trends. | low | web, mobile, admin, customer_portal, backend, ai | none | high | missing | apache-fineract |
+| `fintech.bill_pay` Bill Pay | Pay a registered biller (utility, telecom, government) from a wallet or account. | medium | web, mobile, admin, customer_portal, backend | low | none | missing | apache-fineract, moov-io-ach |
+| `fintech.recurring_payments` Recurring Payments | Schedule standing orders or subscription-style payments that execute automatically on a recurrence rule. | medium | web, mobile, admin, customer_portal, backend | low | none | missing | iso20022, moov-io-ach |
+| `fintech.savings_goals` Savings Goals | Let a customer set aside money in a labeled sub-balance ('pot') toward a target amount. | medium | web, mobile, admin, customer_portal, backend | none | low | missing | apache-fineract, actual-budget |
+| `fintech.spend_analytics` Spend Analytics | Categorize a customer's transactions and surface spending insights and trends. | medium | web, mobile, admin, customer_portal, backend, ai | none | high | missing | apache-fineract, actual-budget, iso18245-mcc |
 
 ## Compliance (2)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.aml_transaction_monitoring` AML Transaction Monitoring | Continuously screen posted transactions for structuring, unusual patterns, and thresholds requiring a suspicious activity report. | high | web, mobile, admin, backend, ai | medium | high | missing | fatf-recommendations, eu-amlr, us-bsa |
-| `fintech.sanctions_screening` Sanctions / PEP Screening | Screen parties against sanctions and politically-exposed-person lists at onboarding and periodically thereafter. | high | web, mobile, admin, backend | low | medium | missing | fatf-recommendations |
+| `fintech.aml_transaction_monitoring` AML Transaction Monitoring | Continuously screen posted transactions for structuring, unusual patterns, and thresholds requiring a suspicious activity report. | high | web, admin, backend, ai | medium | high | missing | fatf-recommendations, eu-amlr, us-bsa |
+| `fintech.sanctions_screening` Sanctions / PEP Screening | Screen parties against sanctions and politically-exposed-person lists at onboarding and periodically thereafter. | high | web, admin, backend | low | medium | missing | fatf-recommendations |
 
 ## Integration (2)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `fintech.open_banking_connectivity` Open Banking Connectivity | Expose PSD2-style account information and payment initiation APIs to authorized third-party providers. | high | web, mobile, admin, backend | medium | none | missing | eu-psd2 |
-| `fintech.webhooks_events` Webhooks / Event Notifications | Deliver signed webhook events for account, payment, and card lifecycle changes to integrating partners. | medium | web, mobile, admin, backend, real_time | high | none | missing | blnk |
+| `fintech.open_banking_connectivity` Open Banking Connectivity | Expose PSD2-style account information and payment initiation APIs to authorized third-party providers. | high | web, mobile, admin, customer_portal, backend | medium | none | missing | eu-psd2 |
+| `fintech.webhooks_events` Webhooks / Event Notifications | Deliver signed webhook events for account, payment, and card lifecycle changes to integrating partners. | medium | web, admin, backend, real_time | high | none | missing | blnk |

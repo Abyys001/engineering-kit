@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "restaurant",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "integrations": [
     {
       "id": "pos",
@@ -103,10 +103,10 @@
       "classification": "recommended",
       "provenance": {
         "sources": [
-          "wikipedia-online-food-ordering"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "confidence": "medium"
       }
     },
     {

@@ -64,24 +64,25 @@
       ],
       "maturity": "partial",
       "last_reviewed": "2026-09-27",
-      "feature_count": 19,
+      "feature_count": 21,
       "features_by_classification": {
         "core": 5,
-        "common": 9,
+        "common": 10,
         "recommended": 4,
-        "optional": 1
+        "optional": 1,
+        "compliance": 1
       },
       "features_by_confidence": {
-        "high": 5,
-        "medium": 5,
-        "low": 9
+        "high": 10,
+        "medium": 11,
+        "low": 0
       },
-      "entity_count": 13,
+      "entity_count": 14,
       "role_count": 5,
-      "workflow_count": 3,
-      "state_machine_count": 3,
-      "compliance_count": 2,
-      "integration_count": 2,
+      "workflow_count": 11,
+      "state_machine_count": 6,
+      "compliance_count": 5,
+      "integration_count": 8,
       "standards": [
         "gdpr-2016-679",
         "can-spam"
@@ -287,7 +288,7 @@
         "K64.92",
         "K66.19"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
       "feature_count": 29,
       "features_by_classification": {
@@ -300,14 +301,14 @@
       },
       "features_by_confidence": {
         "high": 7,
-        "medium": 13,
-        "low": 9
+        "medium": 22,
+        "low": 0
       },
       "entity_count": 16,
       "role_count": 8,
-      "workflow_count": 5,
-      "state_machine_count": 5,
-      "compliance_count": 6,
+      "workflow_count": 20,
+      "state_machine_count": 11,
+      "compliance_count": 7,
       "integration_count": 6,
       "standards": [
         "std:fibo",
@@ -319,14 +320,21 @@
         "us-bsa",
         "eu-psd2",
         "pci-dss",
-        "gdpr"
+        "gdpr",
+        "iso18245-mcc",
+        "reg-e-efta",
+        "emvco-specifications"
       ],
       "implementation_references": [
         "blnk",
         "apache-fineract",
-        "formance-ledger"
+        "formance-ledger",
+        "moov-io-iso8583",
+        "moov-io-metro2",
+        "moov-io-ach",
+        "actual-budget"
       ],
-      "source_count": 12,
+      "source_count": 19,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -460,8 +468,8 @@
       "nace": [
         "I55.10"
       ],
-      "maturity": "partial",
-      "last_reviewed": "2026-09-26",
+      "maturity": "curated",
+      "last_reviewed": "2026-09-27",
       "feature_count": 24,
       "features_by_classification": {
         "core": 7,
@@ -471,13 +479,13 @@
       },
       "features_by_confidence": {
         "high": 0,
-        "medium": 13,
-        "low": 11
+        "medium": 19,
+        "low": 5
       },
       "entity_count": 18,
-      "role_count": 5,
-      "workflow_count": 5,
-      "state_machine_count": 4,
+      "role_count": 10,
+      "workflow_count": 12,
+      "state_machine_count": 8,
       "compliance_count": 3,
       "integration_count": 6,
       "standards": [
@@ -488,9 +496,12 @@
       ],
       "implementation_references": [
         "frappe-hospitality",
-        "qloapps"
+        "qloapps",
+        "woopms",
+        "hotelio",
+        "guesthub"
       ],
-      "source_count": 12,
+      "source_count": 15,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -714,24 +725,24 @@
       "nace": [
         "I56.10"
       ],
-      "maturity": "partial",
-      "last_reviewed": "2026-09-26",
+      "maturity": "curated",
+      "last_reviewed": "2026-09-27",
       "feature_count": 25,
       "features_by_classification": {
         "core": 6,
-        "common": 12,
-        "recommended": 4,
-        "optional": 3
+        "common": 11,
+        "optional": 5,
+        "recommended": 3
       },
       "features_by_confidence": {
-        "high": 5,
-        "medium": 3,
-        "low": 17
+        "high": 10,
+        "medium": 14,
+        "low": 1
       },
-      "entity_count": 20,
+      "entity_count": 21,
       "role_count": 7,
-      "workflow_count": 6,
-      "state_machine_count": 6,
+      "workflow_count": 14,
+      "state_machine_count": 12,
       "compliance_count": 4,
       "integration_count": 7,
       "standards": [
@@ -743,9 +754,15 @@
       "implementation_references": [
         "frappe-hospitality",
         "odoo-pos-restaurant",
-        "ury"
+        "ury",
+        "satisfecho-pos",
+        "enatega-food-delivery-multivendor",
+        "restopos",
+        "flutter-pos-system",
+        "opensourcepos",
+        "square-nodejs-sdk"
       ],
-      "source_count": 14,
+      "source_count": 20,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,

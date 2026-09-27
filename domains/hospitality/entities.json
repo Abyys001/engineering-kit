@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "hospitality",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "entities": [
     {
       "id": "property",
@@ -156,9 +156,11 @@
       ],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "woopms"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Corroborated by woopms's RatePlan (min_stay, max_stay, cutoff_days), alongside QloApps's fuller restriction set."
       }
     },
     {
@@ -242,24 +244,38 @@
       "id": "guest_profile",
       "name": "Guest profile",
       "description": "A guest's identity, contact info, and stay history.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "reservation"
+        }
+      ],
       "important_fields": [
         "name",
         "email",
         "phone",
-        "id_document"
+        "id_document",
+        "loyalty_tier"
       ],
-      "states": [],
+      "states": [
+        "bronze",
+        "silver",
+        "gold",
+        "platinum"
+      ],
       "related_features": [
         "hospitality.guest_profiles",
-        "hospitality.loyalty_program"
+        "hospitality.loyalty_program",
+        "hospitality.guest_reviews"
       ],
       "provenance": {
         "sources": [
           "frappe-hospitality",
-          "qloapps"
+          "qloapps",
+          "guesthub"
         ],
-        "confidence": "medium"
+        "confidence": "medium",
+        "notes": "Loyalty tier states (bronze/silver/gold/platinum) sourced from GuestHub's LoyaltyTier enum; not present in Frappe Hospitality or QloApps."
       }
     },
     {
@@ -289,10 +305,12 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-hotel"
+          "wikipedia-hotel",
+          "hotelio",
+          "guesthub"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; neither implementation has a distinct per-stay folio separate from a single order/invoice."
+        "confidence": "medium",
+        "notes": "Corroborated by Hotelio's Invoice+InvoiceItem (itemized line items) and GuestHub's Billing Invoice/LineItem/Payment domain model \u2014 both a real, itemized multi-line charge ledger, though neither uses the hotel-specific term 'folio' or ties it to an in-progress (pre-checkout) stay the way this entity implies."
       }
     },
     {
@@ -360,7 +378,12 @@
       "id": "cancellation_policy",
       "name": "Cancellation policy",
       "description": "Rules for refund percentage based on cancellation timing relative to arrival.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        }
+      ],
       "important_fields": [
         "cutoff_hours",
         "refund_percentage"
@@ -371,16 +394,27 @@
       ],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "woopms"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       }
     },
     {
       "id": "channel",
       "name": "Channel",
       "description": "A connected OTA/distribution channel that receives ARI updates and sends reservations.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        },
+        {
+          "type": "has_many",
+          "target": "reservation",
+          "note": "reservations originating from this channel"
+        }
+      ],
       "important_fields": [
         "name",
         "connection_status"
@@ -404,7 +438,12 @@
       "id": "amenity",
       "name": "Amenity",
       "description": "A named feature attached to a property or room type.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "room_type"
+        }
+      ],
       "important_fields": [
         "name"
       ],
@@ -440,9 +479,11 @@
       ],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "frappe-hospitality"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Corroborated by Frappe Hospitality's Hotel Room Package (a priced bundle of amenities linked to an Item), though it bundles the extra into a room-rate package rather than an itemized per-stay add-on the way QloApps's ServiceProduct does."
       }
     },
     {
@@ -504,7 +545,12 @@
       "id": "night_audit_run",
       "name": "Night audit run",
       "description": "One execution of the end-of-day close/reconciliation/date-rollover process.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        }
+      ],
       "important_fields": [
         "business_date",
         "status"

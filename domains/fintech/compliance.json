@@ -40,7 +40,7 @@
         "fintech.sanctions_screening"
       ],
       "requires_human_review": true,
-      "notes": "Part of the 2024 EU AML package; applicability dates are staged — verify current phase.",
+      "notes": "Part of the 2024 EU AML package; applicability dates are staged \u2014 verify current phase.",
       "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
       "provenance": {
         "sources": [
@@ -54,7 +54,7 @@
       "id": "us_bsa",
       "name": "Bank Secrecy Act (BSA)",
       "kind": "regulation",
-      "version": "31 U.S.C. § 5311 et seq.",
+      "version": "31 U.S.C. \u00a7 5311 et seq.",
       "jurisdiction": "United States",
       "scope": "CDD, currency transaction reports (CTR), and suspicious activity reports (SAR) for US-regulated financial institutions.",
       "affected_features": [
@@ -134,6 +134,28 @@
       "provenance": {
         "sources": [
           "gdpr"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "reg_e",
+      "name": "Regulation E (Electronic Fund Transfer Act)",
+      "kind": "regulation",
+      "version": "12 CFR Part 1005",
+      "jurisdiction": "United States",
+      "scope": "Consumer rights, liability limits, and error-resolution/dispute procedures for electronic fund transfers, including debit card and ACH transactions.",
+      "affected_features": [
+        "fintech.dispute_management",
+        "fintech.payments"
+      ],
+      "requires_human_review": true,
+      "notes": "Administered by the CFPB; implements the Electronic Fund Transfer Act (15 U.S.C. 1693 et seq.). Distinct from Regulation Z (credit-card billing disputes under the Fair Credit Billing Act), which is not modeled here.",
+      "url": "https://www.ecfr.gov/current/title-12/chapter-X/part-1005",
+      "provenance": {
+        "sources": [
+          "reg-e-efta"
         ],
         "confidence": "high",
         "notes": ""

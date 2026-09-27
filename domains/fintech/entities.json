@@ -322,6 +322,8 @@
         "form_factor"
       ],
       "states": [
+        "requested",
+        "issued",
         "active",
         "frozen",
         "expired",
@@ -334,10 +336,12 @@
       "standard_mapping": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-iso8583",
+          "emvco-specifications"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference from common card-processor data shapes; not present in either OSS ledger reviewed."
+        "confidence": "medium",
+        "notes": "Data shape corroborated by moov-io/iso8583's card-authorization message model and EMVCo's card-personalization specifications; still not present in either OSS ledger reviewed."
       }
     },
     {
@@ -547,10 +551,12 @@
       "standard_mapping": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-iso8583",
+          "eu-psd2"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not modeled in either OSS ledger reviewed."
+        "confidence": "medium",
+        "notes": "Corroborated by moov-io/iso8583's authorization/response-code model and PSD2 SCA's transaction-risk-analysis provisions; not modeled in either OSS ledger reviewed."
       }
     },
     {
@@ -581,10 +587,11 @@
       "standard_mapping": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "reg-e-efta"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from card-network chargeback conventions."
+        "confidence": "medium",
+        "notes": "Reasoned from card-network chargeback conventions, corroborated by Regulation E's statutory error-resolution procedure for electronic fund transfers."
       }
     },
     {

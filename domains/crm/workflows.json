@@ -214,6 +214,452 @@
           }
         ]
       }
+    },
+    {
+      "id": "lead_assignment_routing",
+      "name": "Lead Assignment and Routing",
+      "actor": "system",
+      "trigger": "A lead arrives from a form, import, or manual entry with no owner.",
+      "steps": [
+        "Determine the routing basis: team, territory, product interest, or round-robin",
+        "Pick an eligible owner who is active and within capacity",
+        "Set the owner and, where teams are used, the team",
+        "Notify the new owner and start the follow-up clock",
+        "Re-route if the lead is untouched past the agreed window"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company"
+      ],
+      "features": [
+        "crm.record_assignment",
+        "crm.leads",
+        "crm.pipeline_automation"
+      ],
+      "notifications": [
+        "lead_assigned",
+        "lead_unworked_reassigned"
+      ],
+      "integrations": [
+        "lead_capture_forms",
+        "public_api_webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "suitecrm",
+          "espocrm"
+        ],
+        "confidence": "medium",
+        "notes": "Owner assignment itself is corroborated in three implementations (Odoo user_id/team_id with crm_team_member, SuiteCRM assigned_user_id, EspoCRM assignedUser). The routing *basis* and the re-route timer are Odoo-team-specific and policy, so the workflow is medium, not high."
+      }
+    },
+    {
+      "id": "activity_follow_up_cycle",
+      "name": "Activity and Follow-up Cycle",
+      "actor": "sales_rep",
+      "trigger": "A rep needs to progress a lead or deal, or a scheduled activity comes due.",
+      "steps": [
+        "Log what happened: call, meeting, email, or note",
+        "Attach it to the lead, contact, company, or deal it concerns",
+        "Schedule the next activity with a due date and type",
+        "Work the due list; overdue activities surface as the rep's queue",
+        "Close the activity, or reschedule it with a reason"
+      ],
+      "entities": [
+        "activity",
+        "task",
+        "contact",
+        "deal",
+        "lead"
+      ],
+      "features": [
+        "crm.activities_tasks",
+        "crm.contact_timeline",
+        "crm.record_assignment"
+      ],
+      "state_machine": {
+        "entity": "task",
+        "initial": "planned",
+        "terminal": [
+          "done",
+          "cancelled"
+        ],
+        "states": [
+          "planned",
+          "overdue",
+          "done",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "planned",
+            "to": "overdue",
+            "event": "due_date_passed"
+          },
+          {
+            "from": "planned",
+            "to": "done",
+            "event": "complete"
+          },
+          {
+            "from": "overdue",
+            "to": "done",
+            "event": "complete"
+          },
+          {
+            "from": "planned",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "overdue",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "activity_due",
+        "activity_overdue"
+      ],
+      "integrations": [
+        "calendar_provider",
+        "telephony",
+        "email_provider"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "suitecrm",
+          "twenty-crm",
+          "espocrm"
+        ],
+        "confidence": "high",
+        "notes": "Four independent implementations model activity as a typed, dated, polymorphically-attached record: Odoo mail_activity, SuiteCRM Calls/Meetings/Tasks, Twenty task with task-target join entities, EspoCRM Meeting/Call/Task. The 'next activity always scheduled' discipline is Odoo's explicit model."
+      }
+    },
+    {
+      "id": "email_thread_sync",
+      "name": "Email Thread Sync and Logging",
+      "actor": "system",
+      "trigger": "A rep sends or receives mail with a party who exists in the CRM, or a shared mailbox receives a message.",
+      "steps": [
+        "Poll or receive from the mailbox over IMAP, a provider API, or an inbound address",
+        "Match the message to a contact, lead, or account by address",
+        "Thread it against the existing conversation rather than as a loose record",
+        "Attach it to the related deal or case where one is identifiable",
+        "Leave unmatched mail in a queue for a human to assign or discard"
+      ],
+      "entities": [
+        "email_message",
+        "contact",
+        "lead",
+        "deal"
+      ],
+      "features": [
+        "crm.email_sync",
+        "crm.contact_timeline"
+      ],
+      "notifications": [
+        "unmatched_email_queued"
+      ],
+      "integrations": [
+        "email_provider"
+      ],
+      "provenance": {
+        "sources": [
+          "espocrm",
+          "suitecrm",
+          "nextcrm"
+        ],
+        "confidence": "medium",
+        "notes": "EspoCRM has InboundEmail, EmailAccount, EmailFilter and EmailFolder entityDefs in core; SuiteCRM has Emails, InboundEmail and EmailMan. Address-based matching with an unmatched queue is the shape both imply. Whether threading is by RFC 5322 References or by subject differs, so that detail is not claimed."
+      }
+    },
+    {
+      "id": "campaign_execution",
+      "name": "Campaign Build and Send",
+      "actor": "marketing_user",
+      "trigger": "A campaign is scheduled, or a marketing user targets a segment.",
+      "steps": [
+        "Define the segment or target list",
+        "Suppress anyone opted out or without a lawful basis for this channel",
+        "Build the message from a template",
+        "Send in batches through the sending provider",
+        "Record opens, clicks, bounces, and unsubscribes back onto the contact",
+        "Attribute resulting leads and deals to the campaign"
+      ],
+      "entities": [
+        "campaign",
+        "segment",
+        "contact",
+        "lead",
+        "consent_record"
+      ],
+      "features": [
+        "crm.campaign_management",
+        "crm.segmentation",
+        "crm.consent_preferences",
+        "crm.leads"
+      ],
+      "state_machine": {
+        "entity": "campaign",
+        "initial": "draft",
+        "terminal": [
+          "sent",
+          "cancelled"
+        ],
+        "states": [
+          "draft",
+          "scheduled",
+          "sending",
+          "sent",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "scheduled",
+            "event": "schedule"
+          },
+          {
+            "from": "scheduled",
+            "to": "sending",
+            "event": "start_send"
+          },
+          {
+            "from": "sending",
+            "to": "sent",
+            "event": "send_complete"
+          },
+          {
+            "from": "draft",
+            "to": "cancelled",
+            "event": "discard"
+          },
+          {
+            "from": "scheduled",
+            "to": "cancelled",
+            "event": "cancel_before_send"
+          }
+        ]
+      },
+      "notifications": [
+        "campaign_sent",
+        "campaign_bounce_rate_high"
+      ],
+      "integrations": [
+        "marketing_email",
+        "lead_capture_forms"
+      ],
+      "provenance": {
+        "sources": [
+          "suitecrm",
+          "odoo-crm",
+          "espocrm",
+          "can-spam"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations (SuiteCRM Campaigns + ProspectLists + EmailMan queue, Odoo mass_mailing, EspoCRM Campaign + TargetList with opt-out) plus CAN-SPAM, which makes the suppression step a legal requirement rather than a nicety. The state names are the common batch-send pattern."
+      }
+    },
+    {
+      "id": "duplicate_detection_merge",
+      "name": "Duplicate Detection and Merge",
+      "actor": "sales_ops_admin",
+      "trigger": "A record is created or imported that resembles an existing one, or an admin runs a duplicate sweep.",
+      "steps": [
+        "Score candidate matches on email, email domain, name, and phone",
+        "Present the candidates rather than merging automatically",
+        "Choose the surviving record and the field values that survive",
+        "Re-point activities, emails, deals, and notes onto the survivor",
+        "Retain or soft-delete the merged record so history is not lost"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company",
+        "activity"
+      ],
+      "features": [
+        "crm.duplicate_detection_merge",
+        "crm.data_import",
+        "crm.contacts",
+        "crm.companies_accounts"
+      ],
+      "notifications": [
+        "duplicates_found"
+      ],
+      "integrations": [
+        "data_enrichment"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "suitecrm"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo computes duplicate_lead_ids from the company email domain among other rules; SuiteCRM ships MergeRecords. Both keep a human in the confirm step, which is the reason 'present rather than auto-merge' is recorded as part of the workflow. Matching heuristics differ and are not claimed."
+      }
+    },
+    {
+      "id": "data_subject_request",
+      "name": "Data Subject Request (Access, Rectification, Erasure, Objection)",
+      "actor": "sales_ops_admin",
+      "trigger": "A person asks what is held about them, asks for it corrected or deleted, or objects to marketing.",
+      "steps": [
+        "Verify the requester's identity before disclosing anything",
+        "Locate every record about them across contacts, leads, activities, emails, and campaign history",
+        "For access: export the data in a portable form",
+        "For rectification: correct it and propagate to integrated systems",
+        "For objection: record the objection and suppress the channel, keeping a suppression record",
+        "For erasure: delete or irreversibly anonymise, keeping only what another lawful basis requires",
+        "Record what was done, by whom, and when, and respond inside the statutory deadline"
+      ],
+      "entities": [
+        "contact",
+        "lead",
+        "consent_record",
+        "email_message",
+        "activity"
+      ],
+      "features": [
+        "crm.consent_preferences",
+        "crm.contacts",
+        "crm.data_import",
+        "crm.reports_dashboards"
+      ],
+      "state_machine": {
+        "entity": "consent_record",
+        "initial": "opted_in",
+        "terminal": [
+          "withdrawn"
+        ],
+        "states": [
+          "opted_in",
+          "opted_out",
+          "withdrawn"
+        ],
+        "transitions": [
+          {
+            "from": "opted_in",
+            "to": "opted_out",
+            "event": "objection_recorded"
+          },
+          {
+            "from": "opted_out",
+            "to": "opted_in",
+            "event": "fresh_consent_given"
+          },
+          {
+            "from": "opted_in",
+            "to": "withdrawn",
+            "event": "consent_withdrawn"
+          },
+          {
+            "from": "opted_out",
+            "to": "withdrawn",
+            "event": "erasure_completed"
+          }
+        ]
+      },
+      "notifications": [
+        "dsr_received",
+        "dsr_due"
+      ],
+      "integrations": [
+        "marketing_email",
+        "public_api_webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679",
+          "can-spam"
+        ],
+        "confidence": "high",
+        "notes": "Authoritative: GDPR Arts. 15-17 and 21 define access, rectification, erasure and objection, Art. 12(3) the one-month response deadline, and Art. 7(3) withdrawal. The suppression-record point matters because erasing a contact outright loses the very record that stops them being re-imported and re-mailed. Applicability per jurisdiction is a human-review item, not a claim."
+      }
+    },
+    {
+      "id": "quote_to_won_deal",
+      "name": "Quote, Approval and Handoff on Win",
+      "actor": "sales_rep",
+      "trigger": "A deal reaches the proposal stage and needs a priced document.",
+      "steps": [
+        "Add products or services as line items with quantity, price, and discount",
+        "Generate the quote document from a template",
+        "Route for internal approval where discount or value exceeds a threshold",
+        "Send to the customer and record acceptance or rejection",
+        "On acceptance, move the deal to won and hand the accepted quote to invoicing",
+        "On rejection, record the reason and keep the deal open or mark it lost"
+      ],
+      "entities": [
+        "quote",
+        "product",
+        "deal",
+        "contact",
+        "company"
+      ],
+      "features": [
+        "crm.quotes",
+        "crm.deal_products",
+        "crm.deals_pipelines"
+      ],
+      "notifications": [
+        "quote_sent",
+        "approval_required",
+        "quote_accepted"
+      ],
+      "integrations": [
+        "accounting_invoicing"
+      ],
+      "provenance": {
+        "sources": [
+          "suitecrm",
+          "odoo-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations: SuiteCRM AOS_Quotes with AOS_Products_Quotes line items, AOS_PDF_Templates for the document, and conversion into AOS_Invoices/AOS_Contracts; Odoo sale.order with sale_order_line and account_move on confirmation. The approval threshold is policy — neither product fixes it, and EspoCRM core has no quote at all."
+      }
+    },
+    {
+      "id": "forecast_review",
+      "name": "Pipeline Forecast Review",
+      "actor": "sales_manager",
+      "trigger": "The periodic forecast or pipeline review meeting.",
+      "steps": [
+        "Weight open deals by stage probability and expected close date",
+        "Compare the weighted total against the period target",
+        "Challenge stale deals: no activity, or a close date already passed",
+        "Adjust probability, close date, or stage with a reason",
+        "Record the committed number separately from the weighted number"
+      ],
+      "entities": [
+        "deal",
+        "pipeline_stage",
+        "activity"
+      ],
+      "features": [
+        "crm.forecasting",
+        "crm.deals_pipelines",
+        "crm.reports_dashboards",
+        "crm.activities_tasks"
+      ],
+      "notifications": [
+        "forecast_period_closing",
+        "stale_deal_flagged"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "nextcrm"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo crm.lead carries `probability` (with a compute), `expected_revenue` and `date_deadline` ('Expected Closing'), which is the weighted-forecast model. SuiteCRM has no Forecasts module in the core module listing, so this is two sources, not three, and the committed-vs-weighted distinction is sales practice rather than something either product models."
+      }
     }
   ]
 }

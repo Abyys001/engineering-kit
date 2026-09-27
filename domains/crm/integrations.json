@@ -55,6 +55,184 @@
         ],
         "confidence": "low"
       }
+    },
+    {
+      "id": "telephony",
+      "name": "Telephony / VoIP",
+      "category": "communication",
+      "purpose": "Place calls from a record (click-to-call) and log the call, its duration, and its recording back against the contact automatically.",
+      "examples": [
+        "Asterisk / FreePBX",
+        "Twilio Voice",
+        "a SIP trunk provider"
+      ],
+      "protocols": [
+        "SIP",
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "crm.activities_tasks",
+        "crm.contact_timeline"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "suitecrm",
+          "odoo-crm"
+        ],
+        "confidence": "medium",
+        "notes": "SuiteCRM models Calls as a first-class module (with Calls_Reschedule); Odoo ships voip as a separate addon. Both keep the call as a CRM record and the carrier as an integration, which is the shape recorded here. No standard governs call logging."
+      }
+    },
+    {
+      "id": "lead_capture_forms",
+      "name": "Web Forms and Lead Capture",
+      "category": "acquisition",
+      "purpose": "Create a lead from a website form, landing page, or chat widget, with campaign attribution attached.",
+      "examples": [
+        "an embedded form posting to a capture endpoint",
+        "a landing-page builder webhook",
+        "a website chat widget"
+      ],
+      "protocols": [
+        "HTTP POST",
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "crm.leads",
+        "crm.campaign_management",
+        "crm.duplicate_detection_merge"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "espocrm",
+          "odoo-crm",
+          "suitecrm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: EspoCRM has LeadCapture and LeadCaptureLogRecord entityDefs in core; Odoo ships crm with UTM attribution (the `utm` model) and website form integration; SuiteCRM has Prospects/ProspectLists fed by campaign web-to-lead. Capture and attribution travel together in all three."
+      }
+    },
+    {
+      "id": "marketing_email",
+      "name": "Marketing Email / Campaign Sending",
+      "category": "communication",
+      "purpose": "Send a campaign to a segment through a bulk-sending provider, and feed opens, clicks, bounces, and unsubscribes back onto the contact.",
+      "examples": [
+        "Amazon SES",
+        "Postmark",
+        "Mailgun",
+        "an SMTP relay with tracking"
+      ],
+      "protocols": [
+        "SMTP",
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "crm.campaign_management",
+        "crm.segmentation",
+        "crm.consent_preferences"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "suitecrm",
+          "odoo-crm",
+          "espocrm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: SuiteCRM has Campaigns with EmailMan as the send queue; Odoo has the mass_mailing addon; EspoCRM has Campaign plus TargetList with opt-out state. Bounce/unsubscribe feedback is what makes this an integration rather than plain SMTP."
+      }
+    },
+    {
+      "id": "data_enrichment",
+      "name": "Contact / Company Enrichment",
+      "category": "data",
+      "purpose": "Fill in firmographic or contact detail from an external data provider after a lead arrives with only an email or domain.",
+      "examples": [
+        "a firmographic data provider",
+        "a company-domain lookup service"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "crm.companies_accounts",
+        "crm.leads",
+        "crm.duplicate_detection_merge"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "odoo-crm"
+        ],
+        "confidence": "low",
+        "notes": "Only one implementation verified: Odoo ships crm_iap_enrich as a separate paid-credit addon. Neither EspoCRM core nor SuiteCRM has an equivalent, so this is recorded as optional at low confidence rather than a common expectation."
+      }
+    },
+    {
+      "id": "accounting_invoicing",
+      "name": "Accounting / Invoicing",
+      "category": "accounting",
+      "purpose": "Hand a won deal or an accepted quote to the system that raises the invoice, and read payment status back onto the record.",
+      "examples": [
+        "Xero",
+        "QuickBooks",
+        "Odoo Accounting",
+        "a CSV handoff"
+      ],
+      "protocols": [
+        "REST",
+        "CSV export"
+      ],
+      "related_features": [
+        "crm.quotes",
+        "crm.deals_pipelines",
+        "crm.deal_products"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "suitecrm",
+          "odoo-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations: SuiteCRM converts AOS_Quotes into AOS_Invoices and AOS_Contracts in core; Odoo's sale addon carries account_move/account_move_line, wiring the order to the ledger. Where the boundary sits differs, which is why this is `recommended` rather than core."
+      }
+    },
+    {
+      "id": "public_api_webhooks",
+      "name": "Public API and Outbound Webhooks",
+      "category": "platform",
+      "purpose": "Let other systems read and write CRM records, and notify them when a record changes, so the CRM is not the only place data can enter.",
+      "examples": [
+        "a REST or GraphQL API with token auth",
+        "outbound webhooks on record create/update"
+      ],
+      "protocols": [
+        "REST",
+        "GraphQL",
+        "webhooks"
+      ],
+      "related_features": [
+        "crm.pipeline_automation",
+        "crm.data_import",
+        "crm.record_assignment"
+      ],
+      "classification": "platform",
+      "provenance": {
+        "sources": [
+          "espocrm",
+          "twenty-crm",
+          "suitecrm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: EspoCRM exposes a REST API and Webhook entity; Twenty is GraphQL-first over its workspace entities; SuiteCRM ships a V8 REST API. Overlaps no shared capability — an API surface is part of what a CRM is expected to be."
+      }
     }
   ]
 }

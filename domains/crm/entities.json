@@ -269,7 +269,18 @@
       "id": "product",
       "name": "Product",
       "description": "A catalog item that can be added as a line item to a deal or quote.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "quote",
+          "note": "appears on a quote as a line item"
+        },
+        {
+          "type": "has_many",
+          "target": "deal",
+          "note": "a deal can carry expected products"
+        }
+      ],
       "important_fields": [
         "name",
         "sku",
@@ -280,16 +291,33 @@
       ],
       "provenance": {
         "sources": [
-          "nextcrm"
+          "nextcrm",
+          "suitecrm",
+          "odoo-crm"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Relationship shape verified in two implementations: SuiteCRM joins products to quotes through AOS_Products_Quotes (with AOS_Line_Item_Groups); Odoo joins product_template/product_product to sale.order through sale_order_line."
       }
     },
     {
       "id": "segment",
       "name": "Segment / target list",
       "description": "A dynamic or static list of contacts/leads used for targeted outreach.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "contact"
+        },
+        {
+          "type": "many_to_many",
+          "target": "lead"
+        },
+        {
+          "type": "has_many",
+          "target": "campaign",
+          "note": "a campaign sends to one or more segments"
+        }
+      ],
       "important_fields": [
         "name",
         "filter_criteria",
@@ -301,9 +329,11 @@
       "provenance": {
         "sources": [
           "nextcrm",
-          "espocrm"
+          "espocrm",
+          "suitecrm"
         ],
-        "confidence": "medium"
+        "confidence": "medium",
+        "notes": "Verified in two implementations: SuiteCRM models this as ProspectLists joined to Prospects/Contacts/Leads and attached to Campaigns; EspoCRM as TargetList with the same many-to-many shape. Both treat membership as a list, which is why a dynamic 'smart segment' is a separate, weaker claim."
       }
     },
     {
@@ -383,6 +413,48 @@
           "nextcrm"
         ],
         "confidence": "low"
+      }
+    },
+    {
+      "id": "consent_record",
+      "name": "Consent / Preference Record",
+      "description": "The lawful basis or consent captured for a person, and their per-channel opt-in/opt-out state, with when and how it was given or withdrawn.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contact"
+        },
+        {
+          "type": "belongs_to",
+          "target": "lead",
+          "note": "a preference can exist before conversion"
+        }
+      ],
+      "important_fields": [
+        "lawful_basis",
+        "channel",
+        "opted_in",
+        "captured_at",
+        "source",
+        "withdrawn_at"
+      ],
+      "states": [
+        "opted_in",
+        "opted_out",
+        "withdrawn"
+      ],
+      "related_features": [
+        "crm.consent_preferences",
+        "crm.campaign_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679",
+          "can-spam"
+        ],
+        "confidence": "high",
+        "notes": "GDPR Art. 7(1) requires the controller to be able to demonstrate consent, and Art. 7(3) that withdrawal be recorded; CAN-SPAM requires the opt-out to keep working for at least 30 days after the message. Both make this a dated record rather than a boolean."
       }
     }
   ]

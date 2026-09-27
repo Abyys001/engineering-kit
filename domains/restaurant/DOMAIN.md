@@ -22,11 +22,12 @@ billing and payment (including split bills), delivery dispatch. See `workflows.j
 - **Core**: tables and floor plan, menu management, table reservations, dine-in order taking, kitchen display
   system (KDS), in-restaurant payment capture.
 - **Common**: menu modifiers/variants, walk-in waitlist, POS integration, split bills, tips, takeout orders,
-  delivery orders, ingredient inventory, recipes, staff shift scheduling, online ordering, allergen/nutrition
-  labelling.
-- **Recommended**: loyalty/rewards, customer reviews, QR code table ordering, third-party delivery marketplace
-  integration.
-- **Optional**: gift cards, self-service kiosk ordering, multi-location management.
+  ingredient inventory, recipes, staff shift scheduling, online ordering, allergen/nutrition labelling.
+- **Recommended**: customer reviews, QR code table ordering, third-party delivery marketplace integration.
+- **Optional**: loyalty/rewards, delivery orders, gift cards, self-service kiosk ordering, multi-location
+  management. Loyalty and delivery are widely offered but not needed for a restaurant product to be recognizable
+  as one — many operators route delivery entirely through a third-party marketplace instead of building
+  first-party delivery order management.
 
 Full list with classification and sourcing: `FEATURES.md` / `feature-map.json`.
 
@@ -66,14 +67,13 @@ hospitality) was identified in this research pass.
 KDS = kitchen display system; KOT = kitchen order ticket (printed equivalent of a KDS ticket); "86" = mark an item
 unavailable; cover = one seated guest; check/bill = the payable total for a table.
 
-## Maturity: partial
-25 features, 3 independent open-source implementations cross-referenced (Frappe Hospitality, Odoo
-point_of_sale/pos_restaurant, URY), plus 4 authoritative compliance/standards sources. Not `curated`: 17 of 25
-features (68%) rest on one or zero corroborating implementations and carry `low` confidence — reservations,
-waitlist, inventory, recipes, staff shifts, loyalty, reviews, delivery among them — which fails the `curated`
-bar's ≤30% low-confidence ceiling (`tools/kb.py validate`), even though the feature and source counts clear it.
-Raising this to `curated` needs corroborating implementations for those features, not more prose. See
-`sources.md`.
+## Maturity: curated
+25 features, 9 independent open-source implementations cross-referenced (Frappe Hospitality, Odoo
+point_of_sale/pos_restaurant, URY, satisfecho/pos, Enatega food-delivery-multivendor, RestoPOS,
+flutter-pos-system, opensourcepos, Square's official SDK), plus 4 authoritative compliance/standards sources
+and 7 Wikipedia secondary sources. Only 1 of 25 features (4%, self-service kiosk) remains at `low` confidence
+for lack of a second corroborating source — well under the `curated` bar's ≤30% ceiling (`tools/kb.py gaps`).
+See `sources.md`.
 
 ## Relationship to `booking`
 Restaurant reservations are time-boxed, capacity-bound bookings — conceptually the same shape as the generic

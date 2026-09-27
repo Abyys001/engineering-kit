@@ -303,6 +303,9 @@ def validate(only: list[str]) -> Report:
                 rep.err(w, "dependencies/implementation_status belong in their own files")
             check_provenance(w, f, source_ids, rep)
             srcs = f.get("provenance", {}).get("sources", [])
+            if f.get("provenance", {}).get("confidence") == "medium" and len(srcs) < 2:
+                rep.warn(w, "medium confidence with one source - the brief wants two independent sources "
+                            "for medium; add one or drop to low")
             if f.get("provenance", {}).get("confidence") == "high":
                 authoritative = any(s.startswith("std:") or local_src.get(s, {}).get("source_type") == "authoritative" for s in srcs)
                 impls = sum(1 for s in srcs if local_src.get(s, {}).get("source_type") == "implementation")
@@ -706,6 +709,8 @@ def gate(d: str) -> dict:
     fids = {f["id"] for f in feats}
     low = [f["id"] for f in feats if f["provenance"]["confidence"] == "low"]
     single = [f["id"] for f in feats if len(f["provenance"]["sources"]) < 2]
+    med_single = [f["id"] for f in feats
+                  if f["provenance"]["confidence"] == "medium" and len(f["provenance"]["sources"]) < 2]
     no_wf = [f["id"] for f in feats if not f.get("workflows")]
     no_ent = [f["id"] for f in feats if not f.get("entities")]
     no_user = [f["id"] for f in feats if not f.get("users")]
@@ -760,7 +765,8 @@ def gate(d: str) -> dict:
         "authoritative_sources": authoritative, "sources_on_disk": on_disk,
         "impl_status": st, "impl_available": sum(v for k, v in st.items() if k in IMPL_AVAILABLE),
         "pct_low_confidence": pct_low,
-        "features_single_source": single, "features_low_confidence": low,
+        "features_single_source": single, "features_medium_single_source": med_single,
+        "features_low_confidence": low,
         "features_without_workflow": no_wf, "features_without_entities": no_ent,
         "features_without_users": no_user, "features_without_dependency_edge": no_dep,
         "features_unmapped": unmapped,
@@ -790,6 +796,7 @@ def cmd_gaps(a: argparse.Namespace) -> None:
                 print(f"  blocker: {b}")
             for k in ("features_without_workflow", "features_without_entities", "features_without_users",
                       "features_without_dependency_edge", "features_unmapped", "features_low_confidence",
+                      "features_medium_single_source",
                       "entities_without_relationships", "workflows_without_state_machine"):
                 v = r[k]
                 if v:

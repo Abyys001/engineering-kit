@@ -11,8 +11,8 @@
   "nace": [
     "I56.10"
   ],
-  "maturity": "partial",
-  "last_reviewed": "2026-09-26",
+  "maturity": "curated",
+  "last_reviewed": "2026-09-27",
   "sources": [
     {
       "id": "frappe-hospitality",
@@ -82,14 +82,14 @@
     },
     {
       "id": "us-dol-flsa-tips",
-      "title": "US DOL Fair Labor Standards Act — tipped employees / tip credit rules",
+      "title": "US DOL Fair Labor Standards Act \u2014 tipped employees / tip credit rules",
       "url": "https://www.dol.gov/agencies/whd/flsa",
       "source_type": "authoritative",
       "license": "US government work, public domain",
       "retrieved": "2026-09-26",
       "version": "current",
       "local_path": null,
-      "notes": "One jurisdiction's example of tip/labor rules; cited as illustrative, not exhaustive — labour law varies sharply by country/state."
+      "notes": "One jurisdiction's example of tip/labor rules; cited as illustrative, not exhaustive \u2014 labour law varies sharply by country/state."
     },
     {
       "id": "wikipedia-point-of-sale",
@@ -167,6 +167,72 @@
       "version": "2026-09-26 snapshot",
       "local_path": null,
       "notes": "General background for third-party online reservation platforms; not an independent implementation."
+    },
+    {
+      "id": "satisfecho-pos",
+      "title": "satisfecho/pos (self-hosted multi-tenant restaurant POS and ordering)",
+      "url": "https://github.com/satisfecho/pos",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "e2f49cdb59ae198108c8ba8c53aec505a580734c",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees` and `.../contents` (FastAPI/SQLModel backend in back/app/models.py, inventory_models.py, delivery_integration_routes.py, loyalty_wallet.py). Real, actively developed system (migrations dated through 2026-08) modelling Reservation/ReservationStatus, waitlist (front/src/app/waitlist-public), OrderChannel (table/satisfecho_delivery/marketplace) distinguishing first-party delivery from third-party marketplace integration (Uber Eats/Glovo/Deliveroo webhook adapters in delivery_integration_routes.py), Shift + attendance + QR clock-in, LoyaltyProgram/LoyaltyMembership/LoyaltyLedgerEntry/Apple-Google wallet passes, a Bill-of-Materials inventory model (FIFO batch costing, recipe ingredients), per-table QR ordering, and a guest-feedback/Google-review-url migration. GPL-family license (AGPL-3.0): reference-only, no code copied."
+    },
+    {
+      "id": "enatega-food-delivery-multivendor",
+      "title": "Enatega Food Delivery (multivendor) monorepo",
+      "url": "https://github.com/enatega/food-delivery-multivendor",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "389481597ff253c5178e38c316bf646746e91695",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees`. 1382-star MIT monorepo bundling customer, restaurant-admin, rider, and store apps for single- and multi-vendor food delivery, with schema/tipping.ts, schema/rider.ts, schema/delivery.ts, schema/zone.ts, and a ratings GraphQL query/UI (lib/api/graphql/queries/ratings) plus wallet/earnings screens for rider and restaurant payouts."
+    },
+    {
+      "id": "restopos",
+      "title": "RestoPOS (Laravel/Vue multi-tenant restaurant SaaS)",
+      "url": "https://github.com/faizaldevs/RestoPOS",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "a0e17808a01e47f42464f236b518fdd4764c1c03",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees` and `.../contents` (Laravel migrations). tenants/domains tables (multi-tenant SaaS = multi-location chain management), locations/kitchens tables, suppliers/purchases/purchase_items/consumption_items (inventory), employees/employee_categories/attendance/employee_salaries (staff shifts), points table (loyalty), modifiers/food_modifier tables (menu modifiers), and a sales.type column explicitly coded dine-in/takeaway/delivery (`2022_05_26_023205_add_type_column_in_sales_table.php`, comment 'TAKEWAY = t')."
+    },
+    {
+      "id": "flutter-pos-system",
+      "title": "evan361425/flutter-pos-system (small-restaurant POS)",
+      "url": "https://github.com/evan361425/flutter-pos-system",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "22e7ae439eadd4f3a14f90a10cd54d0f3fd7c298",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees`. 619-star, actively maintained (pushed 2026-08) Flutter POS with lib/models/menu/product_ingredient.dart linking a sellable product to ingredient quantities (recipe/BOM), and lib/models/stock/ingredient.dart + stock/replenishment.dart + repository/stock.dart modelling stocked ingredients and restock events (inventory)."
+    },
+    {
+      "id": "opensourcepos",
+      "title": "Open Source Point of Sale (OSPOS)",
+      "url": "https://github.com/opensourcepos/opensourcepos",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "60f6c8f5d0c20b4f412722b48ca9ef6e180178d8",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees` and `.../contents` (LICENSE file confirms MIT; GitHub's own license detector reports NOASSERTION for this repo, so the LICENSE text itself was read directly). 4405-star, actively maintained (pushed 2026-09-27) general retail/hospitality POS with app/Models/Giftcard.php (giftcard_number, value, person_id, deleted) \u2014 a real stored-value gift card model. General retail POS, not restaurant-specific; cited only for the gift card capability, which restaurants adopt from the same POS category."
+    },
+    {
+      "id": "square-nodejs-sdk",
+      "title": "Square Node.js SDK (official vendor API client)",
+      "url": "https://github.com/square/square-nodejs-sdk",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "5e484507548ce8ffdc55752395a290ecc2d26771",
+      "local_path": null,
+      "notes": "Not cloned; inspected via `gh api .../git/trees` (legacy/doc/api/*.md, generated from Square's own published API spec). Official vendor SDK for the Square POS/payments platform, documenting real, separately-billed API resources: orders.md + payments.md + terminal.md (third-party POS order/payment sync), gift-cards.md + gift-card-activities.md, loyalty.md, labor.md + employees.md + team.md (staff/shift), locations.md (multi-location), bookings.md (appointment-style reservations \u2014 evidences the concept of a hosted booking API, though Square Bookings targets appointment businesses generally rather than restaurant table reservations specifically, so not counted as restaurant-reservation corroboration)."
     }
   ],
   "features": [
@@ -183,7 +249,9 @@
         "table",
         "restaurant_location"
       ],
-      "workflows": [],
+      "workflows": [
+        "table_turn_lifecycle"
+      ],
       "capabilities": [
         "floor_plan_editor",
         "table_status_tracking"
@@ -229,14 +297,16 @@
         "menu",
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "capabilities": [
         "pricing",
         "availability_scheduling"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -279,13 +349,15 @@
         "modifier",
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "capabilities": [
         "variant_pricing"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -360,10 +432,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low",
-        "notes": "Only Frappe Hospitality's Restaurant Reservation doctype was found among the three inspected implementations; Odoo POS and URY have no dedicated reservation model in the parts reviewed. Classified core on general product judgement, not on source corroboration."
+        "confidence": "medium",
+        "notes": "Two independent implementations model reservations as a first-class entity with a status lifecycle (Frappe Hospitality's Restaurant Reservation DocType; satisfecho/pos's Reservation/ReservationStatus/PublicReservationCreate with floor/zone seating)."
       }
     },
     {
@@ -410,10 +483,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Frappe's Restaurant Reservation 'Waitlisted' status value; no dedicated waitlist entity was found in any of the three inspected implementations. Treated as a distinct feature because walk-in queuing is operationally different from a scheduled reservation."
+        "confidence": "medium",
+        "notes": "Second independent implementation confirms a walk-in waitlist distinct from booked reservations (satisfecho/pos ships a public waitlist page and dedicated waitlist-branding/feedback work), corroborating Frappe Hospitality."
       }
     },
     {
@@ -517,7 +591,7 @@
           "ury"
         ],
         "confidence": "medium",
-        "notes": "Odoo pos_restaurant documents 'Kitchen Order Printing'; URY has KOT (kitchen order ticket) reprint. Neither is a screen-based KDS in the parts reviewed — ticket printing and true KDS are treated as the same underlying feature at different fidelity."
+        "notes": "Odoo pos_restaurant documents 'Kitchen Order Printing'; URY has KOT (kitchen order ticket) reprint. Neither is a screen-based KDS in the parts reviewed \u2014 ticket printing and true KDS are treated as the same underlying feature at different fidelity."
       }
     },
     {
@@ -540,7 +614,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -563,10 +637,11 @@
         "sources": [
           "frappe-hospitality",
           "odoo-pos-restaurant",
-          "ury"
+          "ury",
+          "square-nodejs-sdk"
         ],
-        "confidence": "low",
-        "notes": "All three inspected implementations are themselves the POS rather than integrating a third-party one, so this reflects reasoned inference about products that are not full POS systems, not direct corroboration."
+        "confidence": "medium",
+        "notes": "The three restaurant-management sources are themselves the POS rather than an integration to one. Square's official SDK (orders/payments/terminal APIs) is added as direct evidence that connecting to a third-party POS for order and payment sync is a real, separately-implemented integration surface at a major vendor."
       }
     },
     {
@@ -712,10 +787,12 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
         ],
-        "confidence": "low",
-        "notes": "Not explicitly verified in any of the three inspected implementations for this pass; included on general industry knowledge (reasoned inference)."
+        "confidence": "high",
+        "notes": "Three independent implementations model tip capture as a distinct concern: Frappe Hospitality, satisfecho/pos (tenant tip presets and per-order tip attribution), and Enatega (schema/tipping.ts)."
       }
     },
     {
@@ -760,16 +837,17 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "ury"
+          "ury",
+          "restopos"
         ],
-        "confidence": "low",
-        "notes": "URY documents an explicit takeaway order-type flow; not verified in Frappe Hospitality or Odoo pos_restaurant for this pass."
+        "confidence": "medium",
+        "notes": "Second independent implementation confirms takeout/pickup as a distinct order type (RestoPOS's sales.type column is explicitly coded dine-in/takeaway/delivery)."
       }
     },
     {
       "id": "restaurant.delivery_orders",
       "name": "Delivery orders",
-      "classification": "common",
+      "classification": "optional",
       "description": "Orders fulfilled by delivery to a customer address, with own or third-party couriers.",
       "users": [
         "cashier",
@@ -783,7 +861,8 @@
       ],
       "workflows": [
         "order_fulfillment_lifecycle",
-        "delivery_dispatch_lifecycle"
+        "delivery_dispatch_lifecycle",
+        "delivery_marketplace_integration_lifecycle"
       ],
       "capabilities": [
         "address_capture",
@@ -814,10 +893,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor",
           "wikipedia-online-food-ordering"
         ],
-        "confidence": "low",
-        "notes": "Not verified in any of the three inspected implementations for this pass; included on general industry knowledge (reasoned inference)."
+        "confidence": "medium",
+        "notes": "Two independent implementations model first-party delivery concretely: satisfecho/pos's OrderChannel.satisfecho_delivery plus a delivery/courier order service, and Enatega's dedicated rider app and delivery/zone schema for restaurant-run delivery."
       }
     },
     {
@@ -832,14 +913,16 @@
         "order",
         "menu"
       ],
-      "workflows": [],
+      "workflows": [
+        "delivery_marketplace_integration_lifecycle"
+      ],
       "capabilities": [
         "menu_sync",
         "order_import"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -859,10 +942,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "satisfecho-pos",
           "wikipedia-online-food-ordering"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+        "confidence": "medium",
+        "notes": "satisfecho/pos implements this concretely: OrderChannel.marketplace plus delivery_integration_routes.py, a real admin API and public webhook ingest for Uber Eats, Glovo, and Deliveroo with per-provider credentials and connection-status tracking. Only one implementation was found (Enatega builds a first-party delivery platform rather than integrating a third-party one), so this stays at medium rather than high."
       }
     },
     {
@@ -877,14 +961,16 @@
       "entities": [
         "inventory_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "inventory_depletion_workflow"
+      ],
       "capabilities": [
         "stock_tracking",
         "low_stock_alerts"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -906,10 +992,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "restopos",
+          "flutter-pos-system"
         ],
-        "confidence": "low",
-        "notes": "None of the three inspected restaurant-specific modules include ingredient-level stock; ERPNext/Odoo have generic (non-restaurant) stock modules the restaurant doctypes could sit on top of, but that link was not verified in this pass."
+        "confidence": "high",
+        "notes": "Three independent implementations model ingredient/stock inventory: satisfecho/pos (FIFO batch costing, purchase orders, Bill of Materials), RestoPOS (suppliers/purchases/purchase_items/consumption_items), and flutter-pos-system (stock/ingredient + replenishment)."
       }
     },
     {
@@ -926,14 +1014,16 @@
         "menu_item",
         "inventory_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "inventory_depletion_workflow"
+      ],
       "capabilities": [
         "costing",
         "auto_depletion"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -951,10 +1041,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "flutter-pos-system"
         ],
-        "confidence": "low",
-        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+        "confidence": "medium",
+        "notes": "Two independent implementations link a sellable menu item to ingredient quantities: satisfecho/pos's explicit 'Bill of Materials - links sellable products to inventory ingredients' model, and flutter-pos-system's product_ingredient.dart."
       }
     },
     {
@@ -968,7 +1059,9 @@
       "entities": [
         "shift"
       ],
-      "workflows": [],
+      "workflows": [
+        "staff_shift_lifecycle"
+      ],
       "capabilities": [
         "shift_planning",
         "time_tracking"
@@ -996,16 +1089,18 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "restopos",
+          "square-nodejs-sdk"
         ],
-        "confidence": "low",
-        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+        "confidence": "high",
+        "notes": "Three independent sources: satisfecho/pos (Shift model, QR clock-in/out, work-session breaks), RestoPOS (attendance and employee_salaries tables), and Square's official labor/employees/team API."
       }
     },
     {
       "id": "restaurant.loyalty",
       "name": "Loyalty and rewards",
-      "classification": "recommended",
+      "classification": "optional",
       "description": "Points, punch cards, or tiered rewards tied to a guest's order history.",
       "users": [
         "customer",
@@ -1015,7 +1110,9 @@
         "loyalty_account",
         "guest"
       ],
-      "workflows": [],
+      "workflows": [
+        "loyalty_program_lifecycle"
+      ],
       "capabilities": [
         "points_accrual",
         "redemption"
@@ -1042,11 +1139,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "ury",
-          "wikipedia-loyalty-program"
+          "satisfecho-pos",
+          "restopos",
+          "square-nodejs-sdk"
         ],
-        "confidence": "low",
-        "notes": "URY shows a 'favourite items per customer' feature, which is adjacent to but not the same as a formal points/rewards program; no full loyalty program was verified in the three inspected implementations."
+        "confidence": "high",
+        "notes": "Three independent sources model points/rewards as a first-class concern: satisfecho/pos (LoyaltyProgram, LoyaltyMembership, LoyaltyLedgerEntry, Apple/Google wallet pass issuance), RestoPOS (a dedicated points table), and Square's official loyalty API. URY's 'favourite items' feature was dropped from this list \u2014 it is not a points/rewards program and does not corroborate this feature."
       }
     },
     {
@@ -1061,7 +1159,9 @@
       "entities": [
         "review"
       ],
-      "workflows": [],
+      "workflows": [
+        "review_lifecycle"
+      ],
       "capabilities": [
         "feedback_collection"
       ],
@@ -1088,10 +1188,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-customer-review"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
         ],
-        "confidence": "low",
-        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+        "confidence": "medium",
+        "notes": "Two independent implementations: satisfecho/pos (a guest-feedback and Google-review-url migration) and Enatega (a dedicated ratings schema, GraphQL query, and admin UI)."
       }
     },
     {
@@ -1136,10 +1237,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-online-food-ordering"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
         ],
-        "confidence": "low",
-        "notes": "Not present as a distinct module in the three inspected implementations; reasoned inference from common industry practice."
+        "confidence": "medium",
+        "notes": "Two independent implementations of guest-facing online ordering: satisfecho/pos's public menu/order endpoints and Enatega's customer app."
       }
     },
     {
@@ -1153,13 +1255,15 @@
       "entities": [
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "capabilities": [
         "allergen_tagging"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -1227,10 +1331,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "satisfecho-pos",
           "wikipedia-online-food-ordering"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+        "confidence": "medium",
+        "notes": "satisfecho/pos implements per-table QR ordering concretely (public QR-to-menu links, shared cart per table, QR order history), corroborating the general online-ordering pattern described by the secondary source."
       }
     },
     {
@@ -1243,9 +1348,12 @@
         "customer"
       ],
       "entities": [
-        "payment"
+        "payment",
+        "gift_card"
       ],
-      "workflows": [],
+      "workflows": [
+        "gift_card_lifecycle"
+      ],
       "capabilities": [
         "stored_value"
       ],
@@ -1272,10 +1380,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "opensourcepos",
           "wikipedia-gift-card"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+        "confidence": "medium",
+        "notes": "opensourcepos's Giftcard model (giftcard_number, value, person_id) is a concrete stored-value implementation, corroborating the general description. General retail POS, not restaurant-specific \u2014 noted honestly rather than claimed as a restaurant implementation."
       }
     },
     {
@@ -1343,7 +1452,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -1361,10 +1470,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "restopos",
+          "square-nodejs-sdk"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference from Frappe Hospitality's Restaurant doctype supporting multiple Restaurant records per Company, generalized to chain management."
+        "confidence": "high",
+        "notes": "Three independent sources model multi-location/multi-tenant chain management: Frappe Hospitality, RestoPOS (tenants/domains/locations tables), and Square's official locations API."
       }
     }
   ]

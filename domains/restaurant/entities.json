@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "restaurant",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "entities": [
     {
       "id": "restaurant_location",
@@ -15,6 +15,10 @@
         {
           "type": "has_many",
           "target": "menu"
+        },
+        {
+          "type": "has_many",
+          "target": "shift"
         }
       ],
       "important_fields": [
@@ -75,7 +79,28 @@
       "id": "guest",
       "name": "Guest",
       "description": "The person a reservation, waitlist entry, or order is placed for; may or may not be a registered customer account.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "reservation"
+        },
+        {
+          "type": "has_many",
+          "target": "waitlist_entry"
+        },
+        {
+          "type": "has_many",
+          "target": "order"
+        },
+        {
+          "type": "has_one",
+          "target": "loyalty_account"
+        },
+        {
+          "type": "has_many",
+          "target": "review"
+        }
+      ],
       "important_fields": [
         "name",
         "phone",
@@ -89,7 +114,8 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
         "confidence": "medium"
       }
@@ -127,9 +153,10 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       }
     },
     {
@@ -159,9 +186,10 @@
       ],
       "provenance": {
         "sources": [
-          "frappe-hospitality"
+          "frappe-hospitality",
+          "satisfecho-pos"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       }
     },
     {
@@ -522,10 +550,11 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "restopos",
+          "flutter-pos-system"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "confidence": "high"
       }
     },
     {
@@ -552,17 +581,22 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "flutter-pos-system"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "confidence": "medium"
       }
     },
     {
       "id": "shift",
       "name": "Shift",
       "description": "A scheduled block of work time for a staff member.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "restaurant_location"
+        }
+      ],
       "important_fields": [
         "staff_member",
         "start_at",
@@ -580,10 +614,10 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-point-of-sale"
+          "satisfecho-pos",
+          "restopos"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "confidence": "medium"
       }
     },
     {
@@ -609,9 +643,11 @@
       ],
       "provenance": {
         "sources": [
-          "ury"
+          "satisfecho-pos",
+          "restopos",
+          "square-nodejs-sdk"
         ],
-        "confidence": "low"
+        "confidence": "high"
       }
     },
     {
@@ -643,10 +679,10 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-customer-review"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "confidence": "medium"
       }
     },
     {
@@ -677,10 +713,49 @@
       ],
       "provenance": {
         "sources": [
-          "wikipedia-online-food-ordering"
+          "satisfecho-pos",
+          "enatega-food-delivery-multivendor"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "gift_card",
+      "name": "Gift card",
+      "description": "A stored-value card or code purchased or issued to a guest and redeemed against future orders.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest",
+          "note": "optional; may be sold to a non-account holder"
+        },
+        {
+          "type": "has_many",
+          "target": "payment",
+          "note": "each redemption is recorded as a payment against a bill"
+        }
+      ],
+      "important_fields": [
+        "code",
+        "initial_value",
+        "balance",
+        "status"
+      ],
+      "states": [
+        "issued",
+        "active",
+        "redeemed",
+        "expired"
+      ],
+      "related_features": [
+        "restaurant.gift_cards"
+      ],
+      "provenance": {
+        "sources": [
+          "opensourcepos"
         ],
         "confidence": "low",
-        "notes": "Reasoned inference; not present in any inspected source."
+        "notes": "Single implementation (opensourcepos's Giftcard model: giftcard_number, value, person_id); reasoned inference for the balance/expiry state shape beyond that model's fields."
       }
     }
   ]

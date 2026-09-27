@@ -170,6 +170,42 @@
       "to": "shared.import_export",
       "type": "requires",
       "reason": "Bulk import uses the shared CSV import/validation engine."
+    },
+    {
+      "from": "crm.duplicate_detection_merge",
+      "to": "crm.contacts",
+      "type": "requires",
+      "reason": "There must be contact records before duplicates among them can be detected."
+    },
+    {
+      "from": "crm.duplicate_detection_merge",
+      "to": "crm.leads",
+      "type": "requires",
+      "reason": "Inbound leads are where duplicates overwhelmingly arise."
+    },
+    {
+      "from": "crm.duplicate_detection_merge",
+      "to": "crm.data_import",
+      "type": "enhances",
+      "reason": "Import is the main duplicate source, but detection is useful without it."
+    },
+    {
+      "from": "crm.consent_preferences",
+      "to": "crm.contacts",
+      "type": "requires",
+      "reason": "Consent is recorded against a person."
+    },
+    {
+      "from": "crm.consent_preferences",
+      "to": "crm.campaign_management",
+      "type": "enhances",
+      "reason": "Suppression only bites where there is outbound sending; the record is still required without it."
+    },
+    {
+      "from": "crm.campaign_management",
+      "to": "crm.consent_preferences",
+      "type": "requires",
+      "reason": "Sending without a recorded lawful basis and a working opt-out is not a defensible design."
     }
   ]
 }

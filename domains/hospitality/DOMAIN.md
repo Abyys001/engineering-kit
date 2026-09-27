@@ -12,11 +12,14 @@ type → room, rate plan → availability → reservation → folio) applies to 
 multi-property management matter most for chains and OTA-listed independents.
 
 ## Users
-Guest, front desk agent, housekeeper, revenue manager, property manager (see `roles.json`).
+Guest, front desk agent, reservations agent, housekeeper, maintenance/engineering, revenue manager, night auditor,
+property manager, general manager, owner (see `roles.json`).
 
 ## Core workflows
-Reservation lifecycle (request → confirm → check-in → check-out), housekeeping task lifecycle, night audit,
-channel ARI (availability/rate/inventory) sync, folio and billing. See `workflows.json` for state machines.
+Property/room inventory setup, reservation lifecycle (request → confirm → check-in → check-out), rate and
+restriction management, cancellation/no-show handling, add-on upsell, housekeeping task lifecycle, room maintenance
+and out-of-order handling, night audit, channel ARI (availability/rate/inventory) sync, cross-property oversight,
+post-stay review and loyalty. See `workflows.json` for state machines.
 
 ## Capabilities
 - **Core**: property management, room types, rooms, rate plans, availability/inventory, reservations, front-desk
@@ -69,14 +72,14 @@ PMS = property management system; ARI = availability, rate, inventory (the data 
 OTA = online travel agency; folio = a guest's itemized in-stay charge ledger; night audit = the end-of-day
 close/reconciliation/date-rollover process; RMS = revenue management system.
 
-## Maturity: partial
-24 features, 2 independent open-source implementations cross-referenced (Frappe Hospitality, QloApps) plus 4
-authoritative/standards-adjacent sources (PCI DSS, GDPR, OTA, HTNG) and 6 secondary sources. Not `curated`: only
-two implementations were available (restaurant research had three), so 11 of 24 features (46%) carry `low`
-confidence — folio as a distinct ledger, housekeeping, night audit, add-on services, cancellation rules, channel
-manager, connecting rooms, loyalty, reviews, dynamic pricing among them — which fails the `curated` bar's ≤30%
-low-confidence ceiling (`tools/kb.py validate`). A third independent property-management implementation is the
-missing input. See `sources.md`.
+## Maturity: curated
+24 features, 5 independent open-source implementations cross-referenced (Frappe Hospitality, QloApps, woopms,
+Hotelio, GuestHub) plus 4 authoritative/standards-adjacent sources (PCI DSS, GDPR, OTA, HTNG) and 6 secondary
+sources — 15 sources total. 5 of 24 features (21%) remain `low` confidence, honestly: booking voucher/confirmation,
+connecting/adjoining rooms, housekeeping, night audit, and dynamic/yield-based pricing — each a real, common PMS
+capability with no second independent implementation found in this pass (housekeeping and night audit in
+particular were absent from every implementation inspected; only Wikipedia backs them). This is under the
+`curated` bar's ≤30% low-confidence ceiling (`tools/kb.py gaps`). See `sources.md`.
 
 ## Relationship to `booking`
 Hotel reservations are date-range, capacity-bound bookings — the same shape as `booking.*`'s generic slot/

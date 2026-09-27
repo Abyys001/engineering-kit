@@ -266,6 +266,32 @@
       "references": [],
       "status": "missing",
       "notes": "No forecast model or weighted-pipeline calculation in nextcrm: actions/reports/sales.ts getPipelineValue/getRevenue sum opportunity budgets unweighted by crm_Opportunities_Sales_Stages.probability, and no MRR/recurring-revenue reporting exists (crm_Products.is_recurring is a per-product billing flag, not tied to forecasting)."
+    },
+    {
+      "feature": "crm.duplicate_detection_merge",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "nextcrm (MIT, on disk) has the soft-delete/restore and diffObjects groundwork a merge needs, but no matching or merge. Odoo's duplicate compute and SuiteCRM's MergeRecords are the model references and are NOT on disk. Fuzzy name matching is a genuine kit gap."
+    },
+    {
+      "feature": "crm.consent_preferences",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "No kit code and no local source models consent or per-channel suppression. This is the highest-value missing piece in the domain: without it, campaign sending cannot be suppressed at source."
     }
   ]
 }

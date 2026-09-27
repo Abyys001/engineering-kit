@@ -1,8 +1,14 @@
 {
   "schema": 1,
   "domain": "hospitality",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "edges": [
+    {
+      "from": "hospitality.amenities",
+      "to": "hospitality.room_types",
+      "type": "enhances",
+      "reason": "Amenities are commonly tagged on room types (and properties); a minimal product can ship without them."
+    },
     {
       "from": "hospitality.room_types",
       "to": "hospitality.properties",

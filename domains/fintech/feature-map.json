@@ -9,13 +9,13 @@
     "lending platform",
     "embedded finance"
   ],
-  "description": "Digital financial products — customer wallets, accounts, payments, cards, and lending — built on a double-entry ledger with KYC/AML controls.",
+  "description": "Digital financial products \u2014 customer wallets, accounts, payments, cards, and lending \u2014 built on a double-entry ledger with KYC/AML controls.",
   "nace": [
     "K64.19",
     "K64.92",
     "K66.19"
   ],
-  "maturity": "partial",
+  "maturity": "curated",
   "last_reviewed": "2026-09-27",
   "sources": [
     {
@@ -49,7 +49,7 @@
     },
     {
       "id": "iso20022",
-      "title": "ISO 20022 — Universal financial industry message scheme",
+      "title": "ISO 20022 \u2014 Universal financial industry message scheme",
       "url": "https://www.iso20022.org/",
       "source_type": "authoritative",
       "license": "ISO20022.org terms; message definitions freely published",
@@ -58,7 +58,7 @@
     },
     {
       "id": "iso4217",
-      "title": "ISO 4217 — Currency codes",
+      "title": "ISO 4217 \u2014 Currency codes",
       "url": "https://www.iso.org/iso-4217-currency-codes.html",
       "source_type": "authoritative",
       "license": "ISO copyright; standard summary freely accessible",
@@ -81,7 +81,7 @@
       "source_type": "authoritative",
       "license": "FATF public standard",
       "retrieved": "2026-09-27",
-      "notes": "The 40 Recommendations — global AML/CFT baseline (customer due diligence, suspicious transaction reporting)."
+      "notes": "The 40 Recommendations \u2014 global AML/CFT baseline (customer due diligence, suspicious transaction reporting)."
     },
     {
       "id": "eu-amlr",
@@ -91,7 +91,7 @@
       "license": "EU public law (EUR-Lex)",
       "retrieved": "2026-09-27",
       "version": "Regulation (EU) 2024/1624",
-      "notes": "Part of the 2024 EU AML package (with Directive (EU) 2024/1640 and the new AMLA authority), replacing the AMLD4/5/6 patchwork for directly-applicable rules; phased applicability through 2027 — verify current stage before relying on it."
+      "notes": "Part of the 2024 EU AML package (with Directive (EU) 2024/1640 and the new AMLA authority), replacing the AMLD4/5/6 patchwork for directly-applicable rules; phased applicability through 2027 \u2014 verify current stage before relying on it."
     },
     {
       "id": "us-bsa",
@@ -131,6 +131,75 @@
       "retrieved": "2026-09-27",
       "version": "Regulation (EU) 2016/679",
       "notes": "Personal data handling for party/KYC records."
+    },
+    {
+      "id": "moov-io-iso8583",
+      "title": "moov-io/iso8583",
+      "url": "https://github.com/moov-io/iso8583",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "5219813867194f178412a15294a40f5c48847d3e",
+      "notes": "Not cloned; inspected via `gh api repos/moov-io/iso8583`. Go implementation of ISO 8583 card-originated transaction messaging (authorization, reversal, balance inquiry) used by Visa/Mastercard/Verve networks."
+    },
+    {
+      "id": "moov-io-metro2",
+      "title": "moov-io/metro2",
+      "url": "https://github.com/moov-io/metro2",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "a0be72f973b5a8a672f6d91b3e14322423f4e829",
+      "notes": "Not cloned; inspected via `gh api repos/moov-io/metro2`. Reader/writer/validator for Metro 2 consumer credit history reports, the format lenders use to furnish data to credit bureaus underlying credit scoring."
+    },
+    {
+      "id": "moov-io-ach",
+      "title": "moov-io/ach",
+      "url": "https://github.com/moov-io/ach",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "7ee7ad03d7342e1f651c32db22fc8168c2b97cce",
+      "notes": "Not cloned; inspected via `gh api repos/moov-io/ach`. Reader/writer/validator for NACHA-standard ACH files, the common US rail for both recurring standing debits and one-off bill payments."
+    },
+    {
+      "id": "actual-budget",
+      "title": "Actual Budget",
+      "url": "https://github.com/actualbudget/actual",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "18688645f08cbc2936c51fa9e83a4c5349a151ba",
+      "notes": "Not cloned; inspected via `gh api search/code` against the repo. Personal-finance app with a category-goal-template feature (packages/desktop-client/src/components/budget/goals/) and category-based spending reports, corroborating savings-goal and spend-analytics patterns."
+    },
+    {
+      "id": "iso18245-mcc",
+      "title": "ISO 18245 \u2014 Retail financial services, Merchant category codes",
+      "url": "https://www.iso.org/standard/79450.html",
+      "source_type": "authoritative",
+      "license": "ISO copyright; standard summary freely accessible",
+      "retrieved": "2026-09-27",
+      "version": "ISO 18245:2023",
+      "notes": "Defines the four-digit MCC used to classify merchants by business type; underlies card merchant-category-block controls and spend-categorization analytics."
+    },
+    {
+      "id": "reg-e-efta",
+      "title": "Regulation E \u2014 Electronic Fund Transfers (implements the Electronic Fund Transfer Act)",
+      "url": "https://www.ecfr.gov/current/title-12/chapter-X/part-1005",
+      "source_type": "authoritative",
+      "license": "US public law, CFPB-administered (eCFR)",
+      "retrieved": "2026-09-27",
+      "version": "12 CFR Part 1005",
+      "notes": "US consumer rights, liability limits, and error-resolution/dispute procedures for electronic fund transfers, including debit card and ACH transactions."
+    },
+    {
+      "id": "emvco-specifications",
+      "title": "EMVCo Specifications",
+      "url": "https://www.emvco.com/specifications/",
+      "source_type": "authoritative",
+      "license": "EMVCo published specifications (free registration to access some documents)",
+      "retrieved": "2026-09-27",
+      "notes": "Chip-card technical specifications including the EMV Card Personalisation Specification (CPS), governing card issuance/personalization."
     }
   ],
   "features": [
@@ -147,7 +216,9 @@
       "entities": [
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "kyc_onboarding_lifecycle"
+      ],
       "capabilities": [
         "profile_crud",
         "counterparty_linking"
@@ -254,7 +325,9 @@
         "ledger_entry",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "account_closure_workflow"
+      ],
       "capabilities": [
         "double_entry_posting",
         "balance_computation"
@@ -299,7 +372,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "wallet_funding_and_withdrawal_workflow"
+      ],
       "capabilities": [
         "balance_hold",
         "top_up",
@@ -329,7 +404,7 @@
           "apache-fineract"
         ],
         "confidence": "medium",
-        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "notes": "Downgraded high\u2192medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
       }
     },
     {
@@ -401,7 +476,9 @@
         "wallet",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "internal_transfer_and_p2p_workflow"
+      ],
       "capabilities": [
         "p2p_move",
         "own_account_move"
@@ -445,7 +522,9 @@
         "party",
         "wallet"
       ],
-      "workflows": [],
+      "workflows": [
+        "internal_transfer_and_p2p_workflow"
+      ],
       "capabilities": [
         "handle_lookup",
         "instant_settlement"
@@ -493,7 +572,9 @@
         "wallet",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "card_issuance_lifecycle"
+      ],
       "capabilities": [
         "virtual_card",
         "physical_card",
@@ -523,10 +604,12 @@
       ],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-iso8583",
+          "emvco-specifications"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from card-processor integration patterns; only one ledger-adjacent implementation reviewed directly, corroborated by PCI DSS scope rather than a second OSS implementation."
+        "confidence": "medium",
+        "notes": "Card-processor integration pattern corroborated by moov-io/iso8583's real-world ISO 8583 authorization-message implementation and EMVCo's card-personalization specifications; card-issuing-as-a-service product shape itself is still reasoned from processor conventions rather than a dedicated OSS card-issuing platform."
       }
     },
     {
@@ -540,7 +623,9 @@
       "entities": [
         "card"
       ],
-      "workflows": [],
+      "workflows": [
+        "card_issuance_lifecycle"
+      ],
       "capabilities": [
         "freeze",
         "limit_override",
@@ -570,10 +655,12 @@
       ],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-iso8583",
+          "iso18245-mcc"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference from common card-processor capabilities; not independently verified in a second OSS ledger implementation."
+        "confidence": "medium",
+        "notes": "Freeze/limit mechanics corroborated by moov-io/iso8583's authorization/decline message model; merchant-category blocking corroborated by the ISO 18245 MCC standard."
       }
     },
     {
@@ -689,14 +776,16 @@
         "loan",
         "ledger_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "interest_accrual_workflow"
+      ],
       "capabilities": [
         "daily_accrual",
         "capitalization"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -732,14 +821,16 @@
         "party",
         "loan"
       ],
-      "workflows": [],
+      "workflows": [
+        "loan_lifecycle"
+      ],
       "capabilities": [
         "bureau_pull",
         "internal_scoring_model"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -759,10 +850,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-metro2"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; Fineract exposes credit-bureau integration points but scoring logic itself is deployment-specific."
+        "confidence": "medium",
+        "notes": "Fineract's credit-bureau integration points plus moov-io/metro2's implementation of the Metro 2 consumer-credit-reporting format (the data lenders furnish to bureaus) corroborate that credit scoring sits on bureau data; the internal scoring model itself remains deployment-specific."
       }
     },
     {
@@ -778,7 +870,9 @@
         "statement",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "statement_generation_workflow"
+      ],
       "capabilities": [
         "pdf_generation",
         "period_close"
@@ -824,7 +918,9 @@
         "account",
         "payment"
       ],
-      "workflows": [],
+      "workflows": [
+        "fee_assessment_workflow"
+      ],
       "capabilities": [
         "fee_schedule",
         "assessment",
@@ -832,7 +928,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -870,7 +966,9 @@
         "party",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "wallet_funding_and_withdrawal_workflow"
+      ],
       "capabilities": [
         "velocity_check",
         "tier_based_limits"
@@ -918,7 +1016,10 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "payment_lifecycle",
+        "fraud_alert_triage_workflow"
+      ],
       "capabilities": [
         "rule_engine",
         "ml_scoring",
@@ -926,7 +1027,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -949,10 +1050,12 @@
       ],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-iso8583",
+          "eu-psd2"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference from industry-standard fraud-scoring architecture; not directly modeled in either OSS ledger reviewed."
+        "confidence": "medium",
+        "notes": "Real-time scoring architecture corroborated by moov-io/iso8583's authorization/response-code model and by PSD2's SCA RTS, which explicitly allows transaction-risk-analysis (fraud-rate-based) exemptions from step-up authentication."
       }
     },
     {
@@ -968,7 +1071,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "fraud_alert_triage_workflow"
+      ],
       "capabilities": [
         "threshold_rules",
         "pattern_detection",
@@ -976,7 +1081,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -1020,14 +1125,16 @@
         "party",
         "kyc_case"
       ],
-      "workflows": [],
+      "workflows": [
+        "kyc_onboarding_lifecycle"
+      ],
       "capabilities": [
         "watchlist_match",
         "periodic_rescreen"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -1096,14 +1203,16 @@
         "payment_rail"
       ],
       "compliance": [
-        "pci_dss"
+        "pci_dss",
+        "reg_e"
       ],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "reg-e-efta"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from card-network chargeback conventions; not modeled in either OSS ledger reviewed."
+        "confidence": "medium",
+        "notes": "Card-network chargeback conventions plus Regulation E's statutory error-resolution/dispute procedure for electronic fund transfers corroborate the intake-investigate-resolve shape of this feature."
       }
     },
     {
@@ -1127,7 +1236,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -1167,7 +1276,9 @@
         "wallet",
         "ledger_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "fx_conversion_workflow"
+      ],
       "capabilities": [
         "per_currency_balance",
         "fx_conversion"
@@ -1210,7 +1321,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "mandate_recurring_payment_workflow"
+      ],
       "capabilities": [
         "schedule_rule",
         "retry_on_failure"
@@ -1237,10 +1350,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "iso20022"
+          "iso20022",
+          "moov-io-ach"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from ISO 20022 standing-order message types; no OSS implementation reviewed specifically for recurrence."
+        "confidence": "medium",
+        "notes": "ISO 20022 standing-order message types plus moov-io/ach's NACHA-standard ACH implementation (the common US rail for recurring debits) corroborate the payment-execution mechanics; the recurrence/schedule entity itself is still reasoned."
       }
     },
     {
@@ -1255,7 +1369,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "mandate_recurring_payment_workflow"
+      ],
       "capabilities": [
         "biller_directory",
         "one_off_payment"
@@ -1282,10 +1398,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "moov-io-ach"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference; not directly modeled in the sources reviewed."
+        "confidence": "medium",
+        "notes": "moov-io/ach's NACHA-standard ACH implementation corroborates the payment rail bill pay commonly executes over; the biller-directory concept itself is reasoned, not directly modeled in the sources reviewed."
       }
     },
     {
@@ -1299,7 +1416,9 @@
       "entities": [
         "wallet"
       ],
-      "workflows": [],
+      "workflows": [
+        "savings_goal_workflow"
+      ],
       "capabilities": [
         "goal_tracking",
         "auto_round_up"
@@ -1324,10 +1443,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "actual-budget"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from savings-product patterns in core banking; consumer neobank framing is inference, not directly sourced."
+        "confidence": "medium",
+        "notes": "Actual Budget's category goal-template feature (MIT-licensed, inspected via API, not cloned) corroborates the target-amount goal-tracking pattern; Fineract's savings-product model corroborates the underlying labeled-balance mechanics."
       }
     },
     {
@@ -1341,7 +1461,9 @@
       "entities": [
         "payment"
       ],
-      "workflows": [],
+      "workflows": [
+        "spend_insights_workflow"
+      ],
       "capabilities": [
         "merchant_categorization",
         "trend_insights"
@@ -1367,10 +1489,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "apache-fineract"
+          "apache-fineract",
+          "actual-budget",
+          "iso18245-mcc"
         ],
-        "confidence": "low",
-        "notes": "Reasoned inference from common neobank features; not modeled in the OSS sources reviewed."
+        "confidence": "medium",
+        "notes": "Merchant categorization corroborated by the ISO 18245 MCC standard; trend/insight reporting corroborated by Actual Budget's category-based spending reports (MIT-licensed, inspected via API, not cloned)."
       }
     },
     {
@@ -1386,7 +1510,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "virtual_account_provisioning_workflow"
+      ],
       "capabilities": [
         "dedicated_number_issuance",
         "auto_allocation"
@@ -1395,7 +1521,7 @@
         "web": true,
         "mobile": true,
         "admin": true,
-        "customer_portal": false,
+        "customer_portal": true,
         "backend": true,
         "ai": false,
         "real_time": false
@@ -1431,7 +1557,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "open_banking_consent_workflow"
+      ],
       "capabilities": [
         "consent_management",
         "aisp_api",
@@ -1441,7 +1569,7 @@
         "web": true,
         "mobile": true,
         "admin": true,
-        "customer_portal": false,
+        "customer_portal": true,
         "backend": true,
         "ai": false,
         "real_time": false
@@ -1479,7 +1607,9 @@
         "payment",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "webhook_delivery_workflow"
+      ],
       "capabilities": [
         "event_delivery",
         "signature_verification",
@@ -1487,7 +1617,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,

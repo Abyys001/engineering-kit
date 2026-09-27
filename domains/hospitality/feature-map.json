@@ -12,8 +12,8 @@
   "nace": [
     "I55.10"
   ],
-  "maturity": "partial",
-  "last_reviewed": "2026-09-26",
+  "maturity": "curated",
+  "last_reviewed": "2026-09-27",
   "sources": [
     {
       "id": "frappe-hospitality",
@@ -35,18 +35,18 @@
       "retrieved": "2026-09-26",
       "version": "develop branch, 2026-09-26 snapshot",
       "local_path": null,
-      "notes": "Not cloned (inspected via gh api git tree + raw.githubusercontent.com; 132MB repo, PrestaShop e-commerce core + hotelreservationsystem module). OSL-3.0 verified from actual LICENSE.md — a network/external-deployment copyleft license (section 5), treated with the same caution as AGPL: reference-only, no code copied. modules/hotelreservationsystem/classes/ has ~35 Hotel*/RoomType*/ServiceProduct* classes covering branches, room types, rooms, feature-based rate pricing + restrictions, booking detail + status history (Assigned/CheckedIn/CheckedOut/NoShow/Cancelled), advanced payment, refund rules, connected rooms, channel manager + ARI (Availability-Rate-Inventory) webservice, add-on service products, and PDF booking vouchers."
+      "notes": "Not cloned (inspected via gh api git tree + raw.githubusercontent.com; 132MB repo, PrestaShop e-commerce core + hotelreservationsystem module). OSL-3.0 verified from actual LICENSE.md \u2014 a network/external-deployment copyleft license (section 5), treated with the same caution as AGPL: reference-only, no code copied. modules/hotelreservationsystem/classes/ has ~35 Hotel*/RoomType*/ServiceProduct* classes covering branches, room types, rooms, feature-based rate pricing + restrictions, booking detail + status history (Assigned/CheckedIn/CheckedOut/NoShow/Cancelled), advanced payment, refund rules, connected rooms, channel manager + ARI (Availability-Rate-Inventory) webservice, add-on service products, and PDF booking vouchers."
     },
     {
       "id": "opentravel-alliance",
       "title": "OpenTravel Alliance (OTA) message specifications",
       "url": "https://opentravel.org/category/specification/",
       "source_type": "authoritative",
-      "license": "OTA user license — free to use, may not redistribute/modify the specification text",
+      "license": "OTA user license \u2014 free to use, may not redistribute/modify the specification text",
       "retrieved": "2026-09-26",
       "version": "public mirror through 2017B; current releases through 2024A are member/download-gated",
       "local_path": null,
-      "notes": "Verified organizational facts and access status only (public mirror stops at 2017B; the OpenTravel site's download form lists newer releases behind registration). Did not obtain and read the full current message schema text in this pass, so this source is NOT treated as sufficient alone for 'high' confidence on any feature — cited for terminology (e.g. OTA_HotelResRQ/RS, availability/rate/inventory message families) that is independently well documented in secondary literature, not for message-level detail."
+      "notes": "Verified organizational facts and access status only (public mirror stops at 2017B; the OpenTravel site's download form lists newer releases behind registration). Did not obtain and read the full current message schema text in this pass, so this source is NOT treated as sufficient alone for 'high' confidence on any feature \u2014 cited for terminology (e.g. OTA_HotelResRQ/RS, availability/rate/inventory message families) that is independently well documented in secondary literature, not for message-level detail."
     },
     {
       "id": "htng",
@@ -146,6 +146,39 @@
       "version": "2026-09-26 snapshot",
       "local_path": null,
       "notes": "General background only; no single authoritative cross-jurisdiction source on guest ID/passport registration requirements was found in this pass."
+    },
+    {
+      "id": "woopms",
+      "title": "woopms (koisystems/api.woopms) \u2014 Laravel hotel PMS API",
+      "url": "https://github.com/koisystems/api.woopms",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 (verified from repository LICENSE file)",
+      "retrieved": "2026-09-27",
+      "version": "5c54cbd60caec52dd3a14194d17c0d365b0b949e",
+      "local_path": null,
+      "notes": "Not cloned (AGPL-3.0 network-copyleft; inspected via gh api contents, reference only, no code copied). Small (6-star) but real Laravel API: Property, RoomType, Room, RatePlan (min_persons/max_persons/min_stay/max_stay/cutoff_days/allotment), RoomRate, RoomRateCalendar, Policy + PolicyRule (type=cancellation/guarantee/deposit/modification, hours_before, charge_based_on=number_nights/percentage_amount/fixed_amount), Booking, BookingRoomstay, BookingChannel. Third independent implementation after Frappe Hospitality and QloApps; its Policy/PolicyRule model closely matches this domain's cancellation_policy entity (cutoff_hours/refund_percentage) and its RatePlan min/max-stay + cutoff_days matches rate_restriction."
+    },
+    {
+      "id": "hotelio",
+      "title": "Hotelio (mehedijaman/hotelio) \u2014 Laravel hotel management system",
+      "url": "https://github.com/mehedijaman/hotelio",
+      "source_type": "implementation",
+      "license": "MIT (verified from repository LICENSE file)",
+      "retrieved": "2026-09-27",
+      "version": "5882557278c403ced7d8d67659c24a3e2fc5bd90",
+      "local_path": null,
+      "notes": "Not cloned (inspected via gh api contents). 42-star Laravel app scoped to front-office + accounting: Hotel, Room, Guest, Booking, RoomTransfer, Invoice (GuestID, TaxID, PaymentMethod, SubTotal/TaxTotal/Total) with a separate InvoiceItem (Name, Description, Qty, UnitPrice, Price) line-item table, plus AccountLedger/Balance/Bank/Expense/Income. Its Invoice+InvoiceItem split is the clearest evidence found of an itemized per-stay charge ledger distinct from a single order/invoice."
+    },
+    {
+      "id": "guesthub",
+      "title": "GuestHub (sahdoio/guesthub) \u2014 DDD/Clean Architecture Laravel hotel management system",
+      "url": "https://github.com/sahdoio/guesthub",
+      "source_type": "implementation",
+      "license": "none found (no LICENSE file in the repository; all-rights-reserved by default; verify before any reuse)",
+      "retrieved": "2026-09-27",
+      "version": "fd421830e023333969b296d4fd0ab4f5c74f43a3",
+      "local_path": null,
+      "notes": "Not cloned. Small, actively-developed (pushed 2026-05) modular-monolith rebuild with bounded contexts: Billing (Invoice/LineItem/Payment domain objects with IssueInvoice/VoidInvoice/RefundInvoice commands and InvoiceStatus value object), Stay (Reservation with pending/confirmed/checked_in/checked_out/cancelled states, and a separate SpecialRequest entity for early-check-in/late-check-out/extra-bed/dietary/special-occasion requests), and IAM (a LoyaltyTier enum \u2014 bronze/silver/gold/platinum \u2014 with a UserLoyaltyTierChanged domain event). The LoyaltyTier enum is the clearest implementation evidence found of guest loyalty tiers modeled as a first-class, separately-tracked concept."
     }
   ],
   "features": [
@@ -160,7 +193,9 @@
       "entities": [
         "property"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "capabilities": [
         "property_configuration"
       ],
@@ -203,7 +238,9 @@
         "room_type",
         "amenity"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "capabilities": [
         "capacity_definition"
       ],
@@ -241,12 +278,16 @@
       "description": "Individual physical rooms belonging to a room type, with their own status (active/inactive/out of order).",
       "users": [
         "property_manager",
-        "housekeeper"
+        "housekeeper",
+        "maintenance_engineer"
       ],
       "entities": [
         "room"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow",
+        "room_maintenance_workflow"
+      ],
       "capabilities": [
         "room_status_tracking"
       ],
@@ -289,13 +330,15 @@
         "rate_plan",
         "room_type"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "capabilities": [
         "date_ranged_pricing"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -334,7 +377,10 @@
         "room",
         "reservation_room_stay"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle",
+        "channel_ari_sync_workflow"
+      ],
       "capabilities": [
         "availability_check"
       ],
@@ -376,7 +422,8 @@
       "description": "Book one or more rooms for a date range and guest count; tracks status from request through stay completion.",
       "users": [
         "guest",
-        "front_desk_agent"
+        "front_desk_agent",
+        "reservations_agent"
       ],
       "entities": [
         "reservation",
@@ -470,7 +517,7 @@
           "frappe-hospitality"
         ],
         "confidence": "medium",
-        "notes": "QloApps' HotelBookingDetail has explicit Assigned/CheckedIn/CheckedOut states; Frappe Hospitality only has a terminal 'Completed' status with no explicit check-in event — a weaker but real signal."
+        "notes": "QloApps' HotelBookingDetail has explicit Assigned/CheckedIn/CheckedOut states; Frappe Hospitality only has a terminal 'Completed' status with no explicit check-in event \u2014 a weaker but real signal."
       }
     },
     {
@@ -485,7 +532,10 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle",
+        "post_stay_engagement_workflow"
+      ],
       "capabilities": [
         "profile_management"
       ],
@@ -559,10 +609,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-hotel"
+          "wikipedia-hotel",
+          "hotelio",
+          "guesthub"
         ],
-        "confidence": "low",
-        "notes": "Neither implementation has a distinct running folio; both settle a reservation against a single order/invoice (frappe: Sales Invoice; QloApps: PrestaShop Order) rather than an itemized per-stay ledger. Classified as common on general PMS industry practice."
+        "confidence": "medium",
+        "notes": "Neither implementation has a distinct running folio; both settle a reservation against a single order/invoice (frappe: Sales Invoice; QloApps: PrestaShop Order) rather than an itemized per-stay ledger. Classified as common on general PMS industry practice. Corroborated by two further implementations: Hotelio's Invoice+InvoiceItem (itemized line items per invoice) and GuestHub's Billing bounded context (Invoice/LineItem/Payment with issue/void/refund lifecycle). Neither ties the ledger to a single in-progress stay the way a hotel-specific 'folio' term implies, but both model an itemized, multi-line charge ledger distinct from a single order \u2014 direct structural evidence for the feature."
       }
     },
     {
@@ -611,7 +663,7 @@
           "htng"
         ],
         "confidence": "medium",
-        "notes": "Only QloApps (of the two inspected implementations) has this; OTA/HTNG confirm the concept and its OTA_HotelAvail/OTA_HotelResRQ-style terminology organizationally, but their current message-schema text was not directly read in this pass (access-gated) — not counted alone as sufficient for 'high'."
+        "notes": "Only QloApps (of the two inspected implementations) has this; OTA/HTNG confirm the concept and its OTA_HotelAvail/OTA_HotelResRQ-style terminology organizationally, but their current message-schema text was not directly read in this pass (access-gated) \u2014 not counted alone as sufficient for 'high'."
       }
     },
     {
@@ -626,13 +678,15 @@
         "rate_restriction",
         "rate_plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "capabilities": [
         "restriction_enforcement"
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -650,9 +704,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "woopms"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Corroborated by woopms's RatePlan (min_stay, max_stay, cutoff_days) \u2014 a second, independent implementation of stay-length and booking-window restrictions, alongside QloApps's more complete restriction set (min/max stay, closed-to-arrival/departure, blackout dates)."
       }
     },
     {
@@ -668,7 +724,9 @@
         "cancellation_policy",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "cancellation_and_no_show_workflow"
+      ],
       "capabilities": [
         "refund_calculation"
       ],
@@ -692,9 +750,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "woopms"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Corroborated by woopms's Policy/PolicyRule model (type=cancellation, hours_before, charge_based_on=number_nights/percentage_amount/fixed_amount) \u2014 a second, independent implementation of cutoff-based refund-percentage rules, matching this domain's cancellation_policy entity closely."
       }
     },
     {
@@ -759,7 +819,9 @@
         "amenity",
         "room_type"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "capabilities": [
         "amenity_tagging"
       ],
@@ -802,7 +864,9 @@
         "add_on_service",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "add_on_and_upsell_workflow"
+      ],
       "capabilities": [
         "upsell"
       ],
@@ -829,9 +893,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "qloapps"
+          "qloapps",
+          "frappe-hospitality"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Corroborated by Frappe Hospitality's Hotel Room Package / Hotel Room Pricing Package doctypes (a named bundle of amenities linked to a priced Item, with its own date-ranged rate) alongside QloApps's ServiceProduct classes. The two implementations model this differently \u2014 Frappe bundles the extra into a room-rate package rather than an itemized per-stay add-on the way QloApps does \u2014 so this is real but heterogeneous evidence, not a settled pattern."
       }
     },
     {
@@ -846,7 +912,9 @@
         "booking_voucher",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
       "capabilities": [
         "document_generation"
       ],
@@ -890,7 +958,9 @@
       "entities": [
         "room"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "capabilities": [
         "room_linking"
       ],
@@ -925,12 +995,16 @@
       "classification": "recommended",
       "description": "Manage room types, rates, and reservations across a group of properties from one account.",
       "users": [
-        "property_manager"
+        "property_manager",
+        "general_manager",
+        "owner"
       ],
       "entities": [
         "property"
       ],
-      "workflows": [],
+      "workflows": [
+        "cross_property_oversight_workflow"
+      ],
       "capabilities": [
         "cross_property_reporting"
       ],
@@ -1016,7 +1090,8 @@
       "description": "End-of-day process that posts room charges, reconciles payments, and rolls the business date forward.",
       "users": [
         "front_desk_agent",
-        "property_manager"
+        "property_manager",
+        "night_auditor"
       ],
       "entities": [
         "night_audit_run",
@@ -1067,7 +1142,8 @@
       "description": "Reserve a block of multiple rooms under one booking for an event, family, or corporate group.",
       "users": [
         "guest",
-        "front_desk_agent"
+        "front_desk_agent",
+        "reservations_agent"
       ],
       "entities": [
         "reservation",
@@ -1118,7 +1194,9 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "post_stay_engagement_workflow"
+      ],
       "capabilities": [
         "points_accrual"
       ],
@@ -1144,10 +1222,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-loyalty-program"
+          "wikipedia-loyalty-program",
+          "guesthub"
         ],
-        "confidence": "low",
-        "notes": "Not present in either inspected implementation; reasoned from common industry practice."
+        "confidence": "medium",
+        "notes": "Not present in either inspected implementation; reasoned from common industry practice. Corroborated by GuestHub's LoyaltyTier enum (bronze/silver/gold/platinum) and UserLoyaltyTierChanged domain event \u2014 a second, independent implementation of guest loyalty as a first-class, separately tracked concept, alongside the existing secondary (Wikipedia) source."
       }
     },
     {
@@ -1162,7 +1241,9 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "post_stay_engagement_workflow"
+      ],
       "capabilities": [
         "feedback_collection"
       ],
@@ -1188,10 +1269,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "wikipedia-customer-review"
+          "wikipedia-customer-review",
+          "qloapps"
         ],
-        "confidence": "low",
-        "notes": "Not present in either inspected implementation; reasoned from common industry practice."
+        "confidence": "medium",
+        "notes": "Not present in either inspected implementation; reasoned from common industry practice. Corroborated by QloApps's own qlohotelreview module (QhrHotelReview class, category-based ratings, hooked to trigger after booking-status updates) \u2014 a second, independent implementation of guest reviews as a dedicated feature, alongside the existing secondary (Wikipedia) source. Not found in Frappe Hospitality, woopms, hotelio, or guesthub."
       }
     },
     {
@@ -1205,7 +1287,9 @@
       "entities": [
         "rate_plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "capabilities": [
         "demand_forecasting"
       ],

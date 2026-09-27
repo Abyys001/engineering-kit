@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "hospitality",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "workflows": [
     {
       "id": "reservation_lifecycle",
@@ -24,7 +24,11 @@
       ],
       "features": [
         "hospitality.reservations",
-        "hospitality.front_desk_checkin_checkout"
+        "hospitality.front_desk_checkin_checkout",
+        "hospitality.availability_inventory",
+        "hospitality.guest_profiles",
+        "hospitality.booking_voucher_confirmation",
+        "hospitality.group_bookings"
       ],
       "state_machine": {
         "entity": "reservation",
@@ -151,7 +155,7 @@
     {
       "id": "night_audit_workflow",
       "name": "Night audit workflow",
-      "actor": "front_desk_agent",
+      "actor": "night_auditor",
       "trigger": "End of the property's business day",
       "steps": [
         "Post room charges for the day to open folios",
@@ -221,9 +225,46 @@
         "rate_plan"
       ],
       "features": [
-        "hospitality.channel_manager"
+        "hospitality.channel_manager",
+        "hospitality.availability_inventory"
       ],
-      "state_machine": null,
+      "state_machine": {
+        "entity": "channel",
+        "initial": "disconnected",
+        "terminal": [],
+        "states": [
+          "connected",
+          "disconnected",
+          "error"
+        ],
+        "transitions": [
+          {
+            "from": "disconnected",
+            "to": "connected",
+            "event": "connect"
+          },
+          {
+            "from": "connected",
+            "to": "error",
+            "event": "sync_failure"
+          },
+          {
+            "from": "error",
+            "to": "connected",
+            "event": "reconnect"
+          },
+          {
+            "from": "connected",
+            "to": "disconnected",
+            "event": "disconnect"
+          },
+          {
+            "from": "error",
+            "to": "disconnected",
+            "event": "disable"
+          }
+        ]
+      },
       "notifications": [],
       "integrations": [
         "channel_manager"
@@ -232,7 +273,8 @@
         "sources": [
           "qloapps"
         ],
-        "confidence": "low"
+        "confidence": "low",
+        "notes": "State machine models the channel connection's own health (connected/error/disconnected), evidenced by QloApps's channel-manager connection status; the ARI push/pull exchange itself is a stateless sync operation, not modeled as a separate state machine."
       }
     },
     {
@@ -285,6 +327,348 @@
         ],
         "confidence": "low",
         "notes": "Reasoned inference; neither implementation has a distinct folio entity separate from a single order/invoice."
+      }
+    },
+    {
+      "id": "property_setup_workflow",
+      "name": "Property and room inventory setup",
+      "actor": "property_manager",
+      "trigger": "A property manager onboards a new property or expands its room inventory",
+      "steps": [
+        "Create the property record (name, address, default currency, policies)",
+        "Define room types with capacity and default rate",
+        "Tag amenities on the property and/or its room types",
+        "Add individual physical rooms under each room type",
+        "Optionally link two or more rooms as connecting/adjoining"
+      ],
+      "entities": [
+        "property",
+        "room_type",
+        "room",
+        "amenity"
+      ],
+      "features": [
+        "hospitality.properties",
+        "hospitality.room_types",
+        "hospitality.rooms",
+        "hospitality.amenities",
+        "hospitality.connecting_rooms"
+      ],
+      "state_machine": null,
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "Both implementations model this same property -> room type -> room hierarchy with amenities attached at the room-type/property level; a setup/configuration flow, not a stateful process."
+      }
+    },
+    {
+      "id": "rate_and_restriction_management_workflow",
+      "name": "Rate and restriction management",
+      "actor": "revenue_manager",
+      "trigger": "A revenue manager prices a room type for a future date range",
+      "steps": [
+        "Create or edit a rate plan for a room type and date range",
+        "Attach restrictions: minimum/maximum length of stay, closed-to-arrival/departure, blackout dates",
+        "Optionally apply a demand-based (dynamic/yield) adjustment on top of the base rate",
+        "Activate the rate plan",
+        "Push the updated rate to connected distribution channels"
+      ],
+      "entities": [
+        "rate_plan",
+        "rate_restriction"
+      ],
+      "features": [
+        "hospitality.rate_plans",
+        "hospitality.rate_restrictions",
+        "hospitality.dynamic_pricing"
+      ],
+      "state_machine": {
+        "entity": "rate_plan",
+        "initial": "enabled",
+        "terminal": [],
+        "states": [
+          "enabled",
+          "disabled"
+        ],
+        "transitions": [
+          {
+            "from": "enabled",
+            "to": "disabled",
+            "event": "deactivate"
+          },
+          {
+            "from": "disabled",
+            "to": "enabled",
+            "event": "reactivate"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [
+        "channel_manager"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps",
+          "woopms",
+          "wikipedia-yield-management"
+        ],
+        "confidence": "medium",
+        "notes": "Rate-plan creation and min/max-stay restrictions are corroborated by three implementations; the demand-based dynamic-pricing step is a reasoned extension (see hospitality.dynamic_pricing's own low confidence) \u2014 no implementation inspected computes rates from demand."
+      }
+    },
+    {
+      "id": "cancellation_and_no_show_workflow",
+      "name": "Cancellation and no-show handling",
+      "actor": "front_desk_agent",
+      "trigger": "A guest cancels a reservation, or the property marks a reservation as a no-show after its cancellation cutoff",
+      "steps": [
+        "Guest or staff initiates a cancellation, or staff flags a no-show past the grace period",
+        "Look up the cancellation policy that applies to the reservation's rate plan or property",
+        "Calculate the refund/penalty from the policy's cutoff-hours and charge basis (nights, percentage, or fixed amount)",
+        "Apply the calculated charge or refund against the collected deposit, or post it to the folio",
+        "Update the reservation status to cancelled or no_show"
+      ],
+      "entities": [
+        "cancellation_policy",
+        "reservation",
+        "deposit"
+      ],
+      "features": [
+        "hospitality.cancellation_policies",
+        "hospitality.reservations"
+      ],
+      "state_machine": null,
+      "notifications": [
+        "cancellation_confirmation",
+        "refund_notice"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "woopms"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations model cutoff-based cancellation charges (QloApps's refund rules class; woopms's Policy/PolicyRule with hours_before and charge_based_on). Reuses the reservation entity's own cancelled/no_show states (defined in reservation_lifecycle) rather than redefining them here."
+      }
+    },
+    {
+      "id": "add_on_and_upsell_workflow",
+      "name": "Add-on service upsell",
+      "actor": "front_desk_agent",
+      "trigger": "A guest wants to add a purchasable extra to their stay, at booking or at check-in",
+      "steps": [
+        "Browse available add-on services for the property",
+        "Select and attach one or more add-ons to the reservation",
+        "Post the add-on charge to the folio",
+        "Guest receives an updated total"
+      ],
+      "entities": [
+        "add_on_service",
+        "reservation",
+        "folio"
+      ],
+      "features": [
+        "hospitality.add_on_services"
+      ],
+      "state_machine": null,
+      "notifications": [
+        "updated_confirmation"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "frappe-hospitality"
+        ],
+        "confidence": "medium",
+        "notes": "QloApps's ServiceProduct classes attach add-ons directly to a booking; Frappe Hospitality instead bundles extras into a priced Hotel Room Package \u2014 two different modeling approaches to the same underlying capability."
+      }
+    },
+    {
+      "id": "cross_property_oversight_workflow",
+      "name": "Cross-property oversight",
+      "actor": "property_manager",
+      "trigger": "An operator manages more than one property from a single account",
+      "steps": [
+        "Switch between properties in the admin console",
+        "View consolidated occupancy and revenue across properties",
+        "Apply a rate or policy change to a subset of properties"
+      ],
+      "entities": [
+        "property"
+      ],
+      "features": [
+        "hospitality.multi_property_management"
+      ],
+      "state_machine": null,
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "QloApps's HotelBranchInformation explicitly models multiple branches under one account; Frappe's Hotel Settings is only company-scoped (a weaker signal)."
+      }
+    },
+    {
+      "id": "post_stay_engagement_workflow",
+      "name": "Post-stay review and loyalty",
+      "actor": "guest",
+      "trigger": "A guest completes checkout",
+      "steps": [
+        "System sends a post-stay review invitation",
+        "Guest submits a rating/review, optionally across categories",
+        "The completed stay is credited toward the guest's loyalty tier",
+        "If the guest's loyalty tier changes, the guest profile is updated and the guest is notified"
+      ],
+      "entities": [
+        "guest_profile"
+      ],
+      "features": [
+        "hospitality.guest_reviews",
+        "hospitality.loyalty_program"
+      ],
+      "state_machine": {
+        "entity": "guest_profile",
+        "initial": "bronze",
+        "terminal": [],
+        "states": [
+          "bronze",
+          "silver",
+          "gold",
+          "platinum"
+        ],
+        "transitions": [
+          {
+            "from": "bronze",
+            "to": "silver",
+            "event": "tier_upgrade"
+          },
+          {
+            "from": "silver",
+            "to": "gold",
+            "event": "tier_upgrade"
+          },
+          {
+            "from": "gold",
+            "to": "platinum",
+            "event": "tier_upgrade"
+          },
+          {
+            "from": "silver",
+            "to": "bronze",
+            "event": "tier_downgrade"
+          },
+          {
+            "from": "gold",
+            "to": "silver",
+            "event": "tier_downgrade"
+          },
+          {
+            "from": "platinum",
+            "to": "gold",
+            "event": "tier_downgrade"
+          }
+        ]
+      },
+      "notifications": [
+        "review_invitation",
+        "loyalty_tier_update"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "guesthub",
+          "wikipedia-loyalty-program",
+          "wikipedia-customer-review"
+        ],
+        "confidence": "medium",
+        "notes": "QloApps's qlohotelreview module evidences post-stay reviews; GuestHub's LoyaltyTier enum and UserLoyaltyTierChanged event evidence tier progression as a genuinely stateful part of the guest profile. The tier-recalculation trigger (e.g. stay count/spend thresholds) is reasoned, not evidenced by either implementation."
+      }
+    },
+    {
+      "id": "room_maintenance_workflow",
+      "name": "Room maintenance and out-of-order handling",
+      "actor": "maintenance_engineer",
+      "trigger": "A room is found to be damaged, needs repair, or is intentionally taken offline",
+      "steps": [
+        "Mark the room out_of_order (or temporarily_inactive) with a reason",
+        "Room is excluded from availability/inventory while in that state",
+        "Maintenance/engineering resolves the issue",
+        "Room is marked active and returned to sellable inventory"
+      ],
+      "entities": [
+        "room"
+      ],
+      "features": [
+        "hospitality.rooms",
+        "hospitality.availability_inventory"
+      ],
+      "state_machine": {
+        "entity": "room",
+        "initial": "active",
+        "terminal": [],
+        "states": [
+          "active",
+          "inactive",
+          "temporarily_inactive",
+          "out_of_order"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "out_of_order",
+            "event": "report_issue"
+          },
+          {
+            "from": "out_of_order",
+            "to": "active",
+            "event": "resolve"
+          },
+          {
+            "from": "active",
+            "to": "temporarily_inactive",
+            "event": "take_offline"
+          },
+          {
+            "from": "temporarily_inactive",
+            "to": "active",
+            "event": "reactivate"
+          },
+          {
+            "from": "active",
+            "to": "inactive",
+            "event": "deactivate"
+          },
+          {
+            "from": "inactive",
+            "to": "active",
+            "event": "reactivate"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "Room status values (active/inactive/temporarily_inactive/out_of_order) are already modeled in both implementations; this workflow is the process that drives those transitions, which neither implementation ties to a distinct work-order/ticket entity."
       }
     }
   ]

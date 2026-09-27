@@ -1899,10 +1899,14 @@
       "entities": [
         "contact"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge",
+        "data_subject_request"
+      ],
       "integrations": [],
       "compliance": [
-        "gdpr_crm"
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
       ],
       "ai_relevance": "low",
       "real_time_relevance": "none",
@@ -1940,7 +1944,9 @@
       "entities": [
         "company"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -1980,11 +1986,14 @@
         "lead"
       ],
       "workflows": [
-        "lead_lifecycle"
+        "lead_lifecycle",
+        "lead_assignment_routing",
+        "campaign_execution"
       ],
       "integrations": [],
       "compliance": [
-        "gdpr_crm"
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
       ],
       "ai_relevance": "medium",
       "real_time_relevance": "none",
@@ -2040,7 +2049,7 @@
         "crm.deals_pipelines"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2072,7 +2081,9 @@
         "pipeline_stage"
       ],
       "workflows": [
-        "deal_lifecycle"
+        "deal_lifecycle",
+        "quote_to_won_deal",
+        "forecast_review"
       ],
       "integrations": [],
       "compliance": [],
@@ -2113,7 +2124,10 @@
         "activity",
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "activity_follow_up_cycle",
+        "forecast_review"
+      ],
       "integrations": [
         "calendar_provider"
       ],
@@ -2158,9 +2172,14 @@
         "deal",
         "activity"
       ],
-      "workflows": [],
+      "workflows": [
+        "activity_follow_up_cycle",
+        "email_thread_sync"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_data_subject_rights"
+      ],
       "ai_relevance": "low",
       "real_time_relevance": "low",
       "depends_on": [
@@ -2170,7 +2189,7 @@
         "crm.email_sync"
       ],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2200,7 +2219,10 @@
         "deal",
         "company"
       ],
-      "workflows": [],
+      "workflows": [
+        "lead_assignment_routing",
+        "activity_follow_up_cycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -2210,7 +2232,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2238,7 +2260,9 @@
       "entities": [
         "email_message"
       ],
-      "workflows": [],
+      "workflows": [
+        "email_thread_sync"
+      ],
       "integrations": [
         "email_provider"
       ],
@@ -2291,7 +2315,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2319,12 +2343,19 @@
       "entities": [
         "campaign"
       ],
-      "workflows": [],
+      "workflows": [
+        "campaign_execution"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "none",
-      "depends_on": [],
+      "depends_on": [
+        "crm.consent_preferences"
+      ],
       "enhanced_by": [
         "crm.leads"
       ],
@@ -2358,9 +2389,14 @@
       "entities": [
         "segment"
       ],
-      "workflows": [],
+      "workflows": [
+        "campaign_execution"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
       "ai_relevance": "low",
       "real_time_relevance": "none",
       "depends_on": [
@@ -2402,7 +2438,8 @@
         "deal"
       ],
       "workflows": [
-        "quote_approval"
+        "quote_approval",
+        "quote_to_won_deal"
       ],
       "integrations": [],
       "compliance": [],
@@ -2416,7 +2453,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2446,7 +2483,9 @@
         "product",
         "deal"
       ],
-      "workflows": [],
+      "workflows": [
+        "quote_to_won_deal"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -2454,7 +2493,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2485,7 +2524,9 @@
         "deal",
         "lead"
       ],
-      "workflows": [],
+      "workflows": [
+        "lead_assignment_routing"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -2496,7 +2537,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2524,7 +2565,9 @@
       "entities": [
         "deal"
       ],
-      "workflows": [],
+      "workflows": [
+        "forecast_review"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -2572,7 +2615,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2602,7 +2645,10 @@
         "deal",
         "lead"
       ],
-      "workflows": [],
+      "workflows": [
+        "data_subject_request",
+        "forecast_review"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -2612,7 +2658,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -2642,9 +2688,14 @@
         "segment",
         "product"
       ],
-      "workflows": [],
+      "workflows": [
+        "duplicate_detection_merge",
+        "data_subject_request"
+      ],
       "integrations": [],
-      "compliance": [],
+      "compliance": [
+        "gdpr_data_subject_rights"
+      ],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [
@@ -2652,7 +2703,119 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
+      "path": "domains/crm/feature-map.json"
+    },
+    {
+      "id": "crm.duplicate_detection_merge",
+      "name": "Duplicate Detection and Merge",
+      "domain": "crm",
+      "classification": "common",
+      "description": "Surface probable duplicate leads, contacts, or accounts and merge them into one surviving record, carrying related activity across.",
+      "tags": [
+        "common",
+        "admin",
+        "backend",
+        "search",
+        "workflow"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "users": [
+        "sales_rep",
+        "sales_ops_admin"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company"
+      ],
+      "workflows": [
+        "duplicate_detection_merge"
+      ],
+      "integrations": [
+        "lead_capture_forms",
+        "data_enrichment"
+      ],
+      "compliance": [
+        "gdpr_crm",
+        "gdpr_data_subject_rights"
+      ],
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "depends_on": [
+        "crm.contacts",
+        "crm.leads"
+      ],
+      "enhanced_by": [
+        "crm.data_import"
+      ],
+      "implementation_status": "reference",
+      "confidence": "medium",
+      "path": "domains/crm/feature-map.json"
+    },
+    {
+      "id": "crm.consent_preferences",
+      "name": "Consent and Marketing Preferences",
+      "domain": "crm",
+      "classification": "compliance",
+      "description": "Record the lawful basis or consent behind holding a contact, and their opt-in/opt-out state per channel, so outbound sending can be suppressed at source.",
+      "tags": [
+        "compliance",
+        "admin",
+        "backend",
+        "communication"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "users": [
+        "marketing_user",
+        "sales_ops_admin"
+      ],
+      "entities": [
+        "contact",
+        "lead",
+        "segment",
+        "campaign"
+      ],
+      "workflows": [
+        "data_subject_request",
+        "campaign_execution"
+      ],
+      "integrations": [
+        "marketing_email"
+      ],
+      "compliance": [
+        "gdpr_crm",
+        "can_spam",
+        "gdpr_data_subject_rights",
+        "gdpr_consent_demonstrability",
+        "eprivacy_direct_marketing"
+      ],
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "depends_on": [
+        "crm.contacts"
+      ],
+      "enhanced_by": [
+        "crm.campaign_management"
+      ],
+      "implementation_status": "missing",
+      "confidence": "high",
       "path": "domains/crm/feature-map.json"
     },
     {
@@ -5935,7 +6098,9 @@
       "entities": [
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "kyc_onboarding_lifecycle"
+      ],
       "integrations": [],
       "compliance": [
         "gdpr"
@@ -6032,7 +6197,9 @@
         "ledger_entry",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "account_closure_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6073,7 +6240,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "wallet_funding_and_withdrawal_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6162,7 +6331,9 @@
         "wallet",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "internal_transfer_and_p2p_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6203,7 +6374,9 @@
         "party",
         "wallet"
       ],
-      "workflows": [],
+      "workflows": [
+        "internal_transfer_and_p2p_workflow"
+      ],
       "integrations": [
         "payment_rail"
       ],
@@ -6247,7 +6420,9 @@
         "wallet",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "card_issuance_lifecycle"
+      ],
       "integrations": [
         "card_issuing_processor"
       ],
@@ -6261,7 +6436,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6290,7 +6465,9 @@
       "entities": [
         "card"
       ],
-      "workflows": [],
+      "workflows": [
+        "card_issuance_lifecycle"
+      ],
       "integrations": [
         "card_issuing_processor"
       ],
@@ -6304,7 +6481,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6413,7 +6590,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6428,7 +6605,9 @@
         "loan",
         "ledger_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "interest_accrual_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6454,7 +6633,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6469,7 +6648,9 @@
         "party",
         "loan"
       ],
-      "workflows": [],
+      "workflows": [
+        "loan_lifecycle"
+      ],
       "integrations": [
         "credit_bureau"
       ],
@@ -6481,7 +6662,7 @@
         "fintech.lending_origination"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6512,7 +6693,9 @@
         "statement",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "statement_generation_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6539,7 +6722,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6555,7 +6738,9 @@
         "account",
         "payment"
       ],
-      "workflows": [],
+      "workflows": [
+        "fee_assessment_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6598,7 +6783,9 @@
         "party",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "wallet_funding_and_withdrawal_workflow"
+      ],
       "integrations": [],
       "compliance": [
         "aml_cft_fatf"
@@ -6629,7 +6816,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6645,7 +6832,10 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "payment_lifecycle",
+        "fraud_alert_triage_workflow"
+      ],
       "integrations": [
         "fraud_engine"
       ],
@@ -6661,7 +6851,7 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6676,7 +6866,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6691,7 +6881,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "fraud_alert_triage_workflow"
+      ],
       "integrations": [
         "fraud_engine"
       ],
@@ -6724,7 +6916,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6739,7 +6931,9 @@
         "party",
         "kyc_case"
       ],
-      "workflows": [],
+      "workflows": [
+        "kyc_onboarding_lifecycle"
+      ],
       "integrations": [
         "kyc_provider"
       ],
@@ -6793,7 +6987,8 @@
         "payment_rail"
       ],
       "compliance": [
-        "pci_dss"
+        "pci_dss",
+        "reg_e"
       ],
       "ai_relevance": "low",
       "real_time_relevance": "none",
@@ -6804,7 +6999,7 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6820,7 +7015,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -6881,7 +7076,9 @@
         "wallet",
         "ledger_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "fx_conversion_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -6921,7 +7118,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "mandate_recurring_payment_workflow"
+      ],
       "integrations": [
         "payment_rail"
       ],
@@ -6933,7 +7132,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -6963,7 +7162,9 @@
         "payment",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "mandate_recurring_payment_workflow"
+      ],
       "integrations": [
         "payment_rail"
       ],
@@ -6975,7 +7176,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -7004,7 +7205,9 @@
       "entities": [
         "wallet"
       ],
-      "workflows": [],
+      "workflows": [
+        "savings_goal_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -7014,7 +7217,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -7044,7 +7247,9 @@
       "entities": [
         "payment"
       ],
-      "workflows": [],
+      "workflows": [
+        "spend_insights_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "high",
@@ -7054,7 +7259,7 @@
         "fintech.payments"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/fintech/feature-map.json"
     },
     {
@@ -7071,7 +7276,7 @@
         "web": true,
         "mobile": true,
         "admin": true,
-        "customer_portal": false,
+        "customer_portal": true,
         "backend": true,
         "ai": false,
         "real_time": false
@@ -7084,7 +7289,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "virtual_account_provisioning_workflow"
+      ],
       "integrations": [
         "payment_rail"
       ],
@@ -7113,7 +7320,7 @@
         "web": true,
         "mobile": true,
         "admin": true,
-        "customer_portal": false,
+        "customer_portal": true,
         "backend": true,
         "ai": false,
         "real_time": false
@@ -7126,7 +7333,9 @@
         "account",
         "party"
       ],
-      "workflows": [],
+      "workflows": [
+        "open_banking_consent_workflow"
+      ],
       "integrations": [
         "payment_rail"
       ],
@@ -7155,7 +7364,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -7170,7 +7379,9 @@
         "payment",
         "account"
       ],
-      "workflows": [],
+      "workflows": [
+        "webhook_delivery_workflow"
+      ],
       "integrations": [
         "webhook_delivery"
       ],
@@ -9349,7 +9560,9 @@
       "entities": [
         "property"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -9388,7 +9601,9 @@
         "room_type",
         "amenity"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -9423,12 +9638,16 @@
       },
       "users": [
         "property_manager",
-        "housekeeper"
+        "housekeeper",
+        "maintenance_engineer"
       ],
       "entities": [
         "room"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow",
+        "room_maintenance_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -9453,7 +9672,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -9467,7 +9686,9 @@
         "rate_plan",
         "room_type"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -9507,7 +9728,10 @@
         "room",
         "reservation_room_stay"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle",
+        "channel_ari_sync_workflow"
+      ],
       "integrations": [
         "channel_manager"
       ],
@@ -9545,7 +9769,8 @@
       },
       "users": [
         "guest",
-        "front_desk_agent"
+        "front_desk_agent",
+        "reservations_agent"
       ],
       "entities": [
         "reservation",
@@ -9648,7 +9873,10 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle",
+        "post_stay_engagement_workflow"
+      ],
       "integrations": [],
       "compliance": [
         "gdpr_guest_data"
@@ -9702,7 +9930,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -9762,7 +9990,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -9776,7 +10004,9 @@
         "rate_restriction",
         "rate_plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -9786,7 +10016,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -9816,7 +10046,9 @@
         "cancellation_policy",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "cancellation_and_no_show_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -9828,7 +10060,7 @@
         "hospitality.deposits_advance_payment"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -9904,13 +10136,17 @@
         "amenity",
         "room_type"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [],
-      "enhanced_by": [],
+      "enhanced_by": [
+        "hospitality.room_types"
+      ],
       "implementation_status": "reference",
       "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
@@ -9943,7 +10179,9 @@
         "add_on_service",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "add_on_and_upsell_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -9955,7 +10193,7 @@
         "hospitality.folio_and_charges"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -9985,7 +10223,9 @@
         "booking_voucher",
         "reservation"
       ],
-      "workflows": [],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
       "integrations": [
         "guest_messaging"
       ],
@@ -10026,7 +10266,9 @@
       "entities": [
         "room"
       ],
-      "workflows": [],
+      "workflows": [
+        "property_setup_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -10059,12 +10301,16 @@
         "real_time": false
       },
       "users": [
-        "property_manager"
+        "property_manager",
+        "general_manager",
+        "owner"
       ],
       "entities": [
         "property"
       ],
-      "workflows": [],
+      "workflows": [
+        "cross_property_oversight_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -10144,7 +10390,8 @@
       },
       "users": [
         "front_desk_agent",
-        "property_manager"
+        "property_manager",
+        "night_auditor"
       ],
       "entities": [
         "night_audit_run",
@@ -10190,7 +10437,8 @@
       },
       "users": [
         "guest",
-        "front_desk_agent"
+        "front_desk_agent",
+        "reservations_agent"
       ],
       "entities": [
         "reservation",
@@ -10237,7 +10485,9 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "post_stay_engagement_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -10247,7 +10497,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -10276,7 +10526,9 @@
       "entities": [
         "guest_profile"
       ],
-      "workflows": [],
+      "workflows": [
+        "post_stay_engagement_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -10286,7 +10538,7 @@
         "hospitality.front_desk_checkin_checkout"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/hospitality/feature-map.json"
     },
     {
@@ -10315,7 +10567,9 @@
       "entities": [
         "rate_plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_and_restriction_management_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "high",
@@ -14927,7 +15181,9 @@
         "table",
         "restaurant_location"
       ],
-      "workflows": [],
+      "workflows": [
+        "table_turn_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -14951,7 +15207,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -14966,7 +15222,9 @@
         "menu",
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -14989,7 +15247,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15005,7 +15263,9 @@
         "modifier",
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -15067,7 +15327,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15114,7 +15374,7 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15225,7 +15485,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15252,7 +15512,7 @@
         "restaurant.dine_in_orders"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15391,7 +15651,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15436,14 +15696,14 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
       "id": "restaurant.delivery_orders",
       "name": "Delivery orders",
       "domain": "restaurant",
-      "classification": "common",
+      "classification": "optional",
       "description": "Orders fulfilled by delivery to a customer address, with own or third-party couriers.",
       "tags": [
         "common",
@@ -15471,7 +15731,8 @@
       ],
       "workflows": [
         "order_fulfillment_lifecycle",
-        "delivery_dispatch_lifecycle"
+        "delivery_dispatch_lifecycle",
+        "delivery_marketplace_integration_lifecycle"
       ],
       "integrations": [
         "delivery_marketplace"
@@ -15486,7 +15747,7 @@
         "restaurant.third_party_delivery_integration"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15501,7 +15762,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15515,7 +15776,9 @@
         "order",
         "menu"
       ],
-      "workflows": [],
+      "workflows": [
+        "delivery_marketplace_integration_lifecycle"
+      ],
       "integrations": [
         "delivery_marketplace"
       ],
@@ -15525,7 +15788,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15541,7 +15804,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15555,7 +15818,9 @@
       "entities": [
         "inventory_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "inventory_depletion_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -15565,7 +15830,7 @@
         "restaurant.recipes"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15580,7 +15845,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15596,7 +15861,9 @@
         "menu_item",
         "inventory_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "inventory_depletion_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -15606,7 +15873,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15635,7 +15902,9 @@
       "entities": [
         "shift"
       ],
-      "workflows": [],
+      "workflows": [
+        "staff_shift_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -15645,14 +15914,14 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/restaurant/feature-map.json"
     },
     {
       "id": "restaurant.loyalty",
       "name": "Loyalty and rewards",
       "domain": "restaurant",
-      "classification": "recommended",
+      "classification": "optional",
       "description": "Points, punch cards, or tiered rewards tied to a guest's order history.",
       "tags": [
         "recommended",
@@ -15675,7 +15944,9 @@
         "loyalty_account",
         "guest"
       ],
-      "workflows": [],
+      "workflows": [
+        "loyalty_program_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -15686,7 +15957,7 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15715,7 +15986,9 @@
       "entities": [
         "review"
       ],
-      "workflows": [],
+      "workflows": [
+        "review_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -15725,7 +15998,7 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15772,7 +16045,7 @@
         "restaurant.takeout_orders"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15788,7 +16061,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": true,
         "backend": true,
@@ -15801,7 +16074,9 @@
       "entities": [
         "menu_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "menu_item_lifecycle"
+      ],
       "integrations": [],
       "compliance": [
         "eu_food_information_regulation",
@@ -15860,7 +16135,7 @@
         "restaurant.dine_in_orders"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15888,9 +16163,12 @@
         "customer"
       ],
       "entities": [
-        "payment"
+        "payment",
+        "gift_card"
       ],
-      "workflows": [],
+      "workflows": [
+        "gift_card_lifecycle"
+      ],
       "integrations": [
         "payment_gateway"
       ],
@@ -15902,7 +16180,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/restaurant/feature-map.json"
     },
     {
@@ -15962,7 +16240,7 @@
       ],
       "platforms": {
         "web": true,
-        "mobile": true,
+        "mobile": false,
         "admin": true,
         "customer_portal": false,
         "backend": true,
@@ -15985,7 +16263,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/restaurant/feature-map.json"
     },
     {
