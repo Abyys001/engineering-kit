@@ -1,0 +1,1243 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "name": "Hospitality",
+  "aliases": [
+    "hotel management",
+    "lodging",
+    "property management system",
+    "PMS"
+  ],
+  "description": "Hotel and short-stay lodging operations: property/room/rate setup, availability and reservations, front-desk check-in/out and folio, and distribution to online travel agencies via a channel manager.",
+  "nace": [
+    "I55.10"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-26",
+  "sources": [
+    {
+      "id": "frappe-hospitality",
+      "title": "Frappe Hospitality",
+      "url": "https://github.com/frappe/hospitality",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "2003ff8db7d7fbc453a9d14da0f971b9186a0b4b",
+      "local_path": "sources/domains/frappe-hospitality/source",
+      "notes": "Reference-only (GPL-3.0). ERPNext hotel module: Hotel Room, Hotel Room Type, Hotel Room Amenity, Hotel Room Pricing (+Item/Package), Hotel Room Reservation (+Item), Hotel Settings doctypes. Shared with domains/restaurant."
+    },
+    {
+      "id": "qloapps",
+      "title": "QloApps (PrestaShop-based hotel booking engine + channel manager)",
+      "url": "https://github.com/Qloapps/QloApps",
+      "source_type": "implementation",
+      "license": "OSL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "develop branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned (inspected via gh api git tree + raw.githubusercontent.com; 132MB repo, PrestaShop e-commerce core + hotelreservationsystem module). OSL-3.0 verified from actual LICENSE.md — a network/external-deployment copyleft license (section 5), treated with the same caution as AGPL: reference-only, no code copied. modules/hotelreservationsystem/classes/ has ~35 Hotel*/RoomType*/ServiceProduct* classes covering branches, room types, rooms, feature-based rate pricing + restrictions, booking detail + status history (Assigned/CheckedIn/CheckedOut/NoShow/Cancelled), advanced payment, refund rules, connected rooms, channel manager + ARI (Availability-Rate-Inventory) webservice, add-on service products, and PDF booking vouchers."
+    },
+    {
+      "id": "opentravel-alliance",
+      "title": "OpenTravel Alliance (OTA) message specifications",
+      "url": "https://opentravel.org/category/specification/",
+      "source_type": "authoritative",
+      "license": "OTA user license — free to use, may not redistribute/modify the specification text",
+      "retrieved": "2026-09-26",
+      "version": "public mirror through 2017B; current releases through 2024A are member/download-gated",
+      "local_path": null,
+      "notes": "Verified organizational facts and access status only (public mirror stops at 2017B; the OpenTravel site's download form lists newer releases behind registration). Did not obtain and read the full current message schema text in this pass, so this source is NOT treated as sufficient alone for 'high' confidence on any feature — cited for terminology (e.g. OTA_HotelResRQ/RS, availability/rate/inventory message families) that is independently well documented in secondary literature, not for message-level detail."
+    },
+    {
+      "id": "htng",
+      "title": "HTNG (Hotel Technology Next Generation) interface specifications",
+      "url": "https://htng.org/",
+      "source_type": "authoritative",
+      "license": "HTNG member/vendor-gated specification access",
+      "retrieved": "2026-09-26",
+      "version": "active as of January 2025 release cycle; organization merged into AHLA in 2022",
+      "local_path": null,
+      "notes": "Verified via secondary reporting (Hospitality Technology, AltexSoft, Wikipedia) that HTNG is still active and that its interfaces frequently carry OpenTravel message payloads; did not access gated specification text directly. Cited for the channel-manager/PMS-interface concept only, at low/medium confidence."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI Data Security Standard v4.0.1",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI SSC copyright; free to read/download with registration",
+      "retrieved": "2026-09-26",
+      "version": "4.0.1",
+      "local_path": null,
+      "notes": "Card payment security standard; applies to any property accepting card payments or deposits."
+    },
+    {
+      "id": "eu-gdpr",
+      "title": "EU General Data Protection Regulation (Regulation (EU) 2016/679)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "source_type": "authoritative",
+      "license": "EU public document, free reuse per Commission Decision 2011/833/EU",
+      "retrieved": "2026-09-26",
+      "version": "consolidated text",
+      "local_path": null,
+      "notes": "EU-jurisdiction personal data protection requirement for guest profile data (identity documents, contact details, stay history)."
+    },
+    {
+      "id": "wikipedia-night-audit",
+      "title": "Wikipedia: Night audit",
+      "url": "https://en.wikipedia.org/wiki/Night_audit",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for the night-audit process; not found in either inspected implementation."
+    },
+    {
+      "id": "wikipedia-housekeeping",
+      "title": "Wikipedia: Housekeeping",
+      "url": "https://en.wikipedia.org/wiki/Housekeeping",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for housekeeping/room-turnover status tracking; not found in either inspected implementation as a dedicated module."
+    },
+    {
+      "id": "wikipedia-yield-management",
+      "title": "Wikipedia: Yield management",
+      "url": "https://en.wikipedia.org/wiki/Yield_management",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for demand-based dynamic pricing, distinct from the rule/season-based rate plans both implementations have."
+    },
+    {
+      "id": "wikipedia-loyalty-program",
+      "title": "Wikipedia: Loyalty program",
+      "url": "https://en.wikipedia.org/wiki/Loyalty_program",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for guest loyalty/rewards; not present in either inspected implementation."
+    },
+    {
+      "id": "wikipedia-customer-review",
+      "title": "Wikipedia: Customer review",
+      "url": "https://en.wikipedia.org/wiki/Customer_review",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for guest review collection; not present in either inspected implementation."
+    },
+    {
+      "id": "wikipedia-hotel",
+      "title": "Wikipedia: Hotel",
+      "url": "https://en.wikipedia.org/wiki/Hotel",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background only; no single authoritative cross-jurisdiction source on guest ID/passport registration requirements was found in this pass."
+    }
+  ],
+  "features": [
+    {
+      "id": "hospitality.properties",
+      "name": "Property management",
+      "classification": "core",
+      "description": "Define a hotel/property: name, address, policies, and default settings.",
+      "users": [
+        "property_manager"
+      ],
+      "entities": [
+        "property"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "property_configuration"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.room_types",
+      "name": "Room types",
+      "classification": "core",
+      "description": "Categories of rooms (e.g. Standard, Deluxe, Suite) with capacity and amenities shared across physical rooms.",
+      "users": [
+        "property_manager",
+        "revenue_manager"
+      ],
+      "entities": [
+        "room_type",
+        "amenity"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "capacity_definition"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.rooms",
+      "name": "Rooms",
+      "classification": "core",
+      "description": "Individual physical rooms belonging to a room type, with their own status (active/inactive/out of order).",
+      "users": [
+        "property_manager",
+        "housekeeper"
+      ],
+      "entities": [
+        "room"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "room_status_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "admin",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.rate_plans",
+      "name": "Rates and rate plans",
+      "classification": "core",
+      "description": "Date-ranged pricing per room type (e.g. seasonal rate, non-refundable rate, package rate).",
+      "users": [
+        "revenue_manager"
+      ],
+      "entities": [
+        "rate_plan",
+        "room_type"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "date_ranged_pricing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "demand-based price suggestions"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.availability_inventory",
+      "name": "Availability and inventory",
+      "classification": "core",
+      "description": "Real-time count of sellable rooms per room type per date, used to block overselling.",
+      "users": [
+        "revenue_manager",
+        "property_manager"
+      ],
+      "entities": [
+        "room",
+        "reservation_room_stay"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "availability_check"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "overbooking risk scoring"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "calendar"
+      ],
+      "integrations": [
+        "channel_manager"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "Neither implementation has a dedicated 'inventory' entity distinct from summing reservation date ranges against room status; availability is computed, not stored, in both."
+      }
+    },
+    {
+      "id": "hospitality.reservations",
+      "name": "Reservations",
+      "classification": "core",
+      "description": "Book one or more rooms for a date range and guest count; tracks status from request through stay completion.",
+      "users": [
+        "guest",
+        "front_desk_agent"
+      ],
+      "entities": [
+        "reservation",
+        "reservation_room_stay",
+        "guest_profile"
+      ],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
+      "capabilities": [
+        "availability_check",
+        "conflict_detection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "no-show prediction",
+        "overbooking optimization"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "calendar",
+        "customer"
+      ],
+      "integrations": [
+        "channel_manager"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.front_desk_checkin_checkout",
+      "name": "Front desk check-in / check-out",
+      "classification": "core",
+      "description": "Record a guest's arrival (assign/confirm room, ID capture) and departure (settle folio, release room).",
+      "users": [
+        "front_desk_agent",
+        "guest"
+      ],
+      "entities": [
+        "reservation",
+        "room",
+        "folio"
+      ],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
+      "capabilities": [
+        "status_transition"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [
+        "id_verification"
+      ],
+      "compliance": [
+        "id_document_requirements"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "frappe-hospitality"
+        ],
+        "confidence": "medium",
+        "notes": "QloApps' HotelBookingDetail has explicit Assigned/CheckedIn/CheckedOut states; Frappe Hospitality only has a terminal 'Completed' status with no explicit check-in event — a weaker but real signal."
+      }
+    },
+    {
+      "id": "hospitality.guest_profiles",
+      "name": "Guest profiles",
+      "classification": "common",
+      "description": "Guest identity, contact info, preferences, and stay history, reused across reservations.",
+      "users": [
+        "front_desk_agent",
+        "guest"
+      ],
+      "entities": [
+        "guest_profile"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "profile_management"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "preference-based upsell"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr_guest_data"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.folio_and_charges",
+      "name": "Folio and charges",
+      "classification": "common",
+      "description": "Running itemized ledger of room charges, taxes, and incidentals for a stay, settled at checkout.",
+      "users": [
+        "front_desk_agent"
+      ],
+      "entities": [
+        "folio",
+        "payment"
+      ],
+      "workflows": [
+        "folio_billing_workflow"
+      ],
+      "capabilities": [
+        "charge_posting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "payment",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "Neither implementation has a distinct running folio; both settle a reservation against a single order/invoice (frappe: Sales Invoice; QloApps: PrestaShop Order) rather than an itemized per-stay ledger. Classified as common on general PMS industry practice."
+      }
+    },
+    {
+      "id": "hospitality.channel_manager",
+      "name": "Channel manager / OTA distribution",
+      "classification": "common",
+      "description": "Push rate, availability, and inventory (ARI) to and pull reservations from online travel agencies.",
+      "users": [
+        "revenue_manager"
+      ],
+      "entities": [
+        "channel",
+        "reservation"
+      ],
+      "workflows": [
+        "channel_ari_sync_workflow"
+      ],
+      "capabilities": [
+        "ari_sync"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "integration",
+        "real-time"
+      ],
+      "integrations": [
+        "channel_manager"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "opentravel-alliance",
+          "htng"
+        ],
+        "confidence": "medium",
+        "notes": "Only QloApps (of the two inspected implementations) has this; OTA/HTNG confirm the concept and its OTA_HotelAvail/OTA_HotelResRQ-style terminology organizationally, but their current message-schema text was not directly read in this pass (access-gated) — not counted alone as sufficient for 'high'."
+      }
+    },
+    {
+      "id": "hospitality.rate_restrictions",
+      "name": "Rate restrictions",
+      "classification": "common",
+      "description": "Minimum/maximum length of stay, closed-to-arrival/departure, and blackout-date rules on a rate plan.",
+      "users": [
+        "revenue_manager"
+      ],
+      "entities": [
+        "rate_restriction",
+        "rate_plan"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "restriction_enforcement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hospitality.cancellation_policies",
+      "name": "Cancellation and refund policies",
+      "classification": "common",
+      "description": "Property- or rate-level rules for how much of a payment is refundable based on how close to arrival a guest cancels.",
+      "users": [
+        "revenue_manager",
+        "guest"
+      ],
+      "entities": [
+        "cancellation_policy",
+        "reservation"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "refund_calculation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hospitality.deposits_advance_payment",
+      "name": "Deposits and advance payment",
+      "classification": "common",
+      "description": "Collect a partial or full payment at booking time, ahead of the stay.",
+      "users": [
+        "guest",
+        "front_desk_agent"
+      ],
+      "entities": [
+        "deposit",
+        "payment",
+        "reservation"
+      ],
+      "workflows": [
+        "folio_billing_workflow"
+      ],
+      "capabilities": [
+        "partial_capture"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "payment"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.amenities",
+      "name": "Amenities",
+      "classification": "common",
+      "description": "Named features attached to a property or room type (e.g. Wi-Fi, pool, breakfast included).",
+      "users": [
+        "property_manager"
+      ],
+      "entities": [
+        "amenity",
+        "room_type"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "amenity_tagging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hospitality.add_on_services",
+      "name": "Add-on services",
+      "classification": "recommended",
+      "description": "Purchasable extras attached to a stay (breakfast, airport transfer, spa) beyond the room rate.",
+      "users": [
+        "guest",
+        "front_desk_agent"
+      ],
+      "entities": [
+        "add_on_service",
+        "reservation"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "upsell"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "personalized upsell offers"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "customer",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hospitality.booking_voucher_confirmation",
+      "name": "Booking voucher / confirmation",
+      "classification": "common",
+      "description": "Generate and send a guest-facing confirmation document for a reservation.",
+      "users": [
+        "guest"
+      ],
+      "entities": [
+        "booking_voucher",
+        "reservation"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "document_generation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "document",
+        "customer"
+      ],
+      "integrations": [
+        "guest_messaging"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hospitality.connecting_rooms",
+      "name": "Connecting / adjoining rooms",
+      "classification": "optional",
+      "description": "Model and offer physically connected rooms as a unit for families or groups.",
+      "users": [
+        "front_desk_agent",
+        "guest"
+      ],
+      "entities": [
+        "room"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "room_linking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hospitality.multi_property_management",
+      "name": "Multi-property management",
+      "classification": "recommended",
+      "description": "Manage room types, rates, and reservations across a group of properties from one account.",
+      "users": [
+        "property_manager"
+      ],
+      "entities": [
+        "property"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "cross_property_reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "Frappe's Hotel Settings is scoped per Company (weak signal); QloApps' HotelBranchInformation is explicitly multi-branch."
+      }
+    },
+    {
+      "id": "hospitality.housekeeping",
+      "name": "Housekeeping",
+      "classification": "recommended",
+      "description": "Track room cleaning/turnover status (dirty, cleaning, clean, inspected) and assign housekeeping tasks.",
+      "users": [
+        "housekeeper",
+        "front_desk_agent"
+      ],
+      "entities": [
+        "housekeeping_task",
+        "room"
+      ],
+      "workflows": [
+        "housekeeping_task_lifecycle"
+      ],
+      "capabilities": [
+        "task_assignment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "cleaning-time prediction"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "recommended",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-housekeeping"
+        ],
+        "confidence": "low",
+        "notes": "Neither implementation has a dedicated housekeeping module; QloApps' room active/inactive/temporary-inactive status is a partial, generic analog, not a turnover workflow."
+      }
+    },
+    {
+      "id": "hospitality.night_audit",
+      "name": "Night audit",
+      "classification": "recommended",
+      "description": "End-of-day process that posts room charges, reconciles payments, and rolls the business date forward.",
+      "users": [
+        "front_desk_agent",
+        "property_manager"
+      ],
+      "entities": [
+        "night_audit_run",
+        "folio"
+      ],
+      "workflows": [
+        "night_audit_workflow"
+      ],
+      "capabilities": [
+        "day_close",
+        "date_rollover"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "anomaly detection on reconciliation"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "staff",
+        "reporting"
+      ],
+      "integrations": [
+        "accounting_software"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-night-audit"
+        ],
+        "confidence": "low",
+        "notes": "Not present in either inspected implementation; reasoned from standard PMS industry practice."
+      }
+    },
+    {
+      "id": "hospitality.group_bookings",
+      "name": "Group bookings",
+      "classification": "recommended",
+      "description": "Reserve a block of multiple rooms under one booking for an event, family, or corporate group.",
+      "users": [
+        "guest",
+        "front_desk_agent"
+      ],
+      "entities": [
+        "reservation",
+        "reservation_room_stay"
+      ],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
+      "capabilities": [
+        "multi_room_booking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "recommended",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium",
+        "notes": "Inferred from both implementations supporting multiple room line-items per reservation/cart, not from an explicit 'group booking' or rooming-list concept in either."
+      }
+    },
+    {
+      "id": "hospitality.loyalty_program",
+      "name": "Guest loyalty program",
+      "classification": "optional",
+      "description": "Points, tiers, or member rates tied to a guest's stay history.",
+      "users": [
+        "guest",
+        "property_manager"
+      ],
+      "entities": [
+        "guest_profile"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "points_accrual"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "personalized offers"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-loyalty-program"
+        ],
+        "confidence": "low",
+        "notes": "Not present in either inspected implementation; reasoned from common industry practice."
+      }
+    },
+    {
+      "id": "hospitality.guest_reviews",
+      "name": "Guest reviews",
+      "classification": "optional",
+      "description": "Collect and display post-stay ratings and feedback.",
+      "users": [
+        "guest",
+        "property_manager"
+      ],
+      "entities": [
+        "guest_profile"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "feedback_collection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "sentiment analysis"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-customer-review"
+        ],
+        "confidence": "low",
+        "notes": "Not present in either inspected implementation; reasoned from common industry practice."
+      }
+    },
+    {
+      "id": "hospitality.dynamic_pricing",
+      "name": "Dynamic / yield-based pricing",
+      "classification": "optional",
+      "description": "Adjust room rates automatically based on demand, occupancy forecast, or competitor pricing.",
+      "users": [
+        "revenue_manager"
+      ],
+      "entities": [
+        "rate_plan"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "demand_forecasting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "demand forecasting",
+        "price optimization"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "admin",
+        "ai"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-yield-management"
+        ],
+        "confidence": "low",
+        "notes": "Distinct from the rule/season-based rate plans both implementations have; true demand-responsive pricing was not found in either."
+      }
+    }
+  ]
+}

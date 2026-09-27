@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {"feature": "manufacturing.items_products", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree Part + Odoo product.template/product.product."},
+    {"feature": "manufacturing.bill_of_materials", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree BomItem + Odoo mrp.bom."},
+    {"feature": "manufacturing.bom_substitutes", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree BomItemSubstitute."},
+    {"feature": "manufacturing.routings_operations", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo mrp.routing.workcenter."},
+    {"feature": "manufacturing.work_centers", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo mrp.workcenter."},
+    {"feature": "manufacturing.production_orders", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree Build + Odoo mrp.production."},
+    {"feature": "manufacturing.work_order_scheduling", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo mrp.workorder.date_start/leave_id."},
+    {"feature": "manufacturing.material_requirements_planning", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo stock.warehouse.orderpoint."},
+    {"feature": "manufacturing.inventory_lots_serials", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree StockItem + Odoo stock.lot."},
+    {"feature": "manufacturing.stock_locations", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree StockLocation."},
+    {"feature": "manufacturing.purchase_orders", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree order app PurchaseOrderStatus."},
+    {"feature": "manufacturing.supplier_management", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree company app."},
+    {"feature": "manufacturing.quality_inspections", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree PartTestTemplate/StockItemTestResult."},
+    {"feature": "manufacturing.non_conformance_management", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "Reasoned from StockStatus; no dedicated table found."},
+    {"feature": "manufacturing.equipment_maintenance", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Reasoned from mrp.workcenter working_state/blocked_time."},
+    {"feature": "manufacturing.shop_floor_data_collection", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTreeBarcodeMixin."},
+    {"feature": "manufacturing.traceability", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree StockItemTracking + Odoo stock.lot/lot_producing_ids."},
+    {"feature": "manufacturing.disassembly_unbuild", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree StockHistoryCode.DISASSEMBLED + Odoo mrp.unbuild."},
+    {"feature": "manufacturing.subcontracting", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree Build.external."},
+    {"feature": "manufacturing.product_variants", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree", "sources/domains/odoo-mrp"], "status": "reference", "notes": "InvenTree Part.variant_of + Odoo product.template/product.product."},
+    {"feature": "manufacturing.stocktake_cycle_counting", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "InvenTree PartStocktake."},
+    {"feature": "manufacturing.cost_tracking", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp", "sources/domains/inventree"], "status": "reference", "notes": "Odoo costs_hour + InvenTree PartPricing."},
+    {"feature": "manufacturing.workcenter_capacity_planning", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo mrp.workcenter workorder_*_count fields."},
+    {"feature": "manufacturing.production_scrap_tracking", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/inventree"], "status": "reference", "notes": "Reasoned from StockHistoryCode.BUILD_OUTPUT_REJECTED."},
+    {"feature": "manufacturing.bom_byproducts", "implementations": {"web": [], "backend": [], "mobile": [], "ai": []}, "references": ["sources/domains/odoo-mrp"], "status": "reference", "notes": "Odoo mrp.bom.byproduct."}
+  ]
+}

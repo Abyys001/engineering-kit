@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "workflows": [
+    {
+      "id": "reservation_lifecycle",
+      "name": "Reservation lifecycle",
+      "actor": "guest",
+      "trigger": "Guest requests one or more rooms for a date range",
+      "steps": [
+        "Search availability for dates and occupancy",
+        "Select room type(s) and rate plan",
+        "Confirm and optionally pay deposit",
+        "Check in on arrival",
+        "Check out and settle folio",
+        "Complete, or cancel/no-show before arrival"
+      ],
+      "entities": [
+        "reservation",
+        "reservation_room_stay",
+        "guest_profile",
+        "room"
+      ],
+      "features": [
+        "hospitality.reservations",
+        "hospitality.front_desk_checkin_checkout"
+      ],
+      "state_machine": {
+        "entity": "reservation",
+        "initial": "requested",
+        "terminal": [
+          "checked_out",
+          "cancelled",
+          "no_show"
+        ],
+        "states": [
+          "requested",
+          "confirmed",
+          "checked_in",
+          "checked_out",
+          "cancelled",
+          "no_show"
+        ],
+        "transitions": [
+          {
+            "from": "requested",
+            "to": "confirmed",
+            "event": "confirm"
+          },
+          {
+            "from": "requested",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "confirmed",
+            "to": "checked_in",
+            "event": "check_in"
+          },
+          {
+            "from": "confirmed",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "confirmed",
+            "to": "no_show",
+            "event": "mark_no_show"
+          },
+          {
+            "from": "checked_in",
+            "to": "checked_out",
+            "event": "check_out"
+          }
+        ]
+      },
+      "notifications": [
+        "confirmation",
+        "reminder",
+        "pre_arrival"
+      ],
+      "integrations": [
+        "guest_messaging"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "housekeeping_task_lifecycle",
+      "name": "Housekeeping task lifecycle",
+      "actor": "housekeeper",
+      "trigger": "A room needs turnover after checkout or on a cleaning schedule",
+      "steps": [
+        "Room marked dirty on checkout",
+        "Housekeeper assigned and cleans",
+        "Mark clean",
+        "Supervisor inspects and approves"
+      ],
+      "entities": [
+        "housekeeping_task",
+        "room"
+      ],
+      "features": [
+        "hospitality.housekeeping"
+      ],
+      "state_machine": {
+        "entity": "housekeeping_task",
+        "initial": "dirty",
+        "terminal": [
+          "inspected"
+        ],
+        "states": [
+          "dirty",
+          "cleaning",
+          "clean",
+          "inspected"
+        ],
+        "transitions": [
+          {
+            "from": "dirty",
+            "to": "cleaning",
+            "event": "start_cleaning"
+          },
+          {
+            "from": "cleaning",
+            "to": "clean",
+            "event": "mark_clean"
+          },
+          {
+            "from": "clean",
+            "to": "inspected",
+            "event": "inspect"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-housekeeping"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "night_audit_workflow",
+      "name": "Night audit workflow",
+      "actor": "front_desk_agent",
+      "trigger": "End of the property's business day",
+      "steps": [
+        "Post room charges for the day to open folios",
+        "Reconcile payments taken against the day's transactions",
+        "Resolve no-shows and auto-cancellations",
+        "Roll the business date forward"
+      ],
+      "entities": [
+        "night_audit_run",
+        "folio"
+      ],
+      "features": [
+        "hospitality.night_audit"
+      ],
+      "state_machine": {
+        "entity": "night_audit_run",
+        "initial": "in_progress",
+        "terminal": [
+          "completed",
+          "failed"
+        ],
+        "states": [
+          "in_progress",
+          "completed",
+          "failed"
+        ],
+        "transitions": [
+          {
+            "from": "in_progress",
+            "to": "completed",
+            "event": "finish"
+          },
+          {
+            "from": "in_progress",
+            "to": "failed",
+            "event": "error"
+          }
+        ]
+      },
+      "notifications": [
+        "audit_summary"
+      ],
+      "integrations": [
+        "accounting_software"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-night-audit"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "channel_ari_sync_workflow",
+      "name": "Channel ARI sync workflow",
+      "actor": "revenue_manager",
+      "trigger": "Availability, rate, or inventory changes on the property side, or a reservation arrives from a channel",
+      "steps": [
+        "Push updated availability/rate/inventory (ARI) to connected channels",
+        "Receive reservation from channel",
+        "Map channel room type/rate to internal room type/rate plan",
+        "Create internal reservation"
+      ],
+      "entities": [
+        "channel",
+        "reservation",
+        "rate_plan"
+      ],
+      "features": [
+        "hospitality.channel_manager"
+      ],
+      "state_machine": null,
+      "notifications": [],
+      "integrations": [
+        "channel_manager"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "folio_billing_workflow",
+      "name": "Folio and billing workflow",
+      "actor": "front_desk_agent",
+      "trigger": "A charge is incurred during a stay, or the guest checks out",
+      "steps": [
+        "Post room/incidental charges to the open folio",
+        "Apply any deposit already collected",
+        "Settle remaining balance at checkout",
+        "Close the folio"
+      ],
+      "entities": [
+        "folio",
+        "payment",
+        "deposit"
+      ],
+      "features": [
+        "hospitality.folio_and_charges",
+        "hospitality.deposits_advance_payment"
+      ],
+      "state_machine": {
+        "entity": "folio",
+        "initial": "open",
+        "terminal": [
+          "settled"
+        ],
+        "states": [
+          "open",
+          "settled"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "settled",
+            "event": "settle"
+          }
+        ]
+      },
+      "notifications": [
+        "receipt"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; neither implementation has a distinct folio entity separate from a single order/invoice."
+      }
+    }
+  ]
+}

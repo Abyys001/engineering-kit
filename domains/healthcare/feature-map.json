@@ -1,0 +1,1347 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "name": "Healthcare (clinic / practice management)",
+  "aliases": [
+    "clinic management",
+    "practice management",
+    "EHR",
+    "EMR",
+    "ambulatory care"
+  ],
+  "description": "Clinic and practice management: patients, scheduling, clinical documentation, orders/results, billing, and interoperable health records.",
+  "nace": [
+    "Q86.21",
+    "Q86.22",
+    "Q86.9"
+  ],
+  "maturity": "curated",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "medplum",
+      "title": "Medplum (headless EHR platform)",
+      "url": "https://github.com/medplum/medplum",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "2a810b6f7eaf149c290915f885c3f8423cd5d0ee",
+      "local_path": "sources/domains/medplum/source",
+      "notes": "Extraction-safe (Apache-2.0, NOTICE present, preserve on reuse). Sparse checkout: packages/definitions (FHIR R4 StructureDefinitions/ValueSets + Medplum extensions incl. AccessPolicy), packages/react (form/display components: Scheduler, PatientHeader/Summary/Timeline, QuestionnaireForm/Builder, EncounterTimeline, ServiceRequestTimeline, DiagnosticReportDisplay), packages/core, packages/fhirtypes, packages/mock (synthetic FHIR test data), packages/app (web app shell incl. src/lab), examples/ (foomedical patient portal, medplum-patient-intake-demo, medplum-eligibility-demo, medplum-provider, medplum-smart-on-fhir-demo). Excluded packages/docs, packages/server, packages/agent and other packages to stay well under the size cap."
+    },
+    {
+      "id": "openemr",
+      "title": "OpenEMR",
+      "url": "https://github.com/openemr/openemr",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (repo license field GPL-3.0). Reference-only — most widely deployed open-source ambulatory EHR/PM system; informs scheduling, encounters, billing/claims, and patient portal feature scope. No code copied."
+    },
+    {
+      "id": "openmrs-core",
+      "title": "OpenMRS core",
+      "url": "https://github.com/openmrs/openmrs-core",
+      "source_type": "implementation",
+      "license": "MPL-2.0",
+      "retrieved": "2026-09-27",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "License verified from actual root LICENSE file (Mozilla Public License 2.0; GitHub API license field reported NOASSERTION). Reference-only (copyleft-per-file). Global-health-oriented EMR; informs patient/encounter/observation model and concept dictionary approach. No code copied."
+    }
+  ],
+  "features": [
+    {
+      "id": "healthcare.patient_registration",
+      "name": "Patient registration",
+      "classification": "core",
+      "description": "Capture demographics, contact info, and identifiers for a new patient.",
+      "users": [
+        "front_desk",
+        "patient"
+      ],
+      "entities": [
+        "patient"
+      ],
+      "workflows": [
+        "patient_intake_workflow"
+      ],
+      "capabilities": [
+        "deduplication",
+        "identity_verification"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "duplicate-record detection"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "staff",
+        "customer"
+      ],
+      "integrations": [
+        "identity_verification"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.patient_portal",
+      "name": "Patient portal",
+      "classification": "common",
+      "description": "Patient-facing web/mobile access to appointments, records, messages, and forms.",
+      "users": [
+        "patient",
+        "front_desk"
+      ],
+      "entities": [
+        "patient",
+        "appointment",
+        "clinical_note",
+        "document"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "self-scheduling",
+        "record access"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "customer",
+        "web",
+        "mobile",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "medium",
+        "notes": "Confirmed by Medplum's foomedical example app; near-universal in comparable ambulatory EHR/PM products. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "healthcare.practitioner_directory",
+      "name": "Practitioner directory",
+      "classification": "core",
+      "description": "Manage clinicians, credentials, specialties, and their roles at organizations/locations.",
+      "users": [
+        "practice_manager",
+        "physician"
+      ],
+      "entities": [
+        "practitioner",
+        "practitioner_role",
+        "organization"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "credentialing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.organization_locations",
+      "name": "Organizations and locations",
+      "classification": "core",
+      "description": "Model clinics, departments, and physical locations/rooms a practice operates.",
+      "users": [
+        "practice_manager"
+      ],
+      "entities": [
+        "organization",
+        "location"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin",
+        "location"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.scheduling",
+      "name": "Appointment scheduling",
+      "classification": "core",
+      "description": "Define practitioner/room availability (Schedule/Slot) and book patient appointments.",
+      "users": [
+        "front_desk",
+        "patient",
+        "physician"
+      ],
+      "entities": [
+        "schedule",
+        "slot",
+        "appointment"
+      ],
+      "workflows": [
+        "appointment_lifecycle"
+      ],
+      "capabilities": [
+        "availability",
+        "conflict_detection",
+        "recurrence"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "no-show risk scoring",
+        "optimal slot suggestion"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "calendar",
+        "scheduling",
+        "staff",
+        "customer"
+      ],
+      "integrations": [
+        "calendar_sync",
+        "sms_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high",
+        "notes": "Medplum react package ships a Scheduler component built on Schedule/Slot/Appointment; scheduling is core in all three implementation references."
+      }
+    },
+    {
+      "id": "healthcare.appointment_reminders",
+      "name": "Appointment reminders",
+      "classification": "common",
+      "description": "Automated SMS/email/push reminders and confirmations ahead of a visit.",
+      "users": [
+        "patient",
+        "front_desk"
+      ],
+      "entities": [
+        "appointment"
+      ],
+      "workflows": [
+        "appointment_lifecycle"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "reminder timing optimization"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "communication",
+        "customer"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium",
+        "notes": "Depends on shared.notifications for delivery."
+      }
+    },
+    {
+      "id": "healthcare.telehealth",
+      "name": "Telehealth visits",
+      "classification": "common",
+      "description": "Video/audio visits linked to an appointment and encounter, with a waiting room.",
+      "users": [
+        "patient",
+        "physician"
+      ],
+      "entities": [
+        "appointment",
+        "encounter"
+      ],
+      "workflows": [
+        "telehealth_visit_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "customer",
+        "real-time",
+        "web",
+        "mobile"
+      ],
+      "integrations": [
+        "telehealth_platform"
+      ],
+      "compliance": [
+        "telehealth_licensure"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low",
+        "notes": "Single-source (OpenEMR module ecosystem) plus reasoned inference from general market prevalence post-2020; not confirmed in Medplum/OpenMRS core."
+      }
+    },
+    {
+      "id": "healthcare.encounters",
+      "name": "Encounters / visits",
+      "classification": "core",
+      "description": "Record a clinical encounter: type, participants, location, period, and reason.",
+      "users": [
+        "physician",
+        "nurse"
+      ],
+      "entities": [
+        "encounter"
+      ],
+      "workflows": [
+        "encounter_lifecycle"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.clinical_notes",
+      "name": "Clinical documentation",
+      "classification": "core",
+      "description": "Structured/narrative visit notes (SOAP-style) attached to an encounter.",
+      "users": [
+        "physician",
+        "nurse"
+      ],
+      "entities": [
+        "clinical_note",
+        "encounter"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "templates",
+        "e-signature"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "ambient note drafting",
+        "summarization"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.problem_list",
+      "name": "Problem list / conditions",
+      "classification": "core",
+      "description": "Track a patient's active and historical diagnoses/conditions.",
+      "users": [
+        "physician",
+        "nurse"
+      ],
+      "entities": [
+        "condition"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "coding (ICD-10/SNOMED)"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.observations_vitals",
+      "name": "Observations and vitals",
+      "classification": "core",
+      "description": "Record discrete clinical measurements: vitals, exam findings, screening scores.",
+      "users": [
+        "nurse",
+        "physician"
+      ],
+      "entities": [
+        "observation"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "anomaly flagging"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.e_prescribing",
+      "name": "E-prescribing",
+      "classification": "core",
+      "description": "Create, route, and track medication orders/prescriptions electronically.",
+      "users": [
+        "physician",
+        "pharmacist"
+      ],
+      "entities": [
+        "medication_request"
+      ],
+      "workflows": [
+        "prescription_lifecycle"
+      ],
+      "capabilities": [
+        "drug-interaction checks"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "interaction/allergy alerting"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "compliance"
+      ],
+      "integrations": [
+        "e_prescribing_network"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent sources (OpenEMR module, FHIR MedicationRequest resource); Medplum ships DoseSpot integration packages that were excluded from this clone."
+      }
+    },
+    {
+      "id": "healthcare.allergy_tracking",
+      "name": "Allergy and intolerance tracking",
+      "classification": "core",
+      "description": "Record allergies/intolerances with severity and reaction for safety checks.",
+      "users": [
+        "nurse",
+        "physician"
+      ],
+      "entities": [
+        "allergy_intolerance"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "safety alerting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.document_management",
+      "name": "Clinical document management",
+      "classification": "common",
+      "description": "Store and retrieve scanned documents, referral letters, and imported records.",
+      "users": [
+        "front_desk",
+        "physician"
+      ],
+      "entities": [
+        "document"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "OCR/auto-classification"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "healthcare.lab_orders",
+      "name": "Lab and diagnostic orders",
+      "classification": "common",
+      "description": "Place orders for laboratory or diagnostic services against a patient.",
+      "users": [
+        "physician",
+        "lab_technician"
+      ],
+      "entities": [
+        "service_request"
+      ],
+      "workflows": [
+        "lab_order_lifecycle"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [
+        "lab_interface"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.lab_results",
+      "name": "Lab and diagnostic results",
+      "classification": "common",
+      "description": "Receive, display, and flag lab/diagnostic results against the ordering request.",
+      "users": [
+        "physician",
+        "lab_technician",
+        "patient"
+      ],
+      "entities": [
+        "diagnostic_report",
+        "observation"
+      ],
+      "workflows": [
+        "lab_order_lifecycle"
+      ],
+      "capabilities": [
+        "critical-value flagging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "abnormal-result triage"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [
+        "lab_interface"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.billing_claims",
+      "name": "Billing and insurance claims",
+      "classification": "core",
+      "description": "Generate charges and submit insurance claims for rendered services.",
+      "users": [
+        "billing_specialist"
+      ],
+      "entities": [
+        "claim",
+        "coverage"
+      ],
+      "workflows": [
+        "claim_lifecycle"
+      ],
+      "capabilities": [
+        "coding (CPT/ICD-10)"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "denial-risk prediction"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "payment",
+        "compliance"
+      ],
+      "integrations": [
+        "billing_clearinghouse"
+      ],
+      "compliance": [
+        "hipaa"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.insurance_eligibility",
+      "name": "Insurance eligibility verification",
+      "classification": "common",
+      "description": "Check a patient's coverage and benefits before or at time of service.",
+      "users": [
+        "front_desk",
+        "billing_specialist"
+      ],
+      "entities": [
+        "coverage"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "payment",
+        "integration"
+      ],
+      "integrations": [
+        "billing_clearinghouse"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high",
+        "notes": "Confirmed by Medplum's medplum-eligibility-demo example."
+      }
+    },
+    {
+      "id": "healthcare.patient_consent",
+      "name": "Consent management",
+      "classification": "compliance",
+      "description": "Record and enforce patient consent for treatment, data sharing, and communications.",
+      "users": [
+        "front_desk",
+        "compliance_officer"
+      ],
+      "entities": [
+        "consent"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "hipaa",
+        "gdpr_health_data"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "healthcare.access_policies",
+      "name": "Fine-grained access policies",
+      "classification": "compliance",
+      "description": "Restrict which users/roles can see which resources or data, beyond coarse RBAC.",
+      "users": [
+        "compliance_officer",
+        "system_integration"
+      ],
+      "entities": [
+        "access_policy"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "admin",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [
+        "hipaa",
+        "cfr42_part2"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium",
+        "notes": "Medplum's AccessPolicy resource is a distinctive pattern for resource/compartment-level authorization in health data platforms; single-source, so medium confidence. Complements shared.permissions rather than duplicating it."
+      }
+    },
+    {
+      "id": "healthcare.care_team",
+      "name": "Care team management",
+      "classification": "recommended",
+      "description": "Track the group of practitioners/caregivers responsible for a patient's care.",
+      "users": [
+        "physician",
+        "care_coordinator"
+      ],
+      "entities": [
+        "care_team"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "healthcare.referrals",
+      "name": "Referrals",
+      "classification": "recommended",
+      "description": "Refer a patient to another practitioner, specialty, or organization.",
+      "users": [
+        "physician",
+        "care_coordinator"
+      ],
+      "entities": [
+        "service_request"
+      ],
+      "workflows": [
+        "referral_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "healthcare.immunizations",
+      "name": "Immunization records",
+      "classification": "optional",
+      "description": "Track vaccines administered, including lot, site, and schedule adherence.",
+      "users": [
+        "nurse"
+      ],
+      "entities": [
+        "immunization"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "healthcare.patient_intake_forms",
+      "name": "Digital intake forms",
+      "classification": "common",
+      "description": "Structured questionnaires (history, consent, screening) completed before or at a visit.",
+      "users": [
+        "patient",
+        "front_desk"
+      ],
+      "entities": [
+        "patient"
+      ],
+      "workflows": [
+        "patient_intake_workflow"
+      ],
+      "capabilities": [
+        "conditional logic"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-summarization into note"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium",
+        "notes": "Confirmed by Medplum's medplum-patient-intake-demo example and QuestionnaireForm/Builder react components. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "healthcare.care_plans",
+      "name": "Care plans",
+      "classification": "recommended",
+      "description": "Structured goals, activities, and follow-up schedule for chronic or complex care.",
+      "users": [
+        "physician",
+        "care_coordinator"
+      ],
+      "entities": [
+        "care_plan"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "adherence risk flagging"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "customer",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "healthcare.waitlist",
+      "name": "Appointment waitlist",
+      "classification": "optional",
+      "description": "Hold patients wanting an earlier slot and notify them when one opens.",
+      "users": [
+        "front_desk",
+        "patient"
+      ],
+      "entities": [
+        "appointment"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-fill from waitlist on cancellation"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "scheduling",
+        "customer"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low",
+        "notes": "Single implementation source; reasoned as common in high-demand practices."
+      }
+    },
+    {
+      "id": "healthcare.patient_invoicing",
+      "name": "Patient invoicing and self-pay",
+      "classification": "optional",
+      "description": "Bill patients directly for co-pays, deductibles, or self-pay services.",
+      "users": [
+        "billing_specialist",
+        "patient"
+      ],
+      "entities": [
+        "claim"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "payment",
+        "customer"
+      ],
+      "integrations": [
+        "patient_payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "healthcare.no_show_prediction",
+      "name": "No-show risk scoring",
+      "classification": "premium",
+      "description": "Predict the likelihood a booked appointment will be missed to prioritize outreach.",
+      "users": [
+        "front_desk",
+        "practice_manager"
+      ],
+      "entities": [
+        "appointment"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "no-show prediction model",
+        "targeted reminder intensity"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "scheduling",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from widely-discussed industry practice; not directly confirmed as a shipped feature in OpenEMR or any of the three reference implementations, so confidence is kept low despite citing a source for schema compliance."
+      }
+    }
+  ]
+}

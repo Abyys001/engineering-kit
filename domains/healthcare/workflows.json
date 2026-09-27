@@ -1,0 +1,527 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "appointment_lifecycle",
+      "name": "Appointment lifecycle",
+      "actor": "front_desk",
+      "trigger": "Patient or staff requests a booking against an available slot",
+      "steps": [
+        "Search practitioner/location availability",
+        "Select slot",
+        "Create appointment",
+        "Send confirmation",
+        "Send reminder(s)",
+        "Check in patient",
+        "Mark fulfilled or no-show"
+      ],
+      "entities": [
+        "schedule",
+        "slot",
+        "appointment"
+      ],
+      "features": [
+        "healthcare.scheduling",
+        "healthcare.appointment_reminders"
+      ],
+      "state_machine": {
+        "entity": "appointment",
+        "initial": "pending",
+        "terminal": [
+          "fulfilled",
+          "cancelled",
+          "noshow",
+          "entered-in-error"
+        ],
+        "states": [
+          "proposed",
+          "pending",
+          "booked",
+          "arrived",
+          "checked-in",
+          "fulfilled",
+          "cancelled",
+          "noshow",
+          "entered-in-error",
+          "waitlist"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "booked",
+            "event": "confirm"
+          },
+          {
+            "from": "proposed",
+            "to": "pending",
+            "event": "propose_accept"
+          },
+          {
+            "from": "booked",
+            "to": "arrived",
+            "event": "patient_arrives"
+          },
+          {
+            "from": "arrived",
+            "to": "checked-in",
+            "event": "check_in"
+          },
+          {
+            "from": "checked-in",
+            "to": "fulfilled",
+            "event": "complete_visit"
+          },
+          {
+            "from": "booked",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "booked",
+            "to": "noshow",
+            "event": "mark_no_show"
+          },
+          {
+            "from": "booked",
+            "to": "waitlist",
+            "event": "move_to_waitlist"
+          }
+        ]
+      },
+      "notifications": [
+        "confirmation",
+        "reminder",
+        "cancellation"
+      ],
+      "integrations": [
+        "sms_gateway",
+        "calendar_sync"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "encounter_lifecycle",
+      "name": "Encounter lifecycle",
+      "actor": "physician",
+      "trigger": "A patient presents for a visit (scheduled or walk-in)",
+      "steps": [
+        "Open encounter",
+        "Triage",
+        "Clinical assessment and documentation",
+        "Orders and prescriptions",
+        "Close encounter"
+      ],
+      "entities": [
+        "encounter",
+        "clinical_note",
+        "condition",
+        "observation"
+      ],
+      "features": [
+        "healthcare.encounters",
+        "healthcare.clinical_notes"
+      ],
+      "state_machine": {
+        "entity": "encounter",
+        "initial": "planned",
+        "terminal": [
+          "finished",
+          "cancelled",
+          "entered-in-error"
+        ],
+        "states": [
+          "planned",
+          "arrived",
+          "triaged",
+          "in-progress",
+          "onleave",
+          "finished",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ],
+        "transitions": [
+          {
+            "from": "planned",
+            "to": "arrived",
+            "event": "patient_arrives"
+          },
+          {
+            "from": "arrived",
+            "to": "triaged",
+            "event": "triage"
+          },
+          {
+            "from": "triaged",
+            "to": "in-progress",
+            "event": "start_visit"
+          },
+          {
+            "from": "in-progress",
+            "to": "onleave",
+            "event": "pause"
+          },
+          {
+            "from": "onleave",
+            "to": "in-progress",
+            "event": "resume"
+          },
+          {
+            "from": "in-progress",
+            "to": "finished",
+            "event": "complete"
+          },
+          {
+            "from": "planned",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "lab_order_lifecycle",
+      "name": "Lab order and result lifecycle",
+      "actor": "physician",
+      "trigger": "Clinician orders a lab or diagnostic test",
+      "steps": [
+        "Create service request",
+        "Transmit to lab interface",
+        "Specimen processed",
+        "Result received",
+        "Diagnostic report finalized",
+        "Clinician reviews and acknowledges"
+      ],
+      "entities": [
+        "service_request",
+        "diagnostic_report",
+        "observation"
+      ],
+      "features": [
+        "healthcare.lab_orders",
+        "healthcare.lab_results"
+      ],
+      "state_machine": {
+        "entity": "diagnostic_report",
+        "initial": "registered",
+        "terminal": [
+          "final",
+          "cancelled",
+          "entered-in-error"
+        ],
+        "states": [
+          "registered",
+          "partial",
+          "preliminary",
+          "final",
+          "amended",
+          "corrected",
+          "appended",
+          "cancelled",
+          "entered-in-error",
+          "unknown"
+        ],
+        "transitions": [
+          {
+            "from": "registered",
+            "to": "partial",
+            "event": "partial_results_in"
+          },
+          {
+            "from": "partial",
+            "to": "preliminary",
+            "event": "preliminary_review"
+          },
+          {
+            "from": "preliminary",
+            "to": "final",
+            "event": "finalize"
+          },
+          {
+            "from": "final",
+            "to": "amended",
+            "event": "amend"
+          },
+          {
+            "from": "registered",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "critical value alert"
+      ],
+      "integrations": [
+        "lab_interface"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "prescription_lifecycle",
+      "name": "Prescription lifecycle",
+      "actor": "physician",
+      "trigger": "Clinician prescribes a medication",
+      "steps": [
+        "Check allergies/interactions",
+        "Create medication request",
+        "Route to pharmacy",
+        "Pharmacy dispenses",
+        "Mark completed"
+      ],
+      "entities": [
+        "medication_request",
+        "allergy_intolerance"
+      ],
+      "features": [
+        "healthcare.e_prescribing"
+      ],
+      "state_machine": {
+        "entity": "medication_request",
+        "initial": "draft",
+        "terminal": [
+          "completed",
+          "cancelled",
+          "stopped",
+          "entered-in-error"
+        ],
+        "states": [
+          "draft",
+          "active",
+          "on-hold",
+          "cancelled",
+          "completed",
+          "entered-in-error",
+          "stopped",
+          "unknown"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "active",
+            "event": "send_to_pharmacy"
+          },
+          {
+            "from": "active",
+            "to": "on-hold",
+            "event": "hold"
+          },
+          {
+            "from": "on-hold",
+            "to": "active",
+            "event": "resume"
+          },
+          {
+            "from": "active",
+            "to": "completed",
+            "event": "dispensed"
+          },
+          {
+            "from": "active",
+            "to": "stopped",
+            "event": "stop"
+          },
+          {
+            "from": "draft",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [
+        "e_prescribing_network"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "claim_lifecycle",
+      "name": "Billing claim lifecycle",
+      "actor": "billing_specialist",
+      "trigger": "Billable services are finalized on an encounter",
+      "steps": [
+        "Capture charges",
+        "Build claim",
+        "Submit to clearinghouse/payor",
+        "Receive adjudication",
+        "Post payment or appeal denial"
+      ],
+      "entities": [
+        "claim",
+        "coverage"
+      ],
+      "features": [
+        "healthcare.billing_claims"
+      ],
+      "state_machine": {
+        "entity": "claim",
+        "initial": "draft",
+        "terminal": [
+          "cancelled",
+          "entered-in-error"
+        ],
+        "states": [
+          "draft",
+          "active",
+          "cancelled",
+          "entered-in-error"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "active",
+            "event": "submit"
+          },
+          {
+            "from": "active",
+            "to": "cancelled",
+            "event": "void"
+          }
+        ]
+      },
+      "notifications": [
+        "denial alert"
+      ],
+      "integrations": [
+        "billing_clearinghouse"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high",
+        "notes": "Note: FHIR Claim.status only models draft/active/cancelled/entered-in-error; real adjudication outcome (paid/denied/partial) lives on a separate ClaimResponse and is intentionally not folded into this state machine."
+      }
+    },
+    {
+      "id": "patient_intake_workflow",
+      "name": "Patient intake workflow",
+      "actor": "patient",
+      "trigger": "New patient registers or an existing patient books a visit requiring updated forms",
+      "steps": [
+        "Send intake link",
+        "Patient completes demographics/history/consent forms",
+        "Staff reviews submission",
+        "Data merged into patient record"
+      ],
+      "entities": [
+        "patient",
+        "consent"
+      ],
+      "features": [
+        "healthcare.patient_registration",
+        "healthcare.patient_intake_forms"
+      ],
+      "notifications": [
+        "intake reminder"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "high",
+        "notes": "Confirmed end-to-end by Medplum's medplum-patient-intake-demo example."
+      }
+    },
+    {
+      "id": "referral_workflow",
+      "name": "Referral workflow",
+      "actor": "physician",
+      "trigger": "Clinician determines a patient needs specialist or external care",
+      "steps": [
+        "Create referral service request",
+        "Send to receiving provider/organization",
+        "Receiving provider accepts/schedules",
+        "Consult/report returned",
+        "Referring clinician reviews outcome"
+      ],
+      "entities": [
+        "service_request",
+        "care_team"
+      ],
+      "features": [
+        "healthcare.referrals"
+      ],
+      "notifications": [
+        "referral status update"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "telehealth_visit_workflow",
+      "name": "Telehealth visit workflow",
+      "actor": "patient",
+      "trigger": "A telehealth appointment's start time approaches",
+      "steps": [
+        "Patient joins virtual waiting room",
+        "Practitioner admits patient",
+        "Video visit conducted",
+        "Encounter documented",
+        "Visit link closed"
+      ],
+      "entities": [
+        "appointment",
+        "encounter"
+      ],
+      "features": [
+        "healthcare.telehealth"
+      ],
+      "notifications": [
+        "join reminder"
+      ],
+      "integrations": [
+        "telehealth_platform"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; single implementation-ecosystem source."
+      }
+    }
+  ]
+}

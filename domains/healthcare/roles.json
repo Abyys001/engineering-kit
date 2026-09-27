@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "patient",
+      "name": "Patient",
+      "experience": "customer",
+      "description": "The person receiving care.",
+      "responsibilities": [
+        "Book/attend appointments",
+        "Complete intake forms",
+        "View records",
+        "Pay invoices"
+      ],
+      "related_features": [
+        "healthcare.patient_portal",
+        "healthcare.patient_intake_forms"
+      ],
+      "common_permissions": [
+        "appointment:create_own",
+        "record:read_own"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "physician",
+      "name": "Physician / clinician",
+      "experience": "staff",
+      "description": "Licensed provider who diagnoses and treats patients.",
+      "responsibilities": [
+        "Document encounters",
+        "Order tests/medications",
+        "Manage problem lists"
+      ],
+      "related_features": [
+        "healthcare.encounters",
+        "healthcare.clinical_notes",
+        "healthcare.e_prescribing"
+      ],
+      "common_permissions": [
+        "encounter:write",
+        "medication_request:create",
+        "clinical_note:write"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "nurse",
+      "name": "Nurse / clinical support",
+      "experience": "staff",
+      "description": "Clinical staff supporting patient intake, vitals, and care coordination.",
+      "responsibilities": [
+        "Record vitals/observations",
+        "Administer immunizations",
+        "Triage"
+      ],
+      "related_features": [
+        "healthcare.observations_vitals",
+        "healthcare.immunizations"
+      ],
+      "common_permissions": [
+        "observation:write"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "front_desk",
+      "name": "Front desk / scheduler",
+      "experience": "staff",
+      "description": "Administrative staff handling registration, scheduling, and check-in.",
+      "responsibilities": [
+        "Register patients",
+        "Book/manage appointments",
+        "Verify eligibility"
+      ],
+      "related_features": [
+        "healthcare.patient_registration",
+        "healthcare.scheduling",
+        "healthcare.insurance_eligibility"
+      ],
+      "common_permissions": [
+        "appointment:create",
+        "patient:create"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "billing_specialist",
+      "name": "Billing specialist",
+      "experience": "staff",
+      "description": "Handles charge capture, claims submission, and patient invoicing.",
+      "responsibilities": [
+        "Submit claims",
+        "Post payments",
+        "Follow up on denials"
+      ],
+      "related_features": [
+        "healthcare.billing_claims",
+        "healthcare.patient_invoicing"
+      ],
+      "common_permissions": [
+        "claim:create",
+        "claim:submit"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "lab_technician",
+      "name": "Lab technician",
+      "experience": "staff",
+      "description": "Processes diagnostic orders and enters/reviews results.",
+      "responsibilities": [
+        "Process specimens",
+        "Enter/import results",
+        "Flag critical values"
+      ],
+      "related_features": [
+        "healthcare.lab_orders",
+        "healthcare.lab_results"
+      ],
+      "common_permissions": [
+        "diagnostic_report:write"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "care_coordinator",
+      "name": "Care coordinator",
+      "experience": "staff",
+      "description": "Coordinates referrals, care teams, and care plans across providers.",
+      "responsibilities": [
+        "Manage referrals",
+        "Maintain care team",
+        "Track care plan adherence"
+      ],
+      "related_features": [
+        "healthcare.referrals",
+        "healthcare.care_team",
+        "healthcare.care_plans"
+      ],
+      "common_permissions": [
+        "care_plan:write"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openmrs-core"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "pharmacist",
+      "name": "Pharmacist",
+      "experience": "partner",
+      "description": "External or affiliated pharmacist who dispenses prescribed medications.",
+      "responsibilities": [
+        "Review prescriptions",
+        "Dispense medications",
+        "Flag interactions"
+      ],
+      "related_features": [
+        "healthcare.e_prescribing"
+      ],
+      "common_permissions": [
+        "medication_request:read"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from e-prescribing workflow; pharmacist is typically an external actor, not a first-party app user."
+      }
+    },
+    {
+      "id": "compliance_officer",
+      "name": "Compliance / privacy officer",
+      "experience": "administration",
+      "description": "Oversees HIPAA/privacy compliance, consent, and access policy configuration.",
+      "responsibilities": [
+        "Configure access policies",
+        "Audit access logs",
+        "Manage consent records"
+      ],
+      "related_features": [
+        "healthcare.access_policies",
+        "healthcare.patient_consent"
+      ],
+      "common_permissions": [
+        "access_policy:write",
+        "audit_log:read"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "practice_manager",
+      "name": "Practice manager",
+      "experience": "management",
+      "description": "Manages practitioners, locations, and overall clinic operations.",
+      "responsibilities": [
+        "Manage staff and locations",
+        "Review scheduling and billing performance"
+      ],
+      "related_features": [
+        "healthcare.practitioner_directory",
+        "healthcare.organization_locations",
+        "healthcare.no_show_prediction"
+      ],
+      "common_permissions": [
+        "organization:write",
+        "practitioner:write"
+      ],
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "system_integration",
+      "name": "System / integration account",
+      "experience": "system",
+      "description": "Non-human client (HIE, lab interface, SMART on FHIR app) acting under an access policy.",
+      "responsibilities": [
+        "Exchange data via FHIR API",
+        "Push/pull results and orders"
+      ],
+      "related_features": [
+        "healthcare.access_policies",
+        "healthcare.lab_orders"
+      ],
+      "common_permissions": [
+        "fhir:read",
+        "fhir:write"
+      ],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

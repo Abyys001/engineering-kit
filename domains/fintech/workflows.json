@@ -1,0 +1,391 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "kyc_onboarding_lifecycle",
+      "name": "KYC Onboarding Lifecycle",
+      "actor": "customer",
+      "trigger": "A new party submits identity documents to start using the platform.",
+      "steps": [
+        "Submit identity documents",
+        "Run identity verification",
+        "Screen against sanctions/PEP lists",
+        "Compliance officer reviews if flagged",
+        "Approve or reject the case",
+        "Activate the party on approval"
+      ],
+      "entities": [
+        "party",
+        "kyc_case"
+      ],
+      "features": [
+        "fintech.kyc_onboarding",
+        "fintech.sanctions_screening"
+      ],
+      "state_machine": {
+        "entity": "kyc_case",
+        "initial": "pending",
+        "terminal": [
+          "approved",
+          "rejected",
+          "expired"
+        ],
+        "states": [
+          "pending",
+          "in_review",
+          "approved",
+          "rejected",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "in_review",
+            "event": "submit_for_review"
+          },
+          {
+            "from": "in_review",
+            "to": "approved",
+            "event": "approve"
+          },
+          {
+            "from": "in_review",
+            "to": "rejected",
+            "event": "reject"
+          },
+          {
+            "from": "pending",
+            "to": "expired",
+            "event": "timeout"
+          },
+          {
+            "from": "in_review",
+            "to": "expired",
+            "event": "timeout"
+          }
+        ]
+      },
+      "notifications": [
+        "kyc_approved",
+        "kyc_rejected"
+      ],
+      "integrations": [
+        "kyc_provider"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "payment_lifecycle",
+      "name": "Payment Lifecycle",
+      "actor": "customer",
+      "trigger": "Customer or partner initiates a payment in or out of the platform.",
+      "steps": [
+        "Initiate payment",
+        "Authorize/screen for fraud",
+        "Submit to payment rail",
+        "Settle or fail",
+        "Reverse if disputed"
+      ],
+      "entities": [
+        "payment",
+        "ledger_entry"
+      ],
+      "features": [
+        "fintech.payments",
+        "fintech.fraud_monitoring"
+      ],
+      "state_machine": {
+        "entity": "payment",
+        "initial": "initiated",
+        "terminal": [
+          "completed",
+          "failed",
+          "reversed"
+        ],
+        "states": [
+          "initiated",
+          "pending",
+          "completed",
+          "failed",
+          "reversed"
+        ],
+        "transitions": [
+          {
+            "from": "initiated",
+            "to": "pending",
+            "event": "submit"
+          },
+          {
+            "from": "pending",
+            "to": "completed",
+            "event": "settle"
+          },
+          {
+            "from": "pending",
+            "to": "failed",
+            "event": "decline"
+          },
+          {
+            "from": "completed",
+            "to": "reversed",
+            "event": "reverse"
+          }
+        ]
+      },
+      "notifications": [
+        "payment_completed",
+        "payment_failed"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "iso20022"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "loan_lifecycle",
+      "name": "Loan Lifecycle",
+      "actor": "customer",
+      "trigger": "Customer applies for a loan.",
+      "steps": [
+        "Submit application",
+        "Underwrite (credit check, affordability)",
+        "Approve or reject",
+        "Disburse funds",
+        "Collect scheduled repayments",
+        "Close on payoff or mark default"
+      ],
+      "entities": [
+        "loan",
+        "loan_schedule"
+      ],
+      "features": [
+        "fintech.lending_origination",
+        "fintech.loan_servicing"
+      ],
+      "state_machine": {
+        "entity": "loan",
+        "initial": "applied",
+        "terminal": [
+          "closed",
+          "defaulted",
+          "rejected"
+        ],
+        "states": [
+          "applied",
+          "underwriting",
+          "approved",
+          "rejected",
+          "disbursed",
+          "repaying",
+          "closed",
+          "defaulted"
+        ],
+        "transitions": [
+          {
+            "from": "applied",
+            "to": "underwriting",
+            "event": "start_review"
+          },
+          {
+            "from": "underwriting",
+            "to": "approved",
+            "event": "approve"
+          },
+          {
+            "from": "underwriting",
+            "to": "rejected",
+            "event": "reject"
+          },
+          {
+            "from": "approved",
+            "to": "disbursed",
+            "event": "disburse"
+          },
+          {
+            "from": "disbursed",
+            "to": "repaying",
+            "event": "first_installment_due"
+          },
+          {
+            "from": "repaying",
+            "to": "closed",
+            "event": "pay_off"
+          },
+          {
+            "from": "repaying",
+            "to": "defaulted",
+            "event": "default"
+          }
+        ]
+      },
+      "notifications": [
+        "loan_approved",
+        "loan_disbursed",
+        "installment_due"
+      ],
+      "integrations": [
+        "credit_bureau"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "dispute_lifecycle",
+      "name": "Dispute Lifecycle",
+      "actor": "customer",
+      "trigger": "Customer disputes a payment they don't recognize or weren't satisfied with.",
+      "steps": [
+        "Customer opens dispute",
+        "Support agent investigates",
+        "Rule in favor of customer or merchant",
+        "Close case"
+      ],
+      "entities": [
+        "dispute",
+        "payment"
+      ],
+      "features": [
+        "fintech.dispute_management"
+      ],
+      "state_machine": {
+        "entity": "dispute",
+        "initial": "opened",
+        "terminal": [
+          "closed"
+        ],
+        "states": [
+          "opened",
+          "investigating",
+          "resolved_customer",
+          "resolved_merchant",
+          "closed"
+        ],
+        "transitions": [
+          {
+            "from": "opened",
+            "to": "investigating",
+            "event": "start_investigation"
+          },
+          {
+            "from": "investigating",
+            "to": "resolved_customer",
+            "event": "rule_for_customer"
+          },
+          {
+            "from": "investigating",
+            "to": "resolved_merchant",
+            "event": "rule_for_merchant"
+          },
+          {
+            "from": "resolved_customer",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "resolved_merchant",
+            "to": "closed",
+            "event": "close"
+          }
+        ]
+      },
+      "notifications": [
+        "dispute_opened",
+        "dispute_resolved"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from card-network chargeback conventions."
+      }
+    },
+    {
+      "id": "reconciliation_workflow",
+      "name": "Reconciliation Workflow",
+      "actor": "finance_ops",
+      "trigger": "Scheduled or on-demand reconciliation run against an external statement/feed.",
+      "steps": [
+        "Import external statement/feed",
+        "Auto-match against ledger entries",
+        "Flag discrepancies",
+        "Resolve or escalate"
+      ],
+      "entities": [
+        "reconciliation_run",
+        "ledger_entry"
+      ],
+      "features": [
+        "fintech.reconciliation"
+      ],
+      "state_machine": {
+        "entity": "reconciliation_run",
+        "initial": "running",
+        "terminal": [
+          "completed_matched",
+          "resolved"
+        ],
+        "states": [
+          "running",
+          "completed_matched",
+          "completed_with_discrepancies",
+          "resolved"
+        ],
+        "transitions": [
+          {
+            "from": "running",
+            "to": "completed_matched",
+            "event": "match_all"
+          },
+          {
+            "from": "running",
+            "to": "completed_with_discrepancies",
+            "event": "find_discrepancy"
+          },
+          {
+            "from": "completed_with_discrepancies",
+            "to": "resolved",
+            "event": "resolve"
+          }
+        ]
+      },
+      "notifications": [
+        "reconciliation_discrepancy_found"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

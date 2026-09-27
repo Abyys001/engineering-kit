@@ -1,0 +1,190 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "mls_idx_feed",
+      "name": "MLS / IDX feed",
+      "category": "data",
+      "purpose": "Import or syndicate listings to/from a regional Multiple Listing Service.",
+      "examples": [
+        "RESO Web API",
+        "IDX feeds"
+      ],
+      "protocols": [
+        "RESO Web API (OData)"
+      ],
+      "related_features": [
+        "real-estate.mls_idx_integration"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "listing_portal_syndication",
+      "name": "Listing portal syndication",
+      "category": "marketing",
+      "purpose": "Publish listings to third-party consumer portals.",
+      "examples": [
+        "Zillow",
+        "Realtor.com",
+        "Rightmove"
+      ],
+      "protocols": [
+        "REST",
+        "feed export"
+      ],
+      "related_features": [
+        "real-estate.listing_syndication"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "mapping_geocoding",
+      "name": "Mapping / geocoding",
+      "category": "location",
+      "purpose": "Geocode addresses and render map search results.",
+      "examples": [
+        "Google Maps",
+        "Mapbox"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "real-estate.search_and_map"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "payment_gateway",
+      "name": "Payment gateway",
+      "category": "financial",
+      "purpose": "Collect rent and deposit payments online.",
+      "examples": [
+        "Stripe"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "real-estate.rent_collection"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e_signature",
+      "name": "E-signature",
+      "category": "document",
+      "purpose": "Collect legally binding signatures on leases and disclosures.",
+      "examples": [
+        "DocuSign"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "real-estate.lease_management"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "background_check_screening",
+      "name": "Background / credit check",
+      "category": "identity",
+      "purpose": "Screen rental applicants for credit and background risk.",
+      "examples": [
+        "TransUnion SmartMove"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "real-estate.rental_application_screening"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "sms_email_gateway",
+      "name": "SMS/email gateway",
+      "category": "communication",
+      "purpose": "Deliver lead alerts and viewing reminders.",
+      "examples": [
+        "Twilio"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "real-estate.viewings_scheduling",
+        "real-estate.lead_capture_inquiries"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "virtual_tour_provider",
+      "name": "Virtual tour provider",
+      "category": "content",
+      "purpose": "Host 3D/360° property tours embedded in a listing.",
+      "examples": [
+        "Matterport"
+      ],
+      "protocols": [
+        "REST",
+        "embed"
+      ],
+      "related_features": [
+        "real-estate.virtual_tours_3d"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

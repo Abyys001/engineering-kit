@@ -1,0 +1,369 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "fintech.party_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.kyc_onboarding",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.ledger_accounts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.wallets",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.payments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.internal_transfers",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.p2p_transfers",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.card_issuing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.card_controls",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.lending_origination",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.loan_servicing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.interest_accrual",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.credit_scoring",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.statements",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.fee_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.limits_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.fraud_monitoring",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.aml_transaction_monitoring",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.sanctions_screening",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.dispute_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.reconciliation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.multi_currency_ledger",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/blnk/source"
+      ],
+      "status": "reference",
+      "notes": "Domain model shape (not code) corroborated by Blnk's ledger/balance/account/transaction/identity/reconciliation types."
+    },
+    {
+      "feature": "fintech.recurring_payments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.bill_pay",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.savings_goals",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.spend_analytics",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.virtual_accounts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.open_banking_connectivity",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "fintech.webhooks_events",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    }
+  ]
+}

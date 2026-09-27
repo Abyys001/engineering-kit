@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "domain": "logistics",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "driver_hours_of_service",
+      "name": "Driver hours-of-service (HOS)",
+      "kind": "regulation",
+      "version": "US: 49 CFR Part 395 (FMCSA); EU: Regulation (EC) No 561/2006",
+      "jurisdiction": "United States (FMCSA); European Union",
+      "scope": "Limits on commercial driver on-duty/driving time and mandatory rest breaks; typically enforced via an electronic logging device (ELD) in the US.",
+      "affected_features": ["logistics.dispatch", "logistics.drivers", "logistics.driver_app"],
+      "requires_human_review": true,
+      "notes": "Applies mainly to commercial motor vehicles above regulatory weight/passenger thresholds; exact thresholds and rest-break rules differ by jurisdiction and are flagged, not implemented, here. Neither cloned source (karrio, fleetbase) implements HOS logic; this entry is domain knowledge, not a claim that either product is compliant.",
+      "url": "https://www.fmcsa.dot.gov/regulations/hours-of-service",
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase models driver time_window_start/end and schedule_constraints, which HOS compliance would build on, but does not implement HOS rules itself. Reasoned applicability."}
+    },
+    {
+      "id": "dangerous_goods",
+      "name": "Dangerous goods (hazmat) shipping",
+      "kind": "regulation",
+      "version": "Road: ADR (UNECE); Air: IATA Dangerous Goods Regulations (DGR)",
+      "jurisdiction": "ADR: Europe (road); IATA DGR: global (air, contractual via carriers)",
+      "scope": "Classification, labeling, packaging, and documentation requirements for shipments containing hazardous materials.",
+      "affected_features": ["logistics.customs_documents", "logistics.parcels"],
+      "requires_human_review": true,
+      "notes": "Neither cloned source models a dangerous-goods classification field; flagged from the domain brief as a jurisdiction-specific concern for any product that ships or transports regulated materials, not verified against either implementation.",
+      "url": "https://unece.org/transport/dangerous-goods",
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Commodity/Parcel models carry declared value and content fields that a DG classification would extend; not itself evidence of DG support. Single source, reasoned."}
+    },
+    {
+      "id": "customs_regulations",
+      "name": "Customs and import/export regulations",
+      "kind": "regulation",
+      "version": "Varies by jurisdiction (e.g. US CBP, EU Union Customs Code)",
+      "jurisdiction": "Destination and origin country of an international shipment",
+      "scope": "Declaration of contents, value, and origin for cross-border shipments; duties and taxes calculation.",
+      "affected_features": ["logistics.customs_documents"],
+      "requires_human_review": true,
+      "notes": "Flagged per the brief's guidance that customs is jurisdiction-specific and requires human review; not a claim that any implementation is customs-compliant.",
+      "url": null,
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Shipment.customs embedded field is the only direct evidence; single source, no specific jurisdiction's rules verified."}
+    }
+  ]
+}

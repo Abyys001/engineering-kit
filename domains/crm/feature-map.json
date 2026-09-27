@@ -1,0 +1,862 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "name": "CRM",
+  "aliases": [
+    "customer relationship management",
+    "sales CRM"
+  ],
+  "description": "Contacts, companies/accounts, leads, deals/opportunities and pipelines, activities/tasks, email/calendar sync, quotes, segmentation, and forecasting for a B2B sales team.",
+  "nace": [
+    "J62.01"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "nextcrm",
+      "title": "NextCRM",
+      "url": "https://github.com/pdovhomilja/nextcrm-app",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-26",
+      "version": "b46b563b61c948a07a9cc5a340032444db1f8188",
+      "local_path": "sources/dashboards/nextcrm/source",
+      "notes": "Verified full LICENSE file: plain MIT, no exceptions. Rich Prisma schema (~90 models). Confirmed models: crm_Contacts, crm_Accounts (with member_of parent-account field), crm_Leads (lead_source/status/type lookups, assigned_accounts FK, no explicit convert action found), crm_Opportunities + crm_Opportunities_Sales_Stages + crm_OpportunityLineItems + approval_status workflow (quote/SOW approval before sending), crm_FunnelSettings (kill/recycle/cadence-touch follow-up timers), crm_Activities + Tasks (polymorphic activity links), crm_Products/crm_ProductCategories/crm_AccountProducts, crm_Targets/crm_TargetLists (segmentation, tags, do-not-email), crm_campaigns, crm_Report_Config/crm_Report_Schedule, EmailAccount/Email (IMAP/SMTP sync), CalendarConnection/crm_CalendarEvents (Google OAuth). Confirmed CSV import for products (actions/crm/products/import-products.ts) and targets (actions/crm/targets/import-targets.ts), not contacts specifically. Copy-safe."
+    },
+    {
+      "id": "espocrm",
+      "title": "EspoCRM",
+      "url": "https://github.com/espocrm/espocrm",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "LICENSE.txt read in full (root)",
+      "local_path": null,
+      "notes": "License corrected from an initial GPL-3.0 assumption to the actual AGPL-3.0 after reading LICENSE.txt directly; reference-only, never copy code. Directly read application/Espo/Modules/Crm/Resources/metadata/entityDefs/: confirmed core entities Account, Contact, Lead, Opportunity, Campaign, TargetList, Task, Call, Meeting, Document, Case. Read Opportunity.json (stage/probability/amount/closeDate) and Lead.json (status/source/opportunityAmount/targetLists/convertedAt/createdOpportunity — explicit lead-conversion fields) directly. No native Quote or forecasting entity found in core."
+    },
+    {
+      "id": "odoo-crm",
+      "title": "Odoo CRM (addons/crm)",
+      "url": "https://github.com/odoo/odoo/tree/master/addons/crm",
+      "source_type": "implementation",
+      "license": "LGPL-3.0 (per addon manifest; Odoo licenses per-addon, not repo-wide)",
+      "retrieved": "2026-09-27",
+      "version": "addons/crm/__manifest__.py: 'license': 'LGPL-3' (no local clone; raw file reads only)",
+      "local_path": null,
+      "notes": "Reference-only, never copy code. models/crm_lead.py: unified crm.lead model (a `type` field distinguishes lead vs opportunity), stage_id, probability/automated_probability (ML-assisted forecasting), recurring_revenue/MRR fields, dedicated forecast_graph/forecast_pivot views — the strongest forecasting evidence found in this research pass. Quotes belong to Odoo's separate `sale` addon (not inspected) — not attributed to the crm addon."
+    },
+    {
+      "id": "suitecrm",
+      "title": "SuiteCRM",
+      "url": "https://github.com/salesagility/SuiteCRM",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "LICENSE.txt read in full (root)",
+      "local_path": null,
+      "notes": "License verified directly from LICENSE.txt (plain AGPL-3.0). Reference-only, never copy code. Module/entity-level detail was NOT independently re-verified this session (an API call for the module listing timed out and was not retried) — cited here for license facts only; no feature-level claims in this domain are attributed to SuiteCRM."
+    },
+    {
+      "id": "twenty-crm",
+      "title": "Twenty",
+      "url": "https://github.com/twentyhq/twenty",
+      "source_type": "implementation",
+      "license": "Mixed: AGPL-3.0 with an \"Application Exception\" for APIs/webhooks/manifests, plus separately MIT-licensed SDK/UI packages, plus commercially-licensed enterprise files",
+      "retrieved": "2026-09-27",
+      "version": "LICENSE file read in full (root)",
+      "local_path": null,
+      "notes": "License verified directly from the repo's LICENSE file (mixed, non-trivial — not a single SPDX id). Reference-only, never copy code. Schema/field-level detail was not retrieved (path 404'd); cited here for license facts only, no feature-level claims in this domain are attributed to Twenty."
+    },
+    {
+      "id": "gdpr-2016-679",
+      "title": "Regulation (EU) 2016/679 (General Data Protection Regulation)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "source_type": "authoritative",
+      "license": "EU official legislation; EUR-Lex reuse policy (CC BY 4.0 for reuse of Commission material unless stated otherwise)",
+      "retrieved": "2026-09-26",
+      "version": "OJ L 119, 4.5.2016; CELEX 32016R0679",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: title and CELEX number confirmed. Same verification as cited in the general-saas domain's source registry (each domain keeps its own copy of this source entry per schema)."
+    },
+    {
+      "id": "can-spam",
+      "title": "CAN-SPAM Act: A Compliance Guide for Business",
+      "url": "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business",
+      "source_type": "authoritative",
+      "license": "Public — US federal government publication",
+      "retrieved": "2026-09-26",
+      "version": "current as retrieved",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: exact page title confirmed on ftc.gov."
+    }
+  ],
+  "features": [
+    {
+      "id": "crm.contacts",
+      "name": "Contacts",
+      "classification": "core",
+      "description": "Individual people records with contact details, linked to companies, deals, and activities.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "contact"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr_crm"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations confirm a dedicated contact entity distinct from company/account."
+      }
+    },
+    {
+      "id": "crm.companies_accounts",
+      "name": "Companies / accounts",
+      "classification": "core",
+      "description": "Organization records that group contacts and deals, with optional parent/subsidiary hierarchy.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "company"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations. nextcrm's crm_Accounts.member_of field additionally confirms parent-account hierarchy."
+      }
+    },
+    {
+      "id": "crm.leads",
+      "name": "Leads",
+      "classification": "core",
+      "description": "Unqualified prospects captured before they become a contact/account and a deal.",
+      "users": [
+        "sales_rep",
+        "marketing_user"
+      ],
+      "entities": [
+        "lead"
+      ],
+      "workflows": [
+        "lead_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr_crm"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations, each with lead source/status/type lookups."
+      }
+    },
+    {
+      "id": "crm.lead_conversion",
+      "name": "Lead conversion",
+      "classification": "common",
+      "description": "Convert a qualified lead into a contact, account, and an opportunity, preserving lineage back to the original lead.",
+      "users": [
+        "sales_rep"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company",
+        "deal"
+      ],
+      "workflows": [
+        "lead_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "espocrm"
+        ],
+        "confidence": "low",
+        "notes": "EspoCRM's Lead.json explicitly has convertedAt and createdOpportunity fields, confirming a formal conversion action. NextCRM has both Lead and Opportunity models with an assigned_accounts FK on Lead, but no explicit convert action was found — single strong source only."
+      }
+    },
+    {
+      "id": "crm.deals_pipelines",
+      "name": "Deals / opportunities and pipelines",
+      "classification": "core",
+      "description": "Sales opportunities moving through one or more configurable pipelines and stages, with value and close date.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "deal",
+        "pipeline_stage"
+      ],
+      "workflows": [
+        "deal_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: nextcrm (crm_Opportunities + crm_Opportunities_Sales_Stages), EspoCRM (Opportunity.stage/probability/amount/closeDate), Odoo (crm.lead unified model with stage_id/probability). Status values differ per product (nextcrm: ACTIVE/INACTIVE/PENDING/CLOSED via enum, not an explicit WON/LOST) — the domain's deal_lifecycle state machine synthesizes a common open/won/lost pattern across sources rather than copying one verbatim."
+      }
+    },
+    {
+      "id": "crm.activities_tasks",
+      "name": "Activities and tasks",
+      "classification": "core",
+      "description": "Calls, meetings, notes, and follow-up tasks logged against a contact, company, lead, or deal.",
+      "users": [
+        "sales_rep"
+      ],
+      "entities": [
+        "activity",
+        "task"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [
+        "calendar_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high",
+        "notes": "nextcrm (crm_Activities polymorphic links + Tasks), EspoCRM (Task/Call/Meeting entities), Odoo (activity mixin pattern standard across Odoo CRM leads). Three independent implementations."
+      }
+    },
+    {
+      "id": "crm.contact_timeline",
+      "name": "Unified contact timeline",
+      "classification": "common",
+      "description": "A single chronological view of every activity, email, and document tied to a contact, company, or deal.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "contact",
+        "company",
+        "deal",
+        "activity"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium",
+        "notes": "nextcrm's polymorphic DocumentsToOpportunities/DocumentsToContacts/DocumentsToLeads join tables plus crm_Activities give a unified-timeline shape; EspoCRM's Call/Meeting/Task tied to any parent record is the same pattern. Two independent sources."
+      }
+    },
+    {
+      "id": "crm.record_assignment",
+      "name": "Record assignment",
+      "classification": "common",
+      "description": "Assign a lead, deal, or account to a specific sales rep.",
+      "users": [
+        "sales_manager"
+      ],
+      "entities": [
+        "lead",
+        "deal",
+        "company"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "nextcrm has an assigned_to/assigned_to_user relation on both crm_Leads and crm_Opportunities, confirming manual assignment. Round-robin or territory-based auto-assignment logic was not found — single source, plain assignment only."
+      }
+    },
+    {
+      "id": "crm.email_sync",
+      "name": "Email sync",
+      "classification": "common",
+      "description": "Two-way email sync (IMAP/SMTP or provider OAuth) that logs sent/received email against the matching contact or deal.",
+      "users": [
+        "sales_rep"
+      ],
+      "entities": [
+        "email_message"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "communication"
+      ],
+      "integrations": [
+        "email_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium",
+        "notes": "nextcrm: EmailAccount/Email models with IMAP/SMTP UID sync state. EspoCRM: EmailAccount/InboundEmail in its core entityDefs list. Two independent sources."
+      }
+    },
+    {
+      "id": "crm.calendar_sync",
+      "name": "Calendar sync",
+      "classification": "recommended",
+      "description": "Sync meetings scheduled in the CRM with an external calendar (Google/Outlook) and vice versa.",
+      "users": [
+        "sales_rep"
+      ],
+      "entities": [
+        "calendar_event"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "scheduling",
+        "calendar"
+      ],
+      "integrations": [
+        "calendar_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's CalendarConnection + crm_CalendarEvents models (Google OAuth, iCalUID). Not cross-referenced against a second implementation this pass."
+      }
+    },
+    {
+      "id": "crm.campaign_management",
+      "name": "Campaign management",
+      "classification": "common",
+      "description": "Group leads and deals under a marketing campaign to track source and attribution.",
+      "users": [
+        "marketing_user"
+      ],
+      "entities": [
+        "campaign"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium",
+        "notes": "nextcrm: crm_campaigns linked from both Leads and Opportunities. EspoCRM: Campaign is one of its confirmed core entities. Two independent sources."
+      }
+    },
+    {
+      "id": "crm.segmentation",
+      "name": "Segmentation",
+      "classification": "common",
+      "description": "Dynamic lists of contacts/leads built from filter criteria, used for targeted outreach.",
+      "users": [
+        "marketing_user",
+        "sales_manager"
+      ],
+      "entities": [
+        "segment"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium",
+        "notes": "nextcrm: crm_Targets/crm_TargetLists (tags, do-not-email, conversion tracking, CSV import). EspoCRM: TargetList tied to Campaign. Two independent sources."
+      }
+    },
+    {
+      "id": "crm.quotes",
+      "name": "Quotes",
+      "classification": "recommended",
+      "description": "A priced proposal generated from a deal's line items, routed for internal approval before it is sent to the customer.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "quote",
+        "deal"
+      ],
+      "workflows": [
+        "quote_approval"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "document",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "No dedicated Quote entity found in any source. nextcrm assembles the equivalent from crm_Opportunities.approval_status (explicit code comment: 'SOW/quote approval — CSO approves before the quote is sent') plus crm_OpportunityLineItems plus a separate Invoices model. Odoo's real quoting lives in its `sale` addon, not `crm` (not inspected, not attributed here). Single, partial source — often a bolt-on rather than core CRM."
+      }
+    },
+    {
+      "id": "crm.deal_products",
+      "name": "Deal line items / product catalog",
+      "classification": "common",
+      "description": "A product/price catalog that can be attached as line items to a deal or quote.",
+      "users": [
+        "sales_rep",
+        "sales_manager"
+      ],
+      "entities": [
+        "product",
+        "deal"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's crm_Products/crm_ProductCategories/crm_AccountProducts/crm_OpportunityLineItems models, including CSV product import."
+      }
+    },
+    {
+      "id": "crm.pipeline_automation",
+      "name": "Pipeline automation",
+      "classification": "recommended",
+      "description": "Rule-based automation on deal/lead lifecycle events: stage-change timers, kill/recycle rules, scheduled follow-up cadences.",
+      "users": [
+        "sales_manager",
+        "system"
+      ],
+      "entities": [
+        "deal",
+        "lead"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "workflow",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's crm_FunnelSettings (kill_after_days, recycle_after_days, 5-step cadence_touch offsets, care_checkin/referral/quarter timers) — a concrete but singular example of pipeline automation configuration."
+      }
+    },
+    {
+      "id": "crm.forecasting",
+      "name": "Sales forecasting",
+      "classification": "recommended",
+      "description": "Pipeline-based revenue forecast, weighted by stage probability, often with recurring-revenue (MRR) tracking.",
+      "users": [
+        "sales_manager"
+      ],
+      "entities": [
+        "deal"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "tags": [
+        "management",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-crm",
+          "nextcrm"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo: probability/automated_probability, recurring_revenue/MRR fields, dedicated forecast_graph/forecast_pivot views — the strongest evidence found. nextcrm: crm_Report_Config/crm_Report_Schedule with a 'sales' report category is weaker, indirect evidence. EspoCRM's core lacks a forecasting entity. Two sources, one strong one weak — recommended, not core."
+      }
+    },
+    {
+      "id": "crm.account_hierarchy",
+      "name": "Account hierarchy",
+      "classification": "optional",
+      "description": "Parent/subsidiary relationships between company accounts, with rollup reporting.",
+      "users": [
+        "sales_manager"
+      ],
+      "entities": [
+        "company"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's crm_Accounts.member_of field. No rollup-reporting logic was found, only the relationship field."
+      }
+    },
+    {
+      "id": "crm.reports_dashboards",
+      "name": "Sales reports and dashboards",
+      "classification": "common",
+      "description": "Pipeline, activity, and win/loss reporting dashboards for sales management.",
+      "users": [
+        "sales_manager"
+      ],
+      "entities": [
+        "deal",
+        "lead"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "management",
+        "analytics",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's crm_Report_Config + crm_Report_Schedule (cron-scheduled reports). Depends on shared.reporting for the underlying aggregation/chart/export engine."
+      }
+    },
+    {
+      "id": "crm.data_import",
+      "name": "Bulk data import",
+      "classification": "common",
+      "description": "CSV import of segments/target lists and products, with a review step before committing records.",
+      "users": [
+        "marketing_user",
+        "sales_ops_admin"
+      ],
+      "entities": [
+        "segment",
+        "product"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: nextcrm's ImportTargetsModal/import-targets.ts (targets/segments) and ImportProductsDialog/import-products.ts (products), each with dedicated tests. Contact-specific import was not found, so the feature is scoped to what was actually confirmed. Depends on shared.import_export for the generic CSV mapping/validation engine."
+      }
+    }
+  ]
+}

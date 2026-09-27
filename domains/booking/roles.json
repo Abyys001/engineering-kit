@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "roles": [
+    {
+      "id": "customer",
+      "name": "Customer / bookee",
+      "experience": "customer",
+      "description": "The person booking a service, provider, or resource.",
+      "responsibilities": [
+        "Find an available time slot",
+        "Book, reschedule, or cancel",
+        "Receive reminders"
+      ],
+      "related_features": [
+        "booking.bookings",
+        "booking.time_slots",
+        "booking.reminders"
+      ],
+      "common_permissions": [
+        "booking:create",
+        "booking:cancel_own"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "provider",
+      "name": "Provider / staff member",
+      "experience": "staff",
+      "description": "The person who performs the service and owns an availability schedule.",
+      "responsibilities": [
+        "Set working hours and exceptions",
+        "Accept/decline bookings where approval is required",
+        "Mark out-of-office time"
+      ],
+      "related_features": [
+        "booking.availability",
+        "booking.availability_exceptions",
+        "booking.out_of_office",
+        "booking.booking_confirmation_approval"
+      ],
+      "common_permissions": [
+        "schedule:manage",
+        "booking:accept",
+        "booking:reject"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "secretary",
+      "name": "Scheduling assistant",
+      "experience": "staff",
+      "description": "Books and manages appointments on behalf of one or more providers, without performing the service themselves.",
+      "responsibilities": [
+        "Create/modify bookings for assigned providers",
+        "Manage provider calendars"
+      ],
+      "related_features": [
+        "booking.bookings",
+        "booking.multi_provider_teams"
+      ],
+      "common_permissions": [
+        "booking:create_for_provider",
+        "schedule:view"
+      ],
+      "provenance": {
+        "sources": [
+          "easyappointments"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "manager",
+      "name": "Scheduling manager / admin",
+      "experience": "management",
+      "description": "Configures services, resources, teams, and booking rules for the account.",
+      "responsibilities": [
+        "Define services and pricing",
+        "Configure buffers, notice, and cancellation policy",
+        "Manage teams and webhooks"
+      ],
+      "related_features": [
+        "booking.services",
+        "booking.resources",
+        "booking.multi_provider_teams",
+        "booking.webhooks"
+      ],
+      "common_permissions": [
+        "service:manage",
+        "webhook:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

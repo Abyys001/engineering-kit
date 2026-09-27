@@ -1,0 +1,254 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "buyer_renter",
+      "name": "Buyer / renter",
+      "experience": "customer",
+      "description": "A prospect searching for a property to buy or rent.",
+      "responsibilities": [
+        "Search listings",
+        "Save searches",
+        "Request viewings",
+        "Submit offers/applications"
+      ],
+      "related_features": [
+        "real-estate.search_and_map",
+        "real-estate.lead_capture_inquiries"
+      ],
+      "common_permissions": [
+        "lead:create_own",
+        "offer:create_own"
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "owner",
+      "name": "Property owner / landlord",
+      "experience": "customer",
+      "description": "The person or entity that owns the property being listed or managed.",
+      "responsibilities": [
+        "List/manage properties",
+        "Review offers",
+        "Monitor income/occupancy"
+      ],
+      "related_features": [
+        "real-estate.property_listings",
+        "real-estate.owner_portal"
+      ],
+      "common_permissions": [
+        "property:write_own"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "agent",
+      "name": "Agent",
+      "experience": "staff",
+      "description": "Represents buyers, sellers, landlords, or tenants in a transaction.",
+      "responsibilities": [
+        "Manage listings",
+        "Handle leads and viewings",
+        "Negotiate offers"
+      ],
+      "related_features": [
+        "real-estate.agent_broker_directory",
+        "real-estate.lead_management_crm"
+      ],
+      "common_permissions": [
+        "listing:write",
+        "lead:write"
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "broker",
+      "name": "Broker",
+      "experience": "management",
+      "description": "Manages a brokerage's agents, listings, and commission structure.",
+      "responsibilities": [
+        "Oversee agents",
+        "Approve listings",
+        "Track commissions"
+      ],
+      "related_features": [
+        "real-estate.brokerage_management",
+        "real-estate.commission_tracking"
+      ],
+      "common_permissions": [
+        "agent:write",
+        "brokerage:write"
+      ],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "property_manager",
+      "name": "Property manager",
+      "experience": "staff",
+      "description": "Manages day-to-day operations of rental properties on behalf of an owner.",
+      "responsibilities": [
+        "Manage leases and tenants",
+        "Collect rent",
+        "Coordinate maintenance"
+      ],
+      "related_features": [
+        "real-estate.lease_management",
+        "real-estate.rent_collection",
+        "real-estate.maintenance_requests"
+      ],
+      "common_permissions": [
+        "lease:write",
+        "maintenance_request:write"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "tenant",
+      "name": "Tenant",
+      "experience": "customer",
+      "description": "A renter living in a leased unit.",
+      "responsibilities": [
+        "Pay rent",
+        "Submit maintenance requests",
+        "View lease documents"
+      ],
+      "related_features": [
+        "real-estate.tenant_portal",
+        "real-estate.rent_collection"
+      ],
+      "common_permissions": [
+        "rent_payment:read_own",
+        "maintenance_request:create_own"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "maintenance_vendor",
+      "name": "Maintenance vendor",
+      "experience": "partner",
+      "description": "An external contractor who performs repair/maintenance work.",
+      "responsibilities": [
+        "Receive work orders",
+        "Complete and close out repairs"
+      ],
+      "related_features": [
+        "real-estate.maintenance_requests"
+      ],
+      "common_permissions": [
+        "maintenance_request:update_assigned"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from the maintenance work-order workflow; not a distinct first-class account type confirmed in the inspected source."
+      }
+    },
+    {
+      "id": "leasing_admin",
+      "name": "Leasing / listing admin",
+      "experience": "staff",
+      "description": "Back-office staff handling listing publication and application/screening intake.",
+      "responsibilities": [
+        "Publish listings",
+        "Process rental applications"
+      ],
+      "related_features": [
+        "real-estate.rental_application_screening",
+        "real-estate.listing_syndication"
+      ],
+      "common_permissions": [
+        "listing:publish",
+        "tenant:screen"
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "compliance_officer",
+      "name": "Compliance officer",
+      "experience": "administration",
+      "description": "Oversees fair-housing, AML, and deposit-protection compliance for the operator.",
+      "responsibilities": [
+        "Review listing copy",
+        "Audit screening criteria",
+        "Ensure deposit protection"
+      ],
+      "related_features": [
+        "real-estate.fair_housing_compliance_screening",
+        "real-estate.deposit_management"
+      ],
+      "common_permissions": [
+        "compliance:audit"
+      ],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "system_integration",
+      "name": "System / integration account",
+      "experience": "system",
+      "description": "Non-human client syncing listings via an MLS/IDX feed.",
+      "responsibilities": [
+        "Pull/push listing data"
+      ],
+      "related_features": [
+        "real-estate.mls_idx_integration"
+      ],
+      "common_permissions": [
+        "listing:sync"
+      ],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "ticket",
+      "name": "Ticket",
+      "description": "A customer support request tracked from creation through resolution, called a 'ticket' or 'conversation' depending on the product.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "queue"
+        },
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "belongs_to",
+          "target": "sla_policy",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "subject",
+        "status",
+        "priority",
+        "channel"
+      ],
+      "related_features": [
+        "support.ticket_management"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "new",
+        "open",
+        "pending",
+        "resolved",
+        "closed"
+      ]
+    },
+    {
+      "id": "queue",
+      "name": "Queue / inbox",
+      "description": "A named grouping of tickets by team, department, or channel.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "ticket"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "channel_type"
+      ],
+      "related_features": [
+        "support.ticket_queues"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "sla_policy",
+      "name": "SLA policy",
+      "description": "A set of first-response and resolution time targets applied to matching tickets.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "ticket"
+        }
+      ],
+      "important_fields": [
+        "first_response_target",
+        "resolution_target",
+        "conditions"
+      ],
+      "related_features": [
+        "support.sla_management"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket",
+          "chatwoot"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "escalation_rule",
+      "name": "Escalation rule",
+      "description": "A rule that acts on a ticket once it breaches (or nears breaching) its SLA.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "sla_policy"
+        }
+      ],
+      "important_fields": [
+        "trigger_condition",
+        "action"
+      ],
+      "related_features": [
+        "support.escalation"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "macro",
+      "name": "Macro / canned response",
+      "description": "A saved template or bulk action an agent can apply to a ticket.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "actions",
+        "visibility"
+      ],
+      "related_features": [
+        "support.macros_canned_responses"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "osticket"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "kb_article",
+      "name": "Knowledge base article",
+      "description": "A published help-center article, optionally categorized and internal- or customer-facing.",
+      "relationships": [],
+      "important_fields": [
+        "title",
+        "body",
+        "category",
+        "visibility"
+      ],
+      "related_features": [
+        "support.knowledge_base"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "draft",
+        "published",
+        "archived"
+      ]
+    },
+    {
+      "id": "csat_response",
+      "name": "CSAT response",
+      "description": "A customer's satisfaction rating and optional feedback for a resolved ticket.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "ticket"
+        }
+      ],
+      "important_fields": [
+        "rating",
+        "feedback",
+        "submitted_at"
+      ],
+      "related_features": [
+        "support.csat_surveys"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "customer",
+      "name": "Customer",
+      "description": "The person who opened a ticket, distinct from the agent handling it.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "ticket"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "email"
+      ],
+      "related_features": [
+        "support.customer_portal"
+      ],
+      "provenance": {
+        "sources": [
+          "osticket",
+          "zammad"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "tag",
+      "name": "Tag",
+      "description": "A free-form or fixed label applied to a ticket for filtering and reporting.",
+      "relationships": [],
+      "important_fields": [
+        "name"
+      ],
+      "related_features": [
+        "support.tagging_categorization"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "business_hours_calendar",
+      "name": "Business hours calendar",
+      "description": "A schedule of operating hours and holidays that SLA timers pause outside of.",
+      "relationships": [],
+      "important_fields": [
+        "timezone",
+        "working_hours",
+        "holidays"
+      ],
+      "related_features": [
+        "support.business_hours"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "automation_rule",
+      "name": "Automation rule",
+      "description": "A condition/action rule evaluated automatically against ticket events.",
+      "relationships": [],
+      "important_fields": [
+        "condition",
+        "perform_actions"
+      ],
+      "related_features": [
+        "support.ticket_automation_rules"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "channel",
+      "name": "Channel",
+      "description": "The medium a ticket originated from or is being handled through.",
+      "relationships": [],
+      "important_fields": [
+        "type"
+      ],
+      "related_features": [
+        "support.email_channel",
+        "support.chat_channel",
+        "support.voice_channel"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "freescout"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

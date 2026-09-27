@@ -1,0 +1,799 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "student",
+      "name": "Student",
+      "description": "A learner enrolled or applying to enroll in courses.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "enrollment"
+        },
+        {
+          "type": "has_many",
+          "target": "submission"
+        },
+        {
+          "type": "has_many",
+          "target": "attendance_record"
+        },
+        {
+          "type": "belongs_to",
+          "target": "guardian",
+          "note": "0..n guardians"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "date_of_birth",
+        "contact",
+        "student_id"
+      ],
+      "states": [
+        "applicant",
+        "active",
+        "graduated",
+        "withdrawn"
+      ],
+      "related_features": [
+        "education.enrollment",
+        "education.student_portal",
+        "education.admissions"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "User (role=student)"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "guardian",
+      "name": "Guardian",
+      "description": "A parent or legal guardian linked to a student.",
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "student"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "relationship",
+        "contact"
+      ],
+      "states": [],
+      "related_features": [
+        "education.parent_guardian_access",
+        "education.child_data_consent_controls"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "instructor",
+      "name": "Instructor",
+      "description": "A teacher/faculty member assigned to sections and content.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "qualification",
+        "department"
+      ],
+      "states": [],
+      "related_features": [
+        "education.class_sections",
+        "education.assignments"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "User (role=teacher)"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "institution",
+      "name": "Institution",
+      "description": "The school, college, or training organization operating the platform.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "course"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "type"
+      ],
+      "states": [],
+      "related_features": [
+        "education.course_catalog"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "Org"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "academic_term",
+      "name": "Academic term",
+      "description": "A year/semester/quarter that scopes course offerings and enrollment.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "start_date",
+        "end_date"
+      ],
+      "states": [
+        "upcoming",
+        "active",
+        "closed"
+      ],
+      "related_features": [
+        "education.academic_calendar"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "AcademicSession"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "course",
+      "name": "Course",
+      "description": "A subject/curriculum offered by the institution, independent of any specific term.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "course_section"
+        },
+        {
+          "type": "has_many",
+          "target": "lesson"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "code",
+        "credits",
+        "description"
+      ],
+      "states": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "related_features": [
+        "education.course_catalog"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "Course"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "course_section",
+      "name": "Course section / class",
+      "description": "A specific offering of a course in a term, with an instructor and roster.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course"
+        },
+        {
+          "type": "belongs_to",
+          "target": "academic_term"
+        },
+        {
+          "type": "belongs_to",
+          "target": "instructor"
+        },
+        {
+          "type": "has_many",
+          "target": "enrollment"
+        }
+      ],
+      "important_fields": [
+        "section_code",
+        "capacity"
+      ],
+      "states": [
+        "open",
+        "closed",
+        "cancelled"
+      ],
+      "related_features": [
+        "education.class_sections"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "Class"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "enrollment",
+      "name": "Enrollment",
+      "description": "A student's registration in a course section.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "student"
+        },
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "enrolled_date",
+        "status"
+      ],
+      "states": [
+        "pending",
+        "enrolled",
+        "waitlisted",
+        "dropped",
+        "completed"
+      ],
+      "related_features": [
+        "education.enrollment"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "Enrollment"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms",
+          "1edtech-oneroster"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "lesson",
+      "name": "Lesson / content item",
+      "description": "A unit of course content: page, file, video, or packaged (SCORM/H5P) module.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "type",
+        "sequence"
+      ],
+      "states": [
+        "draft",
+        "published",
+        "hidden"
+      ],
+      "related_features": [
+        "education.lesson_content",
+        "education.self_paced_content"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "assignment",
+      "name": "Assignment",
+      "description": "A gradable or ungradable task given to students in a section.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        },
+        {
+          "type": "has_many",
+          "target": "submission"
+        },
+        {
+          "type": "belongs_to",
+          "target": "rubric",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "instructions",
+        "due_date",
+        "points_possible"
+      ],
+      "states": [
+        "draft",
+        "published",
+        "closed"
+      ],
+      "related_features": [
+        "education.assignments"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "submission",
+      "name": "Submission",
+      "description": "A student's submitted work against an assignment.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "assignment"
+        },
+        {
+          "type": "belongs_to",
+          "target": "student"
+        },
+        {
+          "type": "has_one",
+          "target": "grade",
+          "note": "once graded"
+        }
+      ],
+      "important_fields": [
+        "submitted_at",
+        "content",
+        "status"
+      ],
+      "states": [
+        "draft",
+        "submitted",
+        "late",
+        "graded",
+        "returned"
+      ],
+      "related_features": [
+        "education.submissions"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "grade",
+      "name": "Grade",
+      "description": "A score recorded for a submission, exam attempt, or overall course result.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "student"
+        },
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "score",
+        "scale",
+        "recorded_at"
+      ],
+      "states": [
+        "draft",
+        "final",
+        "amended"
+      ],
+      "related_features": [
+        "education.grading_gradebook",
+        "education.report_cards"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-oneroster",
+          "concept": "Result"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms",
+          "1edtech-oneroster"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "attendance_record",
+      "name": "Attendance record",
+      "description": "Presence/absence status for a student on a given class session or day.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "student"
+        },
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "date",
+        "status"
+      ],
+      "states": [
+        "present",
+        "absent",
+        "late",
+        "excused"
+      ],
+      "related_features": [
+        "education.attendance"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "timetable_slot",
+      "name": "Timetable slot",
+      "description": "A recurring or one-off scheduled time/room for a course section.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "day_of_week",
+        "start_time",
+        "end_time",
+        "room"
+      ],
+      "states": [],
+      "related_features": [
+        "education.timetable",
+        "education.live_classes"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "exam",
+      "name": "Exam / quiz",
+      "description": "An assessment definition: questions, timing, and grading rules.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        },
+        {
+          "type": "has_many",
+          "target": "exam_attempt"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "duration",
+        "question_count",
+        "passing_score"
+      ],
+      "states": [
+        "draft",
+        "scheduled",
+        "open",
+        "closed"
+      ],
+      "related_features": [
+        "education.exams_quizzes"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-qti",
+          "concept": "AssessmentTest"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms",
+          "1edtech-qti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "exam_attempt",
+      "name": "Exam attempt",
+      "description": "One student's attempt at an exam/quiz.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "exam"
+        },
+        {
+          "type": "belongs_to",
+          "target": "student"
+        }
+      ],
+      "important_fields": [
+        "started_at",
+        "submitted_at",
+        "score"
+      ],
+      "states": [
+        "in_progress",
+        "submitted",
+        "graded",
+        "expired"
+      ],
+      "related_features": [
+        "education.exams_quizzes"
+      ],
+      "standard_mapping": [
+        {
+          "source": "1edtech-qti",
+          "concept": "AssessmentResult"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms",
+          "1edtech-qti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "certificate",
+      "name": "Certificate",
+      "description": "A record of a completion/achievement award issued to a student.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "student"
+        },
+        {
+          "type": "belongs_to",
+          "target": "course",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "issued_date",
+        "title",
+        "verification_code"
+      ],
+      "states": [
+        "issued",
+        "revoked"
+      ],
+      "related_features": [
+        "education.certificates"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "fee_invoice",
+      "name": "Fee invoice",
+      "description": "A billed amount owed by a student/guardian for tuition or program fees.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "student"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "due_date",
+        "status"
+      ],
+      "states": [
+        "issued",
+        "partially_paid",
+        "paid",
+        "overdue",
+        "waived"
+      ],
+      "related_features": [
+        "education.fees_billing"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "announcement",
+      "name": "Announcement",
+      "description": "A one-way broadcast message to a course, section, or institution.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course_section",
+          "note": "optional; may be institution-wide"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "body",
+        "posted_at"
+      ],
+      "states": [
+        "draft",
+        "published"
+      ],
+      "related_features": [
+        "education.announcements"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "canvas-lms",
+          "moodle"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "discussion_thread",
+      "name": "Discussion thread",
+      "description": "A threaded conversation within a course's forum.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "course_section"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "posts"
+      ],
+      "states": [
+        "open",
+        "locked"
+      ],
+      "related_features": [
+        "education.discussion_forums"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "rubric",
+      "name": "Rubric",
+      "description": "A structured set of criteria and performance levels used to score work consistently.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "assignment"
+        }
+      ],
+      "important_fields": [
+        "criteria",
+        "point_scale"
+      ],
+      "states": [],
+      "related_features": [
+        "education.rubrics"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

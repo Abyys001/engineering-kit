@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "roles": [
+    {
+      "id": "guest",
+      "name": "Guest",
+      "experience": "customer",
+      "description": "The person staying at the property; books, checks in/out, and pays.",
+      "responsibilities": [
+        "Book a reservation",
+        "Check in and out",
+        "Pay folio balance",
+        "Leave a review"
+      ],
+      "related_features": [
+        "hospitality.reservations",
+        "hospitality.front_desk_checkin_checkout",
+        "hospitality.guest_reviews"
+      ],
+      "common_permissions": [
+        "reservation:create",
+        "review:create"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "front_desk_agent",
+      "name": "Front desk agent",
+      "experience": "staff",
+      "description": "Handles check-in/out, folio charges, and in-person reservation changes.",
+      "responsibilities": [
+        "Check guests in and out",
+        "Post folio charges",
+        "Handle walk-in bookings",
+        "Issue booking vouchers"
+      ],
+      "related_features": [
+        "hospitality.front_desk_checkin_checkout",
+        "hospitality.folio_and_charges",
+        "hospitality.reservations"
+      ],
+      "common_permissions": [
+        "reservation:update",
+        "folio:post_charge",
+        "checkin:perform"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "housekeeper",
+      "name": "Housekeeper",
+      "experience": "staff",
+      "description": "Cleans and turns over rooms between stays and updates room status.",
+      "responsibilities": [
+        "Clean assigned rooms",
+        "Update room status",
+        "Report maintenance issues"
+      ],
+      "related_features": [
+        "hospitality.housekeeping",
+        "hospitality.rooms"
+      ],
+      "common_permissions": [
+        "room:update_status"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-housekeeping"
+        ],
+        "confidence": "low",
+        "notes": "No dedicated housekeeping role found in either inspected implementation; reasoned from industry practice."
+      }
+    },
+    {
+      "id": "revenue_manager",
+      "name": "Revenue manager",
+      "experience": "management",
+      "description": "Owns rates, restrictions, and channel distribution to maximize occupancy and revenue.",
+      "responsibilities": [
+        "Set rate plans and restrictions",
+        "Manage channel manager sync",
+        "Monitor availability and pricing"
+      ],
+      "related_features": [
+        "hospitality.rate_plans",
+        "hospitality.rate_restrictions",
+        "hospitality.channel_manager",
+        "hospitality.dynamic_pricing"
+      ],
+      "common_permissions": [
+        "rate_plan:manage",
+        "channel:sync"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "property_manager",
+      "name": "Property manager",
+      "experience": "management",
+      "description": "Owns property setup, room types, staffing, and cross-property reporting.",
+      "responsibilities": [
+        "Configure property and room types",
+        "Oversee front desk and housekeeping",
+        "Review occupancy reports"
+      ],
+      "related_features": [
+        "hospitality.properties",
+        "hospitality.room_types",
+        "hospitality.multi_property_management"
+      ],
+      "common_permissions": [
+        "property:manage",
+        "room_type:manage",
+        "report:view"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

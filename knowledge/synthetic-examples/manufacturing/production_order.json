@@ -1,0 +1,49 @@
+{
+  "_disclaimer": "Fabricated synthetic example for the manufacturing domain. All names, emails, phone numbers, and IDs are invented for illustration only.",
+  "entity": "production_order",
+  "workflow": "production_order_lifecycle",
+  "example": {
+    "reference": "MO-2026-000342",
+    "item": {"id": "itm_5510", "IPN": "ASM-CHAIR-01", "name": "Ergo Task Chair - Assembly", "units": "PCS"},
+    "bill_of_materials": {
+      "id": "bom_1042",
+      "lines": [
+        {"component": "Seat cushion foam block", "quantity": 1, "uom": "PCS"},
+        {"component": "Chair base (5-star)", "quantity": 1, "uom": "PCS"},
+        {"component": "Gas lift cylinder", "quantity": 1, "uom": "PCS"},
+        {"component": "Fastener kit M6x20", "quantity": 8, "uom": "PCS"}
+      ],
+      "byproducts": [
+        {"item": "Offcut foam scrap", "quantity": 0.3, "uom": "KG"}
+      ]
+    },
+    "quantity": 50,
+    "priority": "normal",
+    "responsible": {"name": "Marcus Feldstein", "email": "mfeldstein@example.com"},
+    "target_date": "2026-10-05",
+    "location_src": "Raw Materials - Bay 3",
+    "location_dest": "Finished Goods - Zone A",
+    "work_orders": [
+      {"operation": "Foam cutting", "work_center": "Cutting Station 1", "state": "done", "qty_produced": 50},
+      {"operation": "Frame assembly", "work_center": "Assembly Line B", "state": "done", "qty_produced": 50},
+      {"operation": "Final QC and packaging", "work_center": "QC Bench 2", "state": "progress", "qty_produced": 37}
+    ],
+    "produced_lots": [
+      {"lot": "LOT-CHAIR-20261003-A", "quantity": 37, "status": "ok"}
+    ],
+    "status_history": [
+      {"status": "pending", "occurred_at": "2026-09-28T08:00:00Z"},
+      {"status": "confirmed", "occurred_at": "2026-09-28T08:15:00Z", "note": "Components reserved"},
+      {"status": "in_progress", "occurred_at": "2026-09-29T07:00:00Z", "note": "Released to shop floor"}
+    ],
+    "current_status": "in_progress"
+  },
+  "state_machine_reference": {
+    "entity": "production_order",
+    "workflow": "production_order_lifecycle",
+    "transitions_exercised": [
+      {"from": "pending", "to": "confirmed", "event": "confirm"},
+      {"from": "confirmed", "to": "in_progress", "event": "start_production"}
+    ]
+  }
+}

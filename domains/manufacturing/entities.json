@@ -1,0 +1,223 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "item",
+      "name": "Item / part",
+      "description": "A raw material, component, sub-assembly, or finished product in the master catalog.",
+      "relationships": [
+        {"type": "has_one", "target": "bill_of_materials", "note": "optional, if the item is manufactured"},
+        {"type": "has_many", "target": "stock_item"},
+        {"type": "has_many", "target": "product_variant"}
+      ],
+      "important_fields": ["IPN", "name", "revision", "units", "assembly", "component", "trackable", "purchaseable", "salable", "consumable", "minimum_stock"],
+      "states": [],
+      "related_features": ["manufacturing.items_products", "manufacturing.product_variants"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's Part model and Odoo's product.template/product.product (referenced throughout mrp models) both implement this."}
+    },
+    {
+      "id": "bill_of_materials",
+      "name": "Bill of materials",
+      "description": "The header record defining what components (and optionally operations) are needed to build one unit of a parent item.",
+      "relationships": [
+        {"type": "belongs_to", "target": "item"},
+        {"type": "has_many", "target": "bom_line"},
+        {"type": "has_many", "target": "bom_byproduct"},
+        {"type": "has_many", "target": "routing_operation"}
+      ],
+      "important_fields": ["product_qty", "uom_id", "type", "active", "bom_validated"],
+      "states": [],
+      "related_features": ["manufacturing.bill_of_materials"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's BomItem (parent Part + bom_checksum/bom_validated) and Odoo's mrp.bom (product_qty, uom_id, type: normal/phantom, operation_ids, byproduct_ids) both implement this."}
+    },
+    {
+      "id": "bom_line",
+      "name": "BOM line / component",
+      "description": "A single required component and quantity within a bill of materials.",
+      "relationships": [
+        {"type": "belongs_to", "target": "bill_of_materials"},
+        {"type": "belongs_to", "target": "item", "note": "the component"}
+      ],
+      "important_fields": ["quantity", "uom_id"],
+      "states": [],
+      "related_features": ["manufacturing.bill_of_materials", "manufacturing.bom_substitutes"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's BomItem rows and Odoo's mrp.bom.line model both implement this."}
+    },
+    {
+      "id": "bom_byproduct",
+      "name": "BOM by-product",
+      "description": "A secondary item produced alongside the primary output, defined on the BOM.",
+      "relationships": [
+        {"type": "belongs_to", "target": "bill_of_materials"},
+        {"type": "belongs_to", "target": "item"}
+      ],
+      "important_fields": ["quantity", "uom_id"],
+      "states": [],
+      "related_features": ["manufacturing.bom_byproducts"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Odoo's mrp.bom.byproduct model; not found in the cloned InvenTree scope. Single source."}
+    },
+    {
+      "id": "routing_operation",
+      "name": "Routing operation",
+      "description": "A single step in the sequence of operations required to manufacture an item, performed at a work center.",
+      "relationships": [
+        {"type": "belongs_to", "target": "bill_of_materials"},
+        {"type": "belongs_to", "target": "work_center"}
+      ],
+      "important_fields": ["sequence", "name", "time_cycle"],
+      "states": [],
+      "related_features": ["manufacturing.routings_operations"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Odoo's mrp.routing.workcenter model; not found in the cloned InvenTree scope. Single source."}
+    },
+    {
+      "id": "work_center",
+      "name": "Work center",
+      "description": "A production resource (machine, line, or team) where operations are performed.",
+      "relationships": [
+        {"type": "has_many", "target": "routing_operation"},
+        {"type": "has_many", "target": "work_order"}
+      ],
+      "important_fields": ["name", "code", "costs_hour", "time_start", "time_stop", "working_state"],
+      "states": ["normal", "blocked", "done"],
+      "related_features": ["manufacturing.work_centers", "manufacturing.equipment_maintenance", "manufacturing.workcenter_capacity_planning"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Verbatim from Odoo's mrp.workcenter.working_state selection field; single source, not modeled distinctly in the cloned InvenTree scope."}
+    },
+    {
+      "id": "production_order",
+      "name": "Production / work order",
+      "description": "An order to manufacture a quantity of an item, tracked from draft through completion.",
+      "relationships": [
+        {"type": "belongs_to", "target": "item"},
+        {"type": "belongs_to", "target": "bill_of_materials"},
+        {"type": "has_many", "target": "work_order"},
+        {"type": "has_many", "target": "stock_item", "note": "consumed components and produced output"},
+        {"type": "belongs_to", "target": "purchase_order", "note": "optional, if subcontracted"}
+      ],
+      "important_fields": ["reference", "quantity", "target_date", "status", "priority", "external"],
+      "states": ["pending", "confirmed", "in_progress", "to_close", "on_hold", "complete", "cancelled"],
+      "related_features": ["manufacturing.production_orders", "manufacturing.disassembly_unbuild", "manufacturing.subcontracting"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's Build model (BuildStatus: pending/production/on_hold/cancelled/complete) and Odoo's mrp.production (state: draft/confirmed/progress/to_close/done/cancel) are independent implementations with different exact vocabularies; the merged states list here reconciles both, see workflows.json for the two verbatim vocabularies."}
+    },
+    {
+      "id": "work_order",
+      "name": "Work order (operation)",
+      "description": "The execution of a single routing operation for a production order at a specific work center.",
+      "relationships": [
+        {"type": "belongs_to", "target": "production_order"},
+        {"type": "belongs_to", "target": "work_center"},
+        {"type": "belongs_to", "target": "routing_operation"}
+      ],
+      "important_fields": ["qty_producing", "qty_produced", "date_start", "state"],
+      "states": ["blocked", "ready", "progress", "done", "cancel"],
+      "related_features": ["manufacturing.work_order_scheduling", "manufacturing.shop_floor_data_collection"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Verbatim from Odoo's mrp.workorder.state selection field; single source, InvenTree does not model operation-level execution separately from the Build itself in the cloned scope."}
+    },
+    {
+      "id": "stock_item",
+      "name": "Stock item (lot / serial)",
+      "description": "A quantity of an item at a location, optionally identified by a batch/lot number or a unique serial number.",
+      "relationships": [
+        {"type": "belongs_to", "target": "item"},
+        {"type": "belongs_to", "target": "stock_location"},
+        {"type": "belongs_to", "target": "production_order", "note": "optional, if produced by or consumed in a build"}
+      ],
+      "important_fields": ["serial", "batch", "quantity", "is_building", "expiry_date", "status"],
+      "states": ["ok", "attention", "damaged", "destroyed", "rejected", "lost", "quarantined", "returned"],
+      "related_features": ["manufacturing.inventory_lots_serials", "manufacturing.traceability", "manufacturing.stocktake_cycle_counting"],
+      "standard_mapping": [{"source": "std:gs1-epcis", "concept": "EPC / lot-batch identification", "note": "Name-only reference; std:gs1-epcis not yet acquired locally at time of writing."}],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "States list is verbatim from InvenTree's StockStatus enum; Odoo's stock.lot models the lot/serial identity independently, corroborating the general concept."}
+    },
+    {
+      "id": "stock_location",
+      "name": "Stock location",
+      "description": "A node in a hierarchical structure of physical storage locations.",
+      "relationships": [
+        {"type": "has_many", "target": "stock_item"},
+        {"type": "has_one", "target": "stock_location", "note": "parent location"}
+      ],
+      "important_fields": ["name", "structural", "external"],
+      "states": [],
+      "related_features": ["manufacturing.stock_locations"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's StockLocation (InvenTreeTree) and StockLocationType models; single source."}
+    },
+    {
+      "id": "supplier",
+      "name": "Supplier",
+      "description": "An external company that supplies raw materials or components, or performs a subcontracted operation.",
+      "relationships": [
+        {"type": "has_many", "target": "purchase_order"}
+      ],
+      "important_fields": ["name", "supplier_part_mapping"],
+      "states": [],
+      "related_features": ["manufacturing.purchase_orders", "manufacturing.supplier_management", "manufacturing.subcontracting"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's company app (Company/SupplierPart/ManufacturerPart models); single source."}
+    },
+    {
+      "id": "purchase_order",
+      "name": "Purchase order",
+      "description": "An order placed with a supplier for raw materials or components.",
+      "relationships": [
+        {"type": "belongs_to", "target": "supplier"},
+        {"type": "has_many", "target": "stock_item", "note": "received against the order"}
+      ],
+      "important_fields": ["status"],
+      "states": ["pending", "placed", "on_hold", "complete", "cancelled", "lost", "returned"],
+      "related_features": ["manufacturing.purchase_orders"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Verbatim from InvenTree's PurchaseOrderStatus enum; single source."}
+    },
+    {
+      "id": "quality_inspection",
+      "name": "Quality inspection",
+      "description": "A pass/fail test result recorded against a test template for a part or a specific stock item.",
+      "relationships": [
+        {"type": "belongs_to", "target": "item", "note": "the test template"},
+        {"type": "belongs_to", "target": "stock_item", "note": "the tested unit"}
+      ],
+      "important_fields": ["result", "value", "test_station", "notes"],
+      "states": [],
+      "related_features": ["manufacturing.quality_inspections"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's PartTestTemplate and StockItemTestResult models; single source."}
+    },
+    {
+      "id": "non_conformance",
+      "name": "Non-conformance",
+      "description": "A logged defect or failed inspection requiring disposition (rework, scrap, use-as-is, return to supplier).",
+      "relationships": [
+        {"type": "belongs_to", "target": "stock_item"},
+        {"type": "belongs_to", "target": "quality_inspection", "note": "optional, if raised from a failed test"}
+      ],
+      "important_fields": ["disposition", "root_cause_notes"],
+      "states": ["open", "under_review", "dispositioned", "closed"],
+      "related_features": ["manufacturing.non_conformance_management", "manufacturing.production_scrap_tracking"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned extension of InvenTree's StockStatus (ATTENTION/DAMAGED/REJECTED/QUARANTINED) and StockItemTestResult failures; no dedicated non-conformance table found, states list is reasoned."}
+    },
+    {
+      "id": "traceability_record",
+      "name": "Traceability record",
+      "description": "An append-only genealogy event linking a stock item to the components consumed or the parent build that produced it.",
+      "relationships": [
+        {"type": "belongs_to", "target": "stock_item"},
+        {"type": "belongs_to", "target": "production_order"}
+      ],
+      "important_fields": ["tracking_type", "notes", "timestamp"],
+      "states": [],
+      "related_features": ["manufacturing.traceability"],
+      "standard_mapping": [{"source": "std:gs1-epcis", "concept": "EPCIS event (what/when/where/why)", "note": "Not yet verified against a local copy of the spec at time of writing; noted as a likely future alignment, not asserted as implemented."}],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's StockItemTracking model (with StockHistoryCode entries like INSTALLED_CHILD_ITEM/REMOVED_CHILD_ITEM/BUILD_OUTPUT_COMPLETED) and Odoo's stock.lot + mrp.production.lot_producing_ids both provide the data needed for genealogy tracing."}
+    },
+    {
+      "id": "product_variant",
+      "name": "Product variant",
+      "description": "A specific buildable/sellable variant of a template item, e.g. by size or color.",
+      "relationships": [
+        {"type": "belongs_to", "target": "item", "note": "the template"}
+      ],
+      "important_fields": ["variant_attributes"],
+      "states": [],
+      "related_features": ["manufacturing.product_variants"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's Part.variant_of/is_template fields and Odoo's product.template vs. product.product split both model this."}
+    }
+  ]
+}

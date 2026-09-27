@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "mappings": [
+    {
+      "feature": "hospitality.properties",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.room_types",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.rooms",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.rate_plans",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.availability_inventory",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.reservations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.front_desk_checkin_checkout",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.guest_profiles",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.folio_and_charges",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.channel_manager",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.rate_restrictions",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.cancellation_policies",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.deposits_advance_payment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.amenities",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's hotel DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "hospitality.add_on_services",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.booking_voucher_confirmation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.connecting_rooms",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.multi_property_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.housekeeping",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.night_audit",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.group_bookings",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.loyalty_program",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.guest_reviews",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    },
+    {
+      "feature": "hospitality.dynamic_pricing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet (QloApps was inspected remotely, not cloned)."
+    }
+  ]
+}

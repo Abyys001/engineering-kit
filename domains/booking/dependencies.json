@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "edges": [
+    {
+      "from": "booking.providers",
+      "to": "booking.availability",
+      "type": "requires",
+      "reason": "A provider needs a schedule to be bookable."
+    },
+    {
+      "from": "booking.resources",
+      "to": "booking.availability",
+      "type": "requires",
+      "reason": "A resource needs a schedule to be bookable."
+    },
+    {
+      "from": "booking.availability_exceptions",
+      "to": "booking.availability",
+      "type": "requires",
+      "reason": "Exceptions override a base schedule."
+    },
+    {
+      "from": "booking.time_slots",
+      "to": "booking.availability",
+      "type": "requires",
+      "reason": "Slots are derived from availability."
+    },
+    {
+      "from": "booking.time_slots",
+      "to": "booking.services",
+      "type": "requires",
+      "reason": "Slot length/interval comes from the service."
+    },
+    {
+      "from": "booking.buffers",
+      "to": "booking.services",
+      "type": "requires",
+      "reason": "Buffers are configured per service."
+    },
+    {
+      "from": "booking.bookings",
+      "to": "booking.time_slots",
+      "type": "requires",
+      "reason": "A booking claims a computed time slot."
+    },
+    {
+      "from": "booking.bookings",
+      "to": "booking.services",
+      "type": "requires",
+      "reason": "A booking is for a service."
+    },
+    {
+      "from": "booking.recurring_bookings",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "A recurring series is a linked set of bookings."
+    },
+    {
+      "from": "booking.buffers_and_group_capacity",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "Shared capacity is enforced per booking's time slot."
+    },
+    {
+      "from": "booking.reminders",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "A reminder is scheduled against a confirmed booking."
+    },
+    {
+      "from": "booking.reminders",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Can send reminders directly through a booking-specific channel without the shared notification system."
+    },
+    {
+      "from": "booking.cancellation_policies",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "A policy is evaluated against a booking's cancellation/no-show."
+    },
+    {
+      "from": "booking.minimum_notice",
+      "to": "booking.time_slots",
+      "type": "requires",
+      "reason": "Notice period filters which slots are offerable."
+    },
+    {
+      "from": "booking.deposits",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "A deposit is collected against a specific booking."
+    },
+    {
+      "from": "booking.deposits",
+      "to": "shared.payments",
+      "type": "requires",
+      "reason": "Payment capture goes through a payment provider."
+    },
+    {
+      "from": "booking.calendar_sync",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "Sync pushes/pulls booking events."
+    },
+    {
+      "from": "booking.out_of_office",
+      "to": "booking.availability",
+      "type": "enhances",
+      "reason": "Blocks time on top of the base schedule; a schedule can exist without it."
+    },
+    {
+      "from": "booking.booking_widget",
+      "to": "booking.services",
+      "type": "requires",
+      "reason": "The public page books against a specific service."
+    },
+    {
+      "from": "booking.webhooks",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "Webhooks fire on booking lifecycle events."
+    },
+    {
+      "from": "booking.multi_provider_teams",
+      "to": "booking.providers",
+      "type": "requires",
+      "reason": "Team assignment selects among providers."
+    },
+    {
+      "from": "booking.booking_confirmation_approval",
+      "to": "booking.bookings",
+      "type": "requires",
+      "reason": "Approval is a status on a booking."
+    },
+    {
+      "from": "booking.waitlist",
+      "to": "booking.time_slots",
+      "type": "requires",
+      "reason": "A waitlist entry is for a specific (currently full) slot."
+    },
+    {
+      "from": "booking.timezone_handling",
+      "to": "booking.availability",
+      "type": "requires",
+      "reason": "Availability is defined in a timezone that must be converted for the customer."
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "healthcare.scheduling",
+      "to": "healthcare.organization_locations",
+      "type": "requires",
+      "reason": "Slots are offered against a practitioner/location"
+    },
+    {
+      "from": "healthcare.scheduling",
+      "to": "healthcare.practitioner_directory",
+      "type": "requires",
+      "reason": "Schedules belong to a practitioner role"
+    },
+    {
+      "from": "healthcare.appointment_reminders",
+      "to": "healthcare.scheduling",
+      "type": "requires",
+      "reason": "Reminders are sent for booked appointments"
+    },
+    {
+      "from": "healthcare.appointment_reminders",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Delivery channel for reminders"
+    },
+    {
+      "from": "healthcare.telehealth",
+      "to": "healthcare.scheduling",
+      "type": "requires",
+      "reason": "A telehealth visit is scheduled as an appointment"
+    },
+    {
+      "from": "healthcare.telehealth",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Waiting-room status benefits from real-time updates"
+    },
+    {
+      "from": "healthcare.encounters",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "An encounter belongs to a registered patient"
+    },
+    {
+      "from": "healthcare.clinical_notes",
+      "to": "healthcare.encounters",
+      "type": "requires",
+      "reason": "Notes document a specific encounter"
+    },
+    {
+      "from": "healthcare.problem_list",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Conditions belong to a patient"
+    },
+    {
+      "from": "healthcare.observations_vitals",
+      "to": "healthcare.encounters",
+      "type": "enhances",
+      "reason": "Vitals are usually captured during an encounter but can stand alone"
+    },
+    {
+      "from": "healthcare.e_prescribing",
+      "to": "healthcare.allergy_tracking",
+      "type": "requires",
+      "reason": "Safe prescribing requires known allergies"
+    },
+    {
+      "from": "healthcare.e_prescribing",
+      "to": "healthcare.practitioner_directory",
+      "type": "requires",
+      "reason": "Prescriptions are authored by a credentialed practitioner"
+    },
+    {
+      "from": "healthcare.lab_orders",
+      "to": "healthcare.encounters",
+      "type": "enhances",
+      "reason": "Orders are often tied to a visit but can be standalone"
+    },
+    {
+      "from": "healthcare.lab_results",
+      "to": "healthcare.lab_orders",
+      "type": "requires",
+      "reason": "A result answers an order"
+    },
+    {
+      "from": "healthcare.billing_claims",
+      "to": "healthcare.encounters",
+      "type": "requires",
+      "reason": "Claims bill for services rendered in an encounter"
+    },
+    {
+      "from": "healthcare.billing_claims",
+      "to": "healthcare.insurance_eligibility",
+      "type": "enhances",
+      "reason": "Eligibility check reduces claim denials"
+    },
+    {
+      "from": "healthcare.insurance_eligibility",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Coverage is attached to a registered patient"
+    },
+    {
+      "from": "healthcare.patient_invoicing",
+      "to": "healthcare.billing_claims",
+      "type": "enhances",
+      "reason": "Patient balance often follows insurance adjudication"
+    },
+    {
+      "from": "healthcare.patient_portal",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Portal access requires a registered patient identity"
+    },
+    {
+      "from": "healthcare.patient_portal",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Patient login and session management"
+    },
+    {
+      "from": "healthcare.patient_intake_forms",
+      "to": "healthcare.patient_registration",
+      "type": "enhances",
+      "reason": "Intake data enriches the patient record"
+    },
+    {
+      "from": "healthcare.patient_consent",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Consent is recorded against a patient"
+    },
+    {
+      "from": "healthcare.access_policies",
+      "to": "shared.permissions",
+      "type": "enhances",
+      "reason": "Adds resource/compartment-level rules on top of coarse RBAC"
+    },
+    {
+      "from": "healthcare.care_team",
+      "to": "healthcare.practitioner_directory",
+      "type": "requires",
+      "reason": "Care team members are practitioners"
+    },
+    {
+      "from": "healthcare.care_plans",
+      "to": "healthcare.problem_list",
+      "type": "enhances",
+      "reason": "Plans typically address active conditions"
+    },
+    {
+      "from": "healthcare.referrals",
+      "to": "healthcare.care_team",
+      "type": "enhances",
+      "reason": "Referrals often route through the care team"
+    },
+    {
+      "from": "healthcare.waitlist",
+      "to": "healthcare.scheduling",
+      "type": "requires",
+      "reason": "Waitlist entries convert into appointments"
+    },
+    {
+      "from": "healthcare.no_show_prediction",
+      "to": "healthcare.scheduling",
+      "type": "requires",
+      "reason": "Scores are computed against booked appointments"
+    },
+    {
+      "from": "healthcare.document_management",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Documents are filed under a patient"
+    },
+    {
+      "from": "healthcare.immunizations",
+      "to": "healthcare.patient_registration",
+      "type": "requires",
+      "reason": "Immunization records belong to a patient"
+    }
+  ]
+}

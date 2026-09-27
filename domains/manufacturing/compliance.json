@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "product_traceability_regulations",
+      "name": "Product traceability regulations",
+      "kind": "regulation",
+      "version": "Varies by industry and jurisdiction (e.g. food safety, medical device, automotive)",
+      "jurisdiction": "Industry- and jurisdiction-specific (e.g. FDA 21 CFR Part 820 for US medical devices, EU Regulation 2017/745 MDR)",
+      "scope": "Requiring forward/backward genealogy of lots and serials from raw material to finished, shippable product, often with defined retention periods.",
+      "affected_features": ["manufacturing.traceability"],
+      "requires_human_review": true,
+      "notes": "Neither cloned source implements a regulation-specific retention or reporting requirement; both provide the underlying genealogy data (InvenTree StockItemTracking, Odoo stock.lot) that a compliant process would be built on top of. Applicability depends entirely on the product being manufactured.",
+      "url": null,
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "low", "notes": "Flagged from the domain brief's guidance on traceability; not verified against a specific regulation's text."}
+    },
+    {
+      "id": "iso_9001_quality_management",
+      "name": "ISO 9001 quality management",
+      "kind": "certification",
+      "version": "ISO 9001:2015",
+      "jurisdiction": "Global (voluntary, contractually required by some customers)",
+      "scope": "Documented quality management processes, including inspection records, non-conformance handling, and corrective action.",
+      "affected_features": ["manufacturing.quality_inspections", "manufacturing.non_conformance_management"],
+      "requires_human_review": true,
+      "notes": "A voluntary certification, not a legal requirement; named here because inspection/non-conformance record-keeping is commonly built to support it, not because either cloned source implements or claims certification.",
+      "url": "https://www.iso.org/standard/62085.html",
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned from InvenTree's test-template/test-result model, which is the kind of record ISO 9001 audits typically require; not a claim of certification support."}
+    }
+  ]
+}

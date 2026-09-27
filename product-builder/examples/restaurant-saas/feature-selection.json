@@ -1,0 +1,596 @@
+{
+  "schema": 1,
+  "project": "restaurant-saas",
+  "features": [
+    {
+      "id": "restaurant.reservations",
+      "name": "Table reservations",
+      "domain_classification": "core",
+      "requested": true,
+      "scope": "IN_SCOPE",
+      "reason": "requested",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "reference",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.dine_in_orders",
+      "name": "Dine-in order taking",
+      "domain_classification": "core",
+      "requested": true,
+      "scope": "IN_SCOPE",
+      "reason": "requested",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend",
+        "real_time"
+      ],
+      "implementation": {
+        "status": "reference",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.kitchen_display",
+      "name": "Kitchen display system (KDS)",
+      "domain_classification": "core",
+      "requested": true,
+      "scope": "IN_SCOPE",
+      "reason": "requested",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "backend",
+        "real_time"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.menu",
+      "name": "Menu management",
+      "domain_classification": "core",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by restaurant.dine_in_orders",
+      "required_by": [
+        "restaurant.dine_in_orders"
+      ],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "reference",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.tables",
+      "name": "Tables and floor plan",
+      "domain_classification": "core",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by restaurant.dine_in_orders, restaurant.reservations",
+      "required_by": [
+        "restaurant.dine_in_orders",
+        "restaurant.reservations"
+      ],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend",
+        "real_time"
+      ],
+      "implementation": {
+        "status": "reference",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "shared.auth",
+      "name": "Authentication",
+      "domain_classification": "platform",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by foundation",
+      "required_by": [
+        "foundation"
+      ],
+      "platforms": [],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "shared.permissions",
+      "name": "Roles and permissions",
+      "domain_classification": "platform",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by foundation",
+      "required_by": [
+        "foundation"
+      ],
+      "platforms": [],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "shared.realtime",
+      "name": "Real-time updates",
+      "domain_classification": "infrastructure",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by restaurant.kitchen_display",
+      "required_by": [
+        "restaurant.kitchen_display"
+      ],
+      "platforms": [],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "shared.users",
+      "name": "User management",
+      "domain_classification": "platform",
+      "requested": false,
+      "scope": "DEPENDENCY",
+      "reason": "required by foundation",
+      "required_by": [
+        "foundation"
+      ],
+      "platforms": [],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "booking.availability",
+      "name": "Availability rules / working hours",
+      "domain_classification": "core",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "core for restaurant \u00b7 enhances in-scope work",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.delivery_orders",
+      "name": "Delivery orders",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend",
+        "real_time"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.gift_cards",
+      "name": "Gift cards",
+      "domain_classification": "optional",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "optional",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.inventory",
+      "name": "Ingredient inventory",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.loyalty",
+      "name": "Loyalty and rewards",
+      "domain_classification": "recommended",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "recommended",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.menu_allergen_labeling",
+      "name": "Allergen and nutrition labelling",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.menu_modifiers",
+      "name": "Menu modifiers and variants",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.multi_location_management",
+      "name": "Multi-location management",
+      "domain_classification": "optional",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "optional",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.online_ordering",
+      "name": "Online ordering",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.payments",
+      "name": "In-restaurant payment capture",
+      "domain_classification": "core",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "core for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "reference",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.pos_integration",
+      "name": "POS integration",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.qr_code_table_ordering",
+      "name": "QR code table ordering",
+      "domain_classification": "recommended",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "recommended",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.recipes",
+      "name": "Recipes and yield",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.reviews",
+      "name": "Customer reviews and ratings",
+      "domain_classification": "recommended",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "recommended",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.self_service_kiosk",
+      "name": "Self-service kiosk ordering",
+      "domain_classification": "optional",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "optional",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.split_bills",
+      "name": "Split bills",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.staff_shifts",
+      "name": "Staff shift scheduling",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.takeout_orders",
+      "name": "Takeout / pickup orders",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.third_party_delivery_integration",
+      "name": "Third-party delivery marketplace integration",
+      "domain_classification": "recommended",
+      "requested": false,
+      "scope": "OPTIONAL",
+      "reason": "recommended",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.tips",
+      "name": "Tips and gratuity",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "restaurant.waitlist",
+      "name": "Walk-in waitlist",
+      "domain_classification": "common",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "common for restaurant",
+      "required_by": [],
+      "platforms": [
+        "web",
+        "mobile",
+        "admin",
+        "customer_portal",
+        "backend"
+      ],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    },
+    {
+      "id": "shared.notifications",
+      "name": "Notifications",
+      "domain_classification": "platform",
+      "requested": false,
+      "scope": "PROPOSED",
+      "reason": "platform for restaurant \u00b7 enhances in-scope work",
+      "required_by": [],
+      "platforms": [],
+      "implementation": {
+        "status": "unknown",
+        "plan": "build"
+      }
+    }
+  ]
+}

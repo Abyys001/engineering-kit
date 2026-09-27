@@ -1,0 +1,74 @@
+{
+  "_disclaimer": "Fabricated synthetic example for the logistics domain. All names, emails, phone numbers, and IDs are invented for illustration only.",
+  "entity": "shipment",
+  "workflow": "shipment_lifecycle",
+  "example": {
+    "id": "shp_9f2a1c4d",
+    "order_id": "ord_7b31e0aa",
+    "customer": {
+      "id": "cus_4471",
+      "name": "Northwind Outfitters LLC",
+      "email": "shipping@example.com",
+      "phone": "+1-555-0101"
+    },
+    "shipper_address": {
+      "name": "Northwind Outfitters LLC",
+      "street1": "482 Industrial Pkwy",
+      "city": "Springvale",
+      "state": "OH",
+      "postal_code": "44011",
+      "country": "US",
+      "phone": "+1-555-0101"
+    },
+    "recipient_address": {
+      "name": "Priya Chandrasekaran",
+      "street1": "17 Maple Court, Apt 3B",
+      "city": "Rivertown",
+      "state": "IL",
+      "postal_code": "60601",
+      "country": "US",
+      "phone": "+1-555-0110"
+    },
+    "parcels": [
+      {"id": "pcl_001", "weight": 4.2, "weight_unit": "KG", "length": 30, "width": 20, "height": 15, "dimension_unit": "CM"}
+    ],
+    "commodities": [
+      {"description": "Insulated hiking boots, size 9", "quantity": 1, "value_amount": 129.99, "value_currency": "USD", "origin_country": "US"}
+    ],
+    "carrier": {"carrier_code": "example_freight_co", "carrier_name": "Example Freight Co."},
+    "selected_rate": {"service_name": "Ground Saver", "amount": 12.45, "currency": "USD", "transit_days": 4},
+    "tracking_number": "EFC0000000123456789",
+    "label_type": "PDF",
+    "reference": "PO-2026-00458",
+    "is_return": false,
+    "test_mode": true,
+    "status_history": [
+      {"status": "draft", "occurred_at": "2026-09-20T14:02:00Z", "note": "Shipment created, rate not yet purchased"},
+      {"status": "created", "occurred_at": "2026-09-20T14:05:33Z", "note": "Label purchased via Example Freight Co."},
+      {"status": "in_transit", "occurred_at": "2026-09-21T09:12:10Z", "note": "Carrier pickup scan at Springvale depot"},
+      {"status": "out_for_delivery", "occurred_at": "2026-09-24T07:40:00Z", "note": "Out for delivery, Rivertown facility"},
+      {"status": "delivery_failed", "occurred_at": "2026-09-24T15:22:41Z", "note": "Recipient not available, left notice"},
+      {"status": "out_for_delivery", "occurred_at": "2026-09-25T08:05:00Z", "note": "Redelivery scheduled and attempted"},
+      {"status": "delivered", "occurred_at": "2026-09-25T11:47:19Z", "note": "Delivered, signature captured"}
+    ],
+    "current_status": "delivered",
+    "proof_of_delivery": {
+      "captured_at": "2026-09-25T11:47:19Z",
+      "captured_by": "driver_id: drv_2290",
+      "signature_url": "https://files.example.com/pod/sig_9f2a1c4d.png",
+      "photo_url": "https://files.example.com/pod/photo_9f2a1c4d.jpg"
+    }
+  },
+  "state_machine_reference": {
+    "entity": "shipment",
+    "workflow": "shipment_lifecycle",
+    "transitions_exercised": [
+      {"from": "draft", "to": "created", "event": "purchase_label"},
+      {"from": "created", "to": "in_transit", "event": "carrier_pickup_scan"},
+      {"from": "in_transit", "to": "out_for_delivery", "event": "out_for_delivery_scan"},
+      {"from": "out_for_delivery", "to": "delivery_failed", "event": "delivery_attempt_failed"},
+      {"from": "delivery_failed", "to": "out_for_delivery", "event": "redelivery_scheduled"},
+      {"from": "out_for_delivery", "to": "delivered", "event": "delivered_scan"}
+    ]
+  }
+}

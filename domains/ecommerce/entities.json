@@ -1,0 +1,585 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "product",
+      "name": "Product",
+      "description": "A sellable item in the catalog, with one or more variants.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "product_variant"
+        },
+        {
+          "type": "belongs_to",
+          "target": "category"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "description",
+        "status",
+        "tax_class"
+      ],
+      "states": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "related_features": [
+        "ecommerce.catalog_management",
+        "ecommerce.storefront_search"
+      ],
+      "standard_mapping": [
+        {
+          "source": "schema-org",
+          "concept": "Product",
+          "note": "schema.org/Product vocabulary for product structured data."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure",
+          "schema-org"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "product_variant",
+      "name": "Product Variant",
+      "description": "A specific purchasable combination of a product's options (e.g. size/color), with its own SKU and price.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "product"
+        },
+        {
+          "type": "has_one",
+          "target": "inventory_item"
+        }
+      ],
+      "important_fields": [
+        "sku",
+        "gtin",
+        "price",
+        "option_values"
+      ],
+      "states": [],
+      "related_features": [
+        "ecommerce.catalog_management",
+        "ecommerce.inventory_management"
+      ],
+      "standard_mapping": [
+        {
+          "source": "gs1-gtin",
+          "concept": "GTIN",
+          "note": "SKU is internal; GTIN is the GS1 identifier printed as a barcode when one exists."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "category",
+      "name": "Category",
+      "description": "A node in the catalog's browsable hierarchy.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "product"
+        },
+        {
+          "type": "belongs_to",
+          "target": "category",
+          "note": "optional parent, for nested categories"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "slug",
+        "parent_id"
+      ],
+      "states": [],
+      "related_features": [
+        "ecommerce.category_navigation"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "inventory_item",
+      "name": "Inventory Item",
+      "description": "The stock level of one product variant at one location.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "product_variant"
+        }
+      ],
+      "important_fields": [
+        "location",
+        "quantity_on_hand",
+        "quantity_reserved"
+      ],
+      "states": [],
+      "related_features": [
+        "ecommerce.inventory_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cart",
+      "name": "Cart",
+      "description": "A shopper's in-progress selection of items before checkout.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "cart_line_item"
+        },
+        {
+          "type": "belongs_to",
+          "target": "customer_account",
+          "note": "optional, for a guest cart"
+        }
+      ],
+      "important_fields": [
+        "currency",
+        "subtotal",
+        "applied_promotions"
+      ],
+      "states": [
+        "active",
+        "converted_to_order",
+        "abandoned"
+      ],
+      "related_features": [
+        "ecommerce.cart",
+        "ecommerce.checkout",
+        "ecommerce.abandoned_cart_recovery"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cart_line_item",
+      "name": "Cart Line Item",
+      "description": "One product variant and quantity within a cart.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "cart"
+        },
+        {
+          "type": "belongs_to",
+          "target": "product_variant"
+        }
+      ],
+      "important_fields": [
+        "quantity",
+        "unit_price"
+      ],
+      "states": [],
+      "related_features": [
+        "ecommerce.cart"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "order",
+      "name": "Order",
+      "description": "A confirmed purchase converted from a cart at checkout; the immutable record of what was sold.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "order_line_item"
+        },
+        {
+          "type": "belongs_to",
+          "target": "customer_account",
+          "note": "optional for guest orders"
+        },
+        {
+          "type": "has_many",
+          "target": "payment"
+        },
+        {
+          "type": "has_many",
+          "target": "shipment"
+        }
+      ],
+      "important_fields": [
+        "order_number",
+        "status",
+        "total",
+        "currency",
+        "placed_at"
+      ],
+      "states": [
+        "pending_payment",
+        "paid",
+        "processing",
+        "shipped",
+        "delivered",
+        "completed",
+        "cancelled"
+      ],
+      "related_features": [
+        "ecommerce.order_management",
+        "ecommerce.checkout"
+      ],
+      "standard_mapping": [
+        {
+          "source": "schema-org",
+          "concept": "Order",
+          "note": "schema.org/Order vocabulary for order structured data."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure",
+          "schema-org"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "order_line_item",
+      "name": "Order Line Item",
+      "description": "One product variant, quantity, and price captured at the time of purchase.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        },
+        {
+          "type": "belongs_to",
+          "target": "product_variant"
+        }
+      ],
+      "important_fields": [
+        "quantity",
+        "unit_price",
+        "tax_amount"
+      ],
+      "states": [],
+      "related_features": [
+        "ecommerce.order_management",
+        "ecommerce.tax_calculation"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "description": "A payment authorization/capture/refund attached to an order.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "currency",
+        "status",
+        "provider"
+      ],
+      "states": [
+        "pending",
+        "authorized",
+        "captured",
+        "refunded",
+        "failed"
+      ],
+      "related_features": [
+        "ecommerce.payments",
+        "ecommerce.checkout"
+      ],
+      "standard_mapping": [
+        {
+          "source": "schema-org",
+          "concept": "Offer.priceSpecification",
+          "note": "Adjacent schema.org vocabulary; payment status itself is not part of schema.org's Order type."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "shipment",
+      "name": "Shipment",
+      "description": "A physical fulfillment of some or all of an order's line items.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        }
+      ],
+      "important_fields": [
+        "carrier",
+        "tracking_number",
+        "status",
+        "shipped_at"
+      ],
+      "states": [
+        "pending",
+        "packed",
+        "shipped",
+        "delivered"
+      ],
+      "related_features": [
+        "ecommerce.shipping_fulfillment"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "return_request",
+      "name": "Return Request",
+      "description": "A customer-initiated request to return or exchange delivered items from an order.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        }
+      ],
+      "important_fields": [
+        "reason",
+        "status",
+        "requested_at"
+      ],
+      "states": [
+        "requested",
+        "approved",
+        "received",
+        "refunded",
+        "rejected"
+      ],
+      "related_features": [
+        "ecommerce.returns_refunds",
+        "ecommerce.order_returns_rma_tracking"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "promotion",
+      "name": "Promotion",
+      "description": "A discount rule, either a redeemable coupon code or an automatic promotion.",
+      "relationships": [],
+      "important_fields": [
+        "type",
+        "value",
+        "eligibility_rules",
+        "starts_at",
+        "ends_at"
+      ],
+      "states": [
+        "scheduled",
+        "active",
+        "expired"
+      ],
+      "related_features": [
+        "ecommerce.promotions_discounts",
+        "ecommerce.discount_stacking_rules"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "customer_account",
+      "name": "Customer Account",
+      "description": "A registered shopper's account, addresses, and order history.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "order"
+        }
+      ],
+      "important_fields": [
+        "email",
+        "default_address",
+        "marketing_consent"
+      ],
+      "states": [
+        "active",
+        "disabled"
+      ],
+      "related_features": [
+        "ecommerce.customer_accounts",
+        "ecommerce.b2b_pricing"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review",
+      "description": "A rating and written comment left by a customer on a product.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "product"
+        },
+        {
+          "type": "belongs_to",
+          "target": "customer_account"
+        }
+      ],
+      "important_fields": [
+        "rating",
+        "body",
+        "verified_purchase"
+      ],
+      "states": [
+        "pending_moderation",
+        "published",
+        "rejected"
+      ],
+      "related_features": [
+        "ecommerce.reviews_ratings"
+      ],
+      "standard_mapping": [
+        {
+          "source": "schema-org",
+          "concept": "Review",
+          "note": "schema.org/Review vocabulary."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "saleor"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; reviews are typically a plugin/app layer rather than a core module."
+      }
+    },
+    {
+      "id": "gift_card",
+      "name": "Gift Card",
+      "description": "A stored-value code redeemable toward a future order.",
+      "relationships": [],
+      "important_fields": [
+        "code",
+        "initial_value",
+        "remaining_balance",
+        "expires_at"
+      ],
+      "states": [
+        "active",
+        "redeemed",
+        "expired"
+      ],
+      "related_features": [
+        "ecommerce.gift_cards"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "saleor",
+          "medusa"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

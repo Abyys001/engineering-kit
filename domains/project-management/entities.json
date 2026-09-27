@@ -1,0 +1,563 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "workspace",
+      "name": "Workspace",
+      "description": "A top-level organization container holding projects and members.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "project"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "slug",
+        "theme"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.workspaces"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Workspace model; single source."
+      }
+    },
+    {
+      "id": "project",
+      "name": "Project",
+      "description": "A container for a related set of tasks, states, and members.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        },
+        {
+          "type": "has_many",
+          "target": "state"
+        },
+        {
+          "type": "has_many",
+          "target": "cycle"
+        },
+        {
+          "type": "has_many",
+          "target": "module"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "identifier",
+        "network"
+      ],
+      "states": [
+        "private",
+        "public"
+      ],
+      "related_features": [
+        "project-management.projects",
+        "project-management.private_projects"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Project (with ProjectNetwork private/public) and Kanboard's ProjectModel are independent implementations. The states list here (private/public) is verbatim from Plane's ProjectNetwork enum."
+      }
+    },
+    {
+      "id": "task",
+      "name": "Task / issue",
+      "description": "The core unit of work, optionally nested under a parent task.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "belongs_to",
+          "target": "state"
+        },
+        {
+          "type": "belongs_to",
+          "target": "task",
+          "note": "optional parent, for subtasks"
+        },
+        {
+          "type": "has_many",
+          "target": "comment"
+        },
+        {
+          "type": "has_many",
+          "target": "attachment"
+        },
+        {
+          "type": "has_many",
+          "target": "task_relation"
+        },
+        {
+          "type": "many_to_many",
+          "target": "label"
+        },
+        {
+          "type": "belongs_to",
+          "target": "cycle",
+          "note": "optional"
+        },
+        {
+          "type": "belongs_to",
+          "target": "module",
+          "note": "optional"
+        },
+        {
+          "type": "belongs_to",
+          "target": "estimate",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "description",
+        "priority",
+        "start_date",
+        "target_date",
+        "sequence_id",
+        "sort_order",
+        "is_draft"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.tasks_issues",
+        "project-management.subtasks",
+        "project-management.recurring_tasks",
+        "project-management.favorites",
+        "project-management.intake_triage",
+        "project-management.activity_feed",
+        "project-management.workload_capacity"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Issue model and Kanboard's TaskModel are independent implementations. A task's actual lifecycle state lives on the separate `state` entity (Plane) or a simple is_active flag plus column position (Kanboard), not on this entity directly."
+      }
+    },
+    {
+      "id": "state",
+      "name": "State / status",
+      "description": "A configurable status a task can be in, grouped into a small set of lifecycle groups.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "color",
+        "sequence",
+        "group",
+        "is_triage",
+        "default"
+      ],
+      "states": [
+        "backlog",
+        "unstarted",
+        "started",
+        "completed",
+        "cancelled",
+        "triage"
+      ],
+      "related_features": [
+        "project-management.statuses_workflows",
+        "project-management.boards_kanban"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's State model and StateGroup TextChoices; single source (Kanboard's is_active is a plain open/closed boolean, not a grouped multi-state model)."
+      }
+    },
+    {
+      "id": "swimlane",
+      "name": "Swimlane",
+      "description": "A horizontal grouping on a kanban board (e.g. by priority, assignee, or category) that cuts across columns.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "position"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.boards_kanban"
+      ],
+      "provenance": {
+        "sources": [
+          "kanboard"
+        ],
+        "confidence": "low",
+        "notes": "Kanboard's dedicated SwimlaneModel; not found in the cloned Plane scope (Plane's grouping is done client-side by field, not a stored swimlane entity). Single source."
+      }
+    },
+    {
+      "id": "task_relation",
+      "name": "Task relation",
+      "description": "A typed, directional link between two tasks.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "task",
+          "note": "the source task"
+        },
+        {
+          "type": "belongs_to",
+          "target": "task",
+          "note": "the related task"
+        }
+      ],
+      "important_fields": [
+        "relation_type"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.task_dependencies"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's IssueRelationChoices (duplicate, relates_to, blocked_by, start_before, finish_before, implemented_by) with defined reverse pairs; single source."
+      }
+    },
+    {
+      "id": "comment",
+      "name": "Comment",
+      "description": "A threaded message on a task, optionally with mentions and reactions.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "comment_html",
+        "mentions"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.comments_mentions"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's IssueComment/IssueMention models; single source."
+      }
+    },
+    {
+      "id": "cycle",
+      "name": "Cycle / sprint",
+      "description": "A fixed-duration iteration that tasks are planned into.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "start_date",
+        "end_date",
+        "owned_by"
+      ],
+      "states": [
+        "upcoming",
+        "active",
+        "completed"
+      ],
+      "related_features": [
+        "project-management.cycles_sprints",
+        "project-management.burndown_velocity_reports"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Cycle model; single source. The states list is reasoned from start_date/end_date rather than a stored status field (Plane computes cycle status from dates, it is not itself an enum column)."
+      }
+    },
+    {
+      "id": "module",
+      "name": "Module / epic",
+      "description": "A larger, cross-cycle grouping of related tasks toward a feature or epic.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "status",
+        "lead"
+      ],
+      "states": [
+        "backlog",
+        "planned",
+        "in-progress",
+        "paused",
+        "completed",
+        "cancelled"
+      ],
+      "related_features": [
+        "project-management.modules_epics"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's Module model and ModuleStatus TextChoices; single source."
+      }
+    },
+    {
+      "id": "milestone",
+      "name": "Milestone",
+      "description": "A target date marking a significant deliverable point in a project.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "target_date"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.milestones"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "No dedicated 'Milestone' model was found in either cloned source; reasoned as a thin, commonly-requested layer over Plane's Module/target-date fields. Low confidence, reasoned, stated in notes per the research brief's rule."
+      }
+    },
+    {
+      "id": "label",
+      "name": "Label",
+      "description": "A tag applied to tasks for categorization and filtering.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "many_to_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "color"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.labels"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Label/IssueLabel and Kanboard's TaskTagModel/category model are independent implementations."
+      }
+    },
+    {
+      "id": "attachment",
+      "name": "Attachment",
+      "description": "A file uploaded to a task.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "file_name",
+        "file_url",
+        "file_size"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.attachments"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's IssueAttachment/Asset and Kanboard's TaskFileModel are independent implementations."
+      }
+    },
+    {
+      "id": "view",
+      "name": "Saved view",
+      "description": "A saved combination of filters, sort, and grouping for a project's task list.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "filters",
+        "sort_order"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.views_filters",
+        "project-management.saved_views_sharing",
+        "project-management.gantt_timeline"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's View model; single source."
+      }
+    },
+    {
+      "id": "time_entry",
+      "name": "Time entry",
+      "description": "A logged block of time spent on a task by a user.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "user",
+        "started_at",
+        "duration"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.time_tracking"
+      ],
+      "provenance": {
+        "sources": [
+          "kanboard"
+        ],
+        "confidence": "low",
+        "notes": "Kanboard's SubtaskTimeTrackingModel (start/stop timer, computed duration); single source, modeled per-subtask in Kanboard rather than per top-level task."
+      }
+    },
+    {
+      "id": "estimate",
+      "name": "Estimate scale",
+      "description": "A project-defined scale of effort values (e.g. Fibonacci points) that tasks can be sized against.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        },
+        {
+          "type": "has_many",
+          "target": "task"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "point_values"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.estimates_story_points",
+        "project-management.burndown_velocity_reports"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Estimate model and Issue.estimate_point FK; single source."
+      }
+    },
+    {
+      "id": "guest_member",
+      "name": "Guest / external member",
+      "description": "A restricted, often unauthenticated or lightly-authenticated external participant with view/comment access to a specific project.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "project"
+        }
+      ],
+      "important_fields": [
+        "email",
+        "access_level"
+      ],
+      "states": [],
+      "related_features": [
+        "project-management.guest_client_access"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's ProjectPublicMember and ProjectDeployBoard models; single source."
+      }
+    }
+  ]
+}

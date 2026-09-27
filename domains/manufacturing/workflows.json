@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "bom_management",
+      "name": "BOM management",
+      "actor": "production_planner",
+      "trigger": "A new item needs a manufacturing recipe, or an existing one changes",
+      "steps": ["Define BOM header for the parent item", "Add component lines with quantities", "Optionally add operations/routing and by-products", "Validate the BOM against current component costs/checksum", "Activate for use in production orders"],
+      "entities": ["bill_of_materials", "bom_line", "bom_byproduct", "routing_operation"],
+      "features": ["manufacturing.bill_of_materials", "manufacturing.bom_byproducts", "manufacturing.routings_operations"],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's bom_validated/bom_checksum fields and Odoo's mrp.bom active/type fields both imply this lifecycle, though neither source enumerates a formal BOM approval state machine, so no state_machine is included."}
+    },
+    {
+      "id": "production_order_lifecycle",
+      "name": "Production order lifecycle",
+      "actor": "production_planner",
+      "trigger": "Demand (a sales order, stock shortage, or manual plan) requires building a quantity of an item",
+      "steps": ["Create production order for item/quantity/target date", "Confirm order, reserving components", "Release to the shop floor and begin production", "Report progress and consume components", "Mark ready to close once output is produced", "Close the order, done or cancelled"],
+      "entities": ["production_order", "item", "bill_of_materials"],
+      "features": ["manufacturing.production_orders"],
+      "state_machine": {
+        "entity": "production_order",
+        "initial": "confirmed",
+        "terminal": ["complete", "cancelled"],
+        "states": ["pending", "confirmed", "in_progress", "to_close", "on_hold", "complete", "cancelled"],
+        "transitions": [
+          {"from": "pending", "to": "confirmed", "event": "confirm"},
+          {"from": "confirmed", "to": "in_progress", "event": "start_production"},
+          {"from": "in_progress", "to": "on_hold", "event": "hold"},
+          {"from": "on_hold", "to": "in_progress", "event": "resume"},
+          {"from": "in_progress", "to": "to_close", "event": "production_done"},
+          {"from": "to_close", "to": "complete", "event": "close"},
+          {"from": "pending", "to": "cancelled", "event": "cancel"},
+          {"from": "confirmed", "to": "cancelled", "event": "cancel"},
+          {"from": "on_hold", "to": "cancelled", "event": "cancel"}
+        ]
+      },
+      "notifications": ["production_order_completed", "production_order_on_hold"],
+      "integrations": [],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "State names here follow Odoo's mrp.production.state verbatim (draft/confirmed/progress/to_close/done/cancel, renamed pending/confirmed/in_progress/to_close/complete/cancelled here for cross-source consistency) with an on_hold state added from InvenTree's BuildStatus.ON_HOLD, since InvenTree's own vocabulary (pending/production/on_hold/cancelled/complete) independently confirms the same overall shape. Exact event names are reasoned, not verbatim from either source."}
+    },
+    {
+      "id": "work_order_execution",
+      "name": "Work order execution",
+      "actor": "shop_floor_operator",
+      "trigger": "A production order is released and its first operation becomes available",
+      "steps": ["Operator selects the next ready work order at their work center", "Start the operation (blocked until prerequisite operations are done)", "Record quantity produced as work progresses", "Complete the operation, unblocking the next one", "Work center becomes available for the next work order"],
+      "entities": ["work_order", "work_center", "production_order"],
+      "features": ["manufacturing.work_order_scheduling", "manufacturing.shop_floor_data_collection", "manufacturing.routings_operations"],
+      "state_machine": {
+        "entity": "work_order",
+        "initial": "blocked",
+        "terminal": ["done", "cancel"],
+        "states": ["blocked", "ready", "progress", "done", "cancel"],
+        "transitions": [
+          {"from": "blocked", "to": "ready", "event": "prerequisite_completed"},
+          {"from": "ready", "to": "progress", "event": "start"},
+          {"from": "progress", "to": "done", "event": "complete"},
+          {"from": "ready", "to": "cancel", "event": "cancel"},
+          {"from": "blocked", "to": "cancel", "event": "cancel"}
+        ]
+      },
+      "notifications": [],
+      "integrations": ["barcode_scanner"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Verbatim from Odoo's mrp.workorder.state selection field and its _compute_state logic (blocked while a prerequisite blocked_by_workorder is not done/cancel, otherwise ready, then progress once qty_produced > 0); single source, InvenTree does not model this granularity."}
+    },
+    {
+      "id": "material_requirements_planning",
+      "name": "Material requirements planning run",
+      "actor": "system",
+      "trigger": "A scheduled or on-demand MRP run, or a reorder point is crossed",
+      "steps": ["Compute on-hand plus incoming minus demand per item", "Compare against the item's reorder point/minimum stock", "For make items, suggest or auto-create a production order using the effective BOM", "For buy items, suggest or auto-create a purchase order"],
+      "entities": ["item", "stock_item", "purchase_order", "production_order"],
+      "features": ["manufacturing.material_requirements_planning"],
+      "notifications": ["shortage_detected"],
+      "integrations": [],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Reasoned from Odoo's stock.warehouse.orderpoint (bom_id/effective_bom_id) bundled in addons/mrp; this is reorder-point-triggered replenishment, not a full multi-level MRP II netting run. Single source, no state_machine (this is a scheduled computation, not an entity lifecycle)."}
+    },
+    {
+      "id": "quality_inspection_workflow",
+      "name": "Quality inspection",
+      "actor": "quality_inspector",
+      "trigger": "A stock item reaches a test point defined by its part's test templates",
+      "steps": ["Select the test template(s) required for the item", "Perform the test and record pass/fail plus any measured value", "If failed, raise a non-conformance for disposition", "If passed, the item proceeds (e.g. to stock or shipment)"],
+      "entities": ["quality_inspection", "stock_item", "non_conformance"],
+      "features": ["manufacturing.quality_inspections", "manufacturing.non_conformance_management"],
+      "notifications": ["inspection_failed"],
+      "integrations": [],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's PartTestTemplate + StockItemTestResult models; single source, no formal state machine enumerated in the source beyond a boolean result field."}
+    },
+    {
+      "id": "traceability_lookup",
+      "name": "Traceability lookup",
+      "actor": "quality_inspector",
+      "trigger": "A recall, customer complaint, or audit requires tracing a lot/serial forward or backward",
+      "steps": ["Look up the stock item's traceability records", "Trace backward: which component lots/serials were consumed to produce it", "Trace forward: which output lots/serials or shipments contain this component", "Compile the genealogy for the audit or recall scope"],
+      "entities": ["traceability_record", "stock_item", "production_order"],
+      "features": ["manufacturing.traceability"],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's StockItemTracking history and Odoo's stock.lot/mrp.production.lot_producing_ids both provide the underlying data for this lookup; the lookup workflow itself is reasoned, not a literal feature in either source."}
+    }
+  ]
+}

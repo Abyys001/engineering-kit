@@ -1,0 +1,349 @@
+{
+  "schema": 1,
+  "domain": "logistics",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "customer",
+      "name": "Customer / shipper",
+      "description": "The business or individual account that books shipments and orders.",
+      "relationships": [
+        {"type": "has_many", "target": "order"},
+        {"type": "has_many", "target": "shipment"}
+      ],
+      "important_fields": ["name", "saved_addresses", "billing_profile", "test_mode"],
+      "states": [],
+      "related_features": ["logistics.customers_shippers", "logistics.address_validation"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "Both platforms scope records to an owning account (karrio OwnedEntity, fleetbase company_uuid)."}
+    },
+    {
+      "id": "order",
+      "name": "Order",
+      "description": "A customer's request to move goods; may be fulfilled by one or more shipments, or dispatched directly as a delivery job.",
+      "relationships": [
+        {"type": "belongs_to", "target": "customer"},
+        {"type": "has_many", "target": "commodity"},
+        {"type": "has_one", "target": "shipment", "note": "karrio: an order can spawn shipments"},
+        {"type": "belongs_to", "target": "driver", "note": "fleetbase: driver_assigned_uuid, optional until dispatched"},
+        {"type": "belongs_to", "target": "vehicle", "note": "fleetbase: vehicle_assigned_uuid, optional until dispatched"},
+        {"type": "has_one", "target": "route"}
+      ],
+      "important_fields": ["order_id", "status", "source", "dispatched", "started", "scheduled_at", "time_window_start", "time_window_end"],
+      "states": ["unfulfilled", "dispatched", "en_route", "fulfilled", "delivered", "partial", "cancelled"],
+      "related_features": ["logistics.orders", "logistics.dispatch", "logistics.cod_collection", "logistics.load_planning"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio.Order has OrderStatus (unfulfilled/cancelled/fulfilled/delivered/partial); fleetbase_orders has dispatched/started boolean flags plus a free-text status column (exact values not enumerated in the schema). States list merges both, some values reasoned."}
+    },
+    {
+      "id": "shipment",
+      "name": "Shipment",
+      "description": "A booked movement with a single carrier: parcels, addresses, selected rate, label, and status.",
+      "relationships": [
+        {"type": "belongs_to", "target": "customer"},
+        {"type": "belongs_to", "target": "order", "note": "optional, via order_id"},
+        {"type": "has_many", "target": "parcel"},
+        {"type": "belongs_to", "target": "carrier_service", "note": "selected_rate"},
+        {"type": "has_one", "target": "label"},
+        {"type": "has_one", "target": "customs_document", "note": "embedded customs data, international shipments only"},
+        {"type": "has_many", "target": "tracking_event"},
+        {"type": "has_one", "target": "return", "note": "is_return / return_shipment"}
+      ],
+      "important_fields": ["tracking_number", "status", "label_type", "shipment_identifier", "reference", "is_return"],
+      "states": ["draft", "created", "in_transit", "out_for_delivery", "delivered", "needs_attention", "delivery_failed", "cancelled"],
+      "related_features": ["logistics.shipments", "logistics.rates_quotes", "logistics.labels"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "Verbatim from karrio's Shipment model and core.serializers.ShipmentStatus; single source."}
+    },
+    {
+      "id": "parcel",
+      "name": "Parcel",
+      "description": "A physical package within a shipment: dimensions, weight, and packed commodities.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"},
+        {"type": "has_many", "target": "commodity"}
+      ],
+      "important_fields": ["weight", "weight_unit", "dimension_unit", "packaging_type"],
+      "states": [],
+      "related_features": ["logistics.parcels", "logistics.load_planning"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Parcel model; single source."}
+    },
+    {
+      "id": "commodity",
+      "name": "Commodity / line item",
+      "description": "A product line inside a parcel or order, with declared value and customs classification.",
+      "relationships": [
+        {"type": "belongs_to", "target": "parcel"},
+        {"type": "belongs_to", "target": "order"}
+      ],
+      "important_fields": ["description", "quantity", "weight", "value_amount", "value_currency", "origin_country"],
+      "states": [],
+      "related_features": ["logistics.parcels", "logistics.orders", "logistics.customs_documents"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Commodity and Product models; single source."}
+    },
+    {
+      "id": "label",
+      "name": "Shipping label",
+      "description": "The generated carrier label document (and optional commercial invoice) for a purchased shipment.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"}
+      ],
+      "important_fields": ["label_type", "label_data", "invoice_data"],
+      "states": [],
+      "related_features": ["logistics.labels"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio Shipment.label/label_type/invoice fields; single source."}
+    },
+    {
+      "id": "carrier",
+      "name": "Carrier",
+      "description": "A shipping carrier account connected to the platform, snapshotted onto each shipment at booking time.",
+      "relationships": [
+        {"type": "has_many", "target": "carrier_service"}
+      ],
+      "important_fields": ["carrier_code", "carrier_name", "account_credentials"],
+      "states": [],
+      "related_features": ["logistics.carriers"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "Observed as an embedded JSON snapshot (keyed by carrier_code) on karrio's Shipment model; the standalone carrier/connection model was not cloned. Single source."}
+    },
+    {
+      "id": "carrier_service",
+      "name": "Carrier service level",
+      "description": "A specific rate/service tier offered by a carrier (e.g. ground, express).",
+      "relationships": [
+        {"type": "belongs_to", "target": "carrier"},
+        {"type": "has_many", "target": "rate_quote"}
+      ],
+      "important_fields": ["service_name", "transit_days"],
+      "states": [],
+      "related_features": ["logistics.rates_quotes", "logistics.carriers", "logistics.contract_rates"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's Shipment.services/selected_rate fields and fleetbase's fleetbase_service_rates table both model a named service level with pricing."}
+    },
+    {
+      "id": "rate_quote",
+      "name": "Rate quote",
+      "description": "A price/transit-time quote returned by a carrier for a given shipment.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"},
+        {"type": "belongs_to", "target": "carrier_service"}
+      ],
+      "important_fields": ["amount", "currency", "transit_days"],
+      "states": [],
+      "related_features": ["logistics.rates_quotes", "logistics.freight_invoicing", "logistics.contract_rates"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's Shipment.rates (list of quotes)/selected_rate and fleetbase's fleetbase_purchase_rates/fleetbase_service_quotes tables both model this."}
+    },
+    {
+      "id": "manifest",
+      "name": "Manifest",
+      "description": "A grouping of shipments (carrier close-out) or stops (driver route manifest) for a single hand-off.",
+      "relationships": [
+        {"type": "has_many", "target": "shipment", "note": "karrio: carrier close-out"},
+        {"type": "belongs_to", "target": "driver", "note": "fleetbase: route manifest"},
+        {"type": "belongs_to", "target": "vehicle", "note": "fleetbase: route manifest"}
+      ],
+      "important_fields": ["status", "scheduled_date", "stop_count", "total_distance", "total_duration"],
+      "states": ["pending", "started", "completed", "cancelled"],
+      "related_features": ["logistics.manifests", "logistics.driver_app"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's Manifest model (carrier close-out) and fleetbase_manifests (driver route manifest with status/scheduled_date/stop_count) are independent implementations of related but distinct concepts; states list is reasoned from fleetbase's started_at/completed_at columns."}
+    },
+    {
+      "id": "pickup",
+      "name": "Pickup",
+      "description": "A scheduled carrier or driver pickup for one or more shipments.",
+      "relationships": [
+        {"type": "has_many", "target": "shipment"}
+      ],
+      "important_fields": ["pickup_date", "ready_time", "closing_time", "status"],
+      "states": ["scheduled", "picked_up", "cancelled", "closed"],
+      "related_features": ["logistics.pickups"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "Verbatim from karrio's Pickup model and PickupStatus enum; single source."}
+    },
+    {
+      "id": "tracking_event",
+      "name": "Tracking event",
+      "description": "A single append-only status/scan event in a shipment's or parcel's tracking timeline.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"}
+      ],
+      "important_fields": ["status", "code", "description", "location", "occurred_at"],
+      "states": ["pending", "picked_up", "in_transit", "out_for_delivery", "delivery_delayed", "on_hold", "ready_for_pickup", "delivered", "cancelled", "unknown"],
+      "related_features": ["logistics.tracking_events"],
+      "standard_mapping": [{"source": "std:gs1-epcis", "concept": "EPCIS event (what/when/where/why)", "note": "Not yet verified against a local copy of the spec at time of writing; noted as a likely alignment for a future pass once std:gs1-epcis is acquired, not asserted as implemented."}],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's TrackerStatus enum and fleetbase's fleetbase_tracking_statuses table (status, code, complete flag, geolocation) are independent implementations of the same concept."}
+    },
+    {
+      "id": "proof_of_delivery",
+      "name": "Proof of delivery",
+      "description": "The photo and/or signature captured at delivery, attached to the shipment or order.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"},
+        {"type": "belongs_to", "target": "order"}
+      ],
+      "important_fields": ["photo_url", "signature_url", "captured_at", "captured_by"],
+      "states": [],
+      "related_features": ["logistics.proof_of_delivery"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's TrackingStatus.delivery_image_url/signature_image_url and fleetbase's payloads.pod_method/pod_required columns both model this."}
+    },
+    {
+      "id": "dispatch_assignment",
+      "name": "Dispatch assignment",
+      "description": "The record of assigning a driver and vehicle to an order, capturing when and how it was dispatched.",
+      "relationships": [
+        {"type": "belongs_to", "target": "order"},
+        {"type": "belongs_to", "target": "driver"},
+        {"type": "belongs_to", "target": "vehicle"}
+      ],
+      "important_fields": ["dispatched_at", "adhoc", "is_route_optimized"],
+      "states": [],
+      "related_features": ["logistics.dispatch"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "Modeled as columns directly on fleetbase_orders (dispatched, dispatched_at, adhoc, driver_assigned_uuid, vehicle_assigned_uuid, is_route_optimized) rather than a separate table; single source."}
+    },
+    {
+      "id": "route",
+      "name": "Route",
+      "description": "The sequenced set of stops (waypoints) planned for an order or manifest, with distance/time totals.",
+      "relationships": [
+        {"type": "belongs_to", "target": "order"},
+        {"type": "has_many", "target": "waypoint"}
+      ],
+      "important_fields": ["total_distance", "total_time", "details"],
+      "states": [],
+      "related_features": ["logistics.routes", "logistics.eta_prediction"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_routes table; single source."}
+    },
+    {
+      "id": "waypoint",
+      "name": "Waypoint",
+      "description": "A single stop (pickup, dropoff, or return) within a route or payload, with its own time window and service time.",
+      "relationships": [
+        {"type": "belongs_to", "target": "route"},
+        {"type": "belongs_to", "target": "place"}
+      ],
+      "important_fields": ["type", "time_window_start", "time_window_end", "service_time", "order", "pod_required"],
+      "states": [],
+      "related_features": ["logistics.routes", "logistics.driver_app"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_waypoints table; single source."}
+    },
+    {
+      "id": "place",
+      "name": "Place",
+      "description": "A reusable, geocoded address used as a pickup, dropoff, or facility location.",
+      "relationships": [
+        {"type": "has_many", "target": "waypoint"}
+      ],
+      "important_fields": ["address", "latitude", "longitude"],
+      "states": [],
+      "related_features": ["logistics.routes", "logistics.address_validation"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_places table; single source."}
+    },
+    {
+      "id": "driver",
+      "name": "Driver",
+      "description": "A person who operates a vehicle to complete deliveries or pickups.",
+      "relationships": [
+        {"type": "belongs_to", "target": "vehicle", "note": "current assignment"},
+        {"type": "has_many", "target": "order"}
+      ],
+      "important_fields": ["drivers_license_number", "license_expiry", "current_status", "location", "skills", "online"],
+      "states": ["offline", "online", "on_duty", "on_delivery"],
+      "related_features": ["logistics.drivers", "logistics.dispatch", "logistics.driver_app", "logistics.driver_scoring"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_drivers table; states list reasoned from online/current_status columns, exact string values not enumerated in the schema. Single source."}
+    },
+    {
+      "id": "vehicle",
+      "name": "Vehicle",
+      "description": "A fleet vehicle: specifications, capacity, and current telemetry.",
+      "relationships": [
+        {"type": "belongs_to", "target": "fleet"},
+        {"type": "has_many", "target": "maintenance_record"}
+      ],
+      "important_fields": ["make", "model", "year", "payload_capacity", "seating_capacity", "fuel_type", "location"],
+      "states": [],
+      "related_features": ["logistics.vehicles", "logistics.fleet_maintenance", "logistics.fuel_tracking", "logistics.load_planning"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_vehicles table; single source."}
+    },
+    {
+      "id": "fleet",
+      "name": "Fleet",
+      "description": "A named group of vehicles and drivers, optionally scoped to a service area or zone.",
+      "relationships": [
+        {"type": "has_many", "target": "vehicle"},
+        {"type": "has_many", "target": "driver"},
+        {"type": "belongs_to", "target": "zone", "note": "optional"}
+      ],
+      "important_fields": ["name", "status"],
+      "states": [],
+      "related_features": ["logistics.vehicles"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_fleets, fleetbase_fleet_drivers, fleetbase_fleet_vehicles tables; single source."}
+    },
+    {
+      "id": "warehouse",
+      "name": "Warehouse / location",
+      "description": "A physical facility where inventory is stored or shipments are consolidated.",
+      "relationships": [],
+      "important_fields": ["name", "address", "gln"],
+      "states": [],
+      "related_features": ["logistics.warehouses"],
+      "standard_mapping": [{"source": "std:gs1-epcis", "concept": "Global Location Number (GLN)", "note": "Name-only reference; std:gs1-epcis not yet acquired locally, GLN's exact field format not verified against the spec."}],
+      "provenance": {"sources": ["std:gs1-epcis"], "confidence": "low", "notes": "Not modeled as a first-class entity in either cloned source; reasoned from the domain brief."}
+    },
+    {
+      "id": "exception",
+      "name": "Delivery exception",
+      "description": "A flagged problem with an order, shipment, driver, or vehicle requiring investigation (damage, delay, failed attempt, safety issue).",
+      "relationships": [
+        {"type": "belongs_to", "target": "order"},
+        {"type": "belongs_to", "target": "driver", "note": "optional"},
+        {"type": "belongs_to", "target": "vehicle", "note": "optional"}
+      ],
+      "important_fields": ["type", "category", "priority", "status", "resolved_at"],
+      "states": ["open", "investigating", "resolved", "closed"],
+      "related_features": ["logistics.exceptions_returns", "logistics.claims"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "fleetbase_issues table is the direct implementation; karrio's needs_attention/delivery_failed ShipmentStatus values corroborate the concept from a second, independent source. States list is reasoned from fleetbase's resolved_at/status columns."}
+    },
+    {
+      "id": "return",
+      "name": "Return shipment",
+      "description": "A shipment created to send goods back to the origin or a returns facility.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment", "note": "the original outbound shipment"}
+      ],
+      "important_fields": ["reason", "return_address"],
+      "states": [],
+      "related_features": ["logistics.exceptions_returns"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's Shipment.is_return/return_shipment/return_address fields and fleetbase's payloads.return_uuid/return_tracking_number_uuid both model this."}
+    },
+    {
+      "id": "customs_document",
+      "name": "Customs document",
+      "description": "The customs declaration data attached to an international shipment.",
+      "relationships": [
+        {"type": "belongs_to", "target": "shipment"}
+      ],
+      "important_fields": ["declared_value", "hs_codes", "content_type"],
+      "states": [],
+      "related_features": ["logistics.customs_documents"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio Shipment.customs embedded JSON field; single source."}
+    },
+    {
+      "id": "zone",
+      "name": "Zone / service area",
+      "description": "A named geographic boundary used for pricing eligibility, routing, or geofence entry-exit events.",
+      "relationships": [
+        {"type": "has_many", "target": "fleet", "note": "optional"}
+      ],
+      "important_fields": ["name", "boundary"],
+      "states": [],
+      "related_features": ["logistics.geofencing_zones"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_zones and fleetbase_service_areas tables; single source."}
+    },
+    {
+      "id": "maintenance_record",
+      "name": "Maintenance record",
+      "description": "A scheduled or completed maintenance service event for a vehicle.",
+      "relationships": [
+        {"type": "belongs_to", "target": "vehicle"}
+      ],
+      "important_fields": ["type", "status", "interval_type", "next_due_date", "last_service_date"],
+      "states": ["scheduled", "due", "in_service", "completed"],
+      "related_features": ["logistics.fleet_maintenance"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_maintenance_schedules and fleetbase_maintenances tables; states list reasoned from next_due_date/last_service_date columns. Single source."}
+    }
+  ]
+}

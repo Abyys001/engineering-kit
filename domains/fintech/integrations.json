@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "kyc_provider",
+      "name": "KYC / Identity Verification Provider",
+      "category": "identity",
+      "purpose": "Verify government ID documents and biometric liveness during onboarding.",
+      "examples": [
+        "Onfido",
+        "Jumio",
+        "Persona"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "fintech.kyc_onboarding",
+        "fintech.sanctions_screening"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "payment_rail",
+      "name": "Payment Rail / Network",
+      "category": "payments",
+      "purpose": "Move money externally over card networks, ACH, SEPA, or wire.",
+      "examples": [
+        "Visa/Mastercard networks",
+        "ACH (NACHA)",
+        "SEPA",
+        "SWIFT"
+      ],
+      "protocols": [
+        "ISO 20022",
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "fintech.payments",
+        "fintech.p2p_transfers",
+        "fintech.open_banking_connectivity"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "iso20022",
+          "blnk"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "card_issuing_processor",
+      "name": "Card Issuing Processor",
+      "category": "payments",
+      "purpose": "Issue and process virtual/physical card transactions, including tokenization.",
+      "examples": [
+        "Marqeta",
+        "Galileo",
+        "Lithic"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks",
+        "ISO 8583"
+      ],
+      "related_features": [
+        "fintech.card_issuing",
+        "fintech.card_controls"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in the OSS ledgers reviewed."
+      }
+    },
+    {
+      "id": "credit_bureau",
+      "name": "Credit Bureau",
+      "category": "data",
+      "purpose": "Retrieve a party's credit history/score to support underwriting.",
+      "examples": [
+        "Experian",
+        "Equifax",
+        "TransUnion"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "fintech.lending_origination",
+        "fintech.credit_scoring"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fraud_engine",
+      "name": "Fraud / Risk Scoring Engine",
+      "category": "risk",
+      "purpose": "Real-time transaction risk scoring, often ML-based, with rule overrides.",
+      "examples": [
+        "Sift",
+        "Feedzai",
+        "in-house model"
+      ],
+      "protocols": [
+        "REST",
+        "streaming"
+      ],
+      "related_features": [
+        "fintech.fraud_monitoring",
+        "fintech.aml_transaction_monitoring"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in the OSS ledgers reviewed."
+      }
+    },
+    {
+      "id": "webhook_delivery",
+      "name": "Webhook Delivery",
+      "category": "platform",
+      "purpose": "Deliver signed event notifications to integrating partners with retry/backoff.",
+      "examples": [
+        "Svix",
+        "Hookdeck",
+        "in-house"
+      ],
+      "protocols": [
+        "HTTP webhooks"
+      ],
+      "related_features": [
+        "fintech.webhooks_events"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

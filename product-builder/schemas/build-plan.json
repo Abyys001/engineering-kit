@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-kit/product-builder/build-plan.json",
+  "title": "Dependency-ordered build plan",
+  "type": "object",
+  "required": ["schema", "project", "phases"],
+  "properties": {
+    "schema": {"const": 1},
+    "project": {"type": "string"},
+    "generated_with": {"type": "string", "description": "e.g. `kb.py order … --with-enhances` output used"},
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["order", "name", "tasks"],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1},
+          "name": {"type": "string"},
+          "depends_on_phases": {"type": "array", "items": {"type": "integer"}},
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object", "required": ["title", "acceptance"],
+              "properties": {
+                "title": {"type": "string"},
+                "features": {"type": "array", "items": {"type": "string"}},
+                "surface": {"type": "string"},
+                "kit_paths": {"type": "array", "items": {"type": "string"}},
+                "plan": {"enum": ["reuse", "adapt", "build", "integrate"]},
+                "acceptance": {"type": "array", "items": {"type": "string"}, "minItems": 1}
+              }
+            }
+          }
+        }
+      }
+    },
+    "risks": {"type": "array", "items": {"type": "string"}},
+    "open_decisions": {"type": "array", "items": {"type": "string"}}
+  }
+}

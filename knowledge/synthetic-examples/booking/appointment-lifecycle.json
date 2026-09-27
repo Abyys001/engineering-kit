@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "description": "Fabricated example: a customer books a recurring weekly consultation with a provider, receives a reminder, and the first occurrence is completed while the second is cancelled. Exercises booking_lifecycle and reminder_workflow. All names, contacts, and identifiers are invented.",
+  "entities": {
+    "provider": { "id": "example-provider-001", "name": "Alex Sampleton (Example)", "timezone": "America/Chicago" },
+    "service": { "id": "example-service-consult", "name": "30-Minute Consultation (Example)", "duration_minutes": 30, "price": 45.00, "slot_interval": 30 },
+    "schedule": { "id": "example-schedule-001", "provider": "example-provider-001", "name": "Weekday Hours (Example)", "timezone": "America/Chicago" },
+    "availability_rule": { "id": "example-availrule-001", "schedule": "example-schedule-001", "days_of_week": ["mon", "tue", "wed", "thu", "fri"], "start_time": "09:00", "end_time": "17:00" },
+    "availability_exception": { "id": "example-exception-001", "schedule": "example-schedule-001", "date": "2026-11-27", "is_unavailable": true, "reason": "Holiday (Example)" },
+    "time_slot": [
+      { "id": "example-slot-001", "service": "example-service-consult", "start_at": "2026-10-06T10:00:00-05:00", "end_at": "2026-10-06T10:30:00-05:00" },
+      { "id": "example-slot-002", "service": "example-service-consult", "start_at": "2026-10-13T10:00:00-05:00", "end_at": "2026-10-13T10:30:00-05:00" }
+    ],
+    "booking": {
+      "id": "example-booking-001",
+      "service": "example-service-consult",
+      "provider": "example-provider-001",
+      "recurrence_rule": "FREQ=WEEKLY;COUNT=2;BYDAY=TU",
+      "occurrences": [
+        {
+          "id": "example-booking-001-occ1",
+          "time_slot": "example-slot-001",
+          "status_history": [
+            { "status": "pending", "at": "2026-10-01T08:00:00-05:00" },
+            { "status": "accepted", "at": "2026-10-01T08:00:05-05:00" },
+            { "status": "completed", "at": "2026-10-06T10:31:00-05:00" }
+          ],
+          "status": "completed"
+        },
+        {
+          "id": "example-booking-001-occ2",
+          "time_slot": "example-slot-002",
+          "status_history": [
+            { "status": "pending", "at": "2026-10-01T08:00:00-05:00" },
+            { "status": "accepted", "at": "2026-10-01T08:00:05-05:00" },
+            { "status": "cancelled", "at": "2026-10-12T18:00:00-05:00" }
+          ],
+          "status": "cancelled",
+          "cancellation_reason": "Customer requested reschedule (Example)"
+        }
+      ]
+    },
+    "attendee": { "id": "example-attendee-001", "booking": "example-booking-001", "name": "Jamie Example", "email": "jamie.example@example.com" },
+    "external_calendar_link": { "id": "example-caliink-001", "booking": "example-booking-001-occ1", "provider": "google", "external_event_id": "example-gcal-evt-000123" },
+    "webhook_subscription": { "id": "example-webhook-001", "url": "https://example.com/webhooks/bookings", "events": ["booking.created", "booking.cancelled"], "status": "active" }
+  },
+  "notes": "Synthetic data only — example.com email, +1-555-01xx phone convention (no phone used here), invented names/identifiers/prices, no real customer or business data."
+}

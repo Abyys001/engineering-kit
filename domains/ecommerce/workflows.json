@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "checkout_lifecycle",
+      "name": "Checkout Lifecycle",
+      "actor": "customer",
+      "trigger": "Customer proceeds from cart to checkout.",
+      "steps": [
+        "Enter shipping/billing address",
+        "Select shipping method",
+        "Enter/select payment method",
+        "Review order summary",
+        "Place order (cart converts to order)"
+      ],
+      "entities": [
+        "cart",
+        "order",
+        "payment"
+      ],
+      "features": [
+        "ecommerce.checkout",
+        "ecommerce.cart",
+        "ecommerce.guest_checkout"
+      ],
+      "state_machine": {
+        "entity": "cart",
+        "initial": "active",
+        "terminal": [
+          "converted_to_order",
+          "abandoned"
+        ],
+        "states": [
+          "active",
+          "converted_to_order",
+          "abandoned"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "converted_to_order",
+            "event": "place_order"
+          },
+          {
+            "from": "active",
+            "to": "abandoned",
+            "event": "expire_inactive"
+          }
+        ]
+      },
+      "notifications": [
+        "order_confirmation"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "order_lifecycle",
+      "name": "Order Lifecycle",
+      "actor": "merchant_admin",
+      "trigger": "A cart converts to an order at checkout.",
+      "steps": [
+        "Capture payment",
+        "Allocate/reserve inventory",
+        "Pick and pack",
+        "Ship",
+        "Mark delivered",
+        "Complete or cancel"
+      ],
+      "entities": [
+        "order",
+        "payment",
+        "shipment"
+      ],
+      "features": [
+        "ecommerce.order_management",
+        "ecommerce.payments",
+        "ecommerce.shipping_fulfillment"
+      ],
+      "state_machine": {
+        "entity": "order",
+        "initial": "pending_payment",
+        "terminal": [
+          "completed",
+          "cancelled"
+        ],
+        "states": [
+          "pending_payment",
+          "paid",
+          "processing",
+          "shipped",
+          "delivered",
+          "completed",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "pending_payment",
+            "to": "paid",
+            "event": "payment_captured"
+          },
+          {
+            "from": "pending_payment",
+            "to": "cancelled",
+            "event": "payment_failed"
+          },
+          {
+            "from": "paid",
+            "to": "processing",
+            "event": "start_fulfillment"
+          },
+          {
+            "from": "processing",
+            "to": "shipped",
+            "event": "ship"
+          },
+          {
+            "from": "shipped",
+            "to": "delivered",
+            "event": "confirm_delivery"
+          },
+          {
+            "from": "delivered",
+            "to": "completed",
+            "event": "close_order"
+          },
+          {
+            "from": "paid",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "order_shipped",
+        "order_delivered"
+      ],
+      "integrations": [
+        "payment_gateway",
+        "shipping_carrier"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "return_lifecycle",
+      "name": "Return / Refund Lifecycle",
+      "actor": "customer",
+      "trigger": "Customer requests a return on a delivered order.",
+      "steps": [
+        "Customer requests return with reason",
+        "Merchant approves or rejects",
+        "Customer ships item back",
+        "Merchant receives and inspects",
+        "Refund issued and stock restocked"
+      ],
+      "entities": [
+        "return_request",
+        "order",
+        "payment"
+      ],
+      "features": [
+        "ecommerce.returns_refunds",
+        "ecommerce.order_returns_rma_tracking"
+      ],
+      "state_machine": {
+        "entity": "return_request",
+        "initial": "requested",
+        "terminal": [
+          "refunded",
+          "rejected"
+        ],
+        "states": [
+          "requested",
+          "approved",
+          "received",
+          "refunded",
+          "rejected"
+        ],
+        "transitions": [
+          {
+            "from": "requested",
+            "to": "approved",
+            "event": "approve"
+          },
+          {
+            "from": "requested",
+            "to": "rejected",
+            "event": "reject"
+          },
+          {
+            "from": "approved",
+            "to": "received",
+            "event": "receive_item"
+          },
+          {
+            "from": "received",
+            "to": "refunded",
+            "event": "issue_refund"
+          }
+        ]
+      },
+      "notifications": [
+        "return_approved",
+        "refund_issued"
+      ],
+      "integrations": [
+        "shipping_carrier"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure",
+          "eu-crd"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    }
+  ]
+}

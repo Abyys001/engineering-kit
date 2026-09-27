@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "description": "Fabricated example: a guest reserves a table, is seated, orders, the kitchen fires and serves the order, and the table pays a split bill with a tip. Exercises reservation_lifecycle, order_fulfillment_lifecycle, kitchen_ticket_lifecycle, and billing_and_payment_lifecycle. All names, contacts, and identifiers are invented.",
+  "entities": {
+    "restaurant_location": { "id": "example-restaurant-001", "name": "Example Bistro — Riverside" },
+    "guest": {
+      "id": "example-guest-001",
+      "name": "Jamie Example",
+      "phone": "+1-555-0148",
+      "email": "jamie.example@example.com",
+      "party_size": 4
+    },
+    "table": { "id": "example-table-012", "restaurant_location": "example-restaurant-001", "number": "12", "seats": 4, "status": "occupied" },
+    "reservation": {
+      "id": "example-reservation-001",
+      "guest": "example-guest-001",
+      "table": "example-table-012",
+      "party_size": 4,
+      "start_at": "2026-10-03T19:00:00-05:00",
+      "status_history": [
+        { "status": "requested", "at": "2026-10-01T10:12:00-05:00" },
+        { "status": "confirmed", "at": "2026-10-01T10:12:05-05:00" },
+        { "status": "seated", "at": "2026-10-03T19:03:00-05:00" },
+        { "status": "completed", "at": "2026-10-03T20:41:00-05:00" }
+      ],
+      "status": "completed"
+    },
+    "menu_item": [
+      { "id": "example-item-margherita", "name": "Margherita Pizza (Example)", "price": 14.00 },
+      { "id": "example-item-caesar", "name": "Caesar Salad (Example)", "price": 9.50 }
+    ],
+    "order": {
+      "id": "example-order-001",
+      "order_type": "dine_in",
+      "table": "example-table-012",
+      "guest": "example-guest-001",
+      "status_history": [
+        { "status": "open", "at": "2026-10-03T19:05:00-05:00" },
+        { "status": "sent_to_kitchen", "at": "2026-10-03T19:07:00-05:00" },
+        { "status": "ready", "at": "2026-10-03T19:22:00-05:00" },
+        { "status": "served", "at": "2026-10-03T19:24:00-05:00" },
+        { "status": "billed", "at": "2026-10-03T20:35:00-05:00" },
+        { "status": "paid", "at": "2026-10-03T20:40:00-05:00" }
+      ],
+      "status": "paid",
+      "order_items": [
+        { "id": "example-orderitem-001", "menu_item": "example-item-margherita", "quantity": 2 },
+        { "id": "example-orderitem-002", "menu_item": "example-item-caesar", "quantity": 2 }
+      ]
+    },
+    "kitchen_ticket": {
+      "id": "example-ticket-001",
+      "order": "example-order-001",
+      "station": "hot-line",
+      "status_history": [
+        { "status": "new", "at": "2026-10-03T19:07:00-05:00" },
+        { "status": "preparing", "at": "2026-10-03T19:08:00-05:00" },
+        { "status": "ready", "at": "2026-10-03T19:20:00-05:00" },
+        { "status": "bumped", "at": "2026-10-03T19:24:00-05:00" }
+      ],
+      "status": "bumped"
+    },
+    "bill": {
+      "id": "example-bill-001",
+      "order": "example-order-001",
+      "subtotal": 47.00,
+      "tax": 3.76,
+      "tip": 9.00,
+      "status_history": [
+        { "status": "open", "at": "2026-10-03T20:35:00-05:00" },
+        { "status": "split", "at": "2026-10-03T20:36:00-05:00" },
+        { "status": "paid", "at": "2026-10-03T20:40:00-05:00" }
+      ],
+      "status": "paid"
+    },
+    "payment": [
+      { "id": "example-payment-001", "bill": "example-bill-001", "amount": 29.88, "tip_amount": 4.50, "method": "card", "status": "captured" },
+      { "id": "example-payment-002", "bill": "example-bill-001", "amount": 29.88, "tip_amount": 4.50, "method": "card", "status": "captured" }
+    ]
+  },
+  "notes": "Synthetic data only — example.com email, +1-555-01xx phone, invented names/identifiers/prices, no real guest or business data."
+}

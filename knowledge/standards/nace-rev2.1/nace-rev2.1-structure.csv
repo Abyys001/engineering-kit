@@ -1,0 +1,1332 @@
+sdmx_id,ec_corporate_code,level,name_en,is_standard_code
+TOTAL,,AGG,Total - all NACE activities,Y
+TOT,,AGG,Total (aggregate changing according to the context),Y
+TOT_X_H491_H492,,AGG,All NACE activities (except railways),Y
+NAFT,,AGG,"All NACE activities (except agriculture, fishing and transport) - non AFT",Y
+A-T,,AGG,All NACE activities (except extra-territorial organisations and bodies),Y
+A_B,,AGG,"Agriculture, forestry and fishing; mining and quarrying",Y
+A,A,1,"Agriculture, forestry and fishing",Y
+A01_A03_FOOD,,AGG,"Primary production of food - agriculture, fishing and aquaculture",Y
+A01_A02,,AGG,Agriculture and forestry,Y
+AFT,,AGG,"Agriculture, fishing and transport (except railways) - AFT",Y
+A01_A02_X_A017,,AGG,Agriculture and forestry (except hunting),Y
+A01_IRR,,AGG,Irrigation in agriculture,M
+A01,01,2,"Crop and animal production, hunting and related service activities",Y
+A011,011,3,Growing of non-perennial crops,Y
+A0111,0111,4,"Growing of cereals, other than rice, leguminous crops and oil seeds",Y
+A0112,0112,4,Growing of rice,Y
+A0113,0113,4,"Growing of vegetables and melons, roots and tubers",Y
+A0114,0114,4,Growing of sugar cane,Y
+A0115,0115,4,Growing of tobacco,Y
+A0116,0116,4,Growing of fibre crops,Y
+A0119,0119,4,Growing of other non-perennial crops,Y
+A012,012,3,Growing of perennial crops,Y
+A0121,0121,4,Growing of grapes,Y
+A0122,0122,4,Growing of tropical and subtropical fruits,Y
+A0123,0123,4,Growing of citrus fruits,Y
+A0124,0124,4,Growing of pome fruits and stone fruits,Y
+A0125,0125,4,Growing of other tree and bush fruits and nuts,Y
+A0126,0126,4,Growing of oleaginous fruits,Y
+A0127,0127,4,Growing of beverage crops,Y
+A0128,0128,4,"Growing of spices, aromatic, drug and pharmaceutical crops",Y
+A0129,0129,4,Growing of other perennial crops,Y
+A013,013,3,Plant propagation,Y
+A0130,0130,4,Plant propagation,Y
+A014,014,3,Animal production,Y
+A0141,0141,4,Raising of dairy cattle,Y
+A0142,0142,4,Raising of other cattle and buffaloes,Y
+A0143,0143,4,Raising of horses and other equines,Y
+A0144,0144,4,Raising of camels and camelids,Y
+A0145,0145,4,Raising of sheep and goats,Y
+A0146,0146,4,Raising of swine and pigs,Y
+A0147,0147,4,Raising of poultry,Y
+A0148,0148,4,Raising of other animals,Y
+A015,015,3,Mixed farming,Y
+A0150,0150,4,Mixed farming,Y
+A016,016,3,Support activities to agriculture and post-harvest crop activities,Y
+A0161,0161,4,Support activities for crop production,Y
+A0162,0162,4,Support activities for animal production,Y
+A0163,0163,4,Post-harvest crop activities and seed processing for propagation,Y
+A017,017,3,"Hunting, trapping and related service activities",Y
+A0170,0170,4,"Hunting, trapping and related service activities",Y
+A02,02,2,Forestry and logging,Y
+A021,021,3,Silviculture and other forestry activities,Y
+A0210,0210,4,Silviculture and other forestry activities,Y
+A022,022,3,Logging,Y
+A0220,0220,4,Logging,Y
+A023,023,3,Gathering of wild growing non-wood products,Y
+A0230,0230,4,Gathering of wild growing non-wood products,Y
+A024,024,3,Support services to forestry,Y
+A0240,0240,4,Support services to forestry,Y
+A03,03,2,Fishing and aquaculture,Y
+A031,031,3,Fishing,Y
+A0311,0311,4,Marine fishing,Y
+A0312,0312,4,Freshwater fishing,Y
+A032,032,3,Aquaculture,Y
+A0321,0321,4,Marine aquaculture,Y
+A0322,0322,4,Freshwater aquaculture,Y
+A033,033,3,Support activities for fishing and aquaculture,Y
+A0330,0330,4,Support activities for fishing and aquaculture,Y
+B-T_X_T94,,AGG,"Industry, construction and services (except activities of membership organisations)",Y
+B-T_X_P_T94,2,AGG,"Industry, construction and services (except public administration, defence, compulsory social security, activities of membership organisations, activities of households as employers and extra-territorial organisations and bodies)",Y
+B-T_X_P,,AGG,"Industry, construction and services (except public administration, defence, compulsory social security, activities of households as employers and extra-territorial organisations and bodies)",Y
+B-T_X_L642,,AGG,"Industry, construction and services (except activities of holding companies)",Y
+B-T,1,AGG,"Industry, construction and services (except activities of households as employers and extraterritorial organisations and bodies)",Y
+B-O_T95,3,AGG,"Total business economy; repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles",Y
+B-O_T95_X_L,,AGG,"Total business economy; repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles (except financial and insurance activities)",Y
+B-O,,AGG,Business economy,Y
+B-O_X_L,,AGG,Total business economy (except financial and insurance activities),Y
+B-O_X_L642,,AGG,Business economy except activities of holding companies,Y
+B-N73_INN,,AGG,Economic activities covered by the CIS regulation,Y
+B-F,5,AGG,Industry and construction,Y
+B-F_X_C,,AGG,Industry and construction (except manufacturing),Y
+B-F_X_D,,AGG,"Industry and construction (except electricity, gas, steam and air conditioning supply)",Y
+B-E36_F,,AGG,"Industry and construction (except sewerage, waste management and remediation activities)",Y
+B-E,6,AGG,Industry (except construction),Y
+B-E36,,AGG,"Industry (except construction, sewerage, waste management and remediation activities)",Y
+B-E36_X_FOOD,,AGG,"Industry (except construction, sewerage, waste management and remediation activities), except food, beverages and tobacco",Y
+B-D_F,,AGG,"Mining and quarrying; manufacturing; electricity, gas, steam and air conditioning supply; construction",Y
+B_D-F_XB0721,,AGG,"Mining and quarrying, electricity, gas, water supply, construction (except mining of uranium)",Y
+B_D_E,,AGG,"Mining and quarrying; electricity, gas, steam and air conditioning supply; water supply, sewerage, waste management and remediation activities",Y
+B-D,,AGG,"Mining and quarrying; manufacturing; electricity, gas, steam and air conditioning supply",Y
+B-D_X_FOOD,,AGG,"Mining and quarrying; manufacturing; electricity, gas, steam and air conditioning supply (except food, beverages and tobacco)",Y
+B_C,,AGG,Mining and quarrying; manufacturing,Y
+B_C_X_FOOD,,AGG,"Mining and quarrying; manufacturing (except food, beverages and tobacco)",Y
+B_C_X_MIG_NRG,,AGG,Mining and quarrying; manufacturing (except MIG energy),Y
+B_C_X_FD_MIG_NRG,,AGG,"Mining and quarrying; manufacturing (except MIG energy), except food, beverages and tobacco",Y
+KIA,27,AGG,Knowledge intensive activities,Y
+KIABI,26,AGG,Knowledge intensive activities - business industries,Y
+MIG_NRG,,AGG,MIG - energy,Y
+MIG_NRG_X_E,,AGG,MIG - energy (except section E),Y
+MIG_NRG_X_D_E,,AGG,MIG - energy (except sections D and E),Y
+MIG_ING,,AGG,MIG - intermediate goods,Y
+MIG_ING_CAG,,AGG,MIG - intermediate and capital goods,Y
+MIG_CAG,,AGG,MIG - capital goods,Y
+MIG_CAG_ORD,,AGG,"MIG - capital goods, for new orders",Y
+MIG_COG,,AGG,MIG - consumer goods,Y
+MIG_COG_X_FOOD,,AGG,"MIG - consumer goods (except food, beverages and tobacco)",Y
+MIG_COG_ORD,,AGG,"MIG - consumer goods, for new orders",Y
+MIG_DCOG,,AGG,MIG - durable consumer goods,Y
+MIG_DCOG_ORD,,AGG,"MIG - durable consumer goods, for new orders",Y
+MIG_NDCOG,,AGG,MIG - non-durable consumer goods,Y
+MIG_NDCOG_ORD,,AGG,"MIG - non-durable consumer goods, for new orders",Y
+B,B,1,Mining and quarrying,Y
+B05,05,2,Mining of coal and lignite,Y
+B051,051,3,Mining of hard coal,Y
+B0510,0510,4,Mining of hard coal,Y
+B052,052,3,Mining of lignite,Y
+B0520,0520,4,Mining of lignite,Y
+B06-B09,,AGG,"Mining and quarrying, except mining of coal and lignite",Y
+B06_B09,,AGG,Extraction of crude petroleum and natural gas; mining support service activities,Y
+B06,06,2,Extraction of crude petroleum and natural gas,Y
+B061,061,3,Extraction of crude petroleum,Y
+B0610,0610,4,Extraction of crude petroleum,Y
+B062,062,3,Extraction of natural gas,Y
+B0620,0620,4,Extraction of natural gas,Y
+B07-B09_X_EPRD,,AGG,"Mining, quarrying and mining support service activities except those related to energy products (uranium and thorium ores, peat, petroleum and natural gas)",Y
+B07_X_B0721,,AGG,Mining of metal ores except mining of uranium and thorium ores,Y
+B07,07,2,Mining of metal ores,Y
+B071,071,3,Mining of iron ores,Y
+B0710,0710,4,Mining of iron ores,Y
+B072,072,3,Mining of non-ferrous metal ores,Y
+B0721,0721,4,Mining of uranium and thorium ores,Y
+B0729,0729,4,Mining of other non-ferrous metal ores,Y
+B08,08,2,Other mining and quarrying,Y
+B081,081,3,"Quarrying of stone, sand and clay",Y
+B0811,0811,4,"Quarrying of ornamental stone, limestone, gypsum, slate and other stone",Y
+B0812,0812,4,Operation of gravel and sand pits and mining of clay and kaolin,Y
+B089,089,3,Mining and quarrying n.e.c.,Y
+B0891,0891,4,Mining of chemical and fertiliser minerals,Y
+B0892,0892,4,Extraction of peat,Y
+B0893,0893,4,Extraction of salt,Y
+B0899,0899,4,Other mining and quarrying n.e.c.,Y
+B09,09,2,Mining support service activities,Y
+B091,091,3,Support activities for petroleum and natural gas extraction,Y
+B0910,0910,4,Support activities for petroleum and natural gas extraction,Y
+B099,099,3,Support activities for other mining and quarrying,Y
+B0990,0990,4,Support activities for other mining and quarrying,Y
+C-F,,AGG,"Manufacturing, electricity, gas, steam and air conditioning supply; water supply and construction",Y
+C-E,,AGG,"Manufacturing, electricity, gas, steam and air conditioning; water supply, sewerage, waste management and remediation activities",Y
+C_D,,AGG,"Manufacturing; electricity, gas, steam and air conditioning supply",Y
+HTC,,AGG,High-technology sectors (high-technology manufacturing and knowledge-intensive high technology services),Y
+C,C,1,Manufacturing,Y
+C_CL,,AGG,Manufacturing - for cooling purposes,Y
+C_HTC_MH,12,AGG,High and medium-high technology manufacturing,Y
+C_HTC_M,14,AGG,Medium-high technology manufacturing,Y
+C_HTC,13,AGG,High technology manufacturing,Y
+C_LTC_LM,15,AGG,Low and medium-low technology manufacturing,Y
+C_LTC_M,16,AGG,Medium-low technology manufacturing,Y
+C_LTC,17,AGG,Low technology manufacturing,Y
+C_ORD,,AGG,"Manufacturing, for new orders",Y
+C_ORD_X_C30,,AGG,"Manufacturing, for new orders (except heavy transport equipment)",Y
+C_X_STEEL,,AGG,Manufacturing (except steel and building of ships and boats),Y
+C10-T951_X_L,,AGG,"All activities (except agriculture, forestry and fishing, and mining and quarrying), without financial sector",Y
+C10-C18,,AGG,"Manufacture of products based on: food, beverages, tobacco, textile, leather, wood, pulp and paper; publishing and printing",Y
+C10-C12,,AGG,Manufacture of food products; beverages and tobacco products,Y
+C10_C11,,AGG,Manufacture of food products and beverages,Y
+C10,10,2,Manufacture of food products,Y
+C101,101,3,Processing and preserving of meat and production of meat products,Y
+C101_PRC,,AGG,Processing of meat and production of meat products,Y
+C101_PRS,,AGG,Preserving of meat and production of meat products,Y
+C1011,1011,4,"Processing and preserving of meat, except of poultry meat",Y
+C1012,1012,4,Processing and preserving of poultry meat,Y
+C1013,1013,4,Production of meat and poultry meat products,Y
+C102,102,3,"Processing and preserving of fish, crustaceans and molluscs",Y
+C102_PRC,,AGG,"Processing of fish, crustaceans and molluscs",Y
+C102_PRS,,AGG,"Preserving of fish, crustaceans and molluscs",Y
+C1020,1020,4,"Processing and preserving of fish, crustaceans and molluscs",Y
+C103,103,3,Processing and preserving of fruit and vegetables,Y
+C103_PRC,,AGG,Processing of fruit and vegetables,Y
+C103_PRS,,AGG,Preserving of fruit and vegetables,Y
+C1031,1031,4,Processing and preserving of potatoes,Y
+C1032,1032,4,Manufacture of fruit and vegetable juice,Y
+C1039,1039,4,Other processing and preserving of fruit and vegetables,Y
+C104,104,3,Manufacture of vegetable and animal oils and fats,Y
+C104_PRC,,AGG,Manufacture of vegetable and animal oils and fats (processing),Y
+C104_PRS,,AGG,Manufacture of vegetable and animal oils and fats (preserving),Y
+C1041,1041,4,Manufacture of oils and fats,Y
+C1042,1042,4,Manufacture of margarine and similar edible fats,Y
+C105,105,3,Manufacture of dairy products and edible ice,Y
+C105_PRC,,AGG,Manufacture of dairy products (processing),Y
+C105_PRS,,AGG,Manufacture of dairy products (preserving),Y
+C1051,1051,4,Manufacture of dairy products,Y
+C1052,1052,4,Manufacture of ice cream and other edible ice,Y
+C106,106,3,"Manufacture of grain mill products, starches and starch products",Y
+C106_PRC,,AGG,"Manufacture of grain mill products, starches and starch products (processing)",Y
+C106_PRS,,AGG,"Manufacture of grain mill products, starches and starch products (preserving)",Y
+C1061,1061,4,Manufacture of grain mill products,Y
+C1062,1062,4,Manufacture of starches and starch products,Y
+C107,107,3,Manufacture of bakery and farinaceous products,Y
+C1071,1071,4,Manufacture of bread; manufacture of fresh pastry goods and cakes,Y
+C1072,1072,4,"Manufacture of rusks, biscuits, preserved pastries and cakes",Y
+C1073,1073,4,Manufacture of farinaceous products,Y
+C108,108,3,Manufacture of other food products,Y
+C108_PRC,,AGG,Manufacture of other food products (processing),Y
+C108_PRS,,AGG,Manufacture of other food products (preserving),Y
+C1081,1081,4,Manufacture of sugar,Y
+C1082,1082,4,"Manufacture of cocoa, chocolate and sugar confectionery",Y
+C1083,1083,4,Processing of tea and coffee,Y
+C1084,1084,4,Manufacture of condiments and seasonings,Y
+C1085,1085,4,Manufacture of prepared meals and dishes,Y
+C1086,1086,4,Manufacture of homogenised food preparations and dietetic food,Y
+C1089,1089,4,Manufacture of other food products n.e.c.,Y
+C109,109,3,Manufacture of prepared animal feeds,Y
+C109_PRC,,AGG,Manufacture of prepared animal feeds (processing),Y
+C109_PRS,,AGG,Manufacture of prepared animal feeds (preserving),Y
+C1091,1091,4,Manufacture of prepared feeds for farm animals,Y
+C1092,1092,4,Manufacture of prepared pet foods,Y
+C11,11,2,Manufacture of beverages,Y
+C110,110,3,Manufacture of beverages,Y
+C1101,1101,4,"Distilling, rectifying and blending of spirits",Y
+C1102,1102,4,Manufacture of wine from grape,Y
+C1103,1103,4,Manufacture of cider and other fruit fermented beverages,Y
+C1104,1104,4,Manufacture of other non-distilled fermented beverages,Y
+C1105,1105,4,Manufacture of beer,Y
+C1106,1106,4,Manufacture of malt,Y
+C1107,1107,4,Manufacture of soft drinks and bottled waters,Y
+C12,12,2,Manufacture of tobacco products,Y
+C120,120,3,Manufacture of tobacco products,Y
+C1200,1200,4,Manufacture of tobacco products,Y
+C_TXW,,AGG,"Manufacture of textiles, wearing apparel, wood and paper products; printing and reproduction",Y
+C13-C15,,AGG,"Manufacture of textiles, wearing apparel, leather and related products",Y
+C13_C14,,AGG,Manufacture of textiles and wearing apparel,Y
+C13,13,2,Manufacture of textiles,Y
+C131,131,3,Preparation and spinning of textile fibres,Y
+C1310,1310,4,Preparation and spinning of textile fibres,Y
+C132,132,3,Weaving of textiles,Y
+C1320,1320,4,Weaving of textiles,Y
+C133,133,3,Finishing of textiles,Y
+C1330,1330,4,Finishing of textiles,Y
+C139,139,3,Manufacture of other textiles,Y
+C1391,1391,4,Manufacture of knitted and crocheted fabrics,Y
+C1392,1392,4,Manufacture of household textiles and made-up furnishing articles,Y
+C1393,1393,4,Manufacture of carpets and rugs,Y
+C1394,1394,4,"Manufacture of cordage, rope, twine and netting",Y
+C1395,1395,4,Manufacture of non-wovens and non-woven articles,Y
+C1396,1396,4,Manufacture of other technical and industrial textiles,Y
+C1399,1399,4,Manufacture of other textiles n.e.c.,Y
+C14,14,2,Manufacture of wearing apparel,Y
+C141,141,3,Manufacture of knitted and crocheted apparel,Y
+C1410,1410,4,Manufacture of knitted and crocheted apparel,Y
+C142,142,3,Manufacture of other wearing apparel and accessories,Y
+C1421,1421,4,Manufacture of outerwear,Y
+C1422,1422,4,Manufacture of underwear,Y
+C1423,1423,4,Manufacture of workwear,Y
+C1424,1424,4,Manufacture of leather clothes and fur apparel,Y
+C1429,1429,4,Manufacture of other wearing apparel and accessories n.e.c.,Y
+C15,15,2,Manufacture of leather and related products of other materials,Y
+C151,151,3,"Tanning, dyeing, dressing of leather and fur; manufacture of luggage, handbags, saddlery and harness",Y
+C1511,1511,4,"Tanning, dressing, dyeing of leather and fur",Y
+C1512,1512,4,"Manufacture of luggage, handbags, saddlery and harness of any material",Y
+C152,152,3,Manufacture of footwear,Y
+C1520,1520,4,Manufacture of footwear,Y
+C16-C18,,AGG,"Manufacture of wood, paper, printing and reproduction",Y
+C16,16,2,"Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials",Y
+C161,161,3,Sawmilling and planing of wood; processing and finishing of wood,Y
+C1611,1611,4,Sawmilling and planing of wood,Y
+C1612,1612,4,Processing and finishing of wood,Y
+C162,162,3,"Manufacture of products of wood, cork, straw and plaiting materials",Y
+C1621,1621,4,Manufacture of veneer sheets and wood-based panels,Y
+C1622,1622,4,Manufacture of assembled parquet floors,Y
+C1623,1623,4,Manufacture of other builders' carpentry and joinery,Y
+C1624,1624,4,Manufacture of wooden containers,Y
+C1625,1625,4,Manufacture of doors and windows of wood,Y
+C1626,1626,4,Manufacture of solid fuels from vegetable biomass,Y
+C1627,1627,4,Finishing of wooden products,Y
+C1628,1628,4,"Manufacture of other products of wood and articles of cork, straw and plaiting materials",Y
+C17_C19_C20_C22-C24,,AGG,"Manufacture of paper and paper products, coke and refined petroleum products, chemicals and chemical products, rubber and plastic products, other non-metallic mineral products, and basic metals",N
+C17_C18,,AGG,Manufacture of paper and paper products; printing and reproduction of recorded media,Y
+C17_X_C1711,,AGG,Manufacture of paper and paper products except pulp,Y
+C17,17,2,Manufacture of paper and paper products,Y
+C171,171,3,"Manufacture of pulp, paper and paperboard",Y
+C1711,1711,4,Manufacture of pulp,Y
+C1712,1712,4,Manufacture of paper and paperboard,Y
+C172,172,3,Manufacture of articles of paper and paperboard,Y
+C1721,1721,4,"Manufacture of corrugated paper, paperboard and containers of paper and paperboard",Y
+C1722,1722,4,Manufacture of household and sanitary goods and of toilet requisites,Y
+C1723,1723,4,Manufacture of paper stationery,Y
+C1724,1724,4,Manufacture of wallpaper,Y
+C1725,1725,4,Manufacture of other articles of paper and paperboard,Y
+C18,18,2,Printing and reproduction of recorded media,Y
+C181,181,3,Printing and service activities related to printing,Y
+C1811,1811,4,Printing of newspapers,Y
+C1812,1812,4,Other printing,Y
+C1813,1813,4,Pre-press and pre-media services,Y
+C1814,1814,4,Binding and related services,Y
+C182,182,3,Reproduction of recorded media,Y
+C1820,1820,4,Reproduction of recorded media,Y
+C19-C23,,AGG,"Manufacture of coke, refined petroleum, chemical and basic pharmaceutical products, rubber and plastics, other non-metallic mineral products",Y
+C19-C22,,AGG,"Manufacture of petroleum, chemical, pharmaceutical, rubber and plastic products",Y
+C19-C21,,AGG,Manufacture of coke and refined petroleum product; chemicals and chemical products; basic pharmaceutical products and pharmaceutical preparations,Y
+C19_C20,,AGG,"Manufacture of coke and refined petroleum products, chemicals and chemical products",Y
+C19,19,2,Manufacture of coke and refined petroleum products,Y
+C191,191,3,Manufacture of coke oven products,Y
+C1910,1910,4,Manufacture of coke oven products,Y
+C192,192,3,Manufacture of refined petroleum products and fossil fuel products,Y
+C1920,1920,4,Manufacture of refined petroleum products and fossil fuel products,Y
+C20-C22,,AGG,"Manufacture of chemical, pharmaceutical, rubber and plastic products",Y
+C20_C21,,AGG,Manufacture of chemicals and chemical products; basic pharmaceutical products and pharmaceutical preparations,Y
+C20,20,2,Manufacture of chemicals and chemical products,Y
+C201,201,3,"Manufacture of basic chemicals, fertilisers and nitrogen compounds, plastics and synthetic rubber in primary forms",Y
+C2011,2011,4,Manufacture of industrial gases,Y
+C2012,2012,4,Manufacture of dyes and pigments,Y
+C2013,2013,4,Manufacture of other inorganic basic chemicals,Y
+C2014,2014,4,Manufacture of other organic basic chemicals,Y
+C2015,2015,4,Manufacture of fertilisers and nitrogen compounds,Y
+C2016,2016,4,Manufacture of plastics in primary forms,Y
+C2017,2017,4,Manufacture of synthetic rubber in primary forms,Y
+C202,202,3,"Manufacture of pesticides, disinfectants and other agrochemical products",Y
+C2020,2020,4,"Manufacture of pesticides, disinfectants and other agrochemical products",Y
+C203,203,3,"Manufacture of paints, varnishes and similar coatings, printing ink and mastics",Y
+C2030,2030,4,"Manufacture of paints, varnishes and similar coatings, printing ink and mastics",Y
+C204,204,3,"Manufacture of washing, cleaning and polishing preparations",Y
+C2041,2041,4,"Manufacture of soap and detergents, cleaning and polishing preparations",Y
+C2042,2042,4,Manufacture of perfumes and toilet preparations,Y
+C205,205,3,Manufacture of other chemical products,Y
+C2051,2051,4,Manufacture of liquid biofuels,Y
+C2059,2059,4,Manufacture of other chemical products n.e.c.,Y
+C206,206,3,Manufacture of man-made fibres,Y
+C2060,2060,4,Manufacture of man-made fibres,Y
+C21-C23,,AGG,"Manufacture of basic pharmaceutical products and pharmaceutical preparations, rubber and plastic products and other non-metallic mineral products",Y
+C21,21,2,Manufacture of basic pharmaceutical products and pharmaceutical preparations,Y
+C211,211,3,Manufacture of basic pharmaceutical products,Y
+C2110,2110,4,Manufacture of basic pharmaceutical products,Y
+C212,212,3,Manufacture of pharmaceutical preparations,Y
+C2120,2120,4,Manufacture of pharmaceutical preparations,Y
+C22_C31_C32,,AGG,"Manufacture of rubber, plastic products, furniture and other manufacturing",Y
+C22_C23,,AGG,Manufacture of rubber and plastic products and other non-metallic mineral products,Y
+C22,22,2,Manufacture of rubber and plastic products,Y
+C221,221,3,Manufacture of rubber products,Y
+C2211,2211,4,"Manufacture, retreading and rebuilding of rubber tyres and manufacture of tubes",Y
+C2212,2212,4,Manufacture of other rubber products,Y
+C222,222,3,Manufacture of plastics products,Y
+C2221,2221,4,"Manufacture of plastic plates, sheets, tubes and profiles",Y
+C2222,2222,4,Manufacture of plastic packing goods,Y
+C2223,2223,4,Manufacture of doors and windows of plastic,Y
+C2224,2224,4,Manufacture of builders’ ware of plastic,Y
+C2225,2225,4,Processing and finishing of plastic products,Y
+C2226,2226,4,Manufacture of other plastic products,Y
+C23_X_C231_C235,,AGG,"Manufacture of other non-metallic mineral products except glass, glass products, cement, lime and plaster",Y
+C23,23,2,Manufacture of other non-metallic mineral products,Y
+C231,231,3,Manufacture of glass and glass products,Y
+C2311,2311,4,Manufacture of flat glass,Y
+C2312,2312,4,Shaping and processing of flat glass,Y
+C2313,2313,4,Manufacture of hollow glass,Y
+C2314,2314,4,Manufacture of glass fibres,Y
+C2315,2315,4,"Manufacture and processing of other glass, including technical glassware",Y
+C232,232,3,Manufacture of refractory products,Y
+C2320,2320,4,Manufacture of refractory products,Y
+C233,233,3,Manufacture of clay building materials,Y
+C2331,2331,4,Manufacture of ceramic tiles and flags,Y
+C2332,2332,4,"Manufacture of bricks, tiles and construction products, in baked clay",Y
+C234,234,3,Manufacture of other porcelain and ceramic products,Y
+C2341,2341,4,Manufacture of ceramic household and ornamental articles,Y
+C2342,2342,4,Manufacture of ceramic sanitary fixtures,Y
+C2343,2343,4,Manufacture of ceramic insulators and insulating fittings,Y
+C2344,2344,4,Manufacture of other technical ceramic products,Y
+C2345,2345,4,Manufacture of other ceramic products,Y
+C235,235,3,"Manufacture of cement, lime and plaster",Y
+C2351,2351,4,Manufacture of cement,Y
+C2352,2352,4,Manufacture of lime and plaster,Y
+C236,236,3,"Manufacture of articles of concrete, cement and plaster",Y
+C2361,2361,4,Manufacture of concrete products for construction purposes,Y
+C2362,2362,4,Manufacture of plaster products for construction purposes,Y
+C2363,2363,4,Manufacture of ready-mixed concrete,Y
+C2364,2364,4,Manufacture of mortars,Y
+C2365,2365,4,Manufacture of fibre cement,Y
+C2366,2366,4,"Manufacture of other articles of concrete, plaster and cement",Y
+C237,237,3,"Cutting, shaping and finishing of stone",Y
+C2370,2370,4,"Cutting, shaping and finishing of stone",Y
+C239,239,3,Manufacture of abrasive products and non-metallic mineral products n.e.c.,Y
+C2391,2391,4,Manufacture of abrasive products,Y
+C2399,2399,4,Manufacture of other non-metallic mineral products n.e.c.,Y
+C_MET,,AGG,"Manufacture of metal and machinery products, except electrical equipment",Y
+C24_C25,,AGG,"Manufacture of basic metals and fabricated metal products, except machinery and equipment",Y
+C24,24,2,Manufacture of basic metals,Y
+C24_FER,,AGG,"Manufacture of basic iron and steel and of ferro-alloys; of tubes, pipes, hollow profiles, related fittings and other products of first processing of steel; casting of iron and steel",Y
+C244_C2453_C2454_X_C2442,,AGG,"Manufacture of basic precious and other non-ferrous metals, casting of light metals and of other non-ferrous metals except aluminium production",Y
+C241-C243_C2451_C2452,,AGG,Manufacturing activities related to iron and steel,Y
+C241_C2452,,AGG,Steel,Y
+C241,241,3,Manufacture of basic iron and steel and of ferro-alloys,Y
+C2410,2410,3,Manufacture of basic iron and steel and of ferro-alloys,Y
+C242,242,3,"Manufacture of tubes, pipes, hollow profiles and related fittings, of steel",Y
+C2420,2420,4,"Manufacture of tubes, pipes, hollow profiles and related fittings, of steel",Y
+C243,243,3,Manufacture of other products of first processing of steel,Y
+C2431,2431,4,Cold drawing of bars,Y
+C2432,2432,4,Cold rolling of narrow strip,Y
+C2433,2433,4,Cold forming or folding,Y
+C2434,2434,4,Cold drawing of wire,Y
+C24_NFER,,AGG,Manufacture of basic precious and other non-ferrous metals; casting of light metals and other non-ferrous metals,Y
+C244_C2453_C2454,,AGG,"Manufacture of basic precious and other non-ferrous metals, casting of light metals and of other non-ferrous metals",Y
+C244_X_C2442,,AGG,Manufacture of basic precious and other non-ferrous metals except aluminium production,Y
+C244,244,3,Manufacture of basic precious and other non-ferrous metals,Y
+C2441,2441,4,Precious metals production,Y
+C2442,2442,4,Aluminium production,Y
+C2443,2443,4,"Lead, zinc and tin production",Y
+C2444,2444,4,Copper production,Y
+C2445,2445,4,Other non-ferrous metal production,Y
+C2446,2446,4,Processing of nuclear fuel,Y
+C245,245,3,Casting of metals,Y
+C2451,2451,4,Casting of iron,Y
+C2452,2452,4,Casting of steel,Y
+C2453,2453,4,Casting of light metals,Y
+C2454,2454,4,Casting of other non-ferrous metals,Y
+C25-C30,,AGG,"Manufacture of fabricated metal products, computer, electronic and optical products, electrical equipment, machinery, motor vehicles and other transport equipment",Y
+C25-C28,,AGG,"Manufacture of fabricated metal products, computer, electronic and optical products, electrical equipment, machinery and equipment n.e.c.",Y
+C25_X_C253,,AGG,"Manufacture of fabricated metal products, except weapons and ammunition, machinery and equipment",Y
+C25,25,2,"Manufacture of fabricated metal products, except machinery and equipment",Y
+C251,251,3,Manufacture of structural metal products,Y
+C2511,2511,4,Manufacture of metal structures and parts of structures,Y
+C2512,2512,4,Manufacture of doors and windows of metal,Y
+C252,252,3,"Manufacture of tanks, reservoirs and containers of metal",Y
+C2521,2521,4,"Manufacture of central heating radiators, steam generators and boilers",Y
+C2522,2522,4,"Manufacture of other tanks, reservoirs and containers of metal",Y
+C253,253,3,Manufacture of weapons and ammunition,Y
+C2530,2530,4,Manufacture of weapons and ammunition,Y
+C254,254,3,Forging and shaping metal and powder metallurgy,Y
+C2540,2540,4,Forging and shaping metal and powder metallurgy,Y
+C255,255,3,Treatment and coating of metals; machining,Y
+C2551,2551,4,Coating of metals,Y
+C2552,2552,4,Heat treatment of metals,Y
+C2553,2553,4,Machining of metals,Y
+C256,256,3,"Manufacture of cutlery, tools and general hardware",Y
+C2561,2561,4,Manufacture of cutlery,Y
+C2562,2562,4,Manufacture of locks and hinges,Y
+C2563,2563,4,Manufacture of tools,Y
+C259,259,3,Manufacture of other fabricated metal products,Y
+C2591,2591,4,Manufacture of steel drums and similar containers,Y
+C2592,2592,4,Manufacture of light metal packaging,Y
+C2593,2593,4,"Manufacture of wire products, chain and springs",Y
+C2594,2594,4,Manufacture of fasteners and screw machine products,Y
+C2599,2599,4,Manufacture of other fabricated metal products n.e.c.,Y
+C26-C33,,AGG,"Manufacture of computers, electric and optical products, electrical equipment, machinery and equipment n.e.c, motor vehicles, other transport equipment, furniture, other manufacturing, repair and installation of machinery and equipment",Y
+C26-C30,,AGG,"Manufacture of computer, electronic and optical products, electrical equipment, motor vehicles and other transport equipment",Y
+C26-C28,,AGG,"Manufacture of computer, electronic and optical products, electrical equipment, machinery and equipment n.e.c.",Y
+C26_C27,,AGG,"Manufacture of computer, electronic and optical products; manufacture of electrical equipment",Y
+C26,26,2,"Manufacture of computer, electronic and optical products",Y
+C261,261,3,Manufacture of electronic components and boards,Y
+C2611,2611,4,Manufacture of electronic components,Y
+C2612,2612,4,Manufacture of loaded electronic boards,Y
+C262,262,3,Manufacture of computers and peripheral equipment,Y
+C2620,2620,4,Manufacture of computers and peripheral equipment,Y
+C263_C264,,AGG,Manufacture of communication equipment and consumer electronics,Y
+C263,263,3,Manufacture of communication equipment,Y
+C2630,2630,4,Manufacture of communication equipment,Y
+C264,264,3,Manufacture of consumer electronics,Y
+C2640,2640,4,Manufacture of consumer electronics,Y
+C265,265,3,"Manufacture of measuring testing instruments, clocks and watches",Y
+C2651,2651,4,"Manufacture of instruments and appliances for measuring, testing and navigation",Y
+C2652,2652,4,Manufacture of watches and clocks,Y
+C266,266,3,"Manufacture of irradiation, electromedical and electrotherapeutic equipment",Y
+C2660,2660,4,"Manufacture of irradiation, electromedical and electrotherapeutic equipment",Y
+C267,267,3,"Manufacture of optical instruments, magnetic and optical media and photographic equipment",Y
+C2670,2670,4,"Manufacture of optical instruments, magnetic and optical media and photographic equipment",Y
+C27_C28,,AGG,"Manufacture of electrical equipment, machinery and equipment n.e.c.",Y
+C27,27,2,Manufacture of electrical equipment,Y
+C271,271,3,"Manufacture of electric motors, generators, transformers and electricity distribution and control apparatus",Y
+C2711,2711,4,"Manufacture of electric motors, generators and transformers",Y
+C2712,2712,4,Manufacture of electricity distribution and control apparatus,Y
+C272,272,3,Manufacture of batteries and accumulators,Y
+C2720,2720,4,Manufacture of batteries and accumulators,Y
+C273,273,3,Manufacture of wiring and wiring devices,Y
+C2731,2731,4,Manufacture of fibre optic cables,Y
+C2732,2732,4,Manufacture of other electronic and electric wires and cables,Y
+C2733,2733,4,Manufacture of wiring devices,Y
+C274,274,3,Manufacture of lighting equipment,Y
+C2740,2740,4,Manufacture of lighting equipment,Y
+C275,275,3,Manufacture of domestic appliances,Y
+C2751,2751,4,Manufacture of electric domestic appliances,Y
+C2752,2752,4,Manufacture of non-electric domestic appliances,Y
+C279,279,3,Manufacture of other electrical equipment,Y
+C2790,2790,4,Manufacture of other electrical equipment,Y
+C28,28,2,Manufacture of machinery and equipment n.e.c.,Y
+C281,281,3,Manufacture of general-purpose machinery,Y
+C2811,2811,4,"Manufacture of engines and turbines, except aircraft, vehicle and cycle engines",Y
+C2812,2812,4,Manufacture of fluid power equipment,Y
+C2813,2813,4,Manufacture of other pumps and compressors,Y
+C2814,2814,4,Manufacture of other taps and valves,Y
+C2815,2815,4,"Manufacture of bearings, gears, gearing and driving elements",Y
+C282,282,3,Manufacture of other general-purpose machinery,Y
+C2821,2821,4,"Manufacture of ovens, furnaces and permanent household heating equipment",Y
+C2822,2822,4,Manufacture of lifting and handling equipment,Y
+C2823,2823,4,"Manufacture of office machinery and equipment, except computers and peripheral equipment",Y
+C2824,2824,4,Manufacture of power-driven hand tools,Y
+C2825,2825,4,Manufacture of non-domestic air conditioning equipment,Y
+C2829,2829,4,Manufacture of other general-purpose machinery n.e.c.,Y
+C283,283,3,Manufacture of agricultural and forestry machinery,Y
+C2830,2830,4,Manufacture of agricultural and forestry machinery,Y
+C284,284,3,Manufacture of metal forming machinery and machine tools,Y
+C2841,2841,4,Manufacture of metal forming machinery and machine tools for metal work,Y
+C2842,2842,4,Manufacture of other machine tools,Y
+C289,289,3,Manufacture of other special-purpose machinery,Y
+C2891,2891,4,Manufacture of machinery for metallurgy,Y
+C2892,2892,4,"Manufacture of machinery for mining, quarrying and construction",Y
+C2893,2893,4,"Manufacture of machinery for food, beverage and tobacco processing",Y
+C2894,2894,4,"Manufacture of machinery for textile, apparel and leather production",Y
+C2895,2895,4,Manufacture of machinery for paper and paperboard production,Y
+C2896,2896,4,Manufacture of plastics and rubber machinery,Y
+C2897,2897,4,Manufacture of additive manufacturing machinery,Y
+C2899,2899,4,Manufacture of other special-purpose machinery n.e.c.,Y
+C29_C30,,AGG,"Manufacture of motor vehicles, trailers, semi-trailers and of other transport equipment",Y
+C29,29,2,"Manufacture of motor vehicles, trailers and semi-trailers",Y
+C291,291,3,Manufacture of motor vehicles,Y
+C2910,2910,4,Manufacture of motor vehicles,Y
+C292,292,3,Manufacture of bodies and coachwork for motor vehicles; manufacture of trailers and semi-trailers,Y
+C2920,2920,4,Manufacture of bodies and coachwork for motor vehicles; manufacture of trailers and semi-trailers,Y
+C293,293,3,Manufacture of motor vehicle parts and accessories,Y
+C2931,2931,4,Manufacture of electrical and electronic equipment for motor vehicles,Y
+C2932,2932,4,Manufacture of other parts and accessories for motor vehicles,Y
+C30,30,2,Manufacture of other transport equipment,Y
+C301,301,3,Building of ships and boats,Y
+C3011,3011,4,Building of civilian ships and floating structures,Y
+C3012,3012,4,Building of pleasure and sporting boats,Y
+C3013,3013,4,Building of military ships and vessels,Y
+C302,302,3,Manufacture of railway locomotives and rolling stock,Y
+C3020,3020,4,Manufacture of railway locomotives and rolling stock,Y
+C303,303,3,Manufacture of air and spacecraft and related machinery,Y
+C3031,3031,4,Manufacture of civilian air and spacecraft and related machinery,Y
+C3032,3032,4,Manufacture of military air and spacecraft and related machinery,Y
+C304_C3318,,AGG,"Manufacture of military fighting vehicles and repair and maintenance of military fighting vehicles, ships, boats, air and spacecraft",Y
+C304,304,3,Manufacture of military fighting vehicles,Y
+C3040,3040,4,Manufacture of military fighting vehicles,Y
+C309,309,3,Manufacture of transport equipment n.e.c.,Y
+C3091,3091,4,Manufacture of motorcycles,Y
+C3092,3092,4,Manufacture of bicycles and invalid carriages,Y
+C3099,3099,4,Manufacture of other transport equipment n.e.c.,Y
+C31-C33,,AGG,Manufacture of furniture; other manufacturing; repair and installation of machinery and equipment,Y
+C31_C32,,AGG,Manufacture of furniture; other manufacturing,Y
+C31,31,2,Manufacture of furniture,Y
+C310,310,3,Manufacture of furniture,Y
+C3100,3100,4,Manufacture of furniture,Y
+C32_X_C325,,AGG,Other manufacturing except medical and dental instruments and supplies,Y
+C32,32,2,Other manufacturing,Y
+C321,321,3,"Manufacture of jewellery, bijouterie and related articles",Y
+C3211,3211,4,Striking of coins,Y
+C3212,3212,4,Manufacture of jewellery and related articles,Y
+C3213,3213,4,Manufacture of imitation jewellery and related articles,Y
+C322,322,3,Manufacture of musical instruments,Y
+C3220,3220,4,Manufacture of musical instruments,Y
+C323,323,3,Manufacture of sports goods,Y
+C3230,3230,4,Manufacture of sports goods,Y
+C324,324,3,Manufacture of games and toys,Y
+C3240,3240,4,Manufacture of games and toys,Y
+C325,325,3,Manufacture of medical and dental instruments and supplies,Y
+C3250,3250,4,Manufacture of medical and dental instruments and supplies,Y
+C329,329,3,Manufacturing n.e.c.,Y
+C3291,3291,4,Manufacture of brooms and brushes,Y
+C3299,3299,4,Other manufacturing n.e.c.,Y
+C33,33,2,"Repair, maintenance and installation of machinery and equipment",Y
+C331,331,3,"Repair and maintenance of fabricated metal products, machinery and equipment",Y
+C3311,3311,4,Repair and maintenance of fabricated metal products,Y
+C3312,3312,4,Repair and maintenance of machinery,Y
+C3313,3313,4,Repair and maintenance of electronic and optical equipment,Y
+C3314,3314,4,Repair and maintenance of electrical equipment,Y
+C3315,3315,4,Repair and maintenance of civilian ships and boats,Y
+C3316,3316,4,Repair and maintenance of civilian air and spacecraft,Y
+C3317,3317,4,Repair and maintenance of other civilian transport equipment,Y
+C3318,3318,4,"Repair and maintenance of military fighting vehicles, ships, boats, air and spacecraft",Y
+C3319,3319,4,Repair and maintenance of other equipment,Y
+C332,332,3,Installation of industrial machinery and equipment,Y
+C3320,3320,4,Installation of industrial machinery and equipment,Y
+C_OTH,,AGG,"Other manufacturing (C15, C23, C27, C31, C32, C33)",Y
+D-F,,AGG,"Electricity, gas, steam and air conditioning supply; water supply and construction",Y
+D_E,,AGG,"Electricity, gas, steam and air conditioning supply; water supply; sewerage, waste management and remediation activities",Y
+D,D,1,"Electricity, gas, steam and air conditioning supply",Y
+D35_E36,,AGG,"Electricity, gas, steam and air conditioning supply; water collection, treatment and supply",Y
+D35,35,2,"Electricity, gas, steam and air conditioning supply",Y
+D351,351,3,"Electric power generation, transmission and distribution",Y
+D3511,3511,4,Production of electricity from non-renewable sources,Y
+D3512,3512,4,Production of electricity from renewable sources,Y
+D3513,3513,4,Transmission of electricity,Y
+D3514,3514,4,Distribution of electricity,Y
+D3515,3515,4,Trade of electricity,Y
+D3516,3516,4,Storage of electricity,Y
+D352,352,3,"Manufacture of gas, and distribution of gaseous fuels through mains",Y
+D3521,3521,4,Manufacture of gas,Y
+D3522,3522,4,Distribution of gaseous fuels through mains,Y
+D3523,3523,4,Trade of gas through mains,Y
+D3524,3524,4,Storage of gas as part of network supply services,Y
+D353,353,3,Steam and air conditioning supply,Y
+D3530,3530,4,Steam and air conditioning supply,Y
+D354,354,3,Activities of brokers and agents for electric power and natural gas,Y
+D3540,3540,4,Activities of brokers and agents for electric power and natural gas,Y
+EP_GOV,,AGG,General government,Y
+E,E,1,"Water supply; sewerage, waste management and remediation activities",Y
+E36_E37,,AGG,"Water collection, treatment and supply; sewerage",Y
+E36,36,2,"Water collection, treatment and supply",Y
+E360,360,3,"Water collection, treatment and supply",Y
+E3600,3600,4,"Water collection, treatment and supply",Y
+E37-E39,,AGG,"Sewerage, waste management, remediation activities",Y
+E37,37,2,Sewerage,Y
+E370,370,3,Sewerage,Y
+E3700,3700,4,Sewerage,Y
+E38_E39,,AGG,"Waste collection, treatment and disposal activities; materials recovery; remediation activities and other waste management services",Y
+E38,38,2,"Waste collection, recovery and disposal activities",Y
+E381,381,3,Waste collection,Y
+E3811,3811,4,Collection of non-hazardous waste,Y
+E3812,3812,4,Collection of hazardous waste,Y
+E382,382,3,Waste recovery,Y
+E3821,3821,4,Materials recovery,Y
+E3822,3822,4,Energy recovery,Y
+E3823,3823,4,Other waste recovery,Y
+E383,383,3,Waste disposal without recovery,Y
+E3831,3831,4,Incineration without energy recovery,Y
+E3832,3832,4,Landfilling or permanent storage,Y
+E3833,3833,4,Other waste disposal,Y
+E39,39,2,Remediation activities and other waste management service activities,Y
+E390,390,3,Remediation activities and other waste management service activities,Y
+E3900,3900,4,Remediation activities and other waste management service activities,Y
+F,F,1,Construction,Y
+F41_F43,,AGG,Construction of buildings and specialised construction activities,Y
+F41,41,2,Construction of residential and non-residential buildings,Y
+F410,410,3,Construction of residential and non-residential buildings,Y
+F4100,4100,4,Construction of residential and non-residential buildings,Y
+F42,42,2,Civil engineering,Y
+F421,421,3,Construction of roads and railways,Y
+F4211,4211,4,Construction of roads and motorways,Y
+F4212,4212,4,Construction of railways and underground railways,Y
+F4213,4213,4,Construction of bridges and tunnels,Y
+F422,422,3,Construction of utility projects,Y
+F4221,4221,4,Construction of utility projects for fluids,Y
+F4222,4222,4,Construction of utility projects for electricity and telecommunications,Y
+F429,429,3,Construction of other civil engineering projects,Y
+F4291,4291,4,Construction of water projects,Y
+F4299,4299,4,Construction of other civil engineering projects n.e.c.,Y
+F43,43,2,Specialised construction activities,Y
+F431,431,3,Demolition and site preparation,Y
+F4311,4311,4,Demolition,Y
+F4312,4312,4,Site preparation,Y
+F4313,4313,4,Test drilling and boring,Y
+F432,432,3,"Electrical, plumbing and other construction installation activities",Y
+F4321,4321,4,Electrical installation,Y
+F4322,4322,4,"Plumbing, heat and air-conditioning installation",Y
+F4323,4323,4,Installation of insulation,Y
+F4324,4324,4,Other construction installation,Y
+F433,433,3,Building completion and finishing,Y
+F4331,4331,4,Plastering,Y
+F4332,4332,4,Joinery installation,Y
+F4333,4333,4,Floor and wall covering,Y
+F4334,4334,4,Painting and glazing,Y
+F4335,4335,4,Other building completion and finishing,Y
+F434,434,3,Specialised construction activities in construction of buildings,Y
+F4341,4341,4,Roofing activities,Y
+F4342,4342,4,Other specialised construction activities in construction of buildings,Y
+F435,435,3,Specialised construction activities in civil engineering,Y
+F4350,4350,4,Specialised construction activities in civil engineering,Y
+F436,436,3,Intermediation service activities for specialised construction services,Y
+F4360,4360,4,Intermediation service activities for specialised construction services,Y
+F439,439,3,Other specialised construction activities,Y
+F4391,4391,4,Masonry and bricklaying activities,Y
+F4399,4399,4,Other specialised construction activities n.e.c.,Y
+F_CC1,,AGG,Buildings,Y
+F_CC11,,AGG,Residential buildings,Y
+F_CC11_X_CC113,,AGG,"Residential buildings, except residences for communities",Y
+F_CC111,,AGG,One-dwelling buildings,Y
+F_CC112,,AGG,Two- and more dwelling buildings,Y
+F_CC113,,AGG,Residences for communities,Y
+F_CC12,,AGG,Non-residential buildings,Y
+F_CC12_X_CC122,,AGG,"Non-residential buildings, except office buildings",Y
+F_CC122,,AGG,Office buildings,Y
+F_CC2,,AGG,Civil engineering works,Y
+G-V,18,AGG,Services,Y
+G-T_X_T94,,AGG,Services (except activities of membership organisations),Y
+G-T_X_P_T94,20,AGG,"Services (except public administration, defence, compulsory social security, activities of membership organisations, households as employers and extra-territorial organisations and bodies)",Y
+G-T_X_P,19,AGG,"Services (except public administration, defence, compulsory social security, activities of households as employers and extra-territorial organisations and bodies)",Y
+G-O,,AGG,Services of the business economy,Y
+G-O_X_L,,AGG,Services of the business economy (except financial and insurance activities),Y
+G-O_L642,,AGG,Services of the business economy (except activities of holding companies and financing conduits),Y
+G-I,,AGG,"Wholesale and retail trade, transport, accommodation and food service activities",Y
+G,G,1,Wholesale and retail trade,Y
+G46-T951_X_L,,AGG,"Services, without financial sector",Y
+G46-N73_INN,,AGG,Services covered by the CIS regulation,Y
+G46_ICT,,AGG,ICT wholesale,Y
+G46,46,2,Wholesale trade,Y
+G461,461,3,Wholesale on a fee or contract basis,Y
+G4611,4611,4,"Activities of agents involved in the wholesale of agricultural raw materials, live animals, textile raw materials and semi-finished goods",Y
+G4612,4612,4,"Activities of agents involved in the wholesale of fuels, ores, metals and industrial chemicals",Y
+G4613,4613,4,Activities of agents involved in the wholesale of timber and building materials,Y
+G4614,4614,4,"Activities of agents involved in the wholesale of machinery, industrial equipment, ships and aircraft",Y
+G4615,4615,4,"Activities of agents involved in the wholesale of furniture, household goods, hardware and ironmongery",Y
+G4616,4616,4,"Activities of agents involved in the wholesale of textiles, clothing, fur, footwear and leather goods",Y
+G4617,4617,4,"Activities of agents involved in the wholesale of food, beverages and tobacco",Y
+G4618,4618,4,Activities of agents involved in the wholesale of other particular products,Y
+G4619,4619,4,Activities of agents involved in non-specialised wholesale,Y
+G462,462,3,Wholesale of agricultural raw materials and live animals,Y
+G4621,4621,4,"Wholesale of grain, unmanufactured tobacco, seeds and animal feeds",Y
+G4622,4622,4,Wholesale of flowers and plants,Y
+G4623,4623,4,Wholesale of live animals,Y
+G4624,4624,4,"Wholesale of hides, skins and leather",Y
+G463,463,3,"Wholesale of food, beverages and tobacco",Y
+G4631,4631,4,Wholesale of fruit and vegetables,Y
+G4632,4632,4,"Wholesale of meat, meat products, fish and fish products",Y
+G4633,4633,4,"Wholesale of dairy products, eggs and edible oils and fats",Y
+G4634,4634,4,Wholesale of beverages,Y
+G4635,4635,4,Wholesale of tobacco products,Y
+G4636,4636,4,"Wholesale of sugar, chocolate and sugar confectionery",Y
+G4637,4637,4,"Wholesale of coffee, tea, cocoa and spices",Y
+G4638,4638,4,Wholesale of other food,Y
+G4639,4639,4,"Non-specialised wholesale of food, beverages and tobacco",Y
+G464,464,3,Wholesale of household goods,Y
+G4641,4641,4,Wholesale of textiles,Y
+G4642,4642,4,Wholesale of clothing and footwear,Y
+G4643,4643,4,Wholesale of electrical household appliances,Y
+G4644,4644,4,Wholesale of china and glassware and cleaning materials,Y
+G4645,4645,4,Wholesale of perfume and cosmetics,Y
+G4646,4646,4,Wholesale of pharmaceutical and medical goods,Y
+G4647,4647,4,"Wholesale of household, office and shop furniture, carpets and lighting equipment",Y
+G4648,4648,4,Wholesale of watches and jewellery,Y
+G4649,4649,4,Wholesale of other household goods,Y
+G465,465,3,Wholesale of information and communication equipment,Y
+G4650,4650,4,Wholesale of information and communication equipment,Y
+G466,466,3,"Wholesale of other machinery, equipment and supplies",Y
+G4661,4661,4,"Wholesale of agricultural machinery, equipment and supplies",Y
+G4662,4662,4,Wholesale of machine tools,Y
+G4663,4663,4,"Wholesale of mining, construction and civil engineering machinery",Y
+G4664,4664,4,Wholesale of other machinery and equipment,Y
+G467,467,3,"Wholesale of motor vehicles, motorcycles and related parts and accessories",Y
+G4671,4671,4,Wholesale of motor vehicles,Y
+G4672,4672,4,Wholesale of motor vehicle parts and accessories,Y
+G4673,4673,4,"Wholesale of motorcycles, motorcycle parts and accessories",Y
+G468,468,3,Other specialised wholesale,Y
+G4681,4681,4,"Wholesale of solid, liquid and gaseous fuels and related products",Y
+G4682,4682,4,Wholesale of metals and metal ores,Y
+G4683,4683,4,"Wholesale of wood, construction materials and sanitary equipment",Y
+G4684,4684,4,"Wholesale of hardware, plumbing and heating equipment and supplies",Y
+G4685,4685,4,Wholesale of chemical products,Y
+G4686,4686,4,Wholesale of other intermediate products,Y
+G4687,4687,4,Wholesale of waste and scrap,Y
+G4689,4689,4,Other specialised wholesale n.e.c.,Y
+G469,469,3,Non-specialised wholesale trade,Y
+G4690,4690,4,Non-specialised wholesale trade,Y
+G47,47,2,Retail trade,Y
+G47_X_G473,,AGG,"Retail trade, except of motor vehicles, motorcyles and fuel",Y
+G47_FOOD,,AGG,"Retail sale of food, beverages and tobacco",Y
+G47_NFOOD,,AGG,Retail sale of non-food products (including fuel),Y
+G47_NFOOD_X_G473,,AGG,Retail sale of non-food products (except fuel),Y
+G47_NF_CLTH,,AGG,"Retail sale of textiles, clothing, footware and leather goods in specialised stores",Y
+G47_NF_HLTH,,AGG,"Dispensing chemist; retail sale of medical and orthopaedic goods, cosmetic and toilet articles in specialised stores",Y
+G471,471,3,Non-specialised retail sale,Y
+G4711,4711,4,"Non-specialised retail sale of predominately food, beverages or tobacco",Y
+G4712,4712,4,Other non-specialised retail sale,Y
+G472,472,3,"Retail sale of food, beverages and tobacco",Y
+G4721,4721,4,Retail sale of fruit and vegetables,Y
+G4722,4722,4,Retail sale of meat and meat products,Y
+G4723,4723,4,"Retail sale of fish, crustaceans and molluscs",Y
+G4724,4724,4,"Retail sale of bread, cake and confectionery",Y
+G4725,4725,4,Retail sale of beverages,Y
+G4726,4726,4,Retail sale of tobacco products,Y
+G4727,4727,4,Retail sale of other food,Y
+G473,473,3,Retail sale of automotive fuel,Y
+G4730,4730,4,Retail sale of automotive fuel,Y
+G474,474,3,Retail sale of information and communication equipment,Y
+G4740,4740,4,Retail sale of information and communication equipment,Y
+G475,475,3,Retail sale of other household equipment,Y
+G4751,4751,4,Retail sale of textiles,Y
+G4752,4752,4,"Retail sale of hardware, building materials, paints and glass",Y
+G4753,4753,4,"Retail sale of carpets, rugs, wall and floor coverings",Y
+G4754,4754,4,Retail sale of electrical household appliances,Y
+G4755,4755,4,"Retail sale of furniture, lighting equipment, tableware and other household goods",Y
+G476,476,3,Retail sale of cultural and recreational goods,Y
+G4761,4761,4,Retail sale of books,Y
+G4762,4762,4,"Retail sale of newspapers, and other periodical publications and stationery",Y
+G4763,4763,4,Retail sale of sporting equipment,Y
+G4764,4764,4,Retail sale of games and toys,Y
+G4769,4769,4,Retail sale of cultural and recreational goods n.e.c.,Y
+G477,477,3,"Retail sale of other goods, except motor vehicles and motorcycles",Y
+G4771,4771,4,Retail sale of clothing,Y
+G4772,4772,4,Retail sale of footwear and leather goods,Y
+G4773,4773,4,Retail sale of pharmaceutical products,Y
+G4774,4774,4,Retail sale of medical and orthopaedic goods,Y
+G4775,4775,4,Retail sale of cosmetic and toilet articles,Y
+G4776,4776,4,"Retail sale of flowers, plants, fertilisers, pets and pet food",Y
+G4777,4777,4,Retail sale of watches and jewellery,Y
+G4778,4778,4,Retail sale of other new goods,Y
+G4779,4779,4,Retail sale of second-hand goods,Y
+G478,478,3,"Retail sale of motor vehicles, motorcycles and related parts and accessories",Y
+G4781,4781,4,Retail sale of motor vehicles,Y
+G4782,4782,4,Retail sale of motor vehicle parts and accessories,Y
+G4783,4783,4,"Retail sale of motorcycles, motorcycle parts and accessories",Y
+G479,479,3,Intermediation service activities for retail sale,Y
+G4791,4791,4,Intermediation service activities for non-specialised retail sale,Y
+G4792,4792,4,Intermediation service activities for specialised retail sale,Y
+TI,28,AGG,Total tourism industries (total),Y
+TIM,29,AGG,Tourism industries (mainly tourism),Y
+TIP,30,AGG,Tourism industries (partially tourism),Y
+TI_TR,31,AGG,Tourism industries - transport (total),Y
+TI_LTR,32,AGG,Tourism industries - land transport,Y
+TI_WTR,33,AGG,Tourism industries - water transport,Y
+TI_ACCOM,34,AGG,Tourism industries - accommodation,Y
+TI_FOODB,35,AGG,Tourism industries - food and beverage (total),Y
+TI_COR,36,AGG,Tourism industries - car and other rental (total),Y
+H-O_X_L,,AGG,Services of the business economy (except trade and financial and insurance activities),Y
+H,H,1,Transportation and storage,Y
+H_X_H53,,AGG,Transportation and storage except postal and courier activities,Y
+H_X_H491_H492,,AGG,Transport (except railways),Y
+H491_H492,,AGG,Railways,Y
+H49-H51,,AGG,Land transport and transport via pipelines; water transport; air transport,Y
+H49-H51_NTRA_X_H495,,AGG,"Land transport (except transport via pipelines), water transport and air transport - non transport activities",Y
+H49,49,2,Land transport and transport via pipelines,Y
+H491,491,3,Passenger rail transport,Y
+H4911,4911,4,Passenger heavy rail transport,Y
+H4912,4912,4,Other passenger rail transport,Y
+H492,492,3,Freight rail transport,Y
+H4920,4920,4,Freight rail transport,Y
+H493_H494,,AGG,Other passenger land transport; freight transport by road and removal services,Y
+H493,493,3,Other passenger land transport,Y
+H4931,4931,4,Scheduled passenger transport by road,Y
+H4932,4932,4,Non-scheduled passenger transport by road,Y
+H4933,4933,4,On-demand passenger transport service activities by vehicle with driver,Y
+H4934,4934,4,Passenger transport by cableways and ski lifts,Y
+H4939,4939,4,Other passenger land transport n.e.c.,Y
+H494,494,3,Freight transport by road and removal services,Y
+H4941,4941,4,Freight transport by road,Y
+H4942,4942,4,Removal services,Y
+H495,495,3,Transport via pipeline,Y
+H4950,4950,4,Transport via pipeline,Y
+H50,50,2,Water transport,Y
+H501_H502,,AGG,Sea and coastal water transport,Y
+H501,501,3,Sea and coastal passenger water transport,Y
+H5010,5010,4,Sea and coastal passenger water transport,Y
+H502,502,3,Sea and coastal freight water transport,Y
+H5020,5020,4,Sea and coastal freight water transport,Y
+H503_H504,,AGG,Inland passenger and freight water transport,Y
+H503,503,3,Inland passenger water transport,Y
+H5030,5030,4,Inland passenger water transport,Y
+H504,504,3,Inland freight water transport,Y
+H5040,5040,4,Inland freight water transport,Y
+H51_I55_O79,,AGG,"Air transport; accommodation; travel agency, tour operator and other reservation service and related activities",Y
+H51,51,2,Air transport,Y
+H511,511,3,Passenger air transport,Y
+H5110,5110,4,Passenger air transport,Y
+H512,512,3,Freight air transport and space transport,Y
+H5121,5121,4,Freight air transport,Y
+H5122,5122,4,Space transport,Y
+H52_H53,,AGG,Warehousing and support activities for transportation and postal and courier activities,Y
+H52,52,2,"Warehousing, storage and support activities for transportation",Y
+H521,521,3,Warehousing and storage,Y
+H5210,5210,4,Warehousing and storage,Y
+H522,522,3,Support activities for transportation,Y
+H5221,5221,4,Service activities incidental to land transportation,Y
+H5222,5222,4,Service activities incidental to water transportation,Y
+H5223,5223,4,Service activities incidental to air transportation,Y
+H5224,5224,4,Cargo handling,Y
+H5225,5225,4,Logistics service activities,Y
+H5226,5226,4,Other support activities for transportation,Y
+H523,523,3,Intermediation service activities for transportation,Y
+H5231,5231,4,Intermediation service activities for freight transportation,Y
+H5232,5232,4,Intermediation service activities for passenger transportation,Y
+H52_STL,,AGG,Street lighting,Y
+H53,53,2,Postal and courier activities,Y
+H531,531,3,Postal activities under universal service obligation,Y
+H5310,5310,4,Postal activities under universal service obligation,Y
+H532,532,3,Other postal and courier activities,Y
+H5320,5320,4,Other postal and courier activities,Y
+H533,533,3,Intermediation service activities for postal and courier activities,Y
+H5330,5330,4,Intermediation service activities for postal and courier activities,Y
+H_OTH,,AGG,Other transport,Y
+I_M_P-V,,AGG,"Accommodation and food service activities; real estate activities; public administration and defence; compulsory social security; education; human health and social work activities; arts, sports and recreation; other service activities; activities of households as employers and undifferentiated goods - and service-producing activities of households for own use; activities of extraterritorial organisations and bodies",Y
+I,I,1,Accommodation and food service activities,Y
+I_X_I559_I562,,AGG,"Hotels; holiday and other short-stay accommodation; camping grounds, recreational vehicle parks and trailer parks; restaurants and mobile food and beverage service activities",Y
+I55_I56_O-T_FOOD,,AGG,Restaurants and food services,Y
+I55,55,2,Accommodation,Y
+I551-I553,,AGG,"Hotels; holiday and other short-stay accommodation; camping grounds, recreational vehicle parks and trailer parks",Y
+I551,551,3,Hotels and similar accommodation,Y
+I5510,5510,4,Hotels and similar accommodation,Y
+I552_I553,,AGG,"Holiday and other short-stay accommodation; camping grounds, recreational vehicle parks and trailer parks",Y
+I552,552,3,Holiday and other short-stay accommodation,Y
+I5520,5520,4,Holiday and other short-stay accommodation,Y
+I553,553,3,Camping grounds and recreational vehicle parks,Y
+I5530,5530,4,Camping grounds and recreational vehicle parks,Y
+I554,554,3,Intermediation service activities for accommodation,Y
+I5540,5540,4,Intermediation service activities for accommodation,Y
+I559,559,3,Other accommodation,Y
+I5590,5590,4,Other accommodation,Y
+I56,56,2,Food and beverage service activities,Y
+I561_I563,,AGG,Restaurants and mobile food and beverage service activities,Y
+I561,561,3,Restaurants and mobile food service activities,Y
+I5611,5611,4,Restaurant activities,Y
+I5612,5612,4,Mobile food service activities,Y
+I562,562,3,"Event catering, contract catering service activities and other food service activities",Y
+I5621,5621,4,Event catering activities,Y
+I5622,5622,4,Contract catering service activities and other food service activities,Y
+I563,563,3,Beverage serving activities,Y
+I5630,5630,4,Beverage serving activities,Y
+I564,564,3,Intermediation service activities for food and beverage services activities,Y
+I5640,5640,4,Intermediation service activities for food and beverage services activities,Y
+KIS,21,AGG,Total knowledge intensive services,Y
+KIS_HTC,22,AGG,Knowledge-intensive high technology services,Y
+KIS_MKT,23,AGG,Knowledge intensive market services,Y
+KIS_FIN,24,AGG,Knowledge intensive financial services,Y
+KIS_OTH,25,AGG,Other knowledge intensive services,Y
+J_K,,AGG,"Publishing, broadcasting, and content production and distribution activities; telecommunication, computer programming, consulting, computing infrastructure and other information service activities",Y
+J,J,1,"Publishing, broadcasting, and content production and distribution activities",Y
+J58-J60,,AGG,"Publishing activities; motion picture, video and television programme production, sound recording and music publishing activities; programming, broadcasting, news agency and other content distribution activities",Y
+J58,58,2,Publishing activities,Y
+J581,581,3,"Publishing of books, newspapers and other publishing activities, except software publishing",Y
+J5811,5811,4,Publishing of books,Y
+J5812,5812,4,Publishing of newspapers,Y
+J5813,5813,4,Publishing of journals and periodicals,Y
+J5819,5819,4,"Other publishing activities, except software publishing",Y
+J582,582,3,Software publishing,Y
+J5821,5821,4,Publishing of video games,Y
+J5829,5829,4,Other software publishing,Y
+J59_J60,,AGG,"Motion picture, video and television programme production, sound recording and music publishing activities; programming, broadcasting, news agency and other content distribution activities",Y
+J59,59,2,"Motion picture, video and television programme production, sound recording and music publishing activities",Y
+J591,591,3,"Motion picture, video and television programme activities",Y
+J5911,5911,4,"Motion picture, video and television programme production activities",Y
+J5912,5912,4,"Motion picture, video and television programme post-production activities",Y
+J5913,5913,4,Motion picture and video distribution activities,Y
+J5914,5914,4,Motion picture projection activities,Y
+J592,592,3,Sound recording and music publishing activities,Y
+J5920,5920,4,Sound recording and music publishing activities,Y
+J60,60,2,"Programming, broadcasting, news agency and other content distribution activities",Y
+J601,601,3,Radio broadcasting and audio distribution activities,Y
+J6010,6010,4,Radio broadcasting and audio distribution activities,Y
+J602,602,3,"Television programming, broadcasting and video distribution activities",Y
+J6020,6020,4,"Television programming, broadcasting and video distribution activities",Y
+J603,603,3,News agency and other content distribution activities,Y
+J6031,6031,4,News agency activities,Y
+J6039,6039,4,Other content distribution activities,Y
+J6039_K63,,AGG,"Other content distribution activities and computing infrastructure, data processing, hosting and other information service activities",Y
+K,K,1,"Telecommunication, computer programming, consulting, computing infrastructure and other information service activities",Y
+K61-K63,,AGG,"Telecommunications; computer programming, consultancy and related activities; computing infrastructure, data processing, hosting and other information service activities",Y
+K61,61,2,Telecommunication,Y
+K611,611,3,"Wired, wireless, and satellite telecommunication activities",Y
+K6110,6110,4,"Wired, wireless, and satellite telecommunication activities",Y
+K612,612,3,Telecommunication reselling activities and intermediation service activities for telecommunication,Y
+K6120,6120,4,Telecommunication reselling activities and intermediation service activities for telecommunication,Y
+K619,619,3,Other telecommunications activities,Y
+K6190,6190,4,Other telecommunications activities,Y
+K62_K63,,AGG,"Computer programming, consultancy and related activities; computing infrastructure, data processing, hosting and other information service activities",Y
+K62,62,2,"Computer programming, consultancy and related activities",Y
+K621,621,3,Computer programming activities,Y
+K6210,6210,4,Computer programming activities,Y
+K622,622,3,Computer consultancy and computer facilities management activities,Y
+K6220,6220,4,Computer consultancy and computer facilities management activities,Y
+K629,629,3,Other information technology and computer service activities,Y
+K6290,6290,4,Other information technology and computer service activities,Y
+K63,63,2,"Computing infrastructure, data processing, hosting and other information service activities",Y
+K631,631,3,"Computing infrastructure, data processing, hosting and related activities",Y
+K6310,6310,4,"Computing infrastructure, data processing, hosting and related activities",Y
+K639,639,3,Web search portal activities and other information service activities,Y
+K6391,6391,4,Web search portal activities,Y
+K6392,6392,4,Other information service activities,Y
+L-O,,AGG,"Financial and insurance activities; real estate activities; professional, scientific and technical activities; administrative and support service activities",Y
+L_M,,AGG,Financial and insurance activities; real estate activities,Y
+L_M_X_L642,,AGG,Financial and insurance activities; real estate activities except activities of holding companies,Y
+L_X_L642,,AGG,Financial and insurance activities except activities of holding companies,Y
+L,L,1,Financial and insurance activities,Y
+L64-L66,,AGG,Knowledge intensive financial services,Y
+L64_L661_L663,,AGG,"Financial service and auxiliary activities, and fund management activities, except insurance and pension funding",Y
+L64_L65,,AGG,"Financial service activities, insurance, reinsurance and pension funding, except compulsory social security",Y
+L64_X_L642,,AGG,"Financial service activities, except insurance, pension funding, activities of holding companies",Y
+L64,64,2,"Financial service activities, except insurance and pension funding",Y
+L641,641,3,Monetary intermediation,Y
+L6411,6411,4,Central banking,Y
+L6419,6419,4,Other monetary intermediation,Y
+L642,642,3,Activities of holding companies and financing conduits,Y
+L6421,6421,4,Activities of holding companies,Y
+L6422,6422,4,Activities of financing conduits,Y
+L643,643,3,"Activities of trusts, funds and similar financial entities",Y
+L6431,6431,4,Activities of money market and non-money market investments funds,Y
+L6432,6432,4,"Activities of trust, estate and agency accounts",Y
+L649,649,3,"Other financial service activities, except insurance and pension funding",Y
+L6491,6491,4,Financial leasing,Y
+L6492,6492,4,Other credit granting,Y
+L6499,6499,4,"Other financial service activities, except insurance and pension funding n.e.c.",Y
+L64CRED,,AGG,Total credit institutions,Y
+L65_L662,,AGG,"Insurance, reinsurance and pension funding and auxiliary activities, except compulsory social security",Y
+L65,65,2,"Insurance, reinsurance and pension funding, except compulsory social security",Y
+L651,651,3,Insurance,Y
+L6511,6511,4,Life insurance,Y
+L6512,6512,4,Non-life insurance,Y
+L652,652,3,Reinsurance,Y
+L6520,6520,4,Reinsurance,Y
+L653,653,3,Pension funding,Y
+L6530,6530,4,Pension funding,Y
+L66,66,2,Activities auxiliary to financial services and insurance activities,Y
+L661,661,3,"Activities auxiliary to financial services, except insurance and pension funding",Y
+L6611,6611,4,Administration of financial markets,Y
+L6612,6612,4,Security and commodity contracts brokerage,Y
+L6619,6619,4,"Other activities auxiliary to financial services, except insurance and pension funding",Y
+L662,662,3,Activities auxiliary to insurance and pension funding,Y
+L6621,6621,4,Risk and damage evaluation,Y
+L6622,6622,4,Activities of insurance agents and brokers,Y
+L6629,6629,4,Activities auxiliary to insurance and pension funding n.e.c.,Y
+L663,663,3,Fund management activities,Y
+L6630,6630,4,Fund management activities,Y
+M_N,,AGG,"Real estate activities; professional, scientific and technical activities",Y
+M,M,1,Real estate activities,Y
+M68,68,2,Real estate activities,Y
+M681,681,3,Real estate activities with own property and development of building projects,Y
+M6811,6811,4,Buying and selling of own real estate,Y
+M6812,6812,4,Development of building projects,Y
+M682,682,3,Rental and operating of own or leased real estate,Y
+M6820,6820,4,Rental and operating of own or leased real estate,Y
+M683,683,3,Real estate activities on a fee or contract basis,Y
+M6831,6831,4,Intermediation service activities for real estate activities,Y
+M6832,6832,4,Other real estate activities on a fee or contract basis,Y
+N_T,,AGG,"Professional, scientific and technical activities; other service activities",Y
+N_O,,AGG,"Professional, scientific and technical activities; administrative and support service activities",Y
+N,N,1,"Professional, scientific and technical activities",Y
+N_STS,,AGG,"Professional, scientific and technical activities required by STS regulation",Y
+N69_N74,,AGG,"Legal and accounting activities; activities of head offices; management consultancy activities; architectural and engineering activities; technical testing and analysis; scientific research and development; advertising and market research; other professional, scientific and technical activities",Y
+N69-N71,,AGG,Legal and accounting activities; activities of head offices and management consultancy; architectural and engineering activities; technical testing and analysis,Y
+N69_N71,,AGG,Legal and accounting activities; architectural and engineering activities; technical testing and analysis,Y
+N69_N702,,AGG,Legal and accounting activities; business and other management consultancy activities,Y
+N69,69,2,Legal and accounting activities,Y
+N691,691,3,Legal activities,Y
+N6910,6910,4,Legal activities,Y
+N692,692,3,"Accounting, bookkeeping and auditing activities; tax consultancy",Y
+N6920,6920,4,"Accounting, bookkeeping and auditing activities; tax consultancy",Y
+N70,70,2,Activities of head offices and management consultancy,Y
+N701,701,3,Activities of head offices,Y
+N7010,7010,4,Activities of head offices,Y
+N702,702,3,Business and other management consultancy activities,Y
+N7020,7020,4,Business and other management consultancy activities,Y
+N71-N73,,AGG,Architectural and engineering activities; technical testing and analysis; scientific research and development; advertising and market research,Y
+N71,71,2,Architectural and engineering activities; technical testing and analysis,Y
+N711,711,3,Architectural and engineering activities and related technical consultancy,Y
+N7111,7111,4,Architectural activities,Y
+N7112,7112,4,Engineering activities and related technical consultancy,Y
+N712,712,3,Technical testing and analysis,Y
+N7120,7120,4,Technical testing and analysis,Y
+N72,72,2,Scientific research and development,Y
+N721,721,3,Research and experimental development on natural sciences and engineering,Y
+N7210,7210,4,Research and experimental development on natural sciences and engineering,Y
+N722,722,3,Research and experimental development on social sciences and humanities,Y
+N7220,7220,4,Research and experimental development on social sciences and humanities,Y
+N73-N75,,AGG,"Advertising and market research; other professional, scientific and technical activities; veterinary activities",Y
+N73,73,2,"Activities of advertising, market research and public relations",Y
+N731,731,3,Advertising,Y
+N7311,7311,4,Activities of advertising agencies,Y
+N7312,7312,4,Media representation,Y
+N732,732,3,Market research and public opinion polling,Y
+N7320,7320,4,Market research and public opinion polling,Y
+N733,733,3,Public relations and communication activities,Y
+N7330,7330,4,Public relations and communication activities,Y
+N74_N75,,AGG,"Other professional, scientific and technical activities; veterinary activities",Y
+N74,74,2,"Other professional, scientific and technical activities",Y
+N741,741,3,Specialised design activities,Y
+N7411,7411,4,Industrial product and fashion design activities,Y
+N7412,7412,4,Graphic design and visual communication activities,Y
+N7413,7413,4,Interior design activities,Y
+N7414,7414,4,Other specialised design activities,Y
+N742,742,3,Photographic activities,Y
+N7420,7420,4,Photographic activities,Y
+N743,743,3,Translation and interpretation activities,Y
+N7430,7430,4,Translation and interpretation activities,Y
+N749,749,3,"Other professional, scientific and technical activities n.e.c.",Y
+N7491,7491,4,Patent brokering and marketing service activities,Y
+N7499,7499,4,"All other professional, scientific and technical activities n.e.c.",Y
+N75,75,2,Veterinary activities,Y
+N750,750,3,Veterinary activities,Y
+N7500,7500,4,Veterinary activities,Y
+O,O,1,Administrative and support service activities,Y
+O_STS,,AGG,Administrative and support service activities required by STS regulation,Y
+O77-O82_X_O79,,AGG,"Activities for rental and leasing, employment, security and investigation, services to buildings and landscape, office administrative, office support and other business support",Y
+O77,77,2,Rental and leasing activities,Y
+O771_O7721,,AGG,"Renting and leasing of motor vehicles, recreational and sports goods",Y
+O771,771,3,Rental and leasing of motor vehicles,Y
+O7711,7711,4,Rental and leasing of cars and light motor vehicles,Y
+O7712,7712,4,Rental and leasing of trucks,Y
+O772,772,3,Rental and leasing of personal and household goods,Y
+O7721,7721,4,Rental and leasing of recreational and sports goods,Y
+O7722,7722,4,Rental and leasing of other personal and household goods,Y
+O773,773,3,"Rental and leasing of other machinery, equipment and tangible goods",Y
+O7731,7731,4,Rental and leasing of agricultural machinery and equipment,Y
+O7732,7732,4,Rental and leasing of construction and civil engineering machinery and equipment,Y
+O7733,7733,4,"Rental and leasing of office machinery, equipment and computers",Y
+O7734,7734,4,Rental and leasing of water transport equipment,Y
+O7735,7735,4,Rental and leasing of air transport equipment,Y
+O7739,7739,4,"Rental and leasing of other machinery, equipment and tangible goods n.e.c.",Y
+O774,774,3,"Leasing of intellectual property and similar products, except copyrighted works",Y
+O7740,7740,4,"Leasing of intellectual property and similar products, except copyrighted works",Y
+O775,775,3,Intermediation service activities for rental and leasing of tangible goods and non-financial intangible assets,Y
+O7751,7751,4,"Intermediation service activities for rental and leasing of cars, motorhomes and trailers",Y
+O7752,7752,4,Intermediation service activities for rental and leasing of other tangible goods and non-financial intangible assets,Y
+O78-O82,,AGG,"Employment, travel agency, security and investigation, service and landscape, office administrative and support activities",Y
+O78,78,2,Employment activities,Y
+O781,781,3,Activities of employment placement agencies,Y
+O7810,7810,4,Activities of employment placement agencies,Y
+O782,782,3,Temporary employment agency activities and other human resource provisions,Y
+O7820,7820,4,Temporary employment agency activities and other human resource provisions,Y
+O79,79,2,"Travel agency, tour operator and other reservation service and related activities",Y
+O791,791,3,Travel agency and tour operator activities,Y
+O7911,7911,4,Travel agency activities,Y
+O7912,7912,4,Tour operator activities,Y
+O799,799,3,Other reservation service and related activities,Y
+O7990,7990,4,Other reservation service and related activities,Y
+O80,80,2,Investigation and security activities,Y
+O800,800,3,Investigation and security activities,Y
+O8001,8001,4,Investigation and private security activities,Y
+O8009,8009,4,Security activities n.e.c.,Y
+O81,81,2,Services to buildings and landscape activities,Y
+O811,811,3,Combined facilities support activities,Y
+O8110,8110,4,Combined facilities support activities,Y
+O812,812,3,Cleaning activities,Y
+O8121,8121,4,General cleaning of buildings,Y
+O8122,8122,4,Other building and industrial cleaning activities,Y
+O8123,8123,4,Other cleaning activities,Y
+O813,813,3,Landscape service activities,Y
+O8130,8130,4,Landscape service activities,Y
+O82,82,2,"Office administrative, office support and other business support activities",Y
+O821,821,3,Office administrative and support activities,Y
+O8210,8210,4,Office administrative and support activities,Y
+O822,822,3,Activities of call centres,Y
+O8220,8220,4,Activities of call centres,Y
+O823,823,3,Organisation of conventions and trade shows,Y
+O8230,8230,4,Organisation of conventions and trade shows,Y
+O824,824,3,Intermediation service activities for business support service activities n.e.c.,Y
+O8240,8240,4,Intermediation service activities for business support service activities n.e.c.,Y
+O829,829,3,Business support service activities n.e.c.,Y
+O8291,8291,4,Activities of collection agencies and credit bureaus,Y
+O8292,8292,4,Packaging activities,Y
+O8299,8299,4,Other business support service activities n.e.c.,Y
+P_V,,AGG,Public administration; activities of extraterritorial organisations and bodies,Y
+P-V,,,"Public administration and defence; compulsory social security; education; human health and social work activities; arts, sports and recreation; other service activities; activities of households as employers and undifferentiated goods- and service-producing activities of households for own use and activities of extraterritorial organisations and bodies",Y
+P_U_V,,AGG,Activities,Y
+P-T,,,"Public administration, defence, education, human health and social work activities; arts, sports and recreation; other service activities",N
+P-S,,AGG,"Public administration, defence, education, human health and social work activities; arts, sports and recreation",Y
+P-R,,AGG,Public administration and defence; compulsory social security; education; human health and social work activities,Y
+P_Q,,AGG,Public administration and defence; compulsory social security and education,Y
+P,P,1,Public administration and defence; compulsory social security,Y
+P84,84,2,Public administration and defence; compulsory social security,Y
+P841,841,3,"Administration of the State and the economic, social and environmental policies of the community",Y
+P8411,8411,4,General public administration activities,Y
+P8412,8412,4,"Regulation of health care, education, cultural services and other social services",Y
+P8413,8413,4,Regulation of and contribution to more efficient operation of businesses,Y
+P842,842,3,Provision of services to the community as a whole,Y
+P8421,8421,4,Foreign affairs,Y
+P8422,8422,4,Defence activities,Y
+P8423,8423,4,Justice and judicial activities,Y
+P8424,8424,4,Public order and safety activities,Y
+P8425,8425,4,Fire service activities,Y
+P843,843,3,Compulsory social security activities,Y
+P8430,8430,4,Compulsory social security activities,Y
+Q-T,,AGG,"Education; human health and social work activities; arts, sports and recreation; other service activities",Y
+Q-T_X_T94,,AGG,"Education; human health and social work activities; arts, sports and recreation; other service activities, except activities of membership organisations",Y
+Q_R,,AGG,Education; human health and social work activities,Y
+Q,Q,1,Education,Y
+Q85,85,2,Education,Y
+Q851,851,3,Pre-primary education,Y
+Q8510,8510,4,Pre-primary education,Y
+Q852,852,3,Primary education,Y
+Q8520,8520,4,Primary education,Y
+Q853,853,3,Secondary and post-secondary non-tertiary education,Y
+Q8531,8531,4,General secondary education,Y
+Q8532,8532,4,Vocational secondary education,Y
+Q8533,8533,4,Post-secondary non-tertiary education,Y
+Q854,854,3,Tertiary education,Y
+Q8540,8540,4,Tertiary education,Y
+Q855,855,3,Other education,Y
+Q8551,8551,4,Sports and recreation education,Y
+Q8552,8552,4,Cultural education,Y
+Q8553,8553,4,Driving school activities,Y
+Q8559,8559,4,Other education n.e.c.,Y
+Q856,856,3,Educational support activities,Y
+Q8561,8561,4,Intermediation service activities for courses and tutors,Y
+Q8569,8569,4,Educational support activities n.e.c.,Y
+R,R,1,Human health and social work activities,Y
+R86,86,2,Human health activities,Y
+R861,861,3,Hospital activities,Y
+R8610,8610,4,Hospital activities,Y
+R862,862,3,Medical and dental practice activities,Y
+R8621,8621,4,General medical practice activities,Y
+R8622,8622,4,Medical specialists activities,Y
+R8623,8623,4,Dental practice care activities,Y
+R869,869,3,Other human health activities,Y
+R8691,8691,4,Diagnostic imaging services and medical laboratory activities,Y
+R8692,8692,4,Patient transportation by ambulance,Y
+R8693,8693,4,"Activities of psychologists and psychotherapists, except medical doctors",Y
+R8694,8694,4,Nursing and midwifery activities,Y
+R8695,8695,4,Physiotherapy activities,Y
+R8696,8696,4,"Traditional, complementary and alternative medicine activities",Y
+R8697,8697,4,"Intermediation service activities for medical, dental and other human health services",Y
+R8699,8699,4,Other human health activities n.e.c.,Y
+R87_R88,,AGG,Residential care activities and social work activities without accommodation,Y
+R87,87,2,Residential care activities,Y
+R871,871,3,Residential nursing care activities,Y
+R8710,8710,4,Residential nursing care activities,Y
+R872,872,3,Residential care activities for persons living with or having a diagnosis of a mental illness or substance abuse,Y
+R8720,8720,4,Residential care activities for persons living with or having a diagnosis of a mental illness or substance abuse,Y
+R873,873,3,Residential care activities for older persons or persons with physical disabilities,Y
+R8730,8730,4,Residential care activities for older persons or persons with physical disabilities,Y
+R879,879,3,Other residential care activities,Y
+R8791,8791,4,Intermediation service activities for residential care activities,Y
+R8799,8799,4,Other residential care activities n.e.c.,Y
+R88,88,2,Social work activities without accommodation,Y
+R881,881,3,Social work activities without accommodation for older persons or persons with disabilities,Y
+R8810,8810,4,Social work activities without accommodation for older persons or persons with disabilities,Y
+R889,889,3,Other social work activities without accommodation,Y
+R8891,8891,4,Child day-care activities,Y
+R8899,8899,4,Other social work activities without accommodation n.e.c.,Y
+S-V,,AGG,"Arts, sports and recreation; other service activities; activities of households as employers and undifferentiated goods- and service-producing activities of households for own use; activities of extraterritorial organisations and bodies",Y
+S_T,,AGG,"Arts, sports and recreation; other service activities",Y
+S_T_X_T94,,AGG,"Arts, sports and recreation; other service activities (except activities of membership organisations)",Y
+S,S,1,"Arts, sports and recreation",Y
+S90-S92,,AGG,"Creative, arts and entertainment activities; libraries, archives, museums and other cultural activities; gambling and betting activities",Y
+S90,90,2,Arts creation and performing arts activities,Y
+S901,901,3,Arts creation activities,Y
+S9011,9011,4,Literary creation and musical composition activities,Y
+S9012,9012,4,Visual arts creation activities,Y
+S9013,9013,4,Other arts creation activities,Y
+S902,902,3,Activities of performing arts,Y
+S9020,9020,4,Activities of performing arts,Y
+S903,903,3,Support activities to arts creation and performing arts,Y
+S9031,9031,4,Operation of arts facilities and sites,Y
+S9039,9039,4,Other support activities to arts and performing arts,Y
+S91,91,2,"Libraries, archives, museums and other cultural activities",Y
+S911,911,3,Library and archive activities,Y
+S9111,9111,4,Library activities,Y
+S9112,9112,4,Archive activities,Y
+S912,912,3,"Museum, collection, historical site and monument activities",Y
+S9121,9121,4,Museum and collection activities,Y
+S9122,9122,4,Historical site and monument activities,Y
+S913,913,3,"Conservation, restoration and other support activities for cultural heritage",Y
+S9130,9130,4,"Conservation, restoration and other support activities for cultural heritage",Y
+S914,914,3,Botanical and zoological garden and nature reserve activities,Y
+S9141,9141,4,Botanical and zoological garden activities,Y
+S9142,9142,4,Nature reserve activities,Y
+S92_S93,,AGG,Gambling and betting activities; sporting and other recreational activities,Y
+S92,92,2,Gambling and betting activities,Y
+S920,920,3,Gambling and betting activities,Y
+S9200,9200,4,Gambling and betting activities,Y
+S93,93,2,Sports activities and amusement and recreation activities,Y
+S931,931,3,Sports activities,Y
+S9311,9311,4,Operation of sports facilities,Y
+S9312,9312,4,Activities of sport clubs,Y
+S9313,9313,4,Activities of fitness centres,Y
+S9319,9319,4,Sports activities n.e.c.,Y
+S932,932,3,Amusement and recreation activities,Y
+S9321,9321,4,Activities of amusement parks and theme parks,Y
+S9329,9329,4,Amusement and recreation activities n.e.c.,Y
+T-V,,AGG,Other service activities; activities of households as employers and extraterritorial organisations and bodies,Y
+T_U,,AGG,"Other service activities, activities of households as employers",Y
+T,T,1,Other service activities,Y
+T94,94,2,Activities of membership organisations,Y
+T941,941,3,"Activities of business, employers and professional membership organisations",Y
+T9411,9411,4,Activities of business and employers membership organisations,Y
+T9412,9412,4,Activities of professional membership organisations,Y
+T942,942,3,Activities of trade unions,Y
+T9420,9420,4,Activities of trade unions,Y
+T949,949,3,Activities of other membership organisations,Y
+T9491,9491,4,Activities of religious organisations,Y
+T9492,9492,4,Activities of political organisations,Y
+T9499,9499,4,Activities of other membership organisations n.e.c.,Y
+T95_T96,,AGG,"Repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles; personal service activities",Y
+T95,95,2,"Repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles",Y
+T951,951,3,Repair and maintenance of computers and communication equipment,Y
+T9510,9510,4,Repair and maintenance of computers and communication equipment,Y
+T952,952,3,Repair and maintenance of personal and household goods,Y
+T9521,9521,4,Repair and maintenance of consumer electronics,Y
+T9522,9522,4,Repair and maintenance of household appliances and home and garden equipment,Y
+T9523,9523,4,Repair and maintenance of footwear and leather goods,Y
+T9524,9524,4,Repair and maintenance of furniture and home furnishings,Y
+T9525,9525,4,"Repair and maintenance of watches, clocks and jewellery",Y
+T9529,9529,4,Repair and maintenance of personal and household goods n.e.c.,Y
+T953,953,3,Repair and maintenance of motor vehicles and motorcycles,Y
+T9531,9531,4,Repair and maintenance of motor vehicles,Y
+T9532,9532,4,Repair and maintenance of motorcycles,Y
+T954,954,3,"Intermediation service activities for repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles",Y
+T9540,9540,4,"Intermediation service activities for repair and maintenance of computers, personal and household goods, and motor vehicles and motorcycles",Y
+T96,96,2,Personal service activities,Y
+T961,961,3,Washing and cleaning of textile and fur products,Y
+T9610,9610,4,Washing and cleaning of textile and fur products,Y
+T962,962,3,"Hairdressing, beauty treatment, day spa and similar activities",Y
+T9621,9621,4,Hairdressing and barber activities,Y
+T9622,9622,4,Beauty care and other beauty treatment activities,Y
+T9623,9623,4,"Day spa, sauna and steam bath activities",Y
+T963,963,3,Funeral and related activities,Y
+T9630,9630,4,Funeral and related activities,Y
+T964,964,3,Intermediation service activities for personal services,Y
+T9640,9640,4,Intermediation service activities for personal services,Y
+T969,969,3,Other personal service activities,Y
+T9691,9691,4,Provision of domestic personal service activities,Y
+T9699,9699,4,Other personal service activities n.e.c.,Y
+U,U,1,Activities of households as employers and undifferentiated goods- and service-producing activities of households for own use,Y
+U97,97,2,Activities of households as employers of domestic personnel,Y
+U970,970,3,Activities of households as employers of domestic personnel,Y
+U9700,9700,4,Activities of households as employers of domestic personnel,Y
+U98_V,,AGG,Undifferentiated goods- and services-producing activities of private households for own use and activities of extraterritorial organisations and bodies,Y
+U98,98,2,Undifferentiated goods- and service-producing activities of private households for own use,Y
+U981,981,3,Undifferentiated goods-producing activities of private households for own use,Y
+U9810,9810,4,Undifferentiated goods-producing activities of private households for own use,Y
+U982,982,3,Undifferentiated service-producing activities of private households for own use,Y
+U9820,9820,4,Undifferentiated service-producing activities of private households for own use,Y
+V,V,1,Activities of extraterritorial organisations and bodies,Y
+V99,99,2,Activities of extraterritorial organisations and bodies,Y
+V990,990,3,Activities of extraterritorial organisations and bodies,Y
+V9900,9900,4,Activities of extraterritorial organisations and bodies,Y
+ICT,7,AGG,Information and Communication Technology - total,Y
+C_ICT,8,AGG,ICT manufacturing,Y
+G-V_ICT,9,AGG,ICT services,Y
+INF,10,AGG,Information sector,Y
+CRA,11,AGG,Computer related services,Y
+CLT,37,AGG,Cultural and creative sectors - total,M
+CLT_S,38,AGG,Cultural and creative sectors - services,M
+EP_HH,,AGG,Households,M
+EP_NRES,,AGG,Non-residents,M
+TOTAL_HH_NRES,,AGG,"All NACE activities plus households, non-residents and not allocated",M
+TOTAL_HH,,AGG,All NACE activities plus households,M
+MU_WST,,AGG,Municipal waste,M
+HH_WST,,AGG,Waste from households,M
+HH,,AGG,Total activities by households,M
+HH_HEAT,,AGG,Heating/cooling activities by households,M
+HH_HEAT_OTH,,AGG,Heating/cooling and other activities by households,M
+HH_TRA,,AGG,Transport activities by households,M
+HH_OTH,,AGG,Other activities by households,M
+CH_INV_PA,,AGG,Changes in inventories and produced assets,M
+SD_SU,,AGG,Statistical discrepancy between supply and use of energy for total activities,M
+ROW_ACT,,AGG,Economic activities of the rest of the world,M
+ENV,,AGG,Environment,M
+NRG_FLOW,,AGG,Energy flows over all activities,M
+DATAC,,AGG,Data centres activities,M
+PRV_RE,,AGG,Private real estate activities,M
+FDI,,AGG,All FDI activities,M
+OTH,,1,Other NACE activities,Y
+NAL,,1,Not allocated,Y
+NAP,,1,Not applicable,Y
+NRP,,1,No response,Y
+NSP,,1,Not specified,Y
+UNK,,1,Unknown NACE activity,Y

@@ -1,0 +1,19 @@
+files:
+  - src/oas.md
+  - CONTRIBUTING.md
+  - EDITORS.md
+  - GOVERNANCE.md
+  - IMPLEMENTATIONS.md
+  - MAINTAINERS.md
+  - README.md
+  - SECURITY_CONSIDERATIONS.md
+  - SPECIAL_INTEREST_GROUPS.md
+  - style-guide.md
+  - TOB.md
+ignorePatterns:
+  - pattern: 'slack.com'  # Slack invite links 403 with linkspector
+  - pattern: 'clientdomain.com'
+  - pattern: 'example.org'
+  - pattern: 'w3.org' # W3 returns 403 for automated requests
+  - pattern: 'https://www.npmjs.com/package/markdownlint'
+  - pattern: 'https://www.merriam-webster.com/dictionary/'

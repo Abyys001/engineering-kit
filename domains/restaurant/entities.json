@@ -1,0 +1,687 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "entities": [
+    {
+      "id": "restaurant_location",
+      "name": "Restaurant location",
+      "description": "A single physical restaurant outlet.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "table"
+        },
+        {
+          "type": "has_many",
+          "target": "menu"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "address",
+        "default_menu"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.tables",
+        "restaurant.menu",
+        "restaurant.multi_location_management"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "table",
+      "name": "Table",
+      "description": "A seatable unit on the floor plan.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "restaurant_location"
+        }
+      ],
+      "important_fields": [
+        "number",
+        "seats",
+        "status",
+        "section"
+      ],
+      "states": [
+        "available",
+        "occupied",
+        "reserved",
+        "cleaning"
+      ],
+      "related_features": [
+        "restaurant.tables",
+        "restaurant.dine_in_orders",
+        "restaurant.reservations"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "guest",
+      "name": "Guest",
+      "description": "The person a reservation, waitlist entry, or order is placed for; may or may not be a registered customer account.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "phone",
+        "party_size"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.reservations",
+        "restaurant.waitlist",
+        "restaurant.loyalty"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "reservation",
+      "name": "Reservation",
+      "description": "A booked table for a date/time and party size.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest"
+        },
+        {
+          "type": "belongs_to",
+          "target": "table",
+          "note": "optional until seated"
+        }
+      ],
+      "important_fields": [
+        "party_size",
+        "start_at",
+        "status"
+      ],
+      "states": [
+        "requested",
+        "confirmed",
+        "seated",
+        "completed",
+        "cancelled",
+        "no_show"
+      ],
+      "related_features": [
+        "restaurant.reservations"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "waitlist_entry",
+      "name": "Waitlist entry",
+      "description": "A walk-in party waiting for a table.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest"
+        }
+      ],
+      "important_fields": [
+        "party_size",
+        "quoted_wait_minutes",
+        "status"
+      ],
+      "states": [
+        "waiting",
+        "notified",
+        "seated",
+        "abandoned",
+        "expired"
+      ],
+      "related_features": [
+        "restaurant.waitlist"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "menu",
+      "name": "Menu",
+      "description": "A priced set of items available at a location, optionally time-windowed (e.g. lunch menu).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "restaurant_location"
+        },
+        {
+          "type": "has_many",
+          "target": "menu_item"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "active",
+        "available_from",
+        "available_to"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.menu"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "menu_item",
+      "name": "Menu item",
+      "description": "A single sellable dish or drink.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "menu"
+        },
+        {
+          "type": "has_many",
+          "target": "modifier_group"
+        },
+        {
+          "type": "has_one",
+          "target": "recipe"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "price",
+        "course",
+        "allergens"
+      ],
+      "states": [
+        "active",
+        "86'd",
+        "discontinued"
+      ],
+      "related_features": [
+        "restaurant.menu",
+        "restaurant.menu_allergen_labeling"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "modifier_group",
+      "name": "Modifier group",
+      "description": "A named set of modifier choices for a menu item (e.g. 'Size', 'Toppings').",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "menu_item"
+        },
+        {
+          "type": "has_many",
+          "target": "modifier"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "min_choices",
+        "max_choices"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.menu_modifiers"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "modifier",
+      "name": "Modifier",
+      "description": "A single selectable option within a modifier group, with an optional price delta.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "modifier_group"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "price_delta"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.menu_modifiers"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "order",
+      "name": "Order",
+      "description": "A dine-in, takeout, or delivery order composed of line items.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "table",
+          "note": "dine-in only"
+        },
+        {
+          "type": "belongs_to",
+          "target": "guest"
+        },
+        {
+          "type": "has_many",
+          "target": "order_item"
+        },
+        {
+          "type": "has_one",
+          "target": "bill"
+        }
+      ],
+      "important_fields": [
+        "order_type",
+        "status",
+        "total"
+      ],
+      "states": [
+        "open",
+        "sent_to_kitchen",
+        "ready",
+        "served",
+        "billed",
+        "paid",
+        "cancelled"
+      ],
+      "related_features": [
+        "restaurant.dine_in_orders",
+        "restaurant.takeout_orders",
+        "restaurant.delivery_orders",
+        "restaurant.online_ordering"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "order_item",
+      "name": "Order item",
+      "description": "A single menu item (with chosen modifiers and quantity) within an order.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        },
+        {
+          "type": "belongs_to",
+          "target": "menu_item"
+        }
+      ],
+      "important_fields": [
+        "quantity",
+        "modifiers",
+        "notes",
+        "course"
+      ],
+      "states": [
+        "ordered",
+        "fired",
+        "ready",
+        "served",
+        "voided"
+      ],
+      "related_features": [
+        "restaurant.dine_in_orders",
+        "restaurant.split_bills"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kitchen_ticket",
+      "name": "Kitchen ticket",
+      "description": "A KDS/KOT ticket routing one or more order items to a kitchen station.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        },
+        {
+          "type": "has_many",
+          "target": "order_item"
+        }
+      ],
+      "important_fields": [
+        "station",
+        "status",
+        "fired_at"
+      ],
+      "states": [
+        "new",
+        "preparing",
+        "ready",
+        "bumped",
+        "cancelled"
+      ],
+      "related_features": [
+        "restaurant.kitchen_display"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "bill",
+      "name": "Bill / check",
+      "description": "The payable total for an order or group of orders at a table, which may be split.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        },
+        {
+          "type": "has_many",
+          "target": "payment"
+        }
+      ],
+      "important_fields": [
+        "subtotal",
+        "tax",
+        "tip",
+        "status"
+      ],
+      "states": [
+        "open",
+        "split",
+        "paid",
+        "void"
+      ],
+      "related_features": [
+        "restaurant.payments",
+        "restaurant.split_bills"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "description": "A single payment (or refund) applied against a bill.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "bill"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "tip_amount",
+        "method",
+        "status"
+      ],
+      "states": [
+        "pending",
+        "captured",
+        "failed",
+        "refunded"
+      ],
+      "related_features": [
+        "restaurant.payments",
+        "restaurant.tips",
+        "restaurant.gift_cards"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "inventory_item",
+      "name": "Inventory item",
+      "description": "A stocked ingredient or supply consumed by recipes.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "recipe"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "unit",
+        "quantity_on_hand",
+        "reorder_level"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.inventory"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "recipe",
+      "name": "Recipe",
+      "description": "The bill-of-materials for a menu item: ingredient quantities and yield.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "menu_item"
+        },
+        {
+          "type": "has_many",
+          "target": "inventory_item"
+        }
+      ],
+      "important_fields": [
+        "yield_quantity",
+        "ingredients"
+      ],
+      "states": [],
+      "related_features": [
+        "restaurant.recipes"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "shift",
+      "name": "Shift",
+      "description": "A scheduled block of work time for a staff member.",
+      "relationships": [],
+      "important_fields": [
+        "staff_member",
+        "start_at",
+        "end_at",
+        "role"
+      ],
+      "states": [
+        "scheduled",
+        "clocked_in",
+        "clocked_out",
+        "no_show"
+      ],
+      "related_features": [
+        "restaurant.staff_shifts"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "loyalty_account",
+      "name": "Loyalty account",
+      "description": "A guest's accrued points/rewards balance.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest"
+        }
+      ],
+      "important_fields": [
+        "points_balance",
+        "tier"
+      ],
+      "states": [
+        "active",
+        "suspended"
+      ],
+      "related_features": [
+        "restaurant.loyalty"
+      ],
+      "provenance": {
+        "sources": [
+          "ury"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review",
+      "description": "A guest's post-visit rating and feedback.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest"
+        },
+        {
+          "type": "belongs_to",
+          "target": "order",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "rating",
+        "comment"
+      ],
+      "states": [
+        "submitted",
+        "published",
+        "flagged"
+      ],
+      "related_features": [
+        "restaurant.reviews"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-customer-review"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "delivery",
+      "name": "Delivery",
+      "description": "The courier trip fulfilling a delivery order.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "order"
+        }
+      ],
+      "important_fields": [
+        "address",
+        "courier",
+        "eta",
+        "status"
+      ],
+      "states": [
+        "assigned",
+        "picked_up",
+        "en_route",
+        "delivered",
+        "failed"
+      ],
+      "related_features": [
+        "restaurant.delivery_orders"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    }
+  ]
+}

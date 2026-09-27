@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "git_provider",
+      "name": "Git provider (issue linking)",
+      "category": "development",
+      "purpose": "Link tasks to commits, branches, and pull requests, and optionally auto-transition a task's state when a linked PR merges.",
+      "examples": ["GitHub", "GitLab"],
+      "protocols": ["REST", "webhooks"],
+      "related_features": ["project-management.task_dependencies", "project-management.activity_feed"],
+      "classification": "integration",
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's db/models/integration/github.py; single source."}
+    },
+    {
+      "id": "chat_notifications",
+      "name": "Chat notifications",
+      "category": "communication",
+      "purpose": "Push task/comment notifications into a team chat channel.",
+      "examples": ["Slack"],
+      "protocols": ["webhooks", "REST"],
+      "related_features": ["project-management.comments_mentions", "project-management.activity_feed"],
+      "classification": "integration",
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's db/models/integration/slack.py; single source."}
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "lead_lifecycle",
+      "name": "Lead lifecycle",
+      "actor": "sales_rep",
+      "trigger": "A new lead is captured from a form, import, or manual entry.",
+      "steps": [
+        "Lead is created with a source",
+        "Rep contacts the lead",
+        "Lead is qualified or disqualified",
+        "Qualified lead is converted into a contact, account, and deal"
+      ],
+      "entities": [
+        "lead",
+        "contact",
+        "company",
+        "deal"
+      ],
+      "features": [
+        "crm.leads",
+        "crm.lead_conversion"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "lead",
+        "initial": "new",
+        "terminal": [
+          "converted",
+          "disqualified"
+        ],
+        "states": [
+          "new",
+          "contacted",
+          "qualified",
+          "converted",
+          "disqualified"
+        ],
+        "transitions": [
+          {
+            "from": "new",
+            "to": "contacted",
+            "event": "contact"
+          },
+          {
+            "from": "contacted",
+            "to": "qualified",
+            "event": "qualify"
+          },
+          {
+            "from": "contacted",
+            "to": "disqualified",
+            "event": "disqualify"
+          },
+          {
+            "from": "qualified",
+            "to": "converted",
+            "event": "convert"
+          },
+          {
+            "from": "qualified",
+            "to": "disqualified",
+            "event": "disqualify"
+          }
+        ]
+      }
+    },
+    {
+      "id": "deal_lifecycle",
+      "name": "Deal lifecycle",
+      "actor": "sales_rep",
+      "trigger": "A deal is created (directly or from a converted lead) and moves through pipeline stages to a close.",
+      "steps": [
+        "Deal created in the first pipeline stage",
+        "Rep advances the deal through stages",
+        "Deal is marked won or lost at close"
+      ],
+      "entities": [
+        "deal",
+        "pipeline_stage"
+      ],
+      "features": [
+        "crm.deals_pipelines"
+      ],
+      "notifications": [
+        "deal_won",
+        "deal_lost"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "deal",
+        "initial": "open",
+        "terminal": [
+          "won",
+          "lost"
+        ],
+        "states": [
+          "open",
+          "won",
+          "lost"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "won",
+            "event": "mark_won"
+          },
+          {
+            "from": "open",
+            "to": "lost",
+            "event": "mark_lost"
+          }
+        ]
+      }
+    },
+    {
+      "id": "quote_approval",
+      "name": "Quote approval and send",
+      "actor": "sales_rep",
+      "trigger": "A rep assembles a quote from a deal's line items and routes it for internal approval before sending.",
+      "steps": [
+        "Rep adds line items to the deal",
+        "Rep requests approval",
+        "Manager approves or rejects",
+        "Approved quote is sent to the customer",
+        "Customer accepts, rejects, or lets it expire"
+      ],
+      "entities": [
+        "quote",
+        "deal"
+      ],
+      "features": [
+        "crm.quotes"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      },
+      "state_machine": {
+        "entity": "quote",
+        "initial": "draft",
+        "terminal": [
+          "accepted",
+          "rejected",
+          "expired"
+        ],
+        "states": [
+          "draft",
+          "pending_approval",
+          "approved",
+          "sent",
+          "accepted",
+          "rejected",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "pending_approval",
+            "event": "request_approval"
+          },
+          {
+            "from": "pending_approval",
+            "to": "approved",
+            "event": "approve"
+          },
+          {
+            "from": "pending_approval",
+            "to": "draft",
+            "event": "reject_internal"
+          },
+          {
+            "from": "approved",
+            "to": "sent",
+            "event": "send"
+          },
+          {
+            "from": "sent",
+            "to": "accepted",
+            "event": "customer_accept"
+          },
+          {
+            "from": "sent",
+            "to": "rejected",
+            "event": "customer_reject"
+          },
+          {
+            "from": "sent",
+            "to": "expired",
+            "event": "expire"
+          }
+        ]
+      }
+    }
+  ]
+}

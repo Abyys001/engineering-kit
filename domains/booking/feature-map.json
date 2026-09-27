@@ -1,0 +1,1073 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "name": "Booking",
+  "aliases": [
+    "appointment scheduling",
+    "resource scheduling",
+    "calendar booking"
+  ],
+  "description": "Generic appointment and resource scheduling: services, providers/staff or resources, availability rules and exceptions, time-slot booking with buffers and capacity, recurrence, reminders, cancellation policy, and calendar sync. Other domains (restaurant, hospitality) may depend on this instead of duplicating slot/availability logic.",
+  "nace": [
+    "N82.99"
+  ],
+  "maturity": "curated",
+  "last_reviewed": "2026-09-26",
+  "sources": [
+    {
+      "id": "caldiy",
+      "title": "Cal.diy (Cal.com's open-source community edition)",
+      "url": "https://github.com/calcom/cal.com",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-26",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned (monorepo, 1.1GB, exceeds practical clone cost for this pass; inspected via raw.githubusercontent.com Prisma schema). Root LICENSE file verified as MIT, 2026-09-26 — the repository's own README states it is 'Cal.diy', a fork of Cal.com with all enterprise/commercial code removed and '100% MIT-licensed, no Open Core split'. This CORRECTS an initial assumption (carried in the task brief) that calcom/cal.com is AGPL: that historically described Cal.com's paid/Enterprise-Edition core, which is not what this repository now contains. Permissive license means it is not marked reference-only for licensing reasons, though nothing was copied — only entity/field names were read from packages/prisma/schema.prisma (EventType, Booking, Attendee, Host, Schedule, Availability, OutOfOfficeEntry, BookingSeat, BookingReference, Payment, Webhook)."
+    },
+    {
+      "id": "easyappointments",
+      "title": "Easy!Appointments",
+      "url": "https://github.com/alextselegidis/easyappointments",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned (inspected via raw.githubusercontent.com README + openapi.yml). GPL-3.0 verified from actual LICENSE file. Reference-only, no code copied. Its own OpenAPI contract (openapi.yml) confirms: appointments, availabilities, unavailabilities, customers, services, service_categories, providers, secretaries (a scheduling-on-behalf-of role), working_plan_exceptions, blocked_periods, webhooks. README notes some capabilities (e.g. SMS reminders, deposits) may be gated behind a paid 'premium' tier, not confirmed present in the open-source core — flagged per-feature below."
+    },
+    {
+      "id": "rfc5545",
+      "title": "RFC 5545 — Internet Calendaring and Scheduling Core Object Specification (iCalendar)",
+      "url": "https://www.rfc-editor.org/rfc/rfc5545",
+      "source_type": "authoritative",
+      "license": "IETF Trust — freely usable/implementable per BCP 78/79",
+      "retrieved": "2026-09-26",
+      "version": "RFC 5545",
+      "local_path": null,
+      "notes": "Authoritative standard for calendar events, recurrence rules (RRULE), and time-zone handling; the canonical reference for recurring bookings and calendar sync/export."
+    },
+    {
+      "id": "wikipedia-no-show",
+      "title": "Wikipedia: No-show (booking)",
+      "url": "https://en.wikipedia.org/wiki/No-show_(booking)",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for no-show policy; used only where not directly evidenced in the two inspected implementations."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI Data Security Standard v4.0.1",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI SSC copyright; free to read/download with registration",
+      "retrieved": "2026-09-26",
+      "version": "4.0.1",
+      "local_path": null,
+      "notes": "Same standard already verified for domains/restaurant and domains/hospitality; applies identically to any booking product collecting card deposits/payments."
+    },
+    {
+      "id": "wikipedia-resource-allocation",
+      "title": "Wikipedia: Resource allocation",
+      "url": "https://en.wikipedia.org/wiki/Resource_allocation",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for non-human bookable resources (rooms, equipment); neither Cal.diy nor Easy!Appointments models a generic resource entity."
+    },
+    {
+      "id": "wikipedia-waiting-list",
+      "title": "Wikipedia: Waiting list",
+      "url": "https://en.wikipedia.org/wiki/Waiting_list",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for booking waitlists; not present in either inspected implementation."
+    }
+  ],
+  "features": [
+    {
+      "id": "booking.services",
+      "name": "Services",
+      "classification": "core",
+      "description": "A bookable offering with a name, duration, and price (e.g. '30-minute consultation').",
+      "users": [
+        "customer",
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "service"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "duration_pricing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.providers",
+      "name": "Providers / staff",
+      "classification": "core",
+      "description": "The person (or team member) who performs a service and owns a schedule.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "provider"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "schedule_ownership"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.resources",
+      "name": "Bookable resources",
+      "classification": "recommended",
+      "description": "A non-human bookable unit (room, equipment, vehicle) with its own availability, alongside or instead of a provider.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "resource"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "resource_scheduling"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-resource-allocation"
+        ],
+        "confidence": "low",
+        "notes": "Neither Cal.diy nor Easy!Appointments models a generic non-human bookable resource — both are provider/host-centric. Included as a common pattern in resource-scheduling products generally (e.g. room/equipment booking), not corroborated by an inspected implementation."
+      }
+    },
+    {
+      "id": "booking.availability",
+      "name": "Availability rules / working hours",
+      "classification": "core",
+      "description": "A provider's (or resource's) recurring weekly working hours, from which bookable time slots are derived.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "schedule",
+        "availability_rule"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "weekly_recurrence"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "calendar",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.availability_exceptions",
+      "name": "Availability exceptions",
+      "classification": "common",
+      "description": "One-off overrides to the normal schedule for a specific date: holidays, custom hours, or extra availability.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "availability_exception"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "date_override"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "calendar",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's Availability.date field and OutOfOfficeEntry; Easy!Appointments' working_plan_exceptions endpoint. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.time_slots",
+      "name": "Time slot computation",
+      "classification": "core",
+      "description": "Derive bookable start times from availability rules, existing bookings, buffers, and slot interval.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "time_slot"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "slot_generation",
+        "conflict_detection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "calendar"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.buffers",
+      "name": "Buffers",
+      "classification": "common",
+      "description": "Padding time before and/or after a booking during which the provider/resource is not bookable.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "service"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "buffer_enforcement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "calendar"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's EventType.beforeEventBuffer/afterEventBuffer are explicit; Easy!Appointments' openapi.yml has no equivalent field in the inspected schema, though its README mentions 'breaks' at the provider working-plan level, which is a related but distinct concept."
+      }
+    },
+    {
+      "id": "booking.bookings",
+      "name": "Bookings / appointments",
+      "classification": "core",
+      "description": "A confirmed reservation of a service with a provider (and/or resource) for a specific time slot.",
+      "users": [
+        "customer",
+        "provider"
+      ],
+      "entities": [
+        "booking",
+        "attendee"
+      ],
+      "workflows": [
+        "booking_lifecycle"
+      ],
+      "capabilities": [
+        "booking_creation",
+        "conflict_detection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "no-show prediction",
+        "smart rescheduling suggestions"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "calendar",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.recurring_bookings",
+      "name": "Recurring bookings",
+      "classification": "common",
+      "description": "Book the same service/slot on a repeating schedule (weekly, monthly) as a linked series.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "booking"
+      ],
+      "workflows": [
+        "booking_lifecycle"
+      ],
+      "capabilities": [
+        "recurrence_rule"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "calendar"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "rfc5545"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's EventType.recurringEvent and Booking.recurringEventId confirm the implementation; RFC 5545 RRULE is the authoritative recurrence-rule model most such implementations converge on (not verified that Cal.diy's JSON format follows RRULE literally). Not found in Easy!Appointments' inspected API surface."
+      }
+    },
+    {
+      "id": "booking.buffers_and_group_capacity",
+      "name": "Group bookings / shared capacity",
+      "classification": "recommended",
+      "description": "Allow multiple attendees to book the same time slot up to a capacity limit (e.g. a class or webinar).",
+      "users": [
+        "customer",
+        "provider"
+      ],
+      "entities": [
+        "booking",
+        "attendee"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "capacity_enforcement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "recommended",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's EventType.seatsPerTimeSlot + BookingSeat are explicit; Easy!Appointments' ServiceRecord.attendantsNumber is the equivalent field. Corroborated by both."
+      }
+    },
+    {
+      "id": "booking.reminders",
+      "name": "Reminders",
+      "classification": "common",
+      "description": "Automated email/SMS reminders sent ahead of a booking.",
+      "users": [
+        "customer",
+        "provider"
+      ],
+      "entities": [
+        "booking"
+      ],
+      "workflows": [
+        "reminder_workflow"
+      ],
+      "capabilities": [
+        "scheduled_notification"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "optimal reminder timing"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "communication"
+      ],
+      "integrations": [
+        "sms_gateway",
+        "email_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's Booking.smsReminderNumber field and ReminderMail model confirm this. Easy!Appointments' README lists an 'email notification system' for confirmations but its README flags reminders/SMS as potentially premium-tier; not confirmed present in the open-source core."
+      }
+    },
+    {
+      "id": "booking.cancellation_policies",
+      "name": "Cancellation and no-show policies",
+      "classification": "common",
+      "description": "Rules for how and when a booking can be cancelled or rescheduled, and how a no-show is recorded.",
+      "users": [
+        "customer",
+        "provider"
+      ],
+      "entities": [
+        "booking"
+      ],
+      "workflows": [
+        "booking_lifecycle"
+      ],
+      "capabilities": [
+        "policy_enforcement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "no-show risk scoring"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's Booking.cancellationReason/rejectionReason and BookingStatus enum (cancelled/rejected/accepted/pending) confirm cancellation and rejection tracking; no explicit no-show status was found in either implementation's inspected schema (Easy!Appointments' AppointmentRecord.status was not enumerated in this pass)."
+      }
+    },
+    {
+      "id": "booking.minimum_notice",
+      "name": "Minimum booking notice",
+      "classification": "common",
+      "description": "A minimum lead time required between booking and the appointment start (blocks last-minute bookings).",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "service"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "notice_enforcement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "low",
+        "notes": "Cal.diy's EventType.minimumBookingNotice is explicit; no equivalent field found in Easy!Appointments' inspected API surface."
+      }
+    },
+    {
+      "id": "booking.deposits",
+      "name": "Deposits and paid bookings",
+      "classification": "recommended",
+      "description": "Collect a payment or deposit at the time of booking.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "booking",
+        "payment"
+      ],
+      "workflows": [
+        "booking_lifecycle"
+      ],
+      "capabilities": [
+        "payment_capture"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "payment"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's Booking.paid flag and Payment model confirm this. Easy!Appointments' README flags deposits/payments as likely premium-tier; not confirmed present in its open-source core."
+      }
+    },
+    {
+      "id": "booking.calendar_sync",
+      "name": "Calendar sync",
+      "classification": "common",
+      "description": "Two-way sync of bookings with an external calendar (Google Calendar, Outlook, CalDAV).",
+      "users": [
+        "provider",
+        "customer"
+      ],
+      "entities": [
+        "booking",
+        "external_calendar_link"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "two_way_sync"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "calendar",
+        "integration"
+      ],
+      "integrations": [
+        "calendar_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments",
+          "rfc5545"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "booking.out_of_office",
+      "name": "Out-of-office / blocked time",
+      "classification": "common",
+      "description": "Mark a provider unavailable for a date range (vacation, sick leave), blocking new bookings.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "out_of_office_entry"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "availability_block"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "staff",
+        "calendar"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's OutOfOfficeEntry (with optional reassignment to another user) and Easy!Appointments' Unavailability/blocked_periods endpoints both confirm this. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.booking_widget",
+      "name": "Embeddable booking widget / public link",
+      "classification": "recommended",
+      "description": "A public, shareable booking page or embeddable widget for a service or provider.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "service",
+        "provider"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "public_scheduling_link"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "customer",
+        "web"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's HashedLink model (private booking links) and its core public-booking-page product concept confirm this; not found in Easy!Appointments' inspected API surface, though it is a self-hosted booking form by design."
+      }
+    },
+    {
+      "id": "booking.webhooks",
+      "name": "Booking webhooks",
+      "classification": "recommended",
+      "description": "Fire outbound events (booking created/cancelled/rescheduled) to external systems.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "webhook_subscription"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "event_dispatch"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "recommended",
+        "integration"
+      ],
+      "integrations": [
+        "webhook_consumer"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "medium",
+        "notes": "Both Cal.diy (Webhook model, WebhookScheduledTriggers) and Easy!Appointments (webhooks endpoint with actions + secretToken) confirm this. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "booking.multi_provider_teams",
+      "name": "Teams and round-robin assignment",
+      "classification": "optional",
+      "description": "Assign a booking to one of several providers on a team, by availability, priority, or round robin.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "provider"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "provider_assignment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "load-balanced assignment"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "staff",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's Host model (isFixed, priority, weight per event type) and Easy!Appointments' Secretary-manages-Providers model both show provider-team assignment concepts, though the specific mechanisms differ (round-robin/weighted vs. delegated scheduling)."
+      }
+    },
+    {
+      "id": "booking.booking_confirmation_approval",
+      "name": "Manual booking approval",
+      "classification": "optional",
+      "description": "Require a provider or manager to approve a requested booking before it is confirmed.",
+      "users": [
+        "provider",
+        "manager"
+      ],
+      "entities": [
+        "booking"
+      ],
+      "workflows": [
+        "booking_lifecycle"
+      ],
+      "capabilities": [
+        "approval_step"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium",
+        "notes": "Cal.diy's BookingStatus includes PENDING and AWAITING_HOST alongside ACCEPTED/REJECTED, confirming an approval step exists; not found in Easy!Appointments' inspected schema."
+      }
+    },
+    {
+      "id": "booking.waitlist",
+      "name": "Booking waitlist",
+      "classification": "optional",
+      "description": "Let a customer join a waitlist for a fully booked slot and be notified if it opens up.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "time_slot"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "waitlist_notification"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "reallocation prediction"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-waiting-list"
+        ],
+        "confidence": "low",
+        "notes": "Not found in either inspected implementation; reasoned from common scheduling-product practice."
+      }
+    },
+    {
+      "id": "booking.timezone_handling",
+      "name": "Timezone-aware scheduling",
+      "classification": "common",
+      "description": "Display and book slots correctly across the customer's and provider's timezones.",
+      "users": [
+        "customer",
+        "provider"
+      ],
+      "entities": [
+        "service",
+        "provider"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "timezone_conversion"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "calendar"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments",
+          "rfc5545"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

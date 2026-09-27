@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "customer",
+      "name": "Customer",
+      "experience": "customer",
+      "description": "An individual or corporate client exchanging currency or sending a remittance.",
+      "responsibilities": [
+        "Request a quote",
+        "Complete a transaction",
+        "Provide ID above threshold"
+      ],
+      "related_features": [
+        "exchange.exchange_requests",
+        "exchange.buy_sell_transactions"
+      ],
+      "common_permissions": [
+        "own_transaction:read"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "teller",
+      "name": "Teller / Cashier",
+      "experience": "staff",
+      "description": "Serves customers at the counter: quotes, transacts, manages their till.",
+      "responsibilities": [
+        "Serve walk-in customers",
+        "Execute buy/sell transactions",
+        "Open/close cash session",
+        "Capture ID at threshold"
+      ],
+      "related_features": [
+        "exchange.buy_sell_transactions",
+        "exchange.till_cash_management",
+        "exchange.kyc_thresholds"
+      ],
+      "common_permissions": [
+        "exchange_transaction:create",
+        "till:operate"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "branch_manager",
+      "name": "Branch Manager",
+      "experience": "management",
+      "description": "Oversees a branch's tellers, rates, and cash positions.",
+      "responsibilities": [
+        "Approve rate overrides",
+        "Reconcile till sessions",
+        "Review branch reports"
+      ],
+      "related_features": [
+        "exchange.branch_management",
+        "exchange.rate_management",
+        "exchange.reports_analytics"
+      ],
+      "common_permissions": [
+        "branch:manage",
+        "rate:override"
+      ],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "compliance_officer",
+      "name": "Compliance Officer",
+      "experience": "staff",
+      "description": "Reviews KYC flags and files AML/suspicious-transaction reports.",
+      "responsibilities": [
+        "Review flagged transactions",
+        "File STRs/large-transaction reports",
+        "Maintain audit log access"
+      ],
+      "related_features": [
+        "exchange.aml_reporting",
+        "exchange.kyc_thresholds",
+        "exchange.audit_log"
+      ],
+      "common_permissions": [
+        "aml_report:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "administrator",
+      "name": "Administrator",
+      "experience": "administration",
+      "description": "Configures currencies, rate sources, branches, and staff access for the business.",
+      "responsibilities": [
+        "Configure currencies and rate sources",
+        "Manage branches and staff",
+        "Set commission rules"
+      ],
+      "related_features": [
+        "exchange.currency_master",
+        "exchange.rate_feed_ingestion",
+        "exchange.staff_management"
+      ],
+      "common_permissions": [
+        "*:configure"
+      ],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / Automation",
+      "experience": "system",
+      "description": "Automated rate-feed ingestion and AML threshold flagging.",
+      "responsibilities": [
+        "Pull rate feeds on schedule",
+        "Flag transactions crossing AML thresholds"
+      ],
+      "related_features": [
+        "exchange.rate_feed_ingestion",
+        "exchange.aml_reporting"
+      ],
+      "common_permissions": [
+        "internal_service"
+      ],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "entities": [
+    {
+      "id": "service",
+      "name": "Service",
+      "description": "A bookable offering with duration and price.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "time_slot"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "duration_minutes",
+        "price",
+        "slot_interval",
+        "capacity"
+      ],
+      "states": [
+        "active",
+        "archived"
+      ],
+      "related_features": [
+        "booking.services"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "provider",
+      "name": "Provider",
+      "description": "The person who performs services and owns a schedule.",
+      "relationships": [
+        {
+          "type": "has_one",
+          "target": "schedule"
+        },
+        {
+          "type": "many_to_many",
+          "target": "service"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "timezone",
+        "services"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.providers"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "resource",
+      "name": "Resource",
+      "description": "A non-human bookable unit (room, equipment, vehicle).",
+      "relationships": [
+        {
+          "type": "has_one",
+          "target": "schedule"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "type",
+        "capacity"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.resources"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-resource-allocation"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in either inspected implementation."
+      }
+    },
+    {
+      "id": "schedule",
+      "name": "Schedule",
+      "description": "A named set of recurring weekly availability, assignable to a provider/resource or a specific service.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "availability_rule"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "timezone"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.availability"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "availability_rule",
+      "name": "Availability rule",
+      "description": "A recurring weekly time window (e.g. Mon-Fri 09:00-17:00) within a schedule.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "schedule"
+        }
+      ],
+      "important_fields": [
+        "days_of_week",
+        "start_time",
+        "end_time"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.availability"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "availability_exception",
+      "name": "Availability exception",
+      "description": "A one-off override of the normal schedule for a specific date.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "schedule"
+        }
+      ],
+      "important_fields": [
+        "date",
+        "start_time",
+        "end_time",
+        "is_unavailable"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.availability_exceptions"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "time_slot",
+      "name": "Time slot",
+      "description": "A computed bookable start/end time derived from availability minus existing bookings and buffers.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "service"
+        }
+      ],
+      "important_fields": [
+        "start_at",
+        "end_at"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.time_slots"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "booking",
+      "name": "Booking",
+      "description": "A confirmed (or pending) reservation of a service for a time slot.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "service"
+        },
+        {
+          "type": "belongs_to",
+          "target": "provider"
+        },
+        {
+          "type": "has_many",
+          "target": "attendee"
+        }
+      ],
+      "important_fields": [
+        "start_at",
+        "end_at",
+        "status",
+        "recurrence_rule"
+      ],
+      "states": [
+        "pending",
+        "awaiting_host",
+        "accepted",
+        "rejected",
+        "cancelled",
+        "completed",
+        "no_show"
+      ],
+      "related_features": [
+        "booking.bookings",
+        "booking.recurring_bookings"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "attendee",
+      "name": "Attendee",
+      "description": "A person attending a booking; more than one when a service has shared capacity.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "booking"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "email"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.buffers_and_group_capacity"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "description": "A deposit or full payment collected for a booking.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "booking"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "status"
+      ],
+      "states": [
+        "pending",
+        "captured",
+        "refunded"
+      ],
+      "related_features": [
+        "booking.deposits"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "external_calendar_link",
+      "name": "External calendar link",
+      "description": "The reference tying a booking to an event in an external calendar (Google/Outlook/CalDAV).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "booking"
+        }
+      ],
+      "important_fields": [
+        "provider",
+        "external_event_id"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.calendar_sync"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "out_of_office_entry",
+      "name": "Out-of-office entry",
+      "description": "A date range during which a provider is unavailable for new bookings.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "provider"
+        }
+      ],
+      "important_fields": [
+        "start_date",
+        "end_date",
+        "reason"
+      ],
+      "states": [],
+      "related_features": [
+        "booking.out_of_office"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "webhook_subscription",
+      "name": "Webhook subscription",
+      "description": "An external endpoint subscribed to booking lifecycle events.",
+      "relationships": [],
+      "important_fields": [
+        "url",
+        "events",
+        "secret"
+      ],
+      "states": [
+        "active",
+        "disabled"
+      ],
+      "related_features": [
+        "booking.webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

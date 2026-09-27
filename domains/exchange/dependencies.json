@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "exchange.rate_management",
+      "to": "exchange.currency_master",
+      "type": "requires",
+      "reason": "A rate is quoted for a currency in the master list."
+    },
+    {
+      "from": "exchange.rate_feed_ingestion",
+      "to": "exchange.rate_management",
+      "type": "enhances",
+      "reason": "A feed seeds/validates rates but manual entry works without it."
+    },
+    {
+      "from": "exchange.exchange_requests",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "A quote request is tied to a customer record."
+    },
+    {
+      "from": "exchange.exchange_requests",
+      "to": "exchange.rate_management",
+      "type": "requires",
+      "reason": "A quote needs a current rate to quote against."
+    },
+    {
+      "from": "exchange.buy_sell_transactions",
+      "to": "exchange.exchange_requests",
+      "type": "enhances",
+      "reason": "A transaction can follow a prior quote, but a teller can also transact directly."
+    },
+    {
+      "from": "exchange.buy_sell_transactions",
+      "to": "exchange.rate_management",
+      "type": "requires",
+      "reason": "A transaction locks in a rate at execution time."
+    },
+    {
+      "from": "exchange.buy_sell_transactions",
+      "to": "exchange.till_cash_management",
+      "type": "requires",
+      "reason": "Completing a transaction updates the teller's till position."
+    },
+    {
+      "from": "exchange.buy_sell_transactions",
+      "to": "exchange.kyc_thresholds",
+      "type": "requires",
+      "reason": "ID capture is required above the configured threshold."
+    },
+    {
+      "from": "exchange.remittance",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "A remittance is sent or received on behalf of a customer."
+    },
+    {
+      "from": "exchange.till_cash_management",
+      "to": "exchange.branch_management",
+      "type": "requires",
+      "reason": "A till belongs to a branch."
+    },
+    {
+      "from": "exchange.staff_management",
+      "to": "exchange.branch_management",
+      "type": "requires",
+      "reason": "Staff are assigned to a branch."
+    },
+    {
+      "from": "exchange.receipts_payments",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "A receipt documents a completed transaction."
+    },
+    {
+      "from": "exchange.kyc_thresholds",
+      "to": "exchange.customer_management",
+      "type": "requires",
+      "reason": "Threshold-triggered ID capture attaches to the customer record."
+    },
+    {
+      "from": "exchange.aml_reporting",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "Reports are filed against flagged transactions."
+    },
+    {
+      "from": "exchange.audit_log",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "Every transaction is written to the audit log."
+    },
+    {
+      "from": "exchange.reports_analytics",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "Reports roll up completed transactions."
+    },
+    {
+      "from": "exchange.reports_analytics",
+      "to": "exchange.till_cash_management",
+      "type": "enhances",
+      "reason": "Cash-position history enriches branch reports."
+    },
+    {
+      "from": "exchange.commission_management",
+      "to": "exchange.buy_sell_transactions",
+      "type": "requires",
+      "reason": "Commission is assessed on a transaction."
+    },
+    {
+      "from": "exchange.online_ordering",
+      "to": "exchange.exchange_requests",
+      "type": "requires",
+      "reason": "Order-ahead is a customer-initiated quote."
+    },
+    {
+      "from": "exchange.notifications",
+      "to": "exchange.remittance",
+      "type": "enhances",
+      "reason": "Pickup-ready alerts enhance, but aren't required for, remittance."
+    },
+    {
+      "from": "exchange.customer_management",
+      "to": "shared.audit_log",
+      "type": "enhances",
+      "reason": "Customer profile changes are audit-logged."
+    },
+    {
+      "from": "exchange.aml_reporting",
+      "to": "shared.audit_log",
+      "type": "requires",
+      "reason": "Report filing decisions must be traceable."
+    },
+    {
+      "from": "exchange.staff_management",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Staff sign in with role-scoped access."
+    },
+    {
+      "from": "exchange.reports_analytics",
+      "to": "shared.reporting",
+      "type": "enhances",
+      "reason": "Domain reports surface through the shared reporting capability."
+    },
+    {
+      "from": "exchange.notifications",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Customer alerts are delivered through the shared notification channel."
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "support.ticket_management",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Ticket status changes and replies are delivered as notifications."
+    },
+    {
+      "from": "support.ticket_queues",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "A queue groups tickets."
+    },
+    {
+      "from": "support.assignment",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "Assignment acts on an existing ticket."
+    },
+    {
+      "from": "support.assignment",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Only agents with access to a queue can be assigned its tickets."
+    },
+    {
+      "from": "support.sla_management",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "SLA targets are tracked against ticket state."
+    },
+    {
+      "from": "support.sla_management",
+      "to": "support.business_hours",
+      "type": "enhances",
+      "reason": "SLA timers commonly pause outside business hours."
+    },
+    {
+      "from": "support.escalation",
+      "to": "support.sla_management",
+      "type": "requires",
+      "reason": "Escalation fires on an SLA breach."
+    },
+    {
+      "from": "support.escalation",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "An escalation notifies a manager or reassigns visibly."
+    },
+    {
+      "from": "support.email_channel",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "Inbound/outbound email creates and updates tickets."
+    },
+    {
+      "from": "support.chat_channel",
+      "to": "shared.realtime",
+      "type": "requires",
+      "reason": "A chat widget needs a live transport for real-time messages."
+    },
+    {
+      "from": "support.chat_channel",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "Chat messages become ticket/conversation records."
+    },
+    {
+      "from": "support.voice_channel",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "A call is logged as a ticket."
+    },
+    {
+      "from": "support.knowledge_base",
+      "to": "shared.search",
+      "type": "enhances",
+      "reason": "Articles need to be searchable by customers and agents."
+    },
+    {
+      "from": "support.macros_canned_responses",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "A macro acts on a ticket."
+    },
+    {
+      "from": "support.csat_surveys",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "A survey is sent after a ticket is resolved."
+    },
+    {
+      "from": "support.csat_surveys",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "The survey itself is delivered as a notification (email/in-app)."
+    },
+    {
+      "from": "support.customer_portal",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Customers need an authenticated (or magic-link) session to view their tickets."
+    },
+    {
+      "from": "support.internal_notes",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "A note is attached to a ticket."
+    },
+    {
+      "from": "support.internal_notes",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Internal notes must never be visible to the customer role."
+    },
+    {
+      "from": "support.tagging_categorization",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "Tags are applied to tickets."
+    },
+    {
+      "from": "support.tagging_categorization",
+      "to": "support.reporting_analytics",
+      "type": "enhances",
+      "reason": "Tags are a common reporting dimension."
+    },
+    {
+      "from": "support.business_hours",
+      "to": "support.sla_management",
+      "type": "enhances",
+      "reason": "Business hours refine SLA timer accuracy."
+    },
+    {
+      "from": "support.ticket_automation_rules",
+      "to": "support.ticket_management",
+      "type": "requires",
+      "reason": "Automation rules act on ticket events."
+    },
+    {
+      "from": "support.ticket_automation_rules",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Rule evaluation runs as a background process."
+    },
+    {
+      "from": "support.reporting_analytics",
+      "to": "shared.reporting",
+      "type": "requires",
+      "reason": "Dashboards are built on the shared reporting/analytics engine."
+    },
+    {
+      "from": "support.multichannel_unification",
+      "to": "support.email_channel",
+      "type": "requires",
+      "reason": "Unification presupposes more than one channel feeding the same ticket model."
+    },
+    {
+      "from": "support.multichannel_unification",
+      "to": "support.chat_channel",
+      "type": "enhances",
+      "reason": "Chat is commonly one of the unified channels."
+    }
+  ]
+}

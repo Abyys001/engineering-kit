@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "hipaa",
+      "name": "HIPAA Privacy and Security Rules",
+      "kind": "regulation",
+      "version": "as amended (HITECH, 2013 Omnibus Rule)",
+      "jurisdiction": "United States",
+      "scope": "Protects patient health information (PHI); governs use, disclosure, security safeguards, and breach notification.",
+      "affected_features": [
+        "healthcare.patient_registration",
+        "healthcare.clinical_notes",
+        "healthcare.billing_claims",
+        "healthcare.patient_consent",
+        "healthcare.access_policies"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies to covered entities and business associates handling US patient data.",
+      "url": "https://www.hhs.gov/hipaa/",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "hitech_breach_notification",
+      "name": "HITECH Act breach notification requirements",
+      "kind": "regulation",
+      "version": "2009, as amended",
+      "jurisdiction": "United States",
+      "scope": "Requires notification of patients/HHS/media after a breach of unsecured PHI.",
+      "affected_features": [
+        "healthcare.access_policies",
+        "healthcare.patient_consent"
+      ],
+      "requires_human_review": true,
+      "notes": "Operates alongside HIPAA; breach thresholds and timelines apply.",
+      "url": "https://www.hhs.gov/hipaa/for-professionals/breach-notification/",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "gdpr_health_data",
+      "name": "GDPR — special category (health) data",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679, Art. 9",
+      "jurisdiction": "European Union / EEA",
+      "scope": "Health data is a special category requiring an explicit legal basis (e.g. explicit consent, healthcare provision) and stronger safeguards.",
+      "affected_features": [
+        "healthcare.patient_registration",
+        "healthcare.patient_consent",
+        "healthcare.patient_portal"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever an EU/EEA data subject's health data is processed, regardless of where the operator is based.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "provenance": {
+        "sources": [
+          "std:fhir-r4"
+        ],
+        "confidence": "medium",
+        "notes": "Cited against the GDPR regulation text itself (authoritative), cross-referenced only loosely with the domain sources; confidence kept medium pending legal review."
+      }
+    },
+    {
+      "id": "cfr42_part2",
+      "name": "42 CFR Part 2 — substance use disorder record confidentiality",
+      "kind": "regulation",
+      "version": "42 CFR Part 2 (2020 revisions)",
+      "jurisdiction": "United States",
+      "scope": "Extra confidentiality protections for records of federally-assisted substance use disorder treatment, stricter than baseline HIPAA.",
+      "affected_features": [
+        "healthcare.access_policies",
+        "healthcare.patient_consent"
+      ],
+      "requires_human_review": true,
+      "notes": "Relevant only to practices offering SUD treatment; access-policy-level segmentation is typically how systems implement this.",
+      "url": "https://www.ecfr.gov/current/title-42/chapter-I/subchapter-A/part-2",
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "low",
+        "notes": "Single-source reasoned inference connecting Medplum's AccessPolicy pattern to this regulation's segmentation requirement."
+      }
+    },
+    {
+      "id": "onc_cures_act_info_blocking",
+      "name": "ONC Cures Act Final Rule — information blocking",
+      "kind": "regulation",
+      "version": "45 CFR Part 171",
+      "jurisdiction": "United States",
+      "scope": "Prohibits practices that unreasonably restrict patient access to their electronic health information; drives patient-portal and API access requirements.",
+      "affected_features": [
+        "healthcare.patient_portal",
+        "healthcare.document_management"
+      ],
+      "requires_human_review": true,
+      "notes": "Motivates providing patients timely electronic access to notes, results, and records.",
+      "url": "https://www.healthit.gov/topic/information-blocking",
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hitrust_csf",
+      "name": "HITRUST CSF",
+      "kind": "certification",
+      "version": "v11.x",
+      "jurisdiction": "United States (industry-adopted)",
+      "scope": "Security/privacy control framework commonly required by US health-data business partners; harmonizes HIPAA and other standards.",
+      "affected_features": [
+        "healthcare.access_policies"
+      ],
+      "requires_human_review": true,
+      "notes": "Certification, not a legal requirement; often demanded contractually.",
+      "url": "https://hitrustalliance.net/",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "telehealth_licensure",
+      "name": "Cross-state/cross-border telehealth licensure",
+      "kind": "regulation",
+      "version": "varies by jurisdiction",
+      "jurisdiction": "Varies (US state-by-state; country-by-country elsewhere)",
+      "scope": "A practitioner generally must be licensed in the patient's location to deliver a telehealth visit; interstate compacts vary.",
+      "affected_features": [
+        "healthcare.telehealth"
+      ],
+      "requires_human_review": true,
+      "notes": "Highly jurisdiction-specific; not a single citable rule.",
+      "url": "https://www.fsmb.org/step-3/telemedicine-licensing/",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "pci_dss",
+      "name": "PCI Data Security Standard",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual)",
+      "scope": "Applies to any card payment collected for patient invoicing.",
+      "affected_features": [
+        "healthcare.patient_invoicing"
+      ],
+      "requires_human_review": true,
+      "notes": "Same standard cited across domains handling card payments.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

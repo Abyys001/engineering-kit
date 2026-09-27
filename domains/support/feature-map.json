@@ -1,0 +1,827 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "name": "Support",
+  "aliases": [
+    "customer support",
+    "helpdesk",
+    "ticketing"
+  ],
+  "description": "Tickets/cases, SLAs, queues, assignment, multichannel communication (email, chat, voice), a knowledge base, macros/canned responses, CSAT, escalation, and a customer self-service portal for a customer support team.",
+  "nace": [
+    "J62.01",
+    "N82.20"
+  ],
+  "maturity": "curated",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "chatwoot",
+      "title": "Chatwoot",
+      "url": "https://github.com/chatwoot/chatwoot",
+      "source_type": "implementation",
+      "license": "MIT (core); the enterprise/ directory ships a separate, non-MIT license file and is not covered by the MIT grant",
+      "retrieved": "2026-09-27",
+      "version": "b8eb7766f2735d6e3bf5ed3a69cf453b289a4411",
+      "local_path": null,
+      "notes": "License verified directly from root LICENSE ('Content outside of the above mentioned directories ... available under MIT Expat') plus a separate enterprise/LICENSE file; copy-safe for core code only, never the enterprise/ tree. app/models/message.rb confirms a boolean `private` field (internal notes). app/models/label.rb confirms tags/labels. conversations.status enum: open/resolved/pending/snoozed; sla_policy_id FK + AppliedSla model confirm core (non-enterprise-gated) SLA support. Macro model with actions including change_status/assign_team/send_webhook_event. Article model + portal/category/folder confirm a knowledge base. CsatSurveyResponse model (rating+feedback) confirms CSAT. api/v2/accounts/{reports,live_reports,summary_reports}_controller.rb (core, not enterprise/) confirm reporting/analytics."
+    },
+    {
+      "id": "zammad",
+      "title": "Zammad",
+      "url": "https://github.com/zammad/zammad",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "677594465724afc892449b1beb398b050837cc83",
+      "local_path": null,
+      "notes": "License verified directly from root LICENSE (full AGPL-3.0 text); reference-only, never copy code. Ticket::State model (seeded): new, open, pending reminder, pending close, closed, merged. Explicit Sla model (response_time/update_time, condition-matched) plus an escalation calculation engine. calendar.rb confirms business-hours/holiday calendars. trigger.rb (condition/perform store) confirms rule-based automation. tag.rb confirms tagging. Customer role belongs_to on Ticket confirms a customer-facing portal role."
+    },
+    {
+      "id": "osticket",
+      "title": "osTicket",
+      "url": "https://github.com/osTicket/osTicket",
+      "source_type": "implementation",
+      "license": "GPL-2.0",
+      "retrieved": "2026-09-27",
+      "version": "8d38b0619649a50ee7cbbf37085f5d297fdc6f36",
+      "local_path": null,
+      "notes": "License verified directly from root LICENSE.txt (GPL-2.0 text) and GitHub's license API; resolves a conflicting earlier assumption of Apache-2.0 in favor of the actual GPL-2.0. Reference-only, never copy code. Ticket states via hasState() checks: open, resolved, closed, archived, deleted. SLA model with grace_period and FLAG_ESCALATE/FLAG_NOALERTS bitflags. class.knowledgebase.php/class.faq.php confirm a knowledge base. class.canned.php confirms canned responses. A dedicated client/ directory confirms a customer portal. class.thread.php has an explicit 'N' => 'note' entry type plus a FLAG_SYSTEM system-note flag, confirming internal notes."
+    },
+    {
+      "id": "freescout",
+      "title": "FreeScout",
+      "url": "https://github.com/freescout-helpdesk/freescout",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 (core); the Modules/ directory hosts separately-sold commercial add-ons (including SLA and Reports) not covered by the AGPL grant",
+      "retrieved": "2026-09-27",
+      "version": "77175143d91dfa354cd8d1655ef611e0e1c471bc",
+      "local_path": null,
+      "notes": "License verified directly from root LICENSE (full AGPL-3.0 text); reference-only, never copy code. Conversation status enum: active(1)/pending(2)/closed(3)/spam(4) (STATUS_OPEN=5 is dead code, superseded by active). TYPE_EMAIL/PHONE/CHAT/CUSTOM channel enum confirms multi-channel support including phone. No SLA model found in core — confirms SLA is a paid Modules/ add-on here, not core AGPL code; this caps freescout's contribution to the SLA/escalation feature at zero (excluded from that feature's source list)."
+    },
+    {
+      "id": "ftc-tsr",
+      "title": "Telemarketing Sales Rule (16 CFR 310)",
+      "url": "https://www.ftc.gov/legal-library/browse/rules/telemarketing-sales-rule",
+      "source_type": "authoritative",
+      "license": "Public — US federal government publication",
+      "retrieved": "2026-09-27",
+      "version": "16 CFR 310, current as retrieved",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: exact page title confirmed on ftc.gov."
+    },
+    {
+      "id": "gdpr-2016-679",
+      "title": "Regulation (EU) 2016/679 (General Data Protection Regulation)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "source_type": "authoritative",
+      "license": "EU official legislation; EUR-Lex reuse policy (CC BY 4.0 for reuse of Commission material unless stated otherwise)",
+      "retrieved": "2026-09-26",
+      "version": "OJ L 119, 4.5.2016; CELEX 32016R0679",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: title and CELEX number confirmed. Same source entry independently kept per domain per schema."
+    }
+  ],
+  "features": [
+    {
+      "id": "support.ticket_management",
+      "name": "Ticket management",
+      "classification": "core",
+      "description": "Create, view, update, and track support tickets/conversations through a status lifecycle.",
+      "users": [
+        "agent",
+        "customer"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "workflows": [
+        "ticket_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr_support"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high",
+        "notes": "Four independent implementations, each with its own status enum: chatwoot (open/resolved/pending/snoozed), zammad (new/open/pending reminder/pending close/closed/merged), osTicket (open/resolved/closed/archived/deleted), freescout (active/pending/closed/spam). The domain's canonical state machine synthesizes a common new→open→pending→resolved→closed pattern across all four rather than copying one verbatim."
+      }
+    },
+    {
+      "id": "support.ticket_queues",
+      "name": "Queues / inboxes",
+      "classification": "core",
+      "description": "Group tickets into queues, inboxes, or departments so teams see only the tickets relevant to them.",
+      "users": [
+        "agent",
+        "team_lead"
+      ],
+      "entities": [
+        "queue",
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high",
+        "notes": "All four confirmed: chatwoot inbox/team_id, zammad ticket group, osTicket dept, freescout mailbox."
+      }
+    },
+    {
+      "id": "support.assignment",
+      "name": "Ticket assignment",
+      "classification": "common",
+      "description": "Assign a ticket to a specific agent, and reassign it as needed.",
+      "users": [
+        "agent",
+        "team_lead"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high",
+        "notes": "All four confirmed: chatwoot conversations.assignee_id, zammad ticket owner, osTicket staff assignment, freescout assignee. Automatic round-robin/load-based routing was NOT independently confirmed in any of the four this pass — scoped to manual assignment only; do not read this as evidence for auto-routing algorithms."
+      }
+    },
+    {
+      "id": "support.sla_management",
+      "name": "SLA management",
+      "classification": "core",
+      "description": "Define first-response and resolution time targets per priority/queue and track tickets against them.",
+      "users": [
+        "team_lead",
+        "administrator"
+      ],
+      "entities": [
+        "sla_policy",
+        "ticket"
+      ],
+      "workflows": [
+        "sla_escalation_flow"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "management",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket",
+          "chatwoot"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: zammad (explicit Sla model with response_time/update_time), osTicket (SLA model with grace_period), chatwoot (sla_policy_id + AppliedSla, core not enterprise-gated). FreeScout explicitly excluded: no SLA model found in its core AGPL code — confirmed to be one of its paid Modules/ add-ons instead."
+      }
+    },
+    {
+      "id": "support.escalation",
+      "name": "Escalation",
+      "classification": "common",
+      "description": "Automatically escalate a ticket (reassign, notify a manager, raise priority) when it breaches its SLA.",
+      "users": [
+        "team_lead",
+        "system"
+      ],
+      "entities": [
+        "escalation_rule",
+        "ticket"
+      ],
+      "workflows": [
+        "sla_escalation_flow"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "management",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket",
+          "chatwoot"
+        ],
+        "confidence": "high",
+        "notes": "Same three sources as SLA management: zammad's escalation calculation engine, osTicket's FLAG_ESCALATE/FLAG_NOALERTS bitflags, chatwoot's AppliedSla."
+      }
+    },
+    {
+      "id": "support.email_channel",
+      "name": "Email channel",
+      "classification": "core",
+      "description": "Create and reply to tickets via email, with reply threading matched back to the original ticket.",
+      "users": [
+        "agent",
+        "customer"
+      ],
+      "entities": [
+        "ticket",
+        "channel"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "communication"
+      ],
+      "integrations": [
+        "email_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high",
+        "notes": "Email is the one channel confirmed in all four sources."
+      }
+    },
+    {
+      "id": "support.chat_channel",
+      "name": "Live chat channel",
+      "classification": "common",
+      "description": "A website chat widget that creates and updates tickets in real time.",
+      "users": [
+        "agent",
+        "customer"
+      ],
+      "entities": [
+        "ticket",
+        "channel"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "high",
+      "tags": [
+        "communication",
+        "customer"
+      ],
+      "integrations": [
+        "chat_widget"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "freescout",
+          "zammad"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: chatwoot's core widget product, freescout's TYPE_CHAT enum value, zammad's chat channel. osTicket not confirmed for chat this pass."
+      }
+    },
+    {
+      "id": "support.voice_channel",
+      "name": "Voice / phone channel",
+      "classification": "optional",
+      "description": "Log a phone call as a ticket, optionally integrated with an IVR or call system.",
+      "users": [
+        "agent",
+        "customer"
+      ],
+      "entities": [
+        "ticket",
+        "channel"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "communication"
+      ],
+      "integrations": [
+        "voice_provider"
+      ],
+      "compliance": [
+        "tsr_telemarketing"
+      ],
+      "provenance": {
+        "sources": [
+          "freescout",
+          "chatwoot"
+        ],
+        "confidence": "medium",
+        "notes": "Two directly confirmed: freescout's explicit TYPE_PHONE enum value, chatwoot's voice channel. Zammad's phone/CTI support was not independently verified this pass, so it is not counted toward this feature's confidence despite being referenced in general product knowledge."
+      }
+    },
+    {
+      "id": "support.knowledge_base",
+      "name": "Knowledge base",
+      "classification": "common",
+      "description": "Public and/or internal help-center articles, organized into categories, with search.",
+      "users": [
+        "agent",
+        "customer",
+        "administrator"
+      ],
+      "entities": [
+        "kb_article"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: chatwoot (Article + portal/category/folder), zammad (KnowledgeBase model with categories and sorting modes), osTicket (class.knowledgebase.php + class.faq.php)."
+      }
+    },
+    {
+      "id": "support.macros_canned_responses",
+      "name": "Macros / canned responses",
+      "classification": "common",
+      "description": "Saved reply templates and/or bulk multi-step actions an agent can apply to a ticket in one click.",
+      "users": [
+        "agent"
+      ],
+      "entities": [
+        "macro",
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "osticket"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations: chatwoot's Macro model (personal/global visibility, multi-action incl. change_status/assign_team/send_webhook_event), osTicket's class.canned.php. Not found in zammad or freescout core."
+      }
+    },
+    {
+      "id": "support.csat_surveys",
+      "name": "CSAT surveys",
+      "classification": "recommended",
+      "description": "Send a post-resolution customer satisfaction survey and record the rating/feedback.",
+      "users": [
+        "customer",
+        "team_lead"
+      ],
+      "entities": [
+        "csat_response",
+        "ticket"
+      ],
+      "workflows": [
+        "csat_survey_flow"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: chatwoot's CsatSurveyResponse model (rating + feedback + review notes). Not verified in zammad or osTicket core this pass; noted in freescout as one of its paid Modules add-ons. Deliberately not claimed at medium/high."
+      }
+    },
+    {
+      "id": "support.customer_portal",
+      "name": "Customer self-service portal",
+      "classification": "common",
+      "description": "A logged-in area where a customer can view, create, and track their own tickets.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "customer",
+        "common"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "osticket",
+          "chatwoot",
+          "zammad"
+        ],
+        "confidence": "high",
+        "notes": "Three independent implementations: osTicket's dedicated client/ directory, chatwoot's widget + portal, zammad's customer-role frontend (belongs_to :customer on Ticket, core_workflow_permission 'ticket.customer')."
+      }
+    },
+    {
+      "id": "support.internal_notes",
+      "name": "Internal notes",
+      "classification": "core",
+      "description": "Private, agent-only notes on a ticket that the customer never sees, distinct from customer-visible replies.",
+      "users": [
+        "agent"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "osticket"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations: chatwoot's Message.private boolean field, osTicket's explicit 'N' (note) thread-entry type plus a FLAG_SYSTEM system-note flag. Not independently confirmed in zammad's article model this pass."
+      }
+    },
+    {
+      "id": "support.tagging_categorization",
+      "name": "Tags and categorization",
+      "classification": "common",
+      "description": "Apply free-form tags or fixed categories to tickets for filtering and reporting.",
+      "users": [
+        "agent"
+      ],
+      "entities": [
+        "tag",
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad"
+        ],
+        "confidence": "medium",
+        "notes": "Two independent implementations: chatwoot's Label model, zammad's Tag model."
+      }
+    },
+    {
+      "id": "support.business_hours",
+      "name": "Business hours / holiday calendar",
+      "classification": "recommended",
+      "description": "Define operating hours and holidays that SLA countdown timers pause outside of.",
+      "users": [
+        "administrator"
+      ],
+      "entities": [
+        "business_hours_calendar"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "zammad"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: zammad's calendar.rb (business hours + holidays feeding SLA/escalation calculations). Not independently confirmed in osTicket or chatwoot this pass despite both having SLA models."
+      }
+    },
+    {
+      "id": "support.ticket_automation_rules",
+      "name": "Automation rules",
+      "classification": "recommended",
+      "description": "Trigger-based automation on ticket events (time-based or field-change), e.g. auto-tag, auto-assign, or notify.",
+      "users": [
+        "administrator",
+        "system"
+      ],
+      "entities": [
+        "automation_rule",
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "admin",
+        "backend",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "chatwoot"
+        ],
+        "confidence": "medium",
+        "notes": "zammad's Trigger model (condition/perform, fully automatic) is the stronger source; chatwoot's Macro (change_status/assign_team/send_webhook_event actions) is agent-triggered rather than fully automatic, so it is weaker evidence for the same underlying capability. Two sources, one strong one weak."
+      }
+    },
+    {
+      "id": "support.reporting_analytics",
+      "name": "Reporting and analytics",
+      "classification": "common",
+      "description": "Dashboards on ticket volume, agent performance, and SLA compliance.",
+      "users": [
+        "team_lead",
+        "administrator"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "management",
+        "analytics",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: chatwoot's core (non-enterprise) api/v2/accounts/reports_controller.rb, live_reports_controller.rb, and summary_reports_controller.rb. Depends on shared.reporting for the underlying aggregation/chart/export engine."
+      }
+    },
+    {
+      "id": "support.multichannel_unification",
+      "name": "Unified multichannel inbox",
+      "classification": "recommended",
+      "description": "Present tickets from every channel (email, chat, voice, social) in one inbox per customer, rather than siloed by channel.",
+      "users": [
+        "agent"
+      ],
+      "entities": [
+        "ticket",
+        "channel"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "medium",
+      "tags": [
+        "staff",
+        "communication"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "freescout"
+        ],
+        "confidence": "medium",
+        "notes": "chatwoot's inbox model spans multiple channel types feeding one conversation list; freescout's TYPE_EMAIL/PHONE/CHAT/CUSTOM enum on the same conversation model confirms the same unifying shape."
+      }
+    }
+  ]
+}

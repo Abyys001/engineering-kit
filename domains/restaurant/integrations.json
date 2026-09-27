@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "integrations": [
+    {
+      "id": "pos",
+      "name": "Point of sale",
+      "category": "pos",
+      "purpose": "Order capture and payment settlement terminal used by staff.",
+      "examples": [
+        "Square",
+        "Toast",
+        "Clover"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "restaurant.pos_integration",
+        "restaurant.dine_in_orders"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "payment_gateway",
+      "name": "Payment gateway",
+      "category": "payments",
+      "purpose": "Card/wallet payment authorization and capture.",
+      "examples": [
+        "Stripe",
+        "Adyen",
+        "Square"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "restaurant.payments",
+        "restaurant.tips",
+        "restaurant.gift_cards"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "sms_gateway",
+      "name": "SMS gateway",
+      "category": "communication",
+      "purpose": "Send reservation confirmations, reminders, and waitlist ready-notifications.",
+      "examples": [
+        "Twilio"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "restaurant.reservations",
+        "restaurant.waitlist"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "delivery_marketplace",
+      "name": "Delivery marketplace",
+      "category": "logistics",
+      "purpose": "Receive orders from and dispatch couriers via third-party delivery platforms.",
+      "examples": [
+        "DoorDash",
+        "Uber Eats"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "restaurant.delivery_orders",
+        "restaurant.third_party_delivery_integration"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "accounting_software",
+      "name": "Accounting software",
+      "category": "finance",
+      "purpose": "Export sales, tax, and payout data for bookkeeping.",
+      "examples": [
+        "QuickBooks",
+        "Xero"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "restaurant.payments"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Frappe/ERPNext ties restaurant billing to its own accounting core; external accounting export is reasoned inference for non-ERP products."
+      }
+    },
+    {
+      "id": "online_reservation_platform",
+      "name": "Online reservation platform",
+      "category": "distribution",
+      "purpose": "List availability and accept reservations from a third-party discovery platform.",
+      "examples": [
+        "OpenTable",
+        "Resy"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "restaurant.reservations",
+        "restaurant.takeout_orders"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "wikipedia-opentable"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    },
+    {
+      "id": "kitchen_printer_hardware",
+      "name": "Kitchen printer / KDS hardware",
+      "category": "hardware",
+      "purpose": "Physical ticket printers or screens in the kitchen that receive routed orders.",
+      "examples": [
+        "Epson TM series",
+        "Elo touchscreens"
+      ],
+      "protocols": [
+        "ESC/POS",
+        "local network"
+      ],
+      "related_features": [
+        "restaurant.kitchen_display"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "barcode_scanner",
+      "name": "Barcode / QR scanner",
+      "category": "shop_floor",
+      "purpose": "Scan part, location, or work order barcodes on a mobile/tablet device to speed up shop-floor data entry.",
+      "examples": ["Handheld barcode scanners", "Tablet camera scanning"],
+      "protocols": ["USB HID", "camera"],
+      "related_features": ["manufacturing.shop_floor_data_collection", "manufacturing.stocktake_cycle_counting"],
+      "classification": "integration",
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's InvenTreeBarcodeMixin on Build/Part/StockItem models; single source."}
+    },
+    {
+      "id": "supplier_edi",
+      "name": "Supplier EDI / catalog",
+      "category": "procurement",
+      "purpose": "Exchange purchase orders, order confirmations, and price/catalog data with suppliers.",
+      "examples": ["EDI 850/855/856", "Supplier punch-out catalogs"],
+      "protocols": ["EDI", "REST"],
+      "related_features": ["manufacturing.purchase_orders", "manufacturing.supplier_management", "manufacturing.subcontracting"],
+      "classification": "integration",
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned from InvenTree's SupplierPart/ManufacturerPart models; no actual EDI connector inspected, single source."}
+    }
+  ]
+}

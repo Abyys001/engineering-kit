@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "integrations": [
+    {
+      "id": "calendar_provider",
+      "name": "Calendar provider",
+      "category": "calendar",
+      "purpose": "Two-way sync of bookings with an external calendar.",
+      "examples": [
+        "Google Calendar",
+        "Microsoft Outlook",
+        "CalDAV"
+      ],
+      "protocols": [
+        "REST",
+        "CalDAV",
+        "iCalendar (RFC 5545)"
+      ],
+      "related_features": [
+        "booking.calendar_sync"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments",
+          "rfc5545"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "payment_gateway",
+      "name": "Payment gateway",
+      "category": "payments",
+      "purpose": "Capture a deposit or payment at booking time.",
+      "examples": [
+        "Stripe"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "booking.deposits"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "sms_gateway",
+      "name": "SMS gateway",
+      "category": "communication",
+      "purpose": "Send SMS reminders and confirmations.",
+      "examples": [
+        "Twilio"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "booking.reminders"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "email_provider",
+      "name": "Email provider",
+      "category": "communication",
+      "purpose": "Send booking confirmations, reminders, and cancellations.",
+      "examples": [
+        "SendGrid",
+        "Postmark"
+      ],
+      "protocols": [
+        "SMTP",
+        "REST"
+      ],
+      "related_features": [
+        "booking.reminders",
+        "booking.bookings"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "webhook_consumer",
+      "name": "Webhook consumer",
+      "category": "integration",
+      "purpose": "Receive outbound booking lifecycle events for custom automation.",
+      "examples": [
+        "Zapier",
+        "a customer's own backend"
+      ],
+      "protocols": [
+        "webhooks"
+      ],
+      "related_features": [
+        "booking.webhooks"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "general-saas.workspace_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Team model + settings routes."
+    },
+    {
+      "feature": "general-saas.team_invites",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Invitation model + invite routes."
+    },
+    {
+      "feature": "general-saas.api_keys",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source",
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "ApiKey (boxyhq) and ApiKeys (nextcrm) models."
+    },
+    {
+      "feature": "general-saas.webhooks",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Svix-backed team webhook routes."
+    },
+    {
+      "feature": "general-saas.sso_saml",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Jackson SAML integration."
+    },
+    {
+      "feature": "general-saas.scim_provisioning",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Jackson dsync + SCIM v2.0 routes."
+    },
+    {
+      "feature": "general-saas.audit_log_viewer",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Retraced integration."
+    },
+    {
+      "feature": "general-saas.billing_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Stripe Subscription/Price models + webhook handler."
+    },
+    {
+      "feature": "general-saas.trial_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter/source"
+      ],
+      "status": "reference",
+      "notes": "Stripe subscription status enum includes 'trialing'; no dedicated trial UI/logic found."
+    }
+  ]
+}

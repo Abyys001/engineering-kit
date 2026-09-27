@@ -1,0 +1,39 @@
+name: schema-test
+
+# Author: @MikeRalphson / runs @jdesrosiers tests
+# Issue: https://github.com/OAI/OpenAPI-Specification/pull/2489
+
+#
+# This workflow runs the Yarn test script to validate passing and failing
+# testcases for the metaschemas
+#
+
+# run this on push to any branch and creation of pull-requests
+on:
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7 # checkout repo content
+      with:
+        fetch-depth: 0
+
+    - uses: actions/setup-node@v7 # setup Node.js
+      with:
+        node-version: '24.x'
+
+    - name: Enable Corepack
+      run: corepack enable
+
+    - name: Install dependencies
+      run: yarn install --immutable
+
+    - name: Run tests
+      run: yarn test
+      env:
+        BASE: ${{ github.event.pull_request.base.ref }}

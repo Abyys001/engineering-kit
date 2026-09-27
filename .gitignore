@@ -1,0 +1,2 @@
+# Upstream clones are re-fetchable from each SOURCE.md (URL + revision); only their metadata is versioned.
+sources/*/*/source/

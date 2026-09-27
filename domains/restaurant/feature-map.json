@@ -1,0 +1,1371 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "name": "Restaurant",
+  "aliases": [
+    "food service",
+    "dining",
+    "restaurant management"
+  ],
+  "description": "Dine-in, takeout, and delivery food-service operations: floor plan and reservations, menu and kitchen order flow, point-of-sale payment, and the staff/inventory operations behind them.",
+  "nace": [
+    "I56.10"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-26",
+  "sources": [
+    {
+      "id": "frappe-hospitality",
+      "title": "Frappe Hospitality",
+      "url": "https://github.com/frappe/hospitality",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "2003ff8db7d7fbc453a9d14da0f971b9186a0b4b",
+      "local_path": "sources/domains/frappe-hospitality/source",
+      "notes": "Reference-only (GPL-3.0). ERPNext restaurant module: Restaurant, Restaurant Table, Restaurant Menu/Menu Item, Restaurant Reservation, Restaurant Order Entry doctypes. Shared with domains/hospitality."
+    },
+    {
+      "id": "odoo-pos-restaurant",
+      "title": "Odoo Point of Sale + Restaurant addons (Community, addons/point_of_sale, addons/pos_restaurant)",
+      "url": "https://github.com/odoo/odoo/tree/18.0/addons/pos_restaurant",
+      "source_type": "implementation",
+      "license": "LGPL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "18.0 branch",
+      "local_path": null,
+      "notes": "Not cloned (monorepo, 17GB+, exceeds clone size cap; inspected via raw.githubusercontent.com). addons/ tree is Odoo Community, LGPL-3.0 per root LICENSE; pos_restaurant manifest confirms bill printing, bill splitting, kitchen order printing. Reference-only, no code copied."
+    },
+    {
+      "id": "ury",
+      "title": "URY (ERPNext-based restaurant POS + Mosaic KDS)",
+      "url": "https://github.com/ury-erp/ury",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-26",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned (inspected via GitHub API + raw FEATURES.md). Confirms visual table layout with drag-drop, table/captain transfer, bill splitting by item or custom split, takeaway order flow, KOT (kitchen order ticket) reprint. Reference-only, no code copied."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI Data Security Standard v4.0.1",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI SSC copyright; free to read/download with registration",
+      "retrieved": "2026-09-26",
+      "version": "4.0.1",
+      "local_path": null,
+      "notes": "Card payment security standard; applies to any restaurant accepting card payments."
+    },
+    {
+      "id": "eu-1169-2011",
+      "title": "EU Regulation No 1169/2011 on food information to consumers (allergen labelling)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169",
+      "source_type": "authoritative",
+      "license": "EU public document, free reuse per Commission Decision 2011/833/EU",
+      "retrieved": "2026-09-26",
+      "version": "consolidated text",
+      "local_path": null,
+      "notes": "EU-jurisdiction allergen/menu information disclosure requirement."
+    },
+    {
+      "id": "us-fda-menu-labeling",
+      "title": "US FDA Menu Labeling Requirements (21 CFR 101.11)",
+      "url": "https://www.fda.gov/food/food-labeling-nutrition/menu-labeling-requirements",
+      "source_type": "authoritative",
+      "license": "US government work, public domain",
+      "retrieved": "2026-09-26",
+      "version": "21 CFR 101.11",
+      "local_path": null,
+      "notes": "US chain-restaurant calorie/nutrition menu disclosure requirement."
+    },
+    {
+      "id": "us-dol-flsa-tips",
+      "title": "US DOL Fair Labor Standards Act — tipped employees / tip credit rules",
+      "url": "https://www.dol.gov/agencies/whd/flsa",
+      "source_type": "authoritative",
+      "license": "US government work, public domain",
+      "retrieved": "2026-09-26",
+      "version": "current",
+      "local_path": null,
+      "notes": "One jurisdiction's example of tip/labor rules; cited as illustrative, not exhaustive — labour law varies sharply by country/state."
+    },
+    {
+      "id": "wikipedia-point-of-sale",
+      "title": "Wikipedia: Point of sale",
+      "url": "https://en.wikipedia.org/wiki/Point_of_sale",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for POS-adjacent capabilities (inventory, staff, recipes) not found in the three inspected code implementations; not an independent implementation, does not raise confidence above low on its own."
+    },
+    {
+      "id": "wikipedia-online-food-ordering",
+      "title": "Wikipedia: Online food ordering",
+      "url": "https://en.wikipedia.org/wiki/Online_food_ordering",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for online ordering, delivery, and QR-code ordering; not an independent implementation."
+    },
+    {
+      "id": "wikipedia-loyalty-program",
+      "title": "Wikipedia: Loyalty program",
+      "url": "https://en.wikipedia.org/wiki/Loyalty_program",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for loyalty/rewards; not an independent implementation."
+    },
+    {
+      "id": "wikipedia-gift-card",
+      "title": "Wikipedia: Gift card",
+      "url": "https://en.wikipedia.org/wiki/Gift_card",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for stored-value gift cards; not an independent implementation."
+    },
+    {
+      "id": "wikipedia-customer-review",
+      "title": "Wikipedia: Customer review",
+      "url": "https://en.wikipedia.org/wiki/Customer_review",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for customer review collection; not an independent implementation."
+    },
+    {
+      "id": "wikipedia-interactive-kiosk",
+      "title": "Wikipedia: Interactive kiosk",
+      "url": "https://en.wikipedia.org/wiki/Interactive_kiosk",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for self-service kiosk ordering; not an independent implementation."
+    },
+    {
+      "id": "wikipedia-opentable",
+      "title": "Wikipedia: OpenTable",
+      "url": "https://en.wikipedia.org/wiki/OpenTable",
+      "source_type": "secondary",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-26",
+      "version": "2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "General background for third-party online reservation platforms; not an independent implementation."
+    }
+  ],
+  "features": [
+    {
+      "id": "restaurant.tables",
+      "name": "Tables and floor plan",
+      "classification": "core",
+      "description": "Define dining areas, tables, and seating capacity; visual floor-plan layout with per-table status (available, occupied, reserved, cleaning).",
+      "users": [
+        "host",
+        "manager"
+      ],
+      "entities": [
+        "table",
+        "restaurant_location"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "floor_plan_editor",
+        "table_status_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff",
+        "location"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "restaurant.menu",
+      "name": "Menu management",
+      "classification": "core",
+      "description": "Categories, items, prices, and availability windows for a restaurant's sellable menu.",
+      "users": [
+        "manager",
+        "cashier"
+      ],
+      "entities": [
+        "menu",
+        "menu_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "pricing",
+        "availability_scheduling"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "menu description generation",
+        "demand-based pricing suggestions"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "restaurant.menu_modifiers",
+      "name": "Menu modifiers and variants",
+      "classification": "common",
+      "description": "Add-ons, size options, ingredient substitutions, and combo choices attached to a menu item.",
+      "users": [
+        "cashier",
+        "server"
+      ],
+      "entities": [
+        "modifier_group",
+        "modifier",
+        "menu_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "variant_pricing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo POS has product attributes/combos; URY's item customization dialog supports comments/variants. Frappe's menu item is a flat item+rate with no modifier concept."
+      }
+    },
+    {
+      "id": "restaurant.reservations",
+      "name": "Table reservations",
+      "classification": "core",
+      "description": "Book a table for a date/time and party size; capacity and time-window conflict checking.",
+      "users": [
+        "customer",
+        "host",
+        "manager"
+      ],
+      "entities": [
+        "reservation",
+        "table",
+        "guest"
+      ],
+      "workflows": [
+        "reservation_lifecycle"
+      ],
+      "capabilities": [
+        "availability_check",
+        "conflict_detection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "no-show prediction",
+        "smart table assignment"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "calendar",
+        "customer",
+        "staff"
+      ],
+      "integrations": [
+        "sms_gateway",
+        "online_reservation_platform"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Only Frappe Hospitality's Restaurant Reservation doctype was found among the three inspected implementations; Odoo POS and URY have no dedicated reservation model in the parts reviewed. Classified core on general product judgement, not on source corroboration."
+      }
+    },
+    {
+      "id": "restaurant.waitlist",
+      "name": "Walk-in waitlist",
+      "classification": "common",
+      "description": "Queue walk-in parties without a reservation; estimated wait time and notify-when-ready.",
+      "users": [
+        "host"
+      ],
+      "entities": [
+        "waitlist_entry",
+        "guest",
+        "table"
+      ],
+      "workflows": [
+        "waitlist_lifecycle"
+      ],
+      "capabilities": [
+        "wait_time_estimation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "wait-time prediction"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "staff",
+        "customer"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Frappe's Restaurant Reservation 'Waitlisted' status value; no dedicated waitlist entity was found in any of the three inspected implementations. Treated as a distinct feature because walk-in queuing is operationally different from a scheduled reservation."
+      }
+    },
+    {
+      "id": "restaurant.dine_in_orders",
+      "name": "Dine-in order taking",
+      "classification": "core",
+      "description": "Capture an order against a table/seat, send to kitchen, and track status through to billing.",
+      "users": [
+        "server",
+        "cashier"
+      ],
+      "entities": [
+        "order",
+        "order_item",
+        "table"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle"
+      ],
+      "capabilities": [
+        "order_entry",
+        "course_sequencing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "real-time"
+      ],
+      "integrations": [
+        "pos"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "restaurant.kitchen_display",
+      "name": "Kitchen display system (KDS)",
+      "classification": "core",
+      "description": "Route order tickets to kitchen stations, track prep status, and flag delayed items in real time.",
+      "users": [
+        "kitchen_staff",
+        "server"
+      ],
+      "entities": [
+        "kitchen_ticket",
+        "order_item"
+      ],
+      "workflows": [
+        "kitchen_ticket_lifecycle"
+      ],
+      "capabilities": [
+        "ticket_routing",
+        "prep_time_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "prep-time prediction",
+        "auto-routing by station load"
+      ],
+      "real_time_relevance": "core",
+      "tags": [
+        "core",
+        "staff",
+        "real-time"
+      ],
+      "integrations": [
+        "kitchen_printer_hardware"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo pos_restaurant documents 'Kitchen Order Printing'; URY has KOT (kitchen order ticket) reprint. Neither is a screen-based KDS in the parts reviewed — ticket printing and true KDS are treated as the same underlying feature at different fidelity."
+      }
+    },
+    {
+      "id": "restaurant.pos_integration",
+      "name": "POS integration",
+      "classification": "common",
+      "description": "Connect to or embed a point-of-sale system for order capture and payment settlement.",
+      "users": [
+        "cashier",
+        "manager"
+      ],
+      "entities": [
+        "order",
+        "payment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "order_sync",
+        "payment_sync"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "integration",
+        "payment"
+      ],
+      "integrations": [
+        "pos"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "low",
+        "notes": "All three inspected implementations are themselves the POS rather than integrating a third-party one, so this reflects reasoned inference about products that are not full POS systems, not direct corroboration."
+      }
+    },
+    {
+      "id": "restaurant.payments",
+      "name": "In-restaurant payment capture",
+      "classification": "core",
+      "description": "Charge a table's bill through a payment provider; supports pay-at-table and receipt printing.",
+      "users": [
+        "cashier",
+        "server",
+        "customer"
+      ],
+      "entities": [
+        "payment",
+        "bill"
+      ],
+      "workflows": [
+        "billing_and_payment_lifecycle"
+      ],
+      "capabilities": [
+        "payment_capture",
+        "receipt_generation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "payment",
+        "staff"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "restaurant.split_bills",
+      "name": "Split bills",
+      "classification": "common",
+      "description": "Divide a table's bill by item, by seat, or evenly across a party.",
+      "users": [
+        "cashier",
+        "server",
+        "customer"
+      ],
+      "entities": [
+        "bill",
+        "order_item"
+      ],
+      "workflows": [
+        "billing_and_payment_lifecycle"
+      ],
+      "capabilities": [
+        "bill_splitting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "payment",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "restaurant.tips",
+      "name": "Tips and gratuity",
+      "classification": "common",
+      "description": "Capture tip amount at payment and record it against the server/order for payout and reporting.",
+      "users": [
+        "cashier",
+        "server"
+      ],
+      "entities": [
+        "payment"
+      ],
+      "workflows": [
+        "billing_and_payment_lifecycle"
+      ],
+      "capabilities": [
+        "tip_capture"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "payment",
+        "staff"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "labor_tip_regulations"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Not explicitly verified in any of the three inspected implementations for this pass; included on general industry knowledge (reasoned inference)."
+      }
+    },
+    {
+      "id": "restaurant.takeout_orders",
+      "name": "Takeout / pickup orders",
+      "classification": "common",
+      "description": "Orders placed for customer pickup rather than dine-in; no table assignment.",
+      "users": [
+        "cashier",
+        "customer"
+      ],
+      "entities": [
+        "order",
+        "order_item"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle"
+      ],
+      "capabilities": [
+        "pickup_scheduling"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [
+        "pos",
+        "online_reservation_platform"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "ury"
+        ],
+        "confidence": "low",
+        "notes": "URY documents an explicit takeaway order-type flow; not verified in Frappe Hospitality or Odoo pos_restaurant for this pass."
+      }
+    },
+    {
+      "id": "restaurant.delivery_orders",
+      "name": "Delivery orders",
+      "classification": "common",
+      "description": "Orders fulfilled by delivery to a customer address, with own or third-party couriers.",
+      "users": [
+        "cashier",
+        "delivery_driver",
+        "customer"
+      ],
+      "entities": [
+        "order",
+        "order_item",
+        "delivery"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle",
+        "delivery_dispatch_lifecycle"
+      ],
+      "capabilities": [
+        "address_capture",
+        "courier_assignment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "ETA prediction"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "customer",
+        "real-time"
+      ],
+      "integrations": [
+        "delivery_marketplace"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Not verified in any of the three inspected implementations for this pass; included on general industry knowledge (reasoned inference)."
+      }
+    },
+    {
+      "id": "restaurant.third_party_delivery_integration",
+      "name": "Third-party delivery marketplace integration",
+      "classification": "recommended",
+      "description": "Publish menu and receive orders from delivery marketplaces (e.g. aggregator apps).",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "order",
+        "menu"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "menu_sync",
+        "order_import"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "recommended",
+        "integration"
+      ],
+      "integrations": [
+        "delivery_marketplace"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+      }
+    },
+    {
+      "id": "restaurant.inventory",
+      "name": "Ingredient inventory",
+      "classification": "common",
+      "description": "Track stock levels of ingredients and supplies used to prepare menu items.",
+      "users": [
+        "manager",
+        "kitchen_staff"
+      ],
+      "entities": [
+        "inventory_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "stock_tracking",
+        "low_stock_alerts"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "demand forecasting",
+        "waste prediction"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "inventory",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "None of the three inspected restaurant-specific modules include ingredient-level stock; ERPNext/Odoo have generic (non-restaurant) stock modules the restaurant doctypes could sit on top of, but that link was not verified in this pass."
+      }
+    },
+    {
+      "id": "restaurant.recipes",
+      "name": "Recipes and yield",
+      "classification": "common",
+      "description": "Bill-of-materials per menu item: ingredient quantities and yield, used to cost dishes and deplete stock.",
+      "users": [
+        "manager",
+        "kitchen_staff"
+      ],
+      "entities": [
+        "recipe",
+        "menu_item",
+        "inventory_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "costing",
+        "auto_depletion"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+      }
+    },
+    {
+      "id": "restaurant.staff_shifts",
+      "name": "Staff shift scheduling",
+      "classification": "common",
+      "description": "Plan and publish staff work shifts and track clock-in/clock-out.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "shift"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "shift_planning",
+        "time_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "shift-demand forecasting"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-point-of-sale"
+        ],
+        "confidence": "low",
+        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+      }
+    },
+    {
+      "id": "restaurant.loyalty",
+      "name": "Loyalty and rewards",
+      "classification": "recommended",
+      "description": "Points, punch cards, or tiered rewards tied to a guest's order history.",
+      "users": [
+        "customer",
+        "manager"
+      ],
+      "entities": [
+        "loyalty_account",
+        "guest"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "points_accrual",
+        "redemption"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "personalized offers"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "ury",
+          "wikipedia-loyalty-program"
+        ],
+        "confidence": "low",
+        "notes": "URY shows a 'favourite items per customer' feature, which is adjacent to but not the same as a formal points/rewards program; no full loyalty program was verified in the three inspected implementations."
+      }
+    },
+    {
+      "id": "restaurant.reviews",
+      "name": "Customer reviews and ratings",
+      "classification": "recommended",
+      "description": "Collect and display post-visit ratings/feedback tied to an order or visit.",
+      "users": [
+        "customer",
+        "manager"
+      ],
+      "entities": [
+        "review"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "feedback_collection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "sentiment analysis",
+        "review summarization"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-customer-review"
+        ],
+        "confidence": "low",
+        "notes": "Not present in any of the three inspected implementations for this pass; reasoned inference from common industry practice."
+      }
+    },
+    {
+      "id": "restaurant.online_ordering",
+      "name": "Online ordering",
+      "classification": "common",
+      "description": "Customer-facing web/app storefront for takeout and delivery ordering against the live menu.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "order",
+        "menu"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle"
+      ],
+      "capabilities": [
+        "cart",
+        "checkout"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "customer",
+        "web"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Not present as a distinct module in the three inspected implementations; reasoned inference from common industry practice."
+      }
+    },
+    {
+      "id": "restaurant.menu_allergen_labeling",
+      "name": "Allergen and nutrition labelling",
+      "classification": "common",
+      "description": "Flag allergens and (where required) publish calorie/nutrition information per menu item.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "menu_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "allergen_tagging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "compliance",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "eu_food_information_regulation",
+        "us_fda_menu_labeling"
+      ],
+      "provenance": {
+        "sources": [
+          "eu-1169-2011",
+          "us-fda-menu-labeling"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "restaurant.qr_code_table_ordering",
+      "name": "QR code table ordering",
+      "classification": "recommended",
+      "description": "Guests scan a table QR code to view the menu and order from their own device.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "table",
+        "menu",
+        "order"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle"
+      ],
+      "capabilities": [
+        "self_order"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "recommended",
+        "customer",
+        "web"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+      }
+    },
+    {
+      "id": "restaurant.gift_cards",
+      "name": "Gift cards",
+      "classification": "optional",
+      "description": "Sell and redeem stored-value gift cards.",
+      "users": [
+        "cashier",
+        "customer"
+      ],
+      "entities": [
+        "payment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "stored_value"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "payment",
+        "customer"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-gift-card"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+      }
+    },
+    {
+      "id": "restaurant.self_service_kiosk",
+      "name": "Self-service kiosk ordering",
+      "classification": "optional",
+      "description": "In-store kiosk for customers to browse the menu, order, and pay without staff assistance.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "menu",
+        "order",
+        "payment"
+      ],
+      "workflows": [
+        "order_fulfillment_lifecycle"
+      ],
+      "capabilities": [
+        "self_order",
+        "payment_capture"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "wikipedia-interactive-kiosk"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; common commercial pattern, not verified against an inspected open-source implementation."
+      }
+    },
+    {
+      "id": "restaurant.multi_location_management",
+      "name": "Multi-location management",
+      "classification": "optional",
+      "description": "Manage menus, pricing, and reporting across a chain of restaurant locations from one account.",
+      "users": [
+        "manager"
+      ],
+      "entities": [
+        "restaurant_location"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "cross_location_reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from Frappe Hospitality's Restaurant doctype supporting multiple Restaurant records per Company, generalized to chain management."
+      }
+    }
+  ]
+}

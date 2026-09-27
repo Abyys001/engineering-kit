@@ -1,0 +1,94 @@
+{
+  "_fabricated": true,
+  "_note": "Synthetic example for domains/ecommerce per RESEARCH-BRIEF.md. All names, emails, phones, ids, SKUs, and amounts are invented.",
+  "customer_account": {
+    "id": "cust_acc_31aa02",
+    "email": "sam.taylor@example.com",
+    "default_address": {"line1": "42 Example Ave", "city": "Springfield", "region": "EX", "postal_code": "00002", "country": "US"},
+    "marketing_consent": true,
+    "status": "active"
+  },
+  "product": {
+    "id": "prod_71fa00",
+    "title": "Example Trail Running Shoe",
+    "description": "A fabricated demo product for schema testing.",
+    "status": "published",
+    "tax_class": "standard"
+  },
+  "product_variant": {
+    "id": "variant_71fa00_blue_42",
+    "product_id": "prod_71fa00",
+    "sku": "EX-SHOE-BLU-42",
+    "gtin": "00000000000000",
+    "price": "89.00",
+    "currency": "USD",
+    "option_values": {"color": "blue", "size": "42"}
+  },
+  "cart": {
+    "id": "cart_bb1029",
+    "customer_account_id": "cust_acc_31aa02",
+    "currency": "USD",
+    "status": "converted_to_order",
+    "line_items": [
+      {"id": "cli_1", "product_variant_id": "variant_71fa00_blue_42", "quantity": 1, "unit_price": "89.00"}
+    ],
+    "applied_promotions": ["WELCOME10"]
+  },
+  "promotion": {
+    "id": "promo_welcome10",
+    "code": "WELCOME10",
+    "type": "percentage",
+    "value": "10",
+    "status": "active"
+  },
+  "order": {
+    "id": "order_5c02f1",
+    "order_number": "EX-100042",
+    "customer_account_id": "cust_acc_31aa02",
+    "currency": "USD",
+    "subtotal": "89.00",
+    "discount_total": "8.90",
+    "tax_total": "6.41",
+    "total": "86.51",
+    "status": "shipped",
+    "placed_at": "2026-09-20T16:00:00Z",
+    "line_items": [
+      {"id": "oli_1", "product_variant_id": "variant_71fa00_blue_42", "quantity": 1, "unit_price": "89.00", "tax_amount": "6.41"}
+    ],
+    "history": [
+      {"status": "pending_payment", "at": "2026-09-20T16:00:00Z", "event": "create"},
+      {"status": "paid", "at": "2026-09-20T16:00:20Z", "event": "payment_captured"},
+      {"status": "processing", "at": "2026-09-20T18:00:00Z", "event": "start_fulfillment"},
+      {"status": "shipped", "at": "2026-09-21T09:00:00Z", "event": "ship"}
+    ]
+  },
+  "payment": {
+    "id": "pay_9012ab",
+    "order_id": "order_5c02f1",
+    "amount": "86.51",
+    "currency": "USD",
+    "status": "captured",
+    "provider": "example_gateway"
+  },
+  "shipment": {
+    "id": "ship_44d100",
+    "order_id": "order_5c02f1",
+    "carrier": "Example Parcel Co.",
+    "tracking_number": "EXPC000000001",
+    "status": "shipped",
+    "shipped_at": "2026-09-21T09:00:00Z"
+  },
+  "return_request_example": {
+    "id": "ret_2a9911",
+    "order_id": "order_prior_9f0011",
+    "reason": "wrong_size",
+    "status": "refunded",
+    "requested_at": "2026-09-10T12:00:00Z",
+    "history": [
+      {"status": "requested", "at": "2026-09-10T12:00:00Z"},
+      {"status": "approved", "at": "2026-09-10T15:00:00Z"},
+      {"status": "received", "at": "2026-09-14T10:00:00Z"},
+      {"status": "refunded", "at": "2026-09-15T09:30:00Z"}
+    ]
+  }
+}

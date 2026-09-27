@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "education.class_sections",
+      "to": "education.course_catalog",
+      "type": "requires",
+      "reason": "A section is an offering of a catalog course"
+    },
+    {
+      "from": "education.class_sections",
+      "to": "education.academic_calendar",
+      "type": "requires",
+      "reason": "A section is scoped to a term"
+    },
+    {
+      "from": "education.enrollment",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Enrollment registers a student into a section"
+    },
+    {
+      "from": "education.lesson_content",
+      "to": "education.course_catalog",
+      "type": "requires",
+      "reason": "Lessons belong to a course"
+    },
+    {
+      "from": "education.self_paced_content",
+      "to": "education.lesson_content",
+      "type": "enhances",
+      "reason": "Packaged content is a delivery mode of lesson content"
+    },
+    {
+      "from": "education.assignments",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Assignments are issued within a section"
+    },
+    {
+      "from": "education.submissions",
+      "to": "education.assignments",
+      "type": "requires",
+      "reason": "A submission answers an assignment"
+    },
+    {
+      "from": "education.grading_gradebook",
+      "to": "education.submissions",
+      "type": "requires",
+      "reason": "Grades are recorded against submissions/attempts"
+    },
+    {
+      "from": "education.rubrics",
+      "to": "education.assignments",
+      "type": "enhances",
+      "reason": "Rubrics structure how an assignment is scored"
+    },
+    {
+      "from": "education.attendance",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Attendance is tracked per section session"
+    },
+    {
+      "from": "education.timetable",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Timetable slots schedule a section"
+    },
+    {
+      "from": "education.live_classes",
+      "to": "education.timetable",
+      "type": "requires",
+      "reason": "A live class session occurs at a scheduled slot"
+    },
+    {
+      "from": "education.exams_quizzes",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Exams are administered within a section"
+    },
+    {
+      "from": "education.certificates",
+      "to": "education.grading_gradebook",
+      "type": "enhances",
+      "reason": "Certificate issuance typically checks completion/grade criteria"
+    },
+    {
+      "from": "education.report_cards",
+      "to": "education.grading_gradebook",
+      "type": "requires",
+      "reason": "Report cards aggregate recorded grades"
+    },
+    {
+      "from": "education.parent_guardian_access",
+      "to": "education.enrollment",
+      "type": "requires",
+      "reason": "Guardian access is scoped to a linked, enrolled student"
+    },
+    {
+      "from": "education.parent_guardian_access",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Guardian portal login"
+    },
+    {
+      "from": "education.fees_billing",
+      "to": "education.enrollment",
+      "type": "requires",
+      "reason": "Fees are billed against an enrolled student"
+    },
+    {
+      "from": "education.student_portal",
+      "to": "education.enrollment",
+      "type": "requires",
+      "reason": "Portal content is scoped to the student's enrollments"
+    },
+    {
+      "from": "education.student_portal",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Student login and session management"
+    },
+    {
+      "from": "education.announcements",
+      "to": "education.class_sections",
+      "type": "enhances",
+      "reason": "Announcements can be scoped to a section or sent institution-wide"
+    },
+    {
+      "from": "education.discussion_forums",
+      "to": "education.class_sections",
+      "type": "requires",
+      "reason": "Forums are scoped to a course section"
+    },
+    {
+      "from": "education.lti_tool_integration",
+      "to": "education.class_sections",
+      "type": "enhances",
+      "reason": "LTI tools are launched from within a section"
+    },
+    {
+      "from": "education.roster_sync",
+      "to": "education.enrollment",
+      "type": "enhances",
+      "reason": "Roster sync keeps enrollment data aligned with the SIS"
+    },
+    {
+      "from": "education.xapi_learning_records",
+      "to": "education.submissions",
+      "type": "enhances",
+      "reason": "Learning-record statements are generated from learner activity"
+    },
+    {
+      "from": "education.plagiarism_detection",
+      "to": "education.submissions",
+      "type": "enhances",
+      "reason": "Scans run against submitted work"
+    },
+    {
+      "from": "education.child_data_consent_controls",
+      "to": "education.enrollment",
+      "type": "requires",
+      "reason": "Consent must be captured before/at enrollment of a minor"
+    },
+    {
+      "from": "education.at_risk_student_prediction",
+      "to": "education.attendance",
+      "type": "enhances",
+      "reason": "Attendance is a common risk-model input"
+    },
+    {
+      "from": "education.at_risk_student_prediction",
+      "to": "education.grading_gradebook",
+      "type": "enhances",
+      "reason": "Grades are a common risk-model input"
+    },
+    {
+      "from": "education.admissions",
+      "to": "education.enrollment",
+      "type": "enhances",
+      "reason": "An accepted application converts into an enrollment"
+    }
+  ]
+}

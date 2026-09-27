@@ -1,0 +1,427 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "workspace",
+      "name": "Workspace",
+      "description": "A tenant's isolated account within the product; the unit of billing, membership, and data isolation.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "invitation"
+        },
+        {
+          "type": "has_many",
+          "target": "api_key"
+        },
+        {
+          "type": "belongs_to",
+          "target": "plan"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "slug",
+        "plan_id",
+        "created_at"
+      ],
+      "related_features": [
+        "general-saas.workspace_management",
+        "general-saas.workspace_deletion_export"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "active",
+        "suspended",
+        "pending_deletion",
+        "deleted"
+      ]
+    },
+    {
+      "id": "invitation",
+      "name": "Invitation",
+      "description": "A pending offer for a person to join a workspace with a pre-assigned role.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "email",
+        "role",
+        "token",
+        "expires_at"
+      ],
+      "related_features": [
+        "general-saas.team_invites"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "pending",
+        "accepted",
+        "expired",
+        "revoked"
+      ]
+    },
+    {
+      "id": "api_key",
+      "name": "API key",
+      "description": "A credential a workspace issues for programmatic access to the product's API.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "prefix",
+        "scopes",
+        "last_used_at",
+        "revoked_at"
+      ],
+      "related_features": [
+        "general-saas.api_keys",
+        "general-saas.public_api_rate_limiting"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "nextcrm"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "active",
+        "revoked",
+        "expired"
+      ]
+    },
+    {
+      "id": "webhook_subscription",
+      "name": "Webhook subscription",
+      "description": "A workspace's registration to receive HTTP callbacks for a set of event types.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        },
+        {
+          "type": "has_many",
+          "target": "webhook_delivery"
+        }
+      ],
+      "important_fields": [
+        "endpoint_url",
+        "event_types",
+        "signing_secret",
+        "status"
+      ],
+      "related_features": [
+        "general-saas.webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "active",
+        "disabled"
+      ]
+    },
+    {
+      "id": "webhook_delivery",
+      "name": "Webhook delivery",
+      "description": "A single attempted delivery of an event to a webhook subscription's endpoint.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "webhook_subscription"
+        }
+      ],
+      "important_fields": [
+        "event_type",
+        "payload",
+        "response_status",
+        "attempt_count"
+      ],
+      "related_features": [
+        "general-saas.webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "pending",
+        "delivered",
+        "failed",
+        "retrying"
+      ]
+    },
+    {
+      "id": "plan",
+      "name": "Plan",
+      "description": "A subscription tier with a price and a set of entitlements.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "entitlement"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "price",
+        "billing_interval"
+      ],
+      "related_features": [
+        "general-saas.plans_entitlements",
+        "general-saas.billing_portal"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "entitlement",
+      "name": "Entitlement",
+      "description": "A specific limit or capability a plan grants a workspace (e.g. seats, API calls, a gated feature).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "plan"
+        }
+      ],
+      "important_fields": [
+        "feature_key",
+        "limit",
+        "used"
+      ],
+      "related_features": [
+        "general-saas.plans_entitlements",
+        "general-saas.seat_management"
+      ],
+      "provenance": {
+        "sources": [
+          "lago-api"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "usage_event",
+      "name": "Usage event",
+      "description": "A single recorded unit of consumption against a metered capability (API call, storage, seat-day, etc.).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "metric",
+        "quantity",
+        "occurred_at"
+      ],
+      "related_features": [
+        "general-saas.usage_metering"
+      ],
+      "provenance": {
+        "sources": [
+          "lago-api"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "feature_flag",
+      "name": "Feature flag",
+      "description": "A named toggle controlling whether a feature is enabled, disabled, or partially rolled out.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace",
+          "note": "nullable; a flag can be global"
+        }
+      ],
+      "important_fields": [
+        "key",
+        "rollout_strategy",
+        "enabled"
+      ],
+      "related_features": [
+        "general-saas.feature_flags"
+      ],
+      "provenance": {
+        "sources": [
+          "unleash"
+        ],
+        "confidence": "low"
+      },
+      "states": [
+        "enabled",
+        "disabled",
+        "partial_rollout"
+      ]
+    },
+    {
+      "id": "sso_connection",
+      "name": "SSO connection",
+      "description": "A workspace's configured single sign-on link to a customer identity provider.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "protocol",
+        "idp_metadata_url",
+        "status"
+      ],
+      "related_features": [
+        "general-saas.sso_saml"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "saml-core-2.0"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "pending",
+        "active",
+        "error"
+      ]
+    },
+    {
+      "id": "scim_connection",
+      "name": "SCIM connection",
+      "description": "A workspace's configured SCIM provisioning link to a customer identity provider.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "base_url",
+        "bearer_token",
+        "status"
+      ],
+      "related_features": [
+        "general-saas.scim_provisioning"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "scim-rfc"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "active",
+        "disabled"
+      ]
+    },
+    {
+      "id": "export_job",
+      "name": "Export job",
+      "description": "An asynchronous request to export a workspace's data.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "workspace"
+        }
+      ],
+      "important_fields": [
+        "format",
+        "requested_by",
+        "download_url"
+      ],
+      "related_features": [
+        "general-saas.data_export",
+        "general-saas.workspace_deletion_export"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low"
+      },
+      "states": [
+        "queued",
+        "processing",
+        "completed",
+        "failed"
+      ]
+    },
+    {
+      "id": "status_incident",
+      "name": "Status incident",
+      "description": "A public record of a service disruption shown on the status page.",
+      "relationships": [],
+      "important_fields": [
+        "title",
+        "severity",
+        "affected_components"
+      ],
+      "related_features": [
+        "general-saas.status_page"
+      ],
+      "provenance": {
+        "sources": [
+          "cachet"
+        ],
+        "confidence": "low"
+      },
+      "states": [
+        "investigating",
+        "identified",
+        "monitoring",
+        "resolved"
+      ]
+    },
+    {
+      "id": "changelog_entry",
+      "name": "Changelog entry",
+      "description": "A single published release note or product update.",
+      "relationships": [],
+      "important_fields": [
+        "version",
+        "category",
+        "published_at"
+      ],
+      "related_features": [
+        "general-saas.changelog"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

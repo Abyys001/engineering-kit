@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "workspace_admin",
+      "name": "Workspace admin",
+      "experience": "administration",
+      "description": "Manages workspace-level settings, billing, and member access across all projects.",
+      "responsibilities": [
+        "Invite/remove workspace members",
+        "Configure workspace settings",
+        "Create projects"
+      ],
+      "related_features": [
+        "project-management.workspaces",
+        "project-management.private_projects"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's WorkspaceMember role field; single source."
+      }
+    },
+    {
+      "id": "project_manager",
+      "name": "Project / team lead",
+      "experience": "management",
+      "description": "Owns a project's configuration, planning, and reporting.",
+      "responsibilities": [
+        "Configure states/boards/cycles/modules",
+        "Plan sprints and assign work",
+        "Review reports and dependencies"
+      ],
+      "related_features": [
+        "project-management.projects",
+        "project-management.statuses_workflows",
+        "project-management.cycles_sprints",
+        "project-management.modules_epics"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's ProjectMember role (ROLE enum) and Kanboard's ProjectRoleModel (project manager role) are independent implementations."
+      }
+    },
+    {
+      "id": "contributor",
+      "name": "Contributor",
+      "experience": "staff",
+      "description": "A team member who does the work: creates and updates tasks, comments, and logs time.",
+      "responsibilities": [
+        "Work assigned tasks",
+        "Move cards on the board",
+        "Comment and log time",
+        "Update subtasks"
+      ],
+      "related_features": [
+        "project-management.tasks_issues",
+        "project-management.boards_kanban",
+        "project-management.comments_mentions",
+        "project-management.time_tracking",
+        "project-management.subtasks"
+      ],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Both platforms' default member role."
+      }
+    },
+    {
+      "id": "guest_client",
+      "name": "Guest / client",
+      "experience": "partner",
+      "description": "An external stakeholder with restricted access to view or comment on specific projects.",
+      "responsibilities": [
+        "View shared project/board",
+        "Comment on tasks",
+        "Submit intake requests"
+      ],
+      "related_features": [
+        "project-management.guest_client_access",
+        "project-management.comments_mentions",
+        "project-management.intake_triage"
+      ],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's ProjectPublicMember/ProjectDeployBoard; single source."
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / automation",
+      "experience": "system",
+      "description": "Automated actor that generates recurring tasks, computes activity feed entries, and runs scheduled reports.",
+      "responsibilities": [
+        "Generate recurring task instances",
+        "Log activity feed entries",
+        "Compute burndown/velocity data"
+      ],
+      "related_features": [
+        "project-management.recurring_tasks",
+        "project-management.activity_feed",
+        "project-management.burndown_velocity_reports"
+      ],
+      "provenance": {
+        "sources": [
+          "kanboard",
+          "plane"
+        ],
+        "confidence": "medium",
+        "notes": "Kanboard's RecurringTaskSubscriber/TaskEventJob and Plane's IssueActivity both imply an automated system actor."
+      }
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "ecommerce.category_navigation",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "Categories organize products that must already exist."
+    },
+    {
+      "from": "ecommerce.inventory_management",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "Inventory tracks stock per product variant."
+    },
+    {
+      "from": "ecommerce.storefront_search",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "Search indexes the product catalog."
+    },
+    {
+      "from": "ecommerce.cart",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "A cart line item references an existing product variant."
+    },
+    {
+      "from": "ecommerce.checkout",
+      "to": "ecommerce.cart",
+      "type": "requires",
+      "reason": "Checkout converts an existing cart."
+    },
+    {
+      "from": "ecommerce.checkout",
+      "to": "ecommerce.payments",
+      "type": "requires",
+      "reason": "Checkout captures payment to place the order."
+    },
+    {
+      "from": "ecommerce.checkout",
+      "to": "ecommerce.tax_calculation",
+      "type": "requires",
+      "reason": "Checkout totals include calculated tax."
+    },
+    {
+      "from": "ecommerce.guest_checkout",
+      "to": "ecommerce.checkout",
+      "type": "requires",
+      "reason": "Guest checkout is a variant of the checkout flow."
+    },
+    {
+      "from": "ecommerce.order_management",
+      "to": "ecommerce.checkout",
+      "type": "requires",
+      "reason": "An order is created by a completed checkout."
+    },
+    {
+      "from": "ecommerce.order_management",
+      "to": "ecommerce.inventory_management",
+      "type": "requires",
+      "reason": "Placing an order allocates/reserves inventory."
+    },
+    {
+      "from": "ecommerce.shipping_fulfillment",
+      "to": "ecommerce.order_management",
+      "type": "requires",
+      "reason": "A shipment fulfills an existing order."
+    },
+    {
+      "from": "ecommerce.returns_refunds",
+      "to": "ecommerce.order_management",
+      "type": "requires",
+      "reason": "A return references a completed order."
+    },
+    {
+      "from": "ecommerce.returns_refunds",
+      "to": "ecommerce.payments",
+      "type": "requires",
+      "reason": "A return triggers a refund through payments."
+    },
+    {
+      "from": "ecommerce.order_returns_rma_tracking",
+      "to": "ecommerce.returns_refunds",
+      "type": "requires",
+      "reason": "RMA tracking extends a return request."
+    },
+    {
+      "from": "ecommerce.promotions_discounts",
+      "to": "ecommerce.cart",
+      "type": "requires",
+      "reason": "A promotion is applied to a cart before checkout."
+    },
+    {
+      "from": "ecommerce.discount_stacking_rules",
+      "to": "ecommerce.promotions_discounts",
+      "type": "requires",
+      "reason": "Stacking rules govern how multiple promotions combine."
+    },
+    {
+      "from": "ecommerce.customer_accounts",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "A customer account is a specialization of platform authentication."
+    },
+    {
+      "from": "ecommerce.b2b_pricing",
+      "to": "ecommerce.customer_accounts",
+      "type": "requires",
+      "reason": "Tiered pricing is assigned per customer/customer-group."
+    },
+    {
+      "from": "ecommerce.gift_cards",
+      "to": "ecommerce.payments",
+      "type": "enhances",
+      "reason": "Gift cards are one more payment/credit method at checkout."
+    },
+    {
+      "from": "ecommerce.wishlist",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "A wishlist saves references to existing products."
+    },
+    {
+      "from": "ecommerce.abandoned_cart_recovery",
+      "to": "ecommerce.cart",
+      "type": "requires",
+      "reason": "Recovery targets an existing abandoned cart."
+    },
+    {
+      "from": "ecommerce.abandoned_cart_recovery",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Recovery is delivered as a notification/email."
+    },
+    {
+      "from": "ecommerce.product_recommendations",
+      "to": "ecommerce.catalog_management",
+      "type": "requires",
+      "reason": "Recommendations surface existing products."
+    },
+    {
+      "from": "ecommerce.reviews_ratings",
+      "to": "ecommerce.order_management",
+      "type": "enhances",
+      "reason": "A verified-purchase badge checks against order history but reviews can also be unverified."
+    },
+    {
+      "from": "ecommerce.merchant_admin",
+      "to": "shared.dashboard",
+      "type": "enhances",
+      "reason": "The admin console builds on the shared dashboard shell."
+    },
+    {
+      "from": "ecommerce.merchant_admin",
+      "to": "shared.data_tables",
+      "type": "enhances",
+      "reason": "Order/product lists use the shared data-table capability."
+    },
+    {
+      "from": "ecommerce.marketplace_multi_vendor",
+      "to": "ecommerce.order_management",
+      "type": "requires",
+      "reason": "Marketplace order-splitting extends the base order model."
+    },
+    {
+      "from": "ecommerce.marketplace_multi_vendor",
+      "to": "shared.organizations",
+      "type": "enhances",
+      "reason": "Each vendor can map to a tenant/organization."
+    },
+    {
+      "from": "ecommerce.tax_calculation",
+      "to": "shared.reporting",
+      "type": "enhances",
+      "reason": "Tax collected feeds into financial reporting."
+    },
+    {
+      "from": "ecommerce.customer_accounts",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Order/account events are delivered via the shared notification capability."
+    }
+  ]
+}

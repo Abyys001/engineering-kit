@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "production_planner",
+      "name": "Production planner",
+      "experience": "staff",
+      "description": "Plans production orders, BOMs, routings, and material requirements.",
+      "responsibilities": ["Create and release production orders", "Maintain BOMs and routings", "Run MRP and review shortages", "Schedule work orders against work centers"],
+      "related_features": ["manufacturing.production_orders", "manufacturing.bill_of_materials", "manufacturing.material_requirements_planning", "manufacturing.work_order_scheduling"],
+      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "Reasoned from both platforms' planning-oriented models (Build.responsible/issued_by; mrp.production's planning fields)."}
+    },
+    {
+      "id": "shop_floor_operator",
+      "name": "Shop floor operator",
+      "experience": "staff",
+      "description": "Executes work orders at a work center, reporting progress and consuming materials.",
+      "responsibilities": ["Scan barcodes to start/complete operations", "Report produced/scrapped quantity", "Consume components against a build"],
+      "related_features": ["manufacturing.shop_floor_data_collection", "manufacturing.work_centers", "manufacturing.inventory_lots_serials"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned from InvenTree's barcode mixin and BuildItem consumption model; single source."}
+    },
+    {
+      "id": "quality_inspector",
+      "name": "Quality inspector",
+      "experience": "staff",
+      "description": "Performs and records quality tests, and dispositions non-conforming material.",
+      "responsibilities": ["Run part test templates", "Record pass/fail results", "Log and disposition non-conformances"],
+      "related_features": ["manufacturing.quality_inspections", "manufacturing.non_conformance_management", "manufacturing.traceability"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's StockItemTestResult.user field; single source."}
+    },
+    {
+      "id": "purchasing_agent",
+      "name": "Purchasing agent",
+      "experience": "staff",
+      "description": "Manages supplier relationships and places purchase orders for materials.",
+      "responsibilities": ["Maintain supplier and supplier-part records", "Place and track purchase orders", "Coordinate subcontracted operations"],
+      "related_features": ["manufacturing.purchase_orders", "manufacturing.supplier_management", "manufacturing.subcontracting"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's company/order apps; single source."}
+    },
+    {
+      "id": "maintenance_technician",
+      "name": "Maintenance technician",
+      "experience": "staff",
+      "description": "Services and repairs work center equipment.",
+      "responsibilities": ["Perform preventive maintenance", "Log downtime and repairs", "Return equipment to service"],
+      "related_features": ["manufacturing.equipment_maintenance"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Reasoned from mrp.workcenter's working_state/blocked_time fields; no dedicated maintenance-role model found. Single source, reasoned."}
+    },
+    {
+      "id": "plant_manager",
+      "name": "Plant / operations manager",
+      "experience": "management",
+      "description": "Oversees overall production performance, capacity, cost, and quality across the shop floor.",
+      "responsibilities": ["Monitor work center load and late orders", "Review cost rollups", "Approve non-conformance dispositions"],
+      "related_features": ["manufacturing.workcenter_capacity_planning", "manufacturing.cost_tracking", "manufacturing.non_conformance_management"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Reasoned from mrp.workcenter's computed workorder_*_count fields, which serve a management-level view; single source."}
+    },
+    {
+      "id": "supplier_partner",
+      "name": "Supplier / vendor",
+      "experience": "partner",
+      "description": "The external company fulfilling a purchase order or subcontracted operation.",
+      "responsibilities": ["Fulfil purchase orders", "Perform subcontracted operations", "Provide certificates of conformance"],
+      "related_features": ["manufacturing.purchase_orders", "manufacturing.subcontracting"],
+      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's Company model (is_supplier flag); single source."}
+    },
+    {
+      "id": "system",
+      "name": "System / MRP engine",
+      "experience": "system",
+      "description": "Automated actor that computes material shortages and updates work center status from scanned events.",
+      "responsibilities": ["Run reorder-point/MRP computation", "Compute work order/work center state transitions", "Ingest barcode scan events"],
+      "related_features": ["manufacturing.material_requirements_planning", "manufacturing.shop_floor_data_collection"],
+      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Reasoned from mrp.workorder's compute='_compute_state' and stock.warehouse.orderpoint's automated reorder logic; single source."}
+    }
+  ]
+}

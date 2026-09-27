@@ -1,0 +1,463 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "workflows": [
+    {
+      "id": "reservation_lifecycle",
+      "name": "Reservation lifecycle",
+      "actor": "customer",
+      "trigger": "Customer requests a table for a date/time and party size",
+      "steps": [
+        "Select date, time, and party size",
+        "Check table availability",
+        "Confirm or wait for host confirmation",
+        "Seat the party on arrival",
+        "Complete or cancel/no-show"
+      ],
+      "entities": [
+        "reservation",
+        "table",
+        "guest"
+      ],
+      "features": [
+        "restaurant.reservations"
+      ],
+      "state_machine": {
+        "entity": "reservation",
+        "initial": "requested",
+        "terminal": [
+          "completed",
+          "cancelled",
+          "no_show"
+        ],
+        "states": [
+          "requested",
+          "confirmed",
+          "seated",
+          "completed",
+          "cancelled",
+          "no_show"
+        ],
+        "transitions": [
+          {
+            "from": "requested",
+            "to": "confirmed",
+            "event": "confirm"
+          },
+          {
+            "from": "requested",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "confirmed",
+            "to": "seated",
+            "event": "seat"
+          },
+          {
+            "from": "confirmed",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "confirmed",
+            "to": "no_show",
+            "event": "mark_no_show"
+          },
+          {
+            "from": "seated",
+            "to": "completed",
+            "event": "complete"
+          }
+        ]
+      },
+      "notifications": [
+        "confirmation",
+        "reminder"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "waitlist_lifecycle",
+      "name": "Waitlist lifecycle",
+      "actor": "host",
+      "trigger": "Walk-in party has no table available",
+      "steps": [
+        "Add party to waitlist with quoted wait time",
+        "Notify when a table is ready",
+        "Seat or expire if unresponsive"
+      ],
+      "entities": [
+        "waitlist_entry",
+        "guest",
+        "table"
+      ],
+      "features": [
+        "restaurant.waitlist"
+      ],
+      "state_machine": {
+        "entity": "waitlist_entry",
+        "initial": "waiting",
+        "terminal": [
+          "seated",
+          "abandoned",
+          "expired"
+        ],
+        "states": [
+          "waiting",
+          "notified",
+          "seated",
+          "abandoned",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "waiting",
+            "to": "notified",
+            "event": "table_ready"
+          },
+          {
+            "from": "notified",
+            "to": "seated",
+            "event": "seat"
+          },
+          {
+            "from": "notified",
+            "to": "expired",
+            "event": "timeout"
+          },
+          {
+            "from": "waiting",
+            "to": "abandoned",
+            "event": "guest_leaves"
+          }
+        ]
+      },
+      "notifications": [
+        "table_ready"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "order_fulfillment_lifecycle",
+      "name": "Order fulfillment lifecycle",
+      "actor": "server",
+      "trigger": "Order placed for dine-in, takeout, or delivery",
+      "steps": [
+        "Take order against a table, counter, or online cart",
+        "Send to kitchen",
+        "Prepare and mark ready",
+        "Serve, hand off, or dispatch for delivery",
+        "Move to billing"
+      ],
+      "entities": [
+        "order",
+        "order_item"
+      ],
+      "features": [
+        "restaurant.dine_in_orders",
+        "restaurant.takeout_orders",
+        "restaurant.delivery_orders",
+        "restaurant.online_ordering"
+      ],
+      "state_machine": {
+        "entity": "order",
+        "initial": "open",
+        "terminal": [
+          "paid",
+          "cancelled"
+        ],
+        "states": [
+          "open",
+          "sent_to_kitchen",
+          "ready",
+          "served",
+          "billed",
+          "paid",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "sent_to_kitchen",
+            "event": "fire"
+          },
+          {
+            "from": "sent_to_kitchen",
+            "to": "ready",
+            "event": "kitchen_ready"
+          },
+          {
+            "from": "ready",
+            "to": "served",
+            "event": "serve"
+          },
+          {
+            "from": "served",
+            "to": "billed",
+            "event": "request_bill"
+          },
+          {
+            "from": "billed",
+            "to": "paid",
+            "event": "pay"
+          },
+          {
+            "from": "open",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "sent_to_kitchen",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "order_ready"
+      ],
+      "integrations": [
+        "pos"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kitchen_ticket_lifecycle",
+      "name": "Kitchen ticket lifecycle",
+      "actor": "kitchen_staff",
+      "trigger": "Order item fired to a kitchen station",
+      "steps": [
+        "Ticket appears on KDS/printer",
+        "Station acknowledges and prepares",
+        "Mark ready",
+        "Bump off screen once served"
+      ],
+      "entities": [
+        "kitchen_ticket",
+        "order_item"
+      ],
+      "features": [
+        "restaurant.kitchen_display"
+      ],
+      "state_machine": {
+        "entity": "kitchen_ticket",
+        "initial": "new",
+        "terminal": [
+          "bumped",
+          "cancelled"
+        ],
+        "states": [
+          "new",
+          "preparing",
+          "ready",
+          "bumped",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "new",
+            "to": "preparing",
+            "event": "acknowledge"
+          },
+          {
+            "from": "preparing",
+            "to": "ready",
+            "event": "mark_ready"
+          },
+          {
+            "from": "ready",
+            "to": "bumped",
+            "event": "bump"
+          },
+          {
+            "from": "new",
+            "to": "cancelled",
+            "event": "void"
+          },
+          {
+            "from": "preparing",
+            "to": "cancelled",
+            "event": "void"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [
+        "kitchen_printer_hardware"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "billing_and_payment_lifecycle",
+      "name": "Billing and payment lifecycle",
+      "actor": "cashier",
+      "trigger": "Guest requests the bill",
+      "steps": [
+        "Generate bill from order",
+        "Optionally split by item/seat/even share",
+        "Capture payment(s) and tip",
+        "Close bill"
+      ],
+      "entities": [
+        "bill",
+        "payment",
+        "order_item"
+      ],
+      "features": [
+        "restaurant.payments",
+        "restaurant.split_bills",
+        "restaurant.tips"
+      ],
+      "state_machine": {
+        "entity": "bill",
+        "initial": "open",
+        "terminal": [
+          "paid",
+          "void"
+        ],
+        "states": [
+          "open",
+          "split",
+          "paid",
+          "void"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "split",
+            "event": "split_bill"
+          },
+          {
+            "from": "open",
+            "to": "paid",
+            "event": "pay_in_full"
+          },
+          {
+            "from": "split",
+            "to": "paid",
+            "event": "pay_all_splits"
+          },
+          {
+            "from": "open",
+            "to": "void",
+            "event": "void_bill"
+          }
+        ]
+      },
+      "notifications": [
+        "receipt"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "delivery_dispatch_lifecycle",
+      "name": "Delivery dispatch lifecycle",
+      "actor": "delivery_driver",
+      "trigger": "Delivery order is ready for pickup",
+      "steps": [
+        "Assign to a driver or marketplace courier",
+        "Driver picks up order",
+        "En route to customer",
+        "Delivered or failed"
+      ],
+      "entities": [
+        "delivery",
+        "order"
+      ],
+      "features": [
+        "restaurant.delivery_orders"
+      ],
+      "state_machine": {
+        "entity": "delivery",
+        "initial": "assigned",
+        "terminal": [
+          "delivered",
+          "failed"
+        ],
+        "states": [
+          "assigned",
+          "picked_up",
+          "en_route",
+          "delivered",
+          "failed"
+        ],
+        "transitions": [
+          {
+            "from": "assigned",
+            "to": "picked_up",
+            "event": "pickup"
+          },
+          {
+            "from": "picked_up",
+            "to": "en_route",
+            "event": "depart"
+          },
+          {
+            "from": "en_route",
+            "to": "delivered",
+            "event": "deliver"
+          },
+          {
+            "from": "en_route",
+            "to": "failed",
+            "event": "fail"
+          }
+        ]
+      },
+      "notifications": [
+        "delivery_status"
+      ],
+      "integrations": [
+        "delivery_marketplace"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-online-food-ordering"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not present in any inspected source."
+      }
+    }
+  ]
+}

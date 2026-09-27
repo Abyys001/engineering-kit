@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "email_gateway",
+      "name": "Email gateway",
+      "category": "communication",
+      "purpose": "Receive and send ticket email via a mailbox or transactional email provider.",
+      "examples": [
+        "IMAP/SMTP",
+        "Postmark",
+        "Mailgun",
+        "SendGrid"
+      ],
+      "protocols": [
+        "IMAP",
+        "SMTP",
+        "REST"
+      ],
+      "related_features": [
+        "support.email_channel"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "chat_widget",
+      "name": "Website chat widget",
+      "category": "communication",
+      "purpose": "Embed a live chat widget on the customer's website that creates and updates tickets in real time.",
+      "examples": [
+        "Chatwoot widget",
+        "Intercom-style widget"
+      ],
+      "protocols": [
+        "WebSocket",
+        "REST"
+      ],
+      "related_features": [
+        "support.chat_channel"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "voice_provider",
+      "name": "Voice / telephony provider",
+      "category": "communication",
+      "purpose": "Route and log phone calls as tickets, optionally with an IVR.",
+      "examples": [
+        "Twilio",
+        "Aircall"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks",
+        "SIP"
+      ],
+      "related_features": [
+        "support.voice_channel"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "freescout"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

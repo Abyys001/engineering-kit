@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer. No jurisdiction-specific rule (e.g. for Iran or any single country) is asserted here — only globally-published FATF/EU sources are cited, and every item is marked for human review.",
+  "items": [
+    {
+      "id": "kyc_thresholds",
+      "name": "KYC / Customer Due Diligence Thresholds",
+      "kind": "regulation",
+      "version": "FATF baseline; exact monetary thresholds are set per jurisdiction",
+      "jurisdiction": "varies by jurisdiction — FATF Recommendations set the baseline that national law implements",
+      "scope": "Identity capture required above a transaction-amount threshold; enhanced due diligence above a second, higher threshold. No specific country's threshold amount is asserted here.",
+      "affected_features": [
+        "exchange.kyc_thresholds",
+        "exchange.buy_sell_transactions"
+      ],
+      "requires_human_review": true,
+      "notes": "This item deliberately does not name a threshold figure for any specific country (including Iran); a project must source its own jurisdiction's regulator for the exact amount.",
+      "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html",
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "aml_str",
+      "name": "AML — Suspicious / Large Transaction Reporting",
+      "kind": "regulation",
+      "version": "FATF Recommendation 20 baseline",
+      "jurisdiction": "global (FATF member and cooperating jurisdictions); currency exchange offices are commonly named obliged entities",
+      "scope": "Filing a suspicious transaction report (STR) or large-cash-transaction report with the relevant financial intelligence unit.",
+      "affected_features": [
+        "exchange.aml_reporting",
+        "exchange.remittance"
+      ],
+      "requires_human_review": true,
+      "notes": "Implemented differently per jurisdiction; verify the local financial intelligence unit's exact filing rules before building this feature into a product.",
+      "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html",
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "eu_currency_exchange_obliged_entity",
+      "name": "EU AML — Currency Exchange Offices as Obliged Entities",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2024/1624 + Directive (EU) 2024/1640",
+      "jurisdiction": "European Union",
+      "scope": "Currency exchange offices ('bureaux de change') are named obliged entities subject to registration, CDD, and reporting duties.",
+      "affected_features": [
+        "exchange.customer_management",
+        "exchange.aml_reporting",
+        "exchange.kyc_thresholds"
+      ],
+      "requires_human_review": true,
+      "notes": "Applicability is staged under the 2024 EU AML package; verify current phase. Cited only for jurisdictions actually operating in the EU/EEA.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "provenance": {
+        "sources": [
+          "eu-amld"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,1088 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "name": "General SaaS",
+  "aliases": [
+    "B2B SaaS platform",
+    "SaaS product layer",
+    "multi-tenant SaaS"
+  ],
+  "description": "The cross-cutting product layer every B2B SaaS application needs on top of its vertical features: tenancy and workspaces, onboarding, plans and entitlements, usage metering, team invites, API keys, webhooks, an internal admin console, status/changelog communication, enterprise SSO/SCIM, data export, and feature flags.",
+  "nace": [
+    "J62.01"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "boxyhq-saas-starter",
+      "title": "BoxyHQ SaaS Starter Kit",
+      "url": "https://github.com/boxyhq/saas-starter-kit",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-26",
+      "version": "abc9b686823cbfb4973c79bc36fea37a3244be6c",
+      "local_path": "sources/dashboards/boxyhq-saas-starter/source",
+      "notes": "Verified from repo LICENSE file (Apache-2.0) by an earlier session. Prisma schema: Team (tenant), TeamMember, Invitation, ApiKey, Subscription/Price/Service (billing). Webhooks via svix (pages/api/teams/[slug]/webhooks), SSO via BoxyHQ Jackson SAML (lib/jackson, pages/api/teams/[slug]/sso.ts), SCIM directory sync via Jackson dsync (pages/api/scim/v2.0/[...directory].ts), audit log via Retraced (lib/retraced.ts). No onboarding wizard, no platform-wide admin console/impersonation, no rate limiting found in this repo (checked by grep)."
+    },
+    {
+      "id": "nextcrm",
+      "title": "NextCRM",
+      "url": "https://github.com/pdovhomilja/nextcrm-app",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-26",
+      "version": "b46b563b61c948a07a9cc5a340032444db1f8188",
+      "local_path": "sources/dashboards/nextcrm/source",
+      "notes": "Cited here only for its ApiKeys model (prisma model ApiKeys: scope, provider, encryptedKey, per-user) as a second, independent API-key-management implementation. NextCRM is single-tenant (no Team/workspace model) so it does not inform tenancy/invite features."
+    },
+    {
+      "id": "unleash",
+      "title": "Unleash",
+      "url": "https://github.com/Unleash/unleash",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "03aeb9b77428034f6311292fae7cbe558c13f847",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file (AGPL-3.0, not Apache as sometimes assumed) via `gh api`; reference-only, never copy code. Inspected src/lib/types/model.ts remotely: FeatureToggle, IFeatureStrategy (strategies+constraints), IEnvironment, IProject, IVariant — feature-flag data model."
+    },
+    {
+      "id": "lago-api",
+      "title": "Lago (billing API)",
+      "url": "https://github.com/getlago/lago-api",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "46b1398eda4fd0eb72c90577930c4febb0264146",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file (AGPL-3.0) via `gh api`; reference-only, never copy code. Inspected app/models remotely: BillableMetric, Event, DailyUsage, Plan, Entitlement, Wallet, UsageThreshold — usage-metering and plan-entitlement data model."
+    },
+    {
+      "id": "cachet",
+      "title": "Cachet",
+      "url": "https://github.com/CachetHQ/Cachet",
+      "source_type": "implementation",
+      "license": "Custom (Cachet License, source-available, non-OSI, see LICENSE.md)",
+      "retrieved": "2026-09-27",
+      "version": "3.x branch",
+      "local_path": null,
+      "notes": "Custom non-OSI license verified from LICENSE.md via `gh api` (GitHub reports NOASSERTION); reference-only, never copy code. Used only as a single reasoned reference for the shape of a public status/incident page (components, incidents, subscribers). Not independently cross-referenced against a second status-page implementation, so status_page confidence is capped at low-medium."
+    },
+    {
+      "id": "gdpr-2016-679",
+      "title": "Regulation (EU) 2016/679 (General Data Protection Regulation)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "source_type": "authoritative",
+      "license": "EU official legislation; EUR-Lex reuse policy (CC BY 4.0 for reuse of Commission material unless stated otherwise)",
+      "retrieved": "2026-09-26",
+      "version": "OJ L 119, 4.5.2016; CELEX 32016R0679",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: title and CELEX number confirmed."
+    },
+    {
+      "id": "ccpa-cpra",
+      "title": "California Consumer Privacy Act of 2018 (as amended by CPRA), Civil Code Title 1.81.5",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article=",
+      "source_type": "authoritative",
+      "license": "Public — California state statutory text",
+      "retrieved": "2026-09-26",
+      "version": "Civil Code 1798.100-1798.199.100, amended through 2025",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: exact title heading confirmed."
+    },
+    {
+      "id": "soc2-tsc",
+      "title": "2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (With Revised Points of Focus – 2022)",
+      "url": "https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022",
+      "source_type": "authoritative",
+      "license": "© AICPA & CIMA; freely downloadable resource, redistribution of the document itself not authorized",
+      "retrieved": "2026-09-27",
+      "version": "2017 TSC with 2022 revised points of focus",
+      "local_path": null,
+      "notes": "Verified via web search matching exact document title and URL on aicpa-cima.com."
+    },
+    {
+      "id": "iso-27001-2022",
+      "title": "ISO/IEC 27001:2022 — Information security management systems",
+      "url": "https://www.iso.org/standard/27001",
+      "source_type": "authoritative",
+      "license": "© ISO/IEC; standard text is paywalled, catalogue/summary page is public",
+      "retrieved": "2026-09-27",
+      "version": "2022 edition (3rd edition), amended by Amd 1:2024",
+      "local_path": null,
+      "notes": "iso.org blocks direct automated fetches (HTTP 403); verified the exact title and URL via web search results instead of direct fetch."
+    },
+    {
+      "id": "scim-rfc",
+      "title": "System for Cross-domain Identity Management (SCIM): Core Schema (RFC 7643) and Protocol (RFC 7644)",
+      "url": "https://datatracker.ietf.org/doc/html/rfc7644",
+      "source_type": "authoritative",
+      "license": "IETF Trust Legal Provisions — freely publishable",
+      "retrieved": "2026-09-27",
+      "version": "RFC 7643 / RFC 7644, September 2015",
+      "local_path": null,
+      "notes": "Both RFC 7643 (Core Schema) and RFC 7644 (Protocol) verified live via WebFetch (exact titles and dates confirmed)."
+    },
+    {
+      "id": "oidc-core",
+      "title": "OpenID Connect Core 1.0 incorporating errata set 2",
+      "url": "https://openid.net/specs/openid-connect-core-1_0.html",
+      "source_type": "authoritative",
+      "license": "OpenID Foundation IPR policy — freely publishable, attribution required",
+      "retrieved": "2026-09-27",
+      "version": "errata set 2, 2023-12-15",
+      "local_path": null,
+      "notes": "Verified live via WebFetch: exact title and date confirmed."
+    },
+    {
+      "id": "saml-core-2.0",
+      "title": "Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0",
+      "url": "https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf",
+      "source_type": "authoritative",
+      "license": "OASIS IPR Policy — freely publishable, attribution required",
+      "retrieved": "2026-09-27",
+      "version": "OASIS Standard, 15 March 2005",
+      "local_path": null,
+      "notes": "URL confirmed reachable (WebFetch retrieved a genuine 615.6KB PDF); binary content could not be parsed to text by the fetch tool, title/date is from well-established public record of this OASIS Standard's identifier."
+    }
+  ],
+  "features": [
+    {
+      "id": "general-saas.workspace_management",
+      "name": "Workspace management",
+      "classification": "core",
+      "description": "Create, rename, and switch between tenant workspaces; manage workspace-level settings and branding.",
+      "users": [
+        "tenant_owner",
+        "tenant_admin"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium",
+        "notes": "One clear implementation (boxyhq Team model + settings routes); the concept itself is near-universal in B2B SaaS but only one source was directly verified this pass."
+      }
+    },
+    {
+      "id": "general-saas.onboarding_flow",
+      "name": "Guided onboarding",
+      "classification": "common",
+      "description": "A first-run setup wizard that walks a new workspace owner through initial configuration after signup.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "web"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "No dedicated onboarding-wizard code found in boxyhq-saas-starter (checked by grep); this is a reasoned inference from very common B2B SaaS practice (Slack/Notion/Linear-style first-run flows), anchored only to the workspace-creation step that boxyhq does implement. Stated explicitly as low confidence, not industry standard."
+      }
+    },
+    {
+      "id": "general-saas.team_invites",
+      "name": "Team invites",
+      "classification": "core",
+      "description": "Invite people to a workspace by email with a pre-assigned role; manage pending, accepted, and expired invitations.",
+      "users": [
+        "tenant_owner",
+        "tenant_admin"
+      ],
+      "entities": [
+        "invitation",
+        "workspace"
+      ],
+      "workflows": [
+        "team_invite_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "admin",
+        "backend",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium",
+        "notes": "Verified implementation: boxyhq Invitation prisma model + pages/api/teams/[slug]/invitations.ts. Depends on shared.users (generic invite/activation) for the underlying account mechanics; this feature is the workspace-scoped, role-assigning specialization of it."
+      }
+    },
+    {
+      "id": "general-saas.plans_entitlements",
+      "name": "Plans and entitlements",
+      "classification": "core",
+      "description": "Subscription plan tiers with feature gating and usage/seat limits enforced per workspace.",
+      "users": [
+        "tenant_owner",
+        "platform_support"
+      ],
+      "entities": [
+        "plan",
+        "entitlement",
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "payment",
+        "backend"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq: Subscription/Price/Service prisma models (Stripe-backed plan tiers). Lago (reference-only, AGPL): explicit Plan + Entitlement + Wallet models. Two independent implementations = medium."
+      }
+    },
+    {
+      "id": "general-saas.usage_metering",
+      "name": "Usage metering",
+      "classification": "common",
+      "description": "Record usage events (API calls, seats, storage, etc.) per workspace to drive limits, alerts, and usage-based billing.",
+      "users": [
+        "system",
+        "platform_support"
+      ],
+      "entities": [
+        "usage_event",
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "backend",
+        "analytics",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "lago-api"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation (Lago's BillableMetric/Event/DailyUsage models, reference-only). Not found in boxyhq. Common pattern in metered-billing SaaS but only one source cross-referenced this pass."
+      }
+    },
+    {
+      "id": "general-saas.api_keys",
+      "name": "API keys",
+      "classification": "core",
+      "description": "Issue and revoke scoped API keys per workspace for programmatic access, with prefix display and last-used tracking.",
+      "users": [
+        "developer",
+        "tenant_admin"
+      ],
+      "entities": [
+        "api_key",
+        "workspace"
+      ],
+      "workflows": [
+        "api_key_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "nextcrm"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq: ApiKey prisma model scoped to a Team, with routes under pages/api/teams/[slug]/. NextCRM: separate ApiKeys model (per-user, per-provider) — a different flavor (storing third-party keys vs issuing the product's own keys) but the same underlying entity/feature shape. Two independent implementations = medium."
+      }
+    },
+    {
+      "id": "general-saas.webhooks",
+      "name": "Outbound webhooks",
+      "classification": "common",
+      "description": "Let a workspace subscribe to product events and receive signed HTTP callbacks, with delivery retry and a delivery log.",
+      "users": [
+        "developer",
+        "tenant_admin"
+      ],
+      "entities": [
+        "webhook_subscription",
+        "webhook_delivery",
+        "workspace"
+      ],
+      "workflows": [
+        "webhook_delivery_flow"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "backend",
+        "integration"
+      ],
+      "integrations": [
+        "svix",
+        "generic_webhook_receiver"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: boxyhq's team-scoped webhook endpoints backed by Svix (lib/svix.ts, pages/api/teams/[slug]/webhooks/). Outbound webhooks are near-ubiquitous in API-first SaaS but only one source verified this pass."
+      }
+    },
+    {
+      "id": "general-saas.admin_console",
+      "name": "Internal admin console",
+      "classification": "core",
+      "description": "An internal, staff-only console for searching tenants, viewing account health, and taking support actions across workspaces.",
+      "users": [
+        "platform_support"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [
+        "soc2_type_ii"
+      ],
+      "provenance": {
+        "sources": [
+          "soc2-tsc"
+        ],
+        "confidence": "low",
+        "notes": "No permissively-licensed OSS reference implementation of a platform-wide internal admin console was found in this research pass (boxyhq only has per-tenant admin, not a vendor-side console). Included as a reasoned inference: SOC 2 Trust Services Criteria (CC6/CC7 access-control and monitoring criteria) commonly motivate building one. Confidence intentionally low; do not treat as a directly-sourced feature."
+      }
+    },
+    {
+      "id": "general-saas.status_page",
+      "name": "Public status page",
+      "classification": "recommended",
+      "description": "A public page showing current system status, component health, and incident history, with subscriber notifications.",
+      "users": [
+        "platform_support"
+      ],
+      "entities": [
+        "status_incident"
+      ],
+      "workflows": [
+        "status_incident_lifecycle"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "web",
+        "communication"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "cachet"
+        ],
+        "confidence": "low",
+        "notes": "Single reference source (Cachet, custom non-OSI license, reference-only) informed the incident/component/subscriber shape. Not cross-referenced against a second implementation this pass."
+      }
+    },
+    {
+      "id": "general-saas.changelog",
+      "name": "Public changelog",
+      "classification": "optional",
+      "description": "A public or in-app feed of shipped changes and release notes, often paired with an unread-updates indicator.",
+      "users": [
+        "tenant_member"
+      ],
+      "entities": [
+        "changelog_entry"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "web",
+        "communication"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "No changelog feature found in the sources inspected this pass; included purely as a reasoned inference from common SaaS practice. Anchored to boxyhq only as the domain's general implementation reference, not as direct evidence of this specific feature — confidence deliberately low."
+      }
+    },
+    {
+      "id": "general-saas.sso_saml",
+      "name": "SSO (SAML)",
+      "classification": "common",
+      "description": "Enterprise single sign-on into a workspace via SAML 2.0 against the customer's identity provider.",
+      "users": [
+        "tenant_admin"
+      ],
+      "entities": [
+        "sso_connection",
+        "workspace"
+      ],
+      "workflows": [
+        "sso_connection_setup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "admin",
+        "backend"
+      ],
+      "integrations": [
+        "saml_idp"
+      ],
+      "compliance": [
+        "gdpr",
+        "soc2_type_ii"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "saml-core-2.0"
+        ],
+        "confidence": "high",
+        "notes": "Implementation (boxyhq's BoxyHQ Jackson SAML integration, lib/jackson) plus the authoritative SAML 2.0 Core spec together satisfy the brief's high-confidence rule (authoritative source present)."
+      }
+    },
+    {
+      "id": "general-saas.scim_provisioning",
+      "name": "SCIM provisioning",
+      "classification": "recommended",
+      "description": "Automatic user provisioning and deprovisioning into a workspace from the customer's identity provider via SCIM.",
+      "users": [
+        "tenant_admin"
+      ],
+      "entities": [
+        "scim_connection",
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "admin",
+        "backend"
+      ],
+      "integrations": [
+        "scim_idp"
+      ],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "scim-rfc"
+        ],
+        "confidence": "high",
+        "notes": "Implementation (boxyhq Jackson dsync + pages/api/scim/v2.0/[...directory].ts) plus the authoritative SCIM RFC 7643/7644 = high confidence per the brief's rule."
+      }
+    },
+    {
+      "id": "general-saas.data_export",
+      "name": "Self-serve data export",
+      "classification": "common",
+      "description": "Let a workspace owner export their tenant's data (CSV/JSON) for backup or portability.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "export_job",
+        "workspace"
+      ],
+      "workflows": [
+        "data_export_request"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "admin",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr",
+        "ccpa_cpra"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium",
+        "notes": "No direct OSS implementation of self-serve export was found in the sources inspected; GDPR Article 20 (right to data portability) and CCPA's right-to-know/portability provisions are the authoritative motivation. Medium rather than high because the specific self-serve-export *feature shape* is our inference from the regulation, not a spec the regulation defines."
+      }
+    },
+    {
+      "id": "general-saas.feature_flags",
+      "name": "Feature flags",
+      "classification": "common",
+      "description": "Toggle features on/off or roll them out gradually, targeted by workspace, user segment, or environment.",
+      "users": [
+        "platform_support",
+        "developer"
+      ],
+      "entities": [
+        "feature_flag",
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "backend",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "unleash"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation (Unleash FeatureToggle/Strategy/Environment/Project model, reference-only, AGPL-3.0). Widely used pattern but only one source cross-referenced this pass."
+      }
+    },
+    {
+      "id": "general-saas.audit_log_viewer",
+      "name": "Audit log viewer",
+      "classification": "common",
+      "description": "A workspace-scoped UI over the audit log with filters, search, and export, for admins to review who changed what.",
+      "users": [
+        "tenant_admin",
+        "platform_support"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "admin",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [
+        "soc2_type_ii"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "Single verified implementation: boxyhq integrates Retraced (lib/retraced.ts) for team-scoped audit history. Depends on shared.audit_log for the underlying append-only record; this feature is the workspace-facing viewer on top of it."
+      }
+    },
+    {
+      "id": "general-saas.billing_portal",
+      "name": "Self-serve billing portal",
+      "classification": "core",
+      "description": "Let a workspace owner view invoices, update payment method, and upgrade/downgrade/cancel their subscription.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "plan",
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "payment",
+        "admin"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium",
+        "notes": "Verified implementation: boxyhq's Stripe-backed Subscription/Price models and webhook handler (pages/api/webhooks/stripe.ts) including subscription status transitions (trialing/active/past_due/canceled). One direct implementation plus this being the de facto standard shape of Stripe Billing Portal integrations."
+      }
+    },
+    {
+      "id": "general-saas.seat_management",
+      "name": "Seat management",
+      "classification": "common",
+      "description": "Track seats included in a plan, assign/reclaim seats as members are invited or removed, and show pending vs active seat counts.",
+      "users": [
+        "tenant_owner",
+        "tenant_admin"
+      ],
+      "entities": [
+        "workspace",
+        "plan"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "payment",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq ties TeamMember to a per-team Subscription; Lago models per-subscription usage/quantity that maps to seat-style metering. Two independent, if partial, sources = medium."
+      }
+    },
+    {
+      "id": "general-saas.custom_roles",
+      "name": "Custom roles",
+      "classification": "recommended",
+      "description": "Let a workspace define its own roles and permission sets beyond the built-in owner/admin/member roles.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "boxyhq ships only fixed ADMIN/MEMBER roles (lib/permissions.ts) with no custom-role support; this feature is a reasoned inference from common enterprise-tier SaaS practice, anchored to boxyhq's fixed-role model as the contrasting baseline. Confidence deliberately low."
+      }
+    },
+    {
+      "id": "general-saas.trial_management",
+      "name": "Trial management",
+      "classification": "common",
+      "description": "Time-boxed free trial on a paid plan with expiration handling and trial-to-paid conversion prompts.",
+      "users": [
+        "tenant_owner",
+        "system"
+      ],
+      "entities": [
+        "workspace",
+        "plan"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "payment"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "boxyhq's Stripe webhook handler comments enumerate the 'trialing' subscription status, confirming trial support at the billing-provider level, but there is no dedicated trial-management UI/logic in the repo. Single, partial source — low confidence."
+      }
+    },
+    {
+      "id": "general-saas.workspace_deletion_export",
+      "name": "Workspace deletion with export",
+      "classification": "compliance",
+      "description": "Let a workspace owner delete their workspace, with a data export offer and a grace period before hard deletion, supporting the right to erasure.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "workspace",
+        "export_job"
+      ],
+      "workflows": [
+        "workspace_offboarding"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr",
+        "ccpa_cpra"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq implements a DELETE team endpoint (pages/api/teams/[slug]/index.ts); GDPR Article 17 (right to erasure) and CCPA deletion rights are the authoritative motivation for the export-then-purge shape. One implementation + one authoritative source = medium (the implementation alone does not confirm the export-before-purge grace period, which is our inference)."
+      }
+    },
+    {
+      "id": "general-saas.public_api_rate_limiting",
+      "name": "Public API rate limiting",
+      "classification": "infrastructure",
+      "description": "Per-key and per-plan request rate limits on the public API, with standard rate-limit response headers.",
+      "users": [
+        "developer"
+      ],
+      "entities": [
+        "api_key"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "No rate-limiting middleware found in boxyhq-saas-starter (checked by grep); reasoned inference from standard public-API practice, anchored to the same API-key entity boxyhq does implement. Confidence deliberately low."
+      }
+    },
+    {
+      "id": "general-saas.sandbox_environment",
+      "name": "Sandbox / test environment",
+      "classification": "optional",
+      "description": "A separate test workspace or API mode with synthetic data, isolated from production, for integration testing.",
+      "users": [
+        "developer"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "backend",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "Not found in any source inspected this pass; reasoned inference from common developer-tool SaaS practice (e.g. payment-provider test modes), anchored to boxyhq's API-key entity as the mechanism a sandbox key would use. Confidence deliberately low."
+      }
+    },
+    {
+      "id": "general-saas.data_residency",
+      "name": "Data residency controls",
+      "classification": "premium",
+      "description": "Let an enterprise workspace pin where its data is stored/processed (e.g. EU vs US region) to satisfy jurisdictional requirements.",
+      "users": [
+        "tenant_owner"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr",
+        "iso_27001"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679",
+          "iso-27001-2022"
+        ],
+        "confidence": "low",
+        "notes": "Not found as a concrete feature in any source inspected; reasoned inference motivated by GDPR cross-border transfer rules and ISO/IEC 27001 asset-location controls, which enterprise customers commonly ask about. No implementation evidence, so capped at low despite two authoritative anchors."
+      }
+    }
+  ]
+}

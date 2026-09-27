@@ -1,0 +1,389 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "contact",
+      "name": "Contact",
+      "description": "An individual person a sales team communicates with.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "company",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "first_name",
+        "last_name",
+        "email",
+        "phone"
+      ],
+      "related_features": [
+        "crm.contacts",
+        "crm.contact_timeline"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "company",
+      "name": "Company / account",
+      "description": "An organization that contacts belong to and deals are made with.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "contact"
+        },
+        {
+          "type": "belongs_to",
+          "target": "company",
+          "note": "parent company, optional"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "industry",
+        "parent_account_id"
+      ],
+      "related_features": [
+        "crm.companies_accounts",
+        "crm.account_hierarchy"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "lead",
+      "name": "Lead",
+      "description": "An unqualified prospect captured before conversion into a contact/account/deal.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "company",
+          "note": "optional, pre-conversion"
+        }
+      ],
+      "important_fields": [
+        "first_name",
+        "last_name",
+        "company",
+        "lead_source",
+        "lead_status"
+      ],
+      "related_features": [
+        "crm.leads",
+        "crm.lead_conversion"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "new",
+        "contacted",
+        "qualified",
+        "converted",
+        "disqualified"
+      ]
+    },
+    {
+      "id": "deal",
+      "name": "Deal / opportunity",
+      "description": "A tracked sales opportunity moving through pipeline stages toward a won or lost outcome.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "company"
+        },
+        {
+          "type": "belongs_to",
+          "target": "contact",
+          "note": "primary contact"
+        },
+        {
+          "type": "belongs_to",
+          "target": "pipeline_stage"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "value",
+        "stage",
+        "close_date",
+        "probability"
+      ],
+      "related_features": [
+        "crm.deals_pipelines",
+        "crm.forecasting"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm",
+          "odoo-crm"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "open",
+        "won",
+        "lost"
+      ]
+    },
+    {
+      "id": "pipeline_stage",
+      "name": "Pipeline stage",
+      "description": "One step in a configurable sales pipeline, with an associated win probability.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "deal"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "order",
+        "probability"
+      ],
+      "related_features": [
+        "crm.deals_pipelines"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "activity",
+      "name": "Activity",
+      "description": "A logged call, meeting, or note against a contact, company, lead, or deal.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contact",
+          "note": "polymorphic; may instead belong to company/lead/deal"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "subject",
+        "occurred_at"
+      ],
+      "related_features": [
+        "crm.activities_tasks",
+        "crm.contact_timeline"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "task",
+      "name": "Task",
+      "description": "A scheduled follow-up action assigned to a sales rep.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "deal",
+          "note": "polymorphic; may instead belong to lead/contact/company"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "due_at",
+        "assigned_to"
+      ],
+      "related_features": [
+        "crm.activities_tasks"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "open",
+        "completed",
+        "overdue"
+      ]
+    },
+    {
+      "id": "quote",
+      "name": "Quote",
+      "description": "A priced proposal generated from a deal, conceptually assembled from line items plus an approval step (no product inspected has a single dedicated Quote object).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "deal"
+        }
+      ],
+      "important_fields": [
+        "line_items",
+        "approval_status",
+        "total"
+      ],
+      "related_features": [
+        "crm.quotes"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      },
+      "states": [
+        "draft",
+        "pending_approval",
+        "approved",
+        "sent",
+        "accepted",
+        "rejected",
+        "expired"
+      ]
+    },
+    {
+      "id": "product",
+      "name": "Product",
+      "description": "A catalog item that can be added as a line item to a deal or quote.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "sku",
+        "price"
+      ],
+      "related_features": [
+        "crm.deal_products"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "segment",
+      "name": "Segment / target list",
+      "description": "A dynamic or static list of contacts/leads used for targeted outreach.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "filter_criteria",
+        "member_count"
+      ],
+      "related_features": [
+        "crm.segmentation"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "campaign",
+      "name": "Campaign",
+      "description": "A marketing or outbound campaign that leads and deals can be attributed to.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "lead"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "channel",
+        "start_date"
+      ],
+      "related_features": [
+        "crm.campaign_management"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "email_message",
+      "name": "Email message",
+      "description": "A sent or received email logged against a contact or deal via account sync.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contact"
+        }
+      ],
+      "important_fields": [
+        "subject",
+        "direction",
+        "sent_at"
+      ],
+      "related_features": [
+        "crm.email_sync"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "calendar_event",
+      "name": "Calendar event",
+      "description": "A meeting synced between the CRM and an external calendar.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contact",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "start_at",
+        "end_at",
+        "external_calendar_id"
+      ],
+      "related_features": [
+        "crm.calendar_sync"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "roles": [
+    {
+      "id": "customer",
+      "name": "Customer / guest",
+      "experience": "customer",
+      "description": "The diner making a reservation, joining a waitlist, ordering, or paying.",
+      "responsibilities": [
+        "Book or request a table",
+        "Place an order",
+        "Pay and tip",
+        "Leave a review"
+      ],
+      "related_features": [
+        "restaurant.reservations",
+        "restaurant.waitlist",
+        "restaurant.online_ordering",
+        "restaurant.reviews",
+        "restaurant.loyalty"
+      ],
+      "common_permissions": [
+        "reservation:create",
+        "order:create",
+        "review:create"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "host",
+      "name": "Host / maître d'",
+      "experience": "staff",
+      "description": "Manages the floor plan, seats guests, and runs the reservation book and waitlist.",
+      "responsibilities": [
+        "Seat guests",
+        "Manage table status",
+        "Confirm reservations",
+        "Run the waitlist"
+      ],
+      "related_features": [
+        "restaurant.tables",
+        "restaurant.reservations",
+        "restaurant.waitlist"
+      ],
+      "common_permissions": [
+        "table:assign",
+        "reservation:confirm",
+        "waitlist:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "server",
+      "name": "Server / waiter",
+      "experience": "staff",
+      "description": "Takes dine-in orders, communicates with the kitchen, and settles bills at the table.",
+      "responsibilities": [
+        "Take orders",
+        "Relay special requests",
+        "Split and settle bills",
+        "Capture tips"
+      ],
+      "related_features": [
+        "restaurant.dine_in_orders",
+        "restaurant.split_bills",
+        "restaurant.payments",
+        "restaurant.tips"
+      ],
+      "common_permissions": [
+        "order:create",
+        "order:update",
+        "bill:split"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kitchen_staff",
+      "name": "Kitchen staff / cook",
+      "experience": "staff",
+      "description": "Prepares food from tickets shown on the kitchen display or printed KOT.",
+      "responsibilities": [
+        "Acknowledge tickets",
+        "Prepare items",
+        "Mark items ready",
+        "Flag stock issues"
+      ],
+      "related_features": [
+        "restaurant.kitchen_display",
+        "restaurant.recipes",
+        "restaurant.inventory"
+      ],
+      "common_permissions": [
+        "kitchen_ticket:update"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "cashier",
+      "name": "Cashier",
+      "experience": "staff",
+      "description": "Processes payment, takeout, and walk-in orders at a fixed point-of-sale terminal.",
+      "responsibilities": [
+        "Take takeout orders",
+        "Process payments",
+        "Issue receipts"
+      ],
+      "related_features": [
+        "restaurant.pos_integration",
+        "restaurant.payments",
+        "restaurant.takeout_orders"
+      ],
+      "common_permissions": [
+        "payment:capture",
+        "order:create"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "delivery_driver",
+      "name": "Delivery driver",
+      "experience": "staff",
+      "description": "Picks up and delivers orders to customer addresses; may be in-house or a third-party courier.",
+      "responsibilities": [
+        "Accept delivery assignment",
+        "Pick up order",
+        "Deliver to customer",
+        "Update delivery status"
+      ],
+      "related_features": [
+        "restaurant.delivery_orders"
+      ],
+      "common_permissions": [
+        "delivery:update_status"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; no dedicated driver role verified in the inspected sources."
+      }
+    },
+    {
+      "id": "manager",
+      "name": "Restaurant manager",
+      "experience": "management",
+      "description": "Owns menu, pricing, staffing, inventory, and reporting for one or more locations.",
+      "responsibilities": [
+        "Manage menu and pricing",
+        "Schedule staff",
+        "Track inventory",
+        "Review sales reports"
+      ],
+      "related_features": [
+        "restaurant.menu",
+        "restaurant.staff_shifts",
+        "restaurant.inventory",
+        "restaurant.multi_location_management"
+      ],
+      "common_permissions": [
+        "menu:manage",
+        "shift:manage",
+        "inventory:manage",
+        "report:view"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "odoo-pos-restaurant",
+          "ury"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

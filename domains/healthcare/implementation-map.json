@@ -1,0 +1,396 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "healthcare.patient_registration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions",
+        "sources/domains/medplum/source/packages/react",
+        "sources/domains/medplum/source/packages/mock"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.patient_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/examples/foomedical",
+        "sources/domains/medplum/source/packages/react"
+      ],
+      "status": "reference",
+      "notes": "foomedical is a full patient-portal example app."
+    },
+    {
+      "feature": "healthcare.practitioner_directory",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.organization_locations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.scheduling",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react",
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": "react/src/Scheduler component."
+    },
+    {
+      "feature": "healthcare.appointment_reminders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.telehealth",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.encounters",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react",
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": "react/src/EncounterTimeline."
+    },
+    {
+      "feature": "healthcare.clinical_notes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react",
+        "sources/domains/medplum/source/examples/medplum-provider"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.problem_list",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.observations_vitals",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.e_prescribing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "DoseSpot packages were excluded from the sparse checkout."
+    },
+    {
+      "feature": "healthcare.allergy_tracking",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.document_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react"
+      ],
+      "status": "reference",
+      "notes": "react/src/AttachmentDisplay, AttachmentInput."
+    },
+    {
+      "feature": "healthcare.lab_orders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react",
+        "sources/domains/medplum/source/packages/app"
+      ],
+      "status": "reference",
+      "notes": "react/src/ServiceRequestTimeline; app/src/lab."
+    },
+    {
+      "feature": "healthcare.lab_results",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/react"
+      ],
+      "status": "reference",
+      "notes": "react/src/DiagnosticReportDisplay."
+    },
+    {
+      "feature": "healthcare.billing_claims",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.insurance_eligibility",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/examples/medplum-eligibility-demo"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.patient_consent",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.access_policies",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": "profiles-medplum.json defines the AccessPolicy resource."
+    },
+    {
+      "feature": "healthcare.care_team",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.referrals",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.immunizations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.patient_intake_forms",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/examples/medplum-patient-intake-demo",
+        "sources/domains/medplum/source/packages/react"
+      ],
+      "status": "reference",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.care_plans",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/medplum/source/packages/definitions",
+        "sources/domains/medplum/source/packages/react"
+      ],
+      "status": "reference",
+      "notes": "react/src/PlanDefinitionBuilder."
+    },
+    {
+      "feature": "healthcare.waitlist",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.patient_invoicing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "healthcare.no_show_prediction",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    }
+  ]
+}

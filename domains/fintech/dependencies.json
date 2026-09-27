@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "fintech.kyc_onboarding",
+      "to": "fintech.party_management",
+      "type": "requires",
+      "reason": "A KYC case is opened against an existing party record."
+    },
+    {
+      "from": "fintech.ledger_accounts",
+      "to": "fintech.party_management",
+      "type": "requires",
+      "reason": "Every ledger account is owned by a party."
+    },
+    {
+      "from": "fintech.wallets",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "A wallet's balance is backed by ledger accounts/entries."
+    },
+    {
+      "from": "fintech.payments",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Settling a payment posts double-entry ledger entries."
+    },
+    {
+      "from": "fintech.internal_transfers",
+      "to": "fintech.wallets",
+      "type": "requires",
+      "reason": "Transfers move balance between wallets."
+    },
+    {
+      "from": "fintech.p2p_transfers",
+      "to": "fintech.internal_transfers",
+      "type": "requires",
+      "reason": "P2P transfer is a targeted case of an internal transfer."
+    },
+    {
+      "from": "fintech.card_issuing",
+      "to": "fintech.wallets",
+      "type": "requires",
+      "reason": "A card spends from an underlying wallet balance."
+    },
+    {
+      "from": "fintech.card_controls",
+      "to": "fintech.card_issuing",
+      "type": "requires",
+      "reason": "Controls act on an already-issued card."
+    },
+    {
+      "from": "fintech.lending_origination",
+      "to": "fintech.party_management",
+      "type": "requires",
+      "reason": "A loan application is made by an existing party."
+    },
+    {
+      "from": "fintech.lending_origination",
+      "to": "fintech.kyc_onboarding",
+      "type": "requires",
+      "reason": "Underwriting requires a verified party."
+    },
+    {
+      "from": "fintech.loan_servicing",
+      "to": "fintech.lending_origination",
+      "type": "requires",
+      "reason": "Servicing starts once a loan is approved/disbursed."
+    },
+    {
+      "from": "fintech.loan_servicing",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Disbursement and repayments post to the ledger."
+    },
+    {
+      "from": "fintech.interest_accrual",
+      "to": "fintech.loan_servicing",
+      "type": "requires",
+      "reason": "Loan interest accrues against a serviced loan."
+    },
+    {
+      "from": "fintech.credit_scoring",
+      "to": "fintech.lending_origination",
+      "type": "enhances",
+      "reason": "A score improves, but isn't required for, a manual decision."
+    },
+    {
+      "from": "fintech.statements",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "A statement summarizes ledger entries for a period."
+    },
+    {
+      "from": "fintech.fee_management",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Assessed fees post as ledger entries."
+    },
+    {
+      "from": "fintech.limits_management",
+      "to": "fintech.party_management",
+      "type": "requires",
+      "reason": "Limits are set per party (and its accounts/cards)."
+    },
+    {
+      "from": "fintech.fraud_monitoring",
+      "to": "fintech.payments",
+      "type": "requires",
+      "reason": "Fraud scoring evaluates payment attempts."
+    },
+    {
+      "from": "fintech.aml_transaction_monitoring",
+      "to": "fintech.payments",
+      "type": "requires",
+      "reason": "AML monitoring screens posted payments."
+    },
+    {
+      "from": "fintech.aml_transaction_monitoring",
+      "to": "fintech.kyc_onboarding",
+      "type": "requires",
+      "reason": "Monitoring correlates against the party's KYC risk profile."
+    },
+    {
+      "from": "fintech.sanctions_screening",
+      "to": "fintech.kyc_onboarding",
+      "type": "requires",
+      "reason": "Sanctions screening runs as part of onboarding and periodic re-checks."
+    },
+    {
+      "from": "fintech.dispute_management",
+      "to": "fintech.payments",
+      "type": "requires",
+      "reason": "A dispute always references a specific payment."
+    },
+    {
+      "from": "fintech.reconciliation",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Reconciliation matches ledger entries against external statements."
+    },
+    {
+      "from": "fintech.multi_currency_ledger",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Multi-currency is an extension of the base ledger model."
+    },
+    {
+      "from": "fintech.recurring_payments",
+      "to": "fintech.payments",
+      "type": "requires",
+      "reason": "A recurring payment executes as a scheduled payment."
+    },
+    {
+      "from": "fintech.bill_pay",
+      "to": "fintech.payments",
+      "type": "requires",
+      "reason": "Bill pay executes as an outbound payment."
+    },
+    {
+      "from": "fintech.savings_goals",
+      "to": "fintech.wallets",
+      "type": "requires",
+      "reason": "A savings goal is a labeled sub-balance of a wallet."
+    },
+    {
+      "from": "fintech.spend_analytics",
+      "to": "fintech.payments",
+      "type": "enhances",
+      "reason": "Analytics summarize payment history but aren't required to process payments."
+    },
+    {
+      "from": "fintech.virtual_accounts",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "A virtual account number routes to an underlying ledger account."
+    },
+    {
+      "from": "fintech.open_banking_connectivity",
+      "to": "fintech.ledger_accounts",
+      "type": "requires",
+      "reason": "Account information APIs expose ledger account data."
+    },
+    {
+      "from": "fintech.webhooks_events",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Webhooks are a partner-facing notification channel alongside in-app/email/SMS."
+    },
+    {
+      "from": "fintech.kyc_onboarding",
+      "to": "shared.file_storage",
+      "type": "enhances",
+      "reason": "Identity documents are stored as files."
+    },
+    {
+      "from": "fintech.statements",
+      "to": "shared.file_storage",
+      "type": "enhances",
+      "reason": "Generated statements are stored as files (e.g. PDF)."
+    },
+    {
+      "from": "fintech.dispute_management",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Dispute status changes notify the customer."
+    },
+    {
+      "from": "fintech.fraud_monitoring",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Confirmed fraud triggers customer/staff alerts."
+    },
+    {
+      "from": "fintech.reconciliation",
+      "to": "shared.reporting",
+      "type": "enhances",
+      "reason": "Discrepancy reports surface through the shared reporting capability."
+    },
+    {
+      "from": "fintech.party_management",
+      "to": "shared.audit_log",
+      "type": "enhances",
+      "reason": "Party profile changes are audit-logged."
+    },
+    {
+      "from": "fintech.aml_transaction_monitoring",
+      "to": "shared.audit_log",
+      "type": "enhances",
+      "reason": "AML case actions are audit-logged for regulatory evidence."
+    },
+    {
+      "from": "fintech.limits_management",
+      "to": "shared.audit_log",
+      "type": "enhances",
+      "reason": "Limit overrides are audit-logged."
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "gdpr_support",
+      "name": "General Data Protection Regulation (as applied to support tickets)",
+      "kind": "regulation",
+      "version": "OJ L 119, 4.5.2016 (in force, consolidated to 2016)",
+      "jurisdiction": "European Union / EEA",
+      "scope": "Support tickets often contain personal data and are a common channel through which EU/EEA individuals exercise data subject access/erasure requests.",
+      "affected_features": [
+        "support.ticket_management",
+        "support.customer_portal"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever a support product's customers include EU/EEA individuals; the support team is frequently the first point of contact for a data subject request, whether or not the product itself was built for that purpose.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "tsr_telemarketing",
+      "name": "Telemarketing Sales Rule (16 CFR 310)",
+      "kind": "regulation",
+      "version": "16 CFR 310, current as retrieved",
+      "jurisdiction": "United States",
+      "scope": "Governs outbound/inbound telemarketing calls: required disclosures, do-not-call handling, and call-time restrictions relevant to a voice support channel.",
+      "affected_features": [
+        "support.voice_channel"
+      ],
+      "requires_human_review": true,
+      "notes": "Primarily targets telemarketing/sales calls rather than inbound customer support, but call-recording consent and do-not-call list obligations can still apply depending on how the voice channel is used.",
+      "url": "https://www.ftc.gov/legal-library/browse/rules/telemarketing-sales-rule",
+      "provenance": {
+        "sources": [
+          "ftc-tsr"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

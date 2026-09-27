@@ -1,0 +1,625 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "party",
+      "name": "Party",
+      "description": "A person or organization that can own accounts, wallets, or be a counterparty.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "account"
+        },
+        {
+          "type": "has_many",
+          "target": "wallet"
+        },
+        {
+          "type": "has_many",
+          "target": "kyc_case"
+        }
+      ],
+      "important_fields": [
+        "party_type",
+        "full_name_or_legal_name",
+        "email",
+        "phone",
+        "risk_rating"
+      ],
+      "states": [
+        "active",
+        "suspended",
+        "closed"
+      ],
+      "related_features": [
+        "fintech.party_management",
+        "fintech.kyc_onboarding"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "Party",
+          "note": "FIBO's Business Entities ontology models Party as the general class of persons/organizations able to hold rights and obligations."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "std:fibo"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "kyc_case",
+      "name": "KYC Case",
+      "description": "A single identity-verification and risk-assessment case for a party, usually opened at onboarding.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        }
+      ],
+      "important_fields": [
+        "status",
+        "risk_score",
+        "verification_method",
+        "submitted_at",
+        "decided_at"
+      ],
+      "states": [
+        "pending",
+        "in_review",
+        "approved",
+        "rejected",
+        "expired"
+      ],
+      "related_features": [
+        "fintech.kyc_onboarding",
+        "fintech.sanctions_screening"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "account",
+      "name": "Ledger Account",
+      "description": "A balance-bearing record in the double-entry ledger, owned by a party.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "has_many",
+          "target": "ledger_entry"
+        }
+      ],
+      "important_fields": [
+        "account_number",
+        "currency",
+        "account_type",
+        "status"
+      ],
+      "states": [
+        "active",
+        "dormant",
+        "closed"
+      ],
+      "related_features": [
+        "fintech.ledger_accounts",
+        "fintech.multi_currency_ledger",
+        "fintech.virtual_accounts"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "FinancialAccount",
+          "note": "FIBO Financial Instruments/Accounts module."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "formance-ledger"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ledger_entry",
+      "name": "Ledger Entry",
+      "description": "A single debit or credit posting to an account; entries always balance within a transaction.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "account"
+        },
+        {
+          "type": "belongs_to",
+          "target": "payment",
+          "note": "optional, set when the entry originates from a payment"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "direction",
+        "currency",
+        "posted_at",
+        "transaction_ref"
+      ],
+      "states": [],
+      "related_features": [
+        "fintech.ledger_accounts",
+        "fintech.reconciliation"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "formance-ledger"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "wallet",
+      "name": "Wallet",
+      "description": "A stored-value balance a party funds and spends from, backed by one or more ledger accounts.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "has_one",
+          "target": "account"
+        }
+      ],
+      "important_fields": [
+        "balance",
+        "currency",
+        "status"
+      ],
+      "states": [
+        "active",
+        "frozen",
+        "closed"
+      ],
+      "related_features": [
+        "fintech.wallets",
+        "fintech.internal_transfers",
+        "fintech.savings_goals"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "description": "A movement of money into or out of the platform over an external rail.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "has_many",
+          "target": "ledger_entry"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "currency",
+        "direction",
+        "status",
+        "rail"
+      ],
+      "states": [
+        "initiated",
+        "pending",
+        "completed",
+        "failed",
+        "reversed"
+      ],
+      "related_features": [
+        "fintech.payments",
+        "fintech.fraud_monitoring",
+        "fintech.aml_transaction_monitoring"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "PaymentTransaction",
+          "note": "FIBO models a monetary transfer between parties."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "iso20022"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "transfer",
+      "name": "Internal Transfer",
+      "description": "A movement of money between two wallets/accounts on the same platform.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "belongs_to",
+          "target": "wallet"
+        }
+      ],
+      "important_fields": [
+        "from_account",
+        "to_account",
+        "amount",
+        "status"
+      ],
+      "states": [
+        "pending",
+        "completed",
+        "failed"
+      ],
+      "related_features": [
+        "fintech.internal_transfers",
+        "fintech.p2p_transfers"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "description": "A virtual or physical card linked to a wallet or account.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "belongs_to",
+          "target": "wallet"
+        }
+      ],
+      "important_fields": [
+        "pan_last4",
+        "expiry",
+        "status",
+        "form_factor"
+      ],
+      "states": [
+        "active",
+        "frozen",
+        "expired",
+        "cancelled"
+      ],
+      "related_features": [
+        "fintech.card_issuing",
+        "fintech.card_controls"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from common card-processor data shapes; not present in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "loan",
+      "name": "Loan",
+      "description": "A credit facility extended to a party, with principal, rate, and term.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        },
+        {
+          "type": "has_many",
+          "target": "loan_schedule"
+        }
+      ],
+      "important_fields": [
+        "principal",
+        "interest_rate",
+        "term_months",
+        "status"
+      ],
+      "states": [
+        "applied",
+        "underwriting",
+        "approved",
+        "rejected",
+        "disbursed",
+        "repaying",
+        "closed",
+        "defaulted"
+      ],
+      "related_features": [
+        "fintech.lending_origination",
+        "fintech.loan_servicing"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "Loan",
+          "note": "FIBO Loans module."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "loan_schedule",
+      "name": "Loan Repayment Schedule Line",
+      "description": "One scheduled installment of a loan's amortization schedule.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "loan"
+        }
+      ],
+      "important_fields": [
+        "due_date",
+        "amount_due",
+        "amount_paid",
+        "status"
+      ],
+      "states": [
+        "due",
+        "partially_paid",
+        "paid",
+        "overdue"
+      ],
+      "related_features": [
+        "fintech.loan_servicing"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "statement",
+      "name": "Statement",
+      "description": "A periodic summary of an account's opening/closing balance and transactions.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "account"
+        }
+      ],
+      "important_fields": [
+        "period_start",
+        "period_end",
+        "opening_balance",
+        "closing_balance"
+      ],
+      "states": [
+        "generated",
+        "delivered"
+      ],
+      "related_features": [
+        "fintech.statements"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fee",
+      "name": "Fee",
+      "description": "A charge assessed against a payment, card, or account per a fee schedule.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "account"
+        },
+        {
+          "type": "belongs_to",
+          "target": "payment",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "fee_type",
+        "amount",
+        "currency"
+      ],
+      "states": [],
+      "related_features": [
+        "fintech.fee_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "limit",
+      "name": "Limit",
+      "description": "A cap on transaction amount, count, or velocity for a party, account, or card.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "party"
+        }
+      ],
+      "important_fields": [
+        "limit_type",
+        "period",
+        "max_amount"
+      ],
+      "states": [],
+      "related_features": [
+        "fintech.limits_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fraud_alert",
+      "name": "Fraud Alert",
+      "description": "A flagged payment or party pending risk-analyst review.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "payment"
+        },
+        {
+          "type": "belongs_to",
+          "target": "party"
+        }
+      ],
+      "important_fields": [
+        "risk_score",
+        "reason_codes",
+        "status"
+      ],
+      "states": [
+        "open",
+        "cleared",
+        "confirmed_fraud"
+      ],
+      "related_features": [
+        "fintech.fraud_monitoring"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not modeled in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "dispute",
+      "name": "Dispute",
+      "description": "A customer-raised challenge to a specific payment, tracked through investigation to resolution.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "payment"
+        }
+      ],
+      "important_fields": [
+        "reason",
+        "status",
+        "amount"
+      ],
+      "states": [
+        "opened",
+        "investigating",
+        "resolved_customer",
+        "resolved_merchant",
+        "closed"
+      ],
+      "related_features": [
+        "fintech.dispute_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from card-network chargeback conventions."
+      }
+    },
+    {
+      "id": "reconciliation_run",
+      "name": "Reconciliation Run",
+      "description": "One execution of matching ledger entries against an external statement/feed.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "ledger_entry"
+        }
+      ],
+      "important_fields": [
+        "run_date",
+        "source",
+        "status",
+        "discrepancy_count"
+      ],
+      "states": [
+        "running",
+        "completed_matched",
+        "completed_with_discrepancies",
+        "resolved"
+      ],
+      "related_features": [
+        "fintech.reconciliation"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

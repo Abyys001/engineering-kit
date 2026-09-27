@@ -1,0 +1,135 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "workflows": [
+    {
+      "id": "booking_lifecycle",
+      "name": "Booking lifecycle",
+      "actor": "customer",
+      "trigger": "Customer selects a service, provider, and time slot",
+      "steps": [
+        "Compute available time slots",
+        "Customer selects a slot and confirms",
+        "Provider approves if manual approval is required",
+        "Reminder sent ahead of the appointment",
+        "Appointment occurs",
+        "Mark completed or no-show, or cancel/reschedule beforehand"
+      ],
+      "entities": [
+        "booking",
+        "time_slot",
+        "attendee"
+      ],
+      "features": [
+        "booking.bookings",
+        "booking.booking_confirmation_approval",
+        "booking.cancellation_policies"
+      ],
+      "state_machine": {
+        "entity": "booking",
+        "initial": "pending",
+        "terminal": [
+          "cancelled",
+          "rejected",
+          "completed",
+          "no_show"
+        ],
+        "states": [
+          "pending",
+          "awaiting_host",
+          "accepted",
+          "rejected",
+          "cancelled",
+          "completed",
+          "no_show"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "awaiting_host",
+            "event": "await_host"
+          },
+          {
+            "from": "pending",
+            "to": "accepted",
+            "event": "auto_confirm"
+          },
+          {
+            "from": "awaiting_host",
+            "to": "accepted",
+            "event": "approve"
+          },
+          {
+            "from": "awaiting_host",
+            "to": "rejected",
+            "event": "reject"
+          },
+          {
+            "from": "accepted",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "accepted",
+            "to": "completed",
+            "event": "complete"
+          },
+          {
+            "from": "accepted",
+            "to": "no_show",
+            "event": "mark_no_show"
+          }
+        ]
+      },
+      "notifications": [
+        "confirmation",
+        "reminder",
+        "cancellation"
+      ],
+      "integrations": [
+        "email_provider",
+        "sms_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy",
+          "easyappointments"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "reminder_workflow",
+      "name": "Reminder workflow",
+      "actor": "provider",
+      "trigger": "A booking is confirmed and its start time approaches",
+      "steps": [
+        "Schedule reminder(s) relative to start time",
+        "Send email and/or SMS reminder",
+        "Send follow-up after completion"
+      ],
+      "entities": [
+        "booking"
+      ],
+      "features": [
+        "booking.reminders"
+      ],
+      "state_machine": null,
+      "notifications": [
+        "reminder",
+        "follow_up"
+      ],
+      "integrations": [
+        "email_provider",
+        "sms_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "caldiy"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

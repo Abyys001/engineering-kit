@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "aml_cft_fatf",
+      "name": "AML/CFT (FATF Recommendations)",
+      "kind": "regulation",
+      "version": "current (continuously amended; last major update Oct 2023)",
+      "jurisdiction": "global (FATF member and cooperating jurisdictions)",
+      "scope": "Customer due diligence, ongoing monitoring, suspicious transaction reporting, and record-keeping baseline that national AML laws implement.",
+      "affected_features": [
+        "fintech.kyc_onboarding",
+        "fintech.aml_transaction_monitoring",
+        "fintech.sanctions_screening"
+      ],
+      "requires_human_review": true,
+      "notes": "FATF Recommendations are not directly binding; they are implemented through national law (e.g. EU AMLR/AMLD, US BSA).",
+      "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html",
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "eu_amlr",
+      "name": "EU Anti-Money Laundering Regulation (AMLR)",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2024/1624",
+      "jurisdiction": "European Union",
+      "scope": "Directly-applicable EU-wide CDD, beneficial-ownership, and reporting rules for obliged entities, phased in through the new AMLA authority.",
+      "affected_features": [
+        "fintech.kyc_onboarding",
+        "fintech.aml_transaction_monitoring",
+        "fintech.sanctions_screening"
+      ],
+      "requires_human_review": true,
+      "notes": "Part of the 2024 EU AML package; applicability dates are staged — verify current phase.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "provenance": {
+        "sources": [
+          "eu-amlr"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "us_bsa",
+      "name": "Bank Secrecy Act (BSA)",
+      "kind": "regulation",
+      "version": "31 U.S.C. § 5311 et seq.",
+      "jurisdiction": "United States",
+      "scope": "CDD, currency transaction reports (CTR), and suspicious activity reports (SAR) for US-regulated financial institutions.",
+      "affected_features": [
+        "fintech.kyc_onboarding",
+        "fintech.aml_transaction_monitoring"
+      ],
+      "requires_human_review": true,
+      "notes": "Administered by FinCEN.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/bank-secrecy-act",
+      "provenance": {
+        "sources": [
+          "us-bsa"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "psd2_sca",
+      "name": "PSD2 Strong Customer Authentication",
+      "kind": "regulation",
+      "version": "Directive (EU) 2015/2366",
+      "jurisdiction": "European Economic Area",
+      "scope": "Two-factor authentication for electronic payments and regulated open-banking access to account data/payment initiation.",
+      "affected_features": [
+        "fintech.payments",
+        "fintech.open_banking_connectivity"
+      ],
+      "requires_human_review": true,
+      "notes": "A successor PSD3 directive plus a Payment Services Regulation (PSR) were proposed by the European Commission in 2023; legislative status changes over time and must be re-verified.",
+      "url": "https://eur-lex.europa.eu/eli/dir/2015/2366/oj",
+      "provenance": {
+        "sources": [
+          "eu-psd2"
+        ],
+        "confidence": "medium",
+        "notes": "PSD3/PSR status is in legislative progress as of the last verification; treat as low-confidence for anything beyond current PSD2 text."
+      }
+    },
+    {
+      "id": "pci_dss",
+      "name": "PCI DSS",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual requirement, not statute)",
+      "scope": "Secure handling, storage, and transmission of cardholder data for any system that issues or processes card payments.",
+      "affected_features": [
+        "fintech.card_issuing",
+        "fintech.payments",
+        "fintech.dispute_management"
+      ],
+      "requires_human_review": true,
+      "notes": "Contractual via card-network rules, not government law.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "pci-dss"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679",
+      "jurisdiction": "European Union / EEA",
+      "scope": "Lawful basis, minimization, and subject rights for personal data collected during onboarding, KYC, and transaction history.",
+      "affected_features": [
+        "fintech.party_management",
+        "fintech.kyc_onboarding"
+      ],
+      "requires_human_review": true,
+      "notes": "",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "provenance": {
+        "sources": [
+          "gdpr"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    }
+  ]
+}

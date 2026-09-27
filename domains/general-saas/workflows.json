@@ -1,0 +1,443 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "team_invite_lifecycle",
+      "name": "Team invite lifecycle",
+      "actor": "tenant_admin",
+      "trigger": "An admin invites a new member to the workspace by email.",
+      "steps": [
+        "Enter invitee email and role",
+        "System sends invite email with a token link",
+        "Invitee accepts and creates/links their account",
+        "Invitation is marked accepted"
+      ],
+      "entities": [
+        "invitation",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.team_invites"
+      ],
+      "notifications": [
+        "invite_email",
+        "invite_accepted"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "invitation",
+        "initial": "pending",
+        "terminal": [
+          "accepted",
+          "expired",
+          "revoked"
+        ],
+        "states": [
+          "pending",
+          "accepted",
+          "expired",
+          "revoked"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "accepted",
+            "event": "accept"
+          },
+          {
+            "from": "pending",
+            "to": "revoked",
+            "event": "revoke"
+          },
+          {
+            "from": "pending",
+            "to": "expired",
+            "event": "expire"
+          }
+        ]
+      }
+    },
+    {
+      "id": "api_key_lifecycle",
+      "name": "API key lifecycle",
+      "actor": "developer",
+      "trigger": "A developer creates an API key to integrate with the product.",
+      "steps": [
+        "Create a key with a name and scopes",
+        "Key is shown once and stored hashed",
+        "Key is used for authenticated API calls",
+        "Key is revoked or naturally expires"
+      ],
+      "entities": [
+        "api_key",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.api_keys"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "api_key",
+        "initial": "active",
+        "terminal": [
+          "revoked",
+          "expired"
+        ],
+        "states": [
+          "active",
+          "revoked",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "revoked",
+            "event": "revoke"
+          },
+          {
+            "from": "active",
+            "to": "expired",
+            "event": "expire"
+          }
+        ]
+      }
+    },
+    {
+      "id": "webhook_delivery_flow",
+      "name": "Webhook delivery",
+      "actor": "system",
+      "trigger": "A subscribed event occurs and must be delivered to the workspace's webhook endpoint.",
+      "steps": [
+        "Event occurs and is queued for delivery",
+        "Worker POSTs the signed payload",
+        "Endpoint responds 2xx (success) or non-2xx (retry)",
+        "Retries exhaust or succeed"
+      ],
+      "entities": [
+        "webhook_subscription",
+        "webhook_delivery"
+      ],
+      "features": [
+        "general-saas.webhooks"
+      ],
+      "notifications": [],
+      "integrations": [
+        "svix"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "webhook_delivery",
+        "initial": "pending",
+        "terminal": [
+          "delivered",
+          "failed"
+        ],
+        "states": [
+          "pending",
+          "delivered",
+          "failed",
+          "retrying"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "delivered",
+            "event": "ack_2xx"
+          },
+          {
+            "from": "pending",
+            "to": "retrying",
+            "event": "non_2xx"
+          },
+          {
+            "from": "retrying",
+            "to": "delivered",
+            "event": "ack_2xx"
+          },
+          {
+            "from": "retrying",
+            "to": "failed",
+            "event": "exhausted_retries"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sso_connection_setup",
+      "name": "SSO connection setup",
+      "actor": "tenant_admin",
+      "trigger": "A workspace admin configures SAML SSO against their identity provider.",
+      "steps": [
+        "Admin enters IdP metadata URL or XML",
+        "System verifies the metadata and stores the connection",
+        "Admin tests a login",
+        "Connection goes live for the workspace"
+      ],
+      "entities": [
+        "sso_connection",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.sso_saml"
+      ],
+      "notifications": [],
+      "integrations": [
+        "saml_idp"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "sso_connection",
+        "initial": "pending",
+        "terminal": [
+          "active"
+        ],
+        "states": [
+          "pending",
+          "active",
+          "error"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "active",
+            "event": "verify_success"
+          },
+          {
+            "from": "pending",
+            "to": "error",
+            "event": "verify_fail"
+          },
+          {
+            "from": "error",
+            "to": "pending",
+            "event": "retry"
+          }
+        ]
+      }
+    },
+    {
+      "id": "data_export_request",
+      "name": "Data export request",
+      "actor": "tenant_owner",
+      "trigger": "A workspace owner requests an export of their tenant's data.",
+      "steps": [
+        "Owner requests an export",
+        "Job is queued and processed asynchronously",
+        "A download link is generated and emailed",
+        "Link expires after a retention window"
+      ],
+      "entities": [
+        "export_job",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.data_export"
+      ],
+      "notifications": [
+        "export_ready"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "export_job",
+        "initial": "queued",
+        "terminal": [
+          "completed",
+          "failed"
+        ],
+        "states": [
+          "queued",
+          "processing",
+          "completed",
+          "failed"
+        ],
+        "transitions": [
+          {
+            "from": "queued",
+            "to": "processing",
+            "event": "start"
+          },
+          {
+            "from": "processing",
+            "to": "completed",
+            "event": "finish_success"
+          },
+          {
+            "from": "processing",
+            "to": "failed",
+            "event": "finish_error"
+          }
+        ]
+      }
+    },
+    {
+      "id": "workspace_offboarding",
+      "name": "Workspace offboarding",
+      "actor": "tenant_owner",
+      "trigger": "A workspace owner deletes their workspace, with an export offer and a grace period before hard deletion.",
+      "steps": [
+        "Owner requests deletion",
+        "System offers a data export",
+        "Workspace enters a grace period",
+        "Workspace is hard-deleted after the grace period, or deletion is cancelled"
+      ],
+      "entities": [
+        "workspace",
+        "export_job"
+      ],
+      "features": [
+        "general-saas.workspace_deletion_export"
+      ],
+      "notifications": [
+        "deletion_scheduled",
+        "deletion_completed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "workspace",
+        "initial": "active",
+        "terminal": [
+          "deleted"
+        ],
+        "states": [
+          "active",
+          "suspended",
+          "pending_deletion",
+          "deleted"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "suspended",
+            "event": "suspend_nonpayment"
+          },
+          {
+            "from": "suspended",
+            "to": "active",
+            "event": "reactivate"
+          },
+          {
+            "from": "active",
+            "to": "pending_deletion",
+            "event": "request_deletion"
+          },
+          {
+            "from": "suspended",
+            "to": "pending_deletion",
+            "event": "request_deletion"
+          },
+          {
+            "from": "pending_deletion",
+            "to": "deleted",
+            "event": "purge_after_grace_period"
+          },
+          {
+            "from": "pending_deletion",
+            "to": "active",
+            "event": "cancel_deletion"
+          }
+        ]
+      }
+    },
+    {
+      "id": "status_incident_lifecycle",
+      "name": "Status incident lifecycle",
+      "actor": "platform_support",
+      "trigger": "Platform support publishes and updates a status-page incident during an outage.",
+      "steps": [
+        "Open an incident and set severity",
+        "Post updates as the cause is identified",
+        "Post a fix-deployed update",
+        "Resolve the incident"
+      ],
+      "entities": [
+        "status_incident"
+      ],
+      "features": [
+        "general-saas.status_page"
+      ],
+      "notifications": [
+        "incident_update"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "cachet"
+        ],
+        "confidence": "low"
+      },
+      "state_machine": {
+        "entity": "status_incident",
+        "initial": "investigating",
+        "terminal": [
+          "resolved"
+        ],
+        "states": [
+          "investigating",
+          "identified",
+          "monitoring",
+          "resolved"
+        ],
+        "transitions": [
+          {
+            "from": "investigating",
+            "to": "identified",
+            "event": "identify"
+          },
+          {
+            "from": "identified",
+            "to": "monitoring",
+            "event": "deploy_fix"
+          },
+          {
+            "from": "monitoring",
+            "to": "resolved",
+            "event": "confirm_resolved"
+          },
+          {
+            "from": "resolved",
+            "to": "investigating",
+            "event": "reopen"
+          }
+        ]
+      }
+    }
+  ]
+}

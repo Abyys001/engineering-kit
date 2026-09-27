@@ -1,0 +1,102 @@
+{
+  "_fabricated": true,
+  "_note": "Synthetic example for domains/exchange per RESEARCH-BRIEF.md. All names, emails, phones, ids, and amounts are invented. No jurisdiction's real regulation, branch, or business data is represented.",
+  "branch": {
+    "id": "branch_downtown_01",
+    "name": "Example Exchange — Downtown Branch",
+    "address": "1 Example Plaza, Springfield, EX 00001",
+    "active": true
+  },
+  "staff": {
+    "id": "staff_taylor_k",
+    "name": "Taylor Kim",
+    "role": "teller",
+    "branch_id": "branch_downtown_01",
+    "active": true
+  },
+  "customer": {
+    "id": "cust_4b71aa",
+    "full_name": "Morgan Lee",
+    "email": "morgan.lee@example.com",
+    "phone": "+1-555-0199",
+    "id_document_type": "passport",
+    "id_document_number": "EX0000001",
+    "risk_rating": "low",
+    "status": "active"
+  },
+  "currency": [
+    {"id": "cur_usd", "iso_code": "USD", "display_name": "US Dollar", "minor_unit_precision": 2},
+    {"id": "cur_eur", "iso_code": "EUR", "display_name": "Euro", "minor_unit_precision": 2}
+  ],
+  "exchange_rate": {
+    "id": "rate_eurusd_20260927",
+    "currency_id": "cur_eur",
+    "buy_rate": "1.0620",
+    "sell_rate": "1.0850",
+    "mid_rate": "1.0735",
+    "source": "manual_with_feed_reference",
+    "effective_at": "2026-09-27T08:00:00Z"
+  },
+  "till": {
+    "id": "till_counter_1",
+    "branch_id": "branch_downtown_01",
+    "name": "Counter 1",
+    "status": "active"
+  },
+  "cash_session": {
+    "id": "session_2026-09-27_taylor",
+    "till_id": "till_counter_1",
+    "staff_id": "staff_taylor_k",
+    "opening_float": {"USD": "2000.00", "EUR": "1500.00"},
+    "status": "open",
+    "opened_at": "2026-09-27T08:00:00Z",
+    "history": [
+      {"status": "open", "at": "2026-09-27T08:00:00Z", "event": "open_session"}
+    ]
+  },
+  "exchange_request": {
+    "id": "req_9c0a11",
+    "customer_id": "cust_4b71aa",
+    "currency_id": "cur_eur",
+    "requested_amount": "300.00",
+    "quoted_rate": "1.0850",
+    "status": "converted",
+    "expires_at": "2026-09-27T09:15:00Z"
+  },
+  "exchange_transaction": {
+    "id": "txn_7e2210",
+    "transaction_ref": "TX-2026-000042",
+    "customer_id": "cust_4b71aa",
+    "currency_id": "cur_eur",
+    "till_id": "till_counter_1",
+    "branch_id": "branch_downtown_01",
+    "txn_type": "sell_foreign_to_customer",
+    "foreign_amount": "300.00",
+    "used_rate": "1.0850",
+    "mid_rate": "1.0735",
+    "margin_pct": "1.07",
+    "commission": "2.00",
+    "state": "completed",
+    "id_capture_required": false,
+    "history": [
+      {"state": "draft", "at": "2026-09-27T09:01:00Z", "event": "create"},
+      {"state": "completed", "at": "2026-09-27T09:02:10Z", "event": "confirm"}
+    ]
+  },
+  "remittance_example": {
+    "id": "rem_c00021",
+    "customer_id": "cust_4b71aa",
+    "branch_id": "branch_downtown_01",
+    "direction": "outbound",
+    "network_partner": "Example Remittance Network",
+    "amount": "500.00",
+    "currency": "USD",
+    "status": "ready_for_pickup",
+    "pickup_code": "EX-88213",
+    "history": [
+      {"status": "initiated", "at": "2026-09-25T10:00:00Z"},
+      {"status": "in_transit", "at": "2026-09-25T10:05:00Z"},
+      {"status": "ready_for_pickup", "at": "2026-09-26T14:00:00Z"}
+    ]
+  }
+}

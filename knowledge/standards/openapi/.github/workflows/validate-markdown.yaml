@@ -1,0 +1,31 @@
+name: validate-markdown
+
+# Author: @MikeRalphson
+# Issue: https://github.com/OAI/OpenAPI-Specification/issues/2130
+
+# This workflow validates markdown files in the project root.
+# It also validates the work-in-progress specification file src/oas.md with slightly different rules.
+
+# run this on pull requests (which includes pushes to their head branch)
+on:
+  - pull_request
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7 # checkout repo content
+
+      - uses: actions/setup-node@v7 # setup Node.js
+        with:
+          node-version: "24.x"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Validate Markdown
+        run: yarn validate-markdown

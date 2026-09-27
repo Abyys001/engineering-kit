@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "gdpr",
+      "name": "General Data Protection Regulation",
+      "kind": "regulation",
+      "version": "OJ L 119, 4.5.2016 (in force, consolidated to 2016)",
+      "jurisdiction": "European Union / EEA",
+      "scope": "Governs processing of personal data of EU/EEA individuals; drives data export, deletion, and residency features.",
+      "affected_features": [
+        "general-saas.data_export",
+        "general-saas.workspace_deletion_export",
+        "general-saas.data_residency",
+        "general-saas.scim_provisioning"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever a workspace's end users or customers include EU/EEA individuals, regardless of where the SaaS vendor is based.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ccpa_cpra",
+      "name": "California Consumer Privacy Act (as amended by CPRA)",
+      "kind": "regulation",
+      "version": "Civil Code Title 1.81.5, as amended through 2025",
+      "jurisdiction": "California, USA",
+      "scope": "Grants California residents rights to know, delete, and opt out of the sale/sharing of their personal information.",
+      "affected_features": [
+        "general-saas.data_export",
+        "general-saas.workspace_deletion_export"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies once a business meets CCPA/CPRA revenue or data-volume thresholds and processes California residents' personal information.",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article=",
+      "provenance": {
+        "sources": [
+          "ccpa-cpra"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "soc2_type_ii",
+      "name": "SOC 2 Type II",
+      "kind": "standard",
+      "version": "2017 TSC with revised points of focus, 2022",
+      "jurisdiction": "United States (widely required contractually worldwide)",
+      "scope": "An attestation of controls over security, availability, processing integrity, confidentiality, and/or privacy, commonly required by enterprise B2B customers before they will buy.",
+      "affected_features": [
+        "general-saas.admin_console",
+        "general-saas.audit_log_viewer",
+        "general-saas.sso_saml"
+      ],
+      "requires_human_review": true,
+      "notes": "Citing SOC 2 criteria does not mean a product has passed an audit; an actual report requires an independent CPA firm engagement.",
+      "url": "https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022",
+      "provenance": {
+        "sources": [
+          "soc2-tsc"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "iso_27001",
+      "name": "ISO/IEC 27001",
+      "kind": "standard",
+      "version": "2022 edition (3rd ed.), amended by Amd 1:2024",
+      "jurisdiction": "Global",
+      "scope": "An information security management system (ISMS) standard, often requested by enterprise customers alongside or instead of SOC 2.",
+      "affected_features": [
+        "general-saas.admin_console",
+        "general-saas.data_residency"
+      ],
+      "requires_human_review": true,
+      "notes": "Certification requires an accredited external audit; citing the standard does not imply certification.",
+      "url": "https://www.iso.org/standard/27001",
+      "provenance": {
+        "sources": [
+          "iso-27001-2022"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

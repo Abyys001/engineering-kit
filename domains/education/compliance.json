@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "ferpa",
+      "name": "FERPA — Family Educational Rights and Privacy Act",
+      "kind": "regulation",
+      "version": "as amended",
+      "jurisdiction": "United States",
+      "scope": "Protects the privacy of student education records; governs disclosure and grants parents/eligible students access rights.",
+      "affected_features": [
+        "education.parent_guardian_access",
+        "education.report_cards",
+        "education.roster_sync"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies to US institutions receiving federal funding.",
+      "url": "https://www2.ed.gov/policy/gen/guid/fpco/ferpa/index.html",
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "coppa",
+      "name": "COPPA — Children's Online Privacy Protection Act",
+      "kind": "regulation",
+      "version": "as amended (2013 Rule)",
+      "jurisdiction": "United States",
+      "scope": "Requires verifiable parental consent before collecting personal information from children under 13.",
+      "affected_features": [
+        "education.child_data_consent_controls",
+        "education.parent_guardian_access"
+      ],
+      "requires_human_review": true,
+      "notes": "Directly relevant to K-12-oriented products with student accounts.",
+      "url": "https://www.ftc.gov/legal-library/browse/rules/childrens-online-privacy-protection-rule-coppa",
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "gdpr_education",
+      "name": "GDPR — general processing and children's data (Art. 8)",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679",
+      "jurisdiction": "European Union / EEA",
+      "scope": "General data protection plus Article 8's special conditions for a child's consent to information-society services.",
+      "affected_features": [
+        "education.child_data_consent_controls",
+        "education.enrollment"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever an EU/EEA data subject's data is processed, regardless of operator location.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "accessibility_wcag",
+      "name": "Web accessibility (WCAG 2.1/2.2, Section 508)",
+      "kind": "standard",
+      "version": "WCAG 2.1/2.2 AA",
+      "jurisdiction": "Global standard; legally mandated in US (Section 508, ADA Title II for public institutions) and EU (EN 301 549)",
+      "scope": "LMS/content must be perceivable, operable, understandable, and robust for learners with disabilities.",
+      "affected_features": [
+        "education.lesson_content",
+        "education.exams_quizzes",
+        "education.student_portal"
+      ],
+      "requires_human_review": true,
+      "notes": "Frequently a procurement/accreditation requirement for public and higher-ed institutions.",
+      "url": "https://www.w3.org/TR/WCAG22/",
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "academic_integrity_policy",
+      "name": "Academic integrity / anti-plagiarism policy",
+      "kind": "guideline",
+      "version": "institution-specific",
+      "jurisdiction": "Institution-specific (not a law)",
+      "scope": "Institutional policy on cheating, plagiarism, and AI-assisted work; drives plagiarism-detection feature requirements.",
+      "affected_features": [
+        "education.plagiarism_detection",
+        "education.exams_quizzes"
+      ],
+      "requires_human_review": true,
+      "notes": "Not a legal regulation; included because it directly shapes feature requirements and is commonly conflated with compliance.",
+      "url": null,
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

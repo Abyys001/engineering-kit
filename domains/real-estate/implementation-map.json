@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "real-estate.property_listings",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.listing_media",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.search_and_map",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.saved_searches_alerts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.lead_capture_inquiries",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.lead_management_crm",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.viewings_scheduling",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.open_houses",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.agent_broker_directory",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.brokerage_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.offers_negotiation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.lease_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.tenant_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.rent_collection",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.deposit_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.maintenance_requests",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.property_management_dashboard",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.document_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.valuations_cma",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.mortgage_calculator",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.mls_idx_integration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.listing_syndication",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.virtual_tours_3d",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.owner_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.tenant_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.rental_application_screening",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.fair_housing_compliance_screening",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.commission_tracking",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "real-estate.price_recommendation_ai",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    }
+  ]
+}

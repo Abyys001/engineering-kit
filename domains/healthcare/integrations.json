@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "lab_interface",
+      "name": "Laboratory interface",
+      "category": "clinical",
+      "purpose": "Transmit orders and receive results from reference/hospital labs.",
+      "examples": [
+        "LabCorp",
+        "Quest Diagnostics",
+        "HL7v2 interface engines"
+      ],
+      "protocols": [
+        "HL7v2",
+        "FHIR"
+      ],
+      "related_features": [
+        "healthcare.lab_orders",
+        "healthcare.lab_results"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e_prescribing_network",
+      "name": "E-prescribing network",
+      "category": "clinical",
+      "purpose": "Route prescriptions electronically to pharmacies and check interactions.",
+      "examples": [
+        "Surescripts",
+        "DoseSpot"
+      ],
+      "protocols": [
+        "NCPDP SCRIPT"
+      ],
+      "related_features": [
+        "healthcare.e_prescribing"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "billing_clearinghouse",
+      "name": "Billing clearinghouse",
+      "category": "financial",
+      "purpose": "Submit insurance claims and receive eligibility/adjudication responses.",
+      "examples": [
+        "Change Healthcare",
+        "Availity"
+      ],
+      "protocols": [
+        "X12 EDI",
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.billing_claims",
+        "healthcare.insurance_eligibility"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "telehealth_platform",
+      "name": "Telehealth video platform",
+      "category": "clinical",
+      "purpose": "Provide the video/audio session for a virtual visit.",
+      "examples": [
+        "Zoom",
+        "Doxy.me",
+        "Twilio Video"
+      ],
+      "protocols": [
+        "WebRTC"
+      ],
+      "related_features": [
+        "healthcare.telehealth"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "sms_gateway",
+      "name": "SMS/notification gateway",
+      "category": "communication",
+      "purpose": "Deliver appointment reminders and alerts.",
+      "examples": [
+        "Twilio"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.scheduling",
+        "healthcare.appointment_reminders",
+        "healthcare.waitlist"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "patient_payment_gateway",
+      "name": "Patient payment gateway",
+      "category": "financial",
+      "purpose": "Collect co-pays and self-pay balances from patients.",
+      "examples": [
+        "Stripe"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.patient_invoicing"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ehr_interoperability",
+      "name": "EHR interoperability / SMART on FHIR",
+      "category": "clinical",
+      "purpose": "Let third-party apps launch inside the EHR context and exchange FHIR data.",
+      "examples": [
+        "SMART App Launch",
+        "Health Information Exchanges"
+      ],
+      "protocols": [
+        "FHIR REST",
+        "OAuth2"
+      ],
+      "related_features": [
+        "healthcare.access_policies"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high",
+        "notes": "Confirmed by Medplum's medplum-smart-on-fhir-demo example."
+      }
+    },
+    {
+      "id": "fax_efax",
+      "name": "Fax / eFax",
+      "category": "document",
+      "purpose": "Send/receive referral letters and records where fax remains the interoperability norm.",
+      "examples": [
+        "eFax providers"
+      ],
+      "protocols": [
+        "T.38",
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.document_management",
+        "healthcare.referrals"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium",
+        "notes": "Confirmed by Medplum's medplum-efax-demo example."
+      }
+    },
+    {
+      "id": "calendar_sync",
+      "name": "Calendar sync",
+      "category": "productivity",
+      "purpose": "Sync practitioner schedules with external calendars.",
+      "examples": [
+        "Google Calendar",
+        "Microsoft 365"
+      ],
+      "protocols": [
+        "CalDAV",
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.scheduling"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "identity_verification",
+      "name": "Identity verification",
+      "category": "identity",
+      "purpose": "Verify patient identity at registration or portal signup to reduce fraud/duplicate records.",
+      "examples": [
+        "ID.me",
+        "manual ID scan"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "healthcare.patient_registration"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "openemr"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

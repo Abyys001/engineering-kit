@@ -1,0 +1,1187 @@
+{
+  "schema": 1,
+  "domain": "manufacturing",
+  "name": "Manufacturing",
+  "aliases": [
+    "MES",
+    "ERP-lite",
+    "shop floor management",
+    "production management"
+  ],
+  "description": "Small-to-mid manufacturing execution and ERP-lite: items and bills of material, routings and work centers, production/work orders with a state machine, material requirements, lot/serial inventory, quality inspection, maintenance, and shop-floor data collection.",
+  "nace": [
+    "C25.62",
+    "C28.29",
+    "C33.12"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "inventree",
+      "title": "InvenTree",
+      "url": "https://github.com/inventree/InvenTree",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "ba848a83aa95bc897ddec9a2a64b270ab464819b",
+      "local_path": "sources/domains/inventree/source",
+      "notes": "Permissive (MIT). Inventory/parts management with light manufacturing (build orders). Cloned src/backend/InvenTree/{part,stock,order,build,company,common} — Part, BomItem, BomItemSubstitute, PartTestTemplate, StockItem, StockLocation, StockItemTracking, StockItemTestResult, Build/BuildLine/BuildItem models and their status_codes.py enums. Frontend and other backend apps were not cloned."
+    },
+    {
+      "id": "odoo-mrp",
+      "title": "Odoo (mrp addon)",
+      "url": "https://github.com/odoo/odoo",
+      "source_type": "implementation",
+      "license": "LGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "9b1a92e38dbae2bb83ad80700ccec0535f8ac68f",
+      "local_path": "sources/domains/odoo-mrp/source",
+      "notes": "reference-only (LGPL). Sparse-checkout limited to addons/mrp (the manufacturing module) from the odoo/odoo monorepo (branch 20.0), plus root LICENSE/COPYRIGHT. Covers mrp.production (production order), mrp.workorder (operation execution), mrp.workcenter, mrp.bom/mrp.bom.line/mrp.bom.byproduct, mrp.routing.workcenter, mrp.unbuild, and the stock_orderpoint/stock_lot/stock_move files bundled in that addon."
+    }
+  ],
+  "features": [
+    {
+      "id": "manufacturing.items_products",
+      "name": "Items and products",
+      "classification": "core",
+      "description": "The master catalog of parts, raw materials, sub-assemblies, and finished products, with identifiers, units of measure, and manufacturing/purchasing/sales flags.",
+      "users": [
+        "production_planner",
+        "purchasing_agent"
+      ],
+      "entities": [
+        "item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "part_master",
+        "make_buy_flags",
+        "unit_of_measure"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's Part model (IPN, revision, assembly/component/trackable/purchaseable/salable/consumable flags) and Odoo's product.template/product.product (referenced throughout mrp.bom/mrp.production) both model this."
+      }
+    },
+    {
+      "id": "manufacturing.bill_of_materials",
+      "name": "Bill of materials (BOM)",
+      "classification": "core",
+      "description": "The structured list of components (and quantities/units) required to build one unit of a parent item, optionally with operations and by-products.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "bill_of_materials",
+        "bom_line",
+        "bom_byproduct"
+      ],
+      "workflows": [
+        "bom_management"
+      ],
+      "capabilities": [
+        "multi_level_bom",
+        "byproducts",
+        "substitutes"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's BomItem/BomItemSubstitute models and Odoo's mrp.bom/mrp.bom.line/mrp.bom.byproduct models both implement this, with Odoo additionally linking operations via operation_ids."
+      }
+    },
+    {
+      "id": "manufacturing.bom_substitutes",
+      "name": "BOM substitutes",
+      "classification": "optional",
+      "description": "Alternative components that can be used in place of a BOM line's primary component.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "bom_line"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "substitute_selection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's BomItemSubstitute model; single source, not found in the cloned odoo-mrp scope."
+      }
+    },
+    {
+      "id": "manufacturing.routings_operations",
+      "name": "Routings and operations",
+      "classification": "core",
+      "description": "The ordered sequence of operations (at specific work centers) required to manufacture an item, with expected duration.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "routing_operation",
+        "work_center"
+      ],
+      "workflows": [
+        "work_order_execution"
+      ],
+      "capabilities": [
+        "operation_sequencing",
+        "expected_duration"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's mrp.routing.workcenter model (linked from mrp.bom.operation_ids); not found in the cloned InvenTree scope, which does not model a distinct routing/operations layer. Single source."
+      }
+    },
+    {
+      "id": "manufacturing.work_centers",
+      "name": "Work centers",
+      "classification": "core",
+      "description": "A physical or logical production resource (machine, line, or team) where operations are performed, with capacity and cost.",
+      "users": [
+        "production_planner",
+        "shop_floor_operator"
+      ],
+      "entities": [
+        "work_center"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "capacity_tracking",
+        "cost_per_hour",
+        "working_state"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's mrp.workcenter model (costs_hour, time_start/time_stop, working_state: normal/blocked/done); not modeled as a distinct entity in the cloned InvenTree scope. Single source."
+      }
+    },
+    {
+      "id": "manufacturing.production_orders",
+      "name": "Production / work orders",
+      "classification": "core",
+      "description": "An order to manufacture a quantity of an item by a target date, tracked through a state machine from draft to completion.",
+      "users": [
+        "production_planner",
+        "shop_floor_operator",
+        "plant_manager"
+      ],
+      "entities": [
+        "production_order"
+      ],
+      "workflows": [
+        "production_order_lifecycle"
+      ],
+      "capabilities": [
+        "multi_level_builds",
+        "reference_numbering",
+        "target_date"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "completion-date risk prediction"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "scheduling",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's Build model (reference, quantity, take_from/destination locations, target_date, BuildStatus: pending/production/on_hold/cancelled/complete) and Odoo's mrp.production (state: draft/confirmed/progress/to_close/done/cancel) are independent implementations of the same concept with different state vocabularies."
+      }
+    },
+    {
+      "id": "manufacturing.work_order_scheduling",
+      "name": "Work order scheduling",
+      "classification": "recommended",
+      "description": "Planning individual operations of a production order against work center capacity and calendars.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "work_order",
+        "work_center"
+      ],
+      "workflows": [
+        "work_order_execution"
+      ],
+      "capabilities": [
+        "capacity_check",
+        "planned_date"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "finite-capacity scheduling optimizer"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's mrp.workorder.date_start (Planned Date) and leave_id (workcenter calendar slot); not found in the cloned InvenTree scope. Single source."
+      }
+    },
+    {
+      "id": "manufacturing.material_requirements_planning",
+      "name": "Material requirements planning (MRP)",
+      "classification": "common",
+      "description": "Computing net material shortages from demand (sales/production orders) against on-hand and incoming stock, and suggesting or triggering replenishment.",
+      "users": [
+        "production_planner",
+        "purchasing_agent"
+      ],
+      "entities": [
+        "item",
+        "stock_item"
+      ],
+      "workflows": [
+        "material_requirements_planning"
+      ],
+      "capabilities": [
+        "reorder_rules",
+        "shortage_computation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "demand forecasting to set reorder points"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's stock.warehouse.orderpoint model (bundled in addons/mrp/models/stock_orderpoint.py: bom_id, effective_bom_id); reorder-point-based MRP, not a full multi-level MRP II run. Not found in the cloned InvenTree scope. Single source."
+      }
+    },
+    {
+      "id": "manufacturing.inventory_lots_serials",
+      "name": "Inventory, lots, and serials",
+      "classification": "core",
+      "description": "Tracking on-hand quantity by location, with optional lot/batch or unique serial number identity per stock item.",
+      "users": [
+        "shop_floor_operator",
+        "production_planner"
+      ],
+      "entities": [
+        "stock_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "lot_tracking",
+        "serial_tracking",
+        "expiry_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's StockItem (serial, batch, quantity, expiry_date, is_building) and Odoo's stock.lot both model lot/serial-tracked inventory."
+      }
+    },
+    {
+      "id": "manufacturing.stock_locations",
+      "name": "Stock locations",
+      "classification": "common",
+      "description": "A hierarchical structure of physical storage locations (warehouse, area, bin) that stock items belong to.",
+      "users": [
+        "shop_floor_operator",
+        "production_planner"
+      ],
+      "entities": [
+        "stock_location"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "location_hierarchy",
+        "location_types"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's StockLocation (InvenTreeTree hierarchy) and StockLocationType models; Odoo's stock.warehouse referenced (location_src_id/location_dest_id on mrp.production) but the warehouse module itself was not cloned, so this is scored on InvenTree alone."
+      }
+    },
+    {
+      "id": "manufacturing.purchase_orders",
+      "name": "Purchase orders",
+      "classification": "common",
+      "description": "Ordering raw materials or components from a supplier to fulfil production needs.",
+      "users": [
+        "purchasing_agent"
+      ],
+      "entities": [
+        "purchase_order",
+        "supplier"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "supplier_part_mapping",
+        "receipt_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "staff",
+        "integration"
+      ],
+      "integrations": [
+        "supplier_edi"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's order app: PurchaseOrderStatus enum (pending/placed/on_hold/complete/cancelled/lost/returned) and StockItem.purchase_order linkage; single source."
+      }
+    },
+    {
+      "id": "manufacturing.supplier_management",
+      "name": "Supplier management",
+      "classification": "optional",
+      "description": "Supplier records and the mapping of which supplier part fulfils which internal item.",
+      "users": [
+        "purchasing_agent"
+      ],
+      "entities": [
+        "supplier"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "supplier_part_catalog"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "integration"
+      ],
+      "integrations": [
+        "supplier_edi"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's company app (Company, SupplierPart, ManufacturerPart models cloned under src/backend/InvenTree/company); single source."
+      }
+    },
+    {
+      "id": "manufacturing.quality_inspections",
+      "name": "Quality inspections",
+      "classification": "common",
+      "description": "Recording pass/fail test results against defined test templates for a part or a specific stock item/serial.",
+      "users": [
+        "quality_inspector"
+      ],
+      "entities": [
+        "quality_inspection"
+      ],
+      "workflows": [
+        "quality_inspection_workflow"
+      ],
+      "capabilities": [
+        "test_templates",
+        "pass_fail_recording",
+        "per_serial_results"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "defect pattern detection across serials"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's PartTestTemplate and StockItemTestResult models (result, value, notes, test_station); not found in the cloned odoo-mrp scope (Odoo's quality module is separate and was not cloned). Single source."
+      }
+    },
+    {
+      "id": "manufacturing.non_conformance_management",
+      "name": "Non-conformance management",
+      "classification": "recommended",
+      "description": "Logging and dispositioning a failed inspection or production defect: quarantine, rework, scrap, or use-as-is.",
+      "users": [
+        "quality_inspector",
+        "plant_manager"
+      ],
+      "entities": [
+        "non_conformance"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "disposition_tracking",
+        "root_cause_notes"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned extension of InvenTree's StockStatus enum (ATTENTION/DAMAGED/REJECTED/QUARANTINED) and StockItemTestResult failures; no dedicated non-conformance/CAPA table found in either cloned source."
+      }
+    },
+    {
+      "id": "manufacturing.equipment_maintenance",
+      "name": "Equipment maintenance",
+      "classification": "recommended",
+      "description": "Scheduling and recording preventive or corrective maintenance for a work center or piece of equipment.",
+      "users": [
+        "maintenance_technician",
+        "plant_manager"
+      ],
+      "entities": [
+        "work_center"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "preventive_scheduling",
+        "downtime_logging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "predictive maintenance from downtime patterns"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from mrp.workcenter's working_state (blocked) and blocked_time/productive_time computed fields, which a maintenance module would drive; no dedicated maintenance-schedule table found in the cloned addons/mrp scope. Single source, reasoned."
+      }
+    },
+    {
+      "id": "manufacturing.shop_floor_data_collection",
+      "name": "Shop-floor data collection",
+      "classification": "core",
+      "description": "A mobile/tablet interface for operators to scan barcodes, report progress, and record quantities directly at the work center.",
+      "users": [
+        "shop_floor_operator"
+      ],
+      "entities": [
+        "production_order",
+        "work_order"
+      ],
+      "workflows": [
+        "work_order_execution"
+      ],
+      "capabilities": [
+        "barcode_scanning",
+        "quantity_reporting",
+        "operator_login"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "mobile",
+        "staff"
+      ],
+      "integrations": [
+        "barcode_scanner"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's InvenTreeBarcodeMixin (on the Build model) and its dedicated `web` app for a shop-floor UI; not found in the cloned odoo-mrp scope (Odoo has a separate 'Shop Floor' app not cloned here). Single source."
+      }
+    },
+    {
+      "id": "manufacturing.traceability",
+      "name": "Traceability",
+      "classification": "core",
+      "description": "Tracing which input lots/serials went into which output lot/serial, forward (where did this batch ship) and backward (what components are in this unit).",
+      "users": [
+        "quality_inspector",
+        "plant_manager"
+      ],
+      "entities": [
+        "traceability_record",
+        "stock_item"
+      ],
+      "workflows": [
+        "traceability_lookup"
+      ],
+      "capabilities": [
+        "genealogy_trace",
+        "audit_trail"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "compliance",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [
+        "product_traceability_regulations"
+      ],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's StockItemTracking (append-only audit trail: INSTALLED_CHILD_ITEM/REMOVED_CHILD_ITEM/DISASSEMBLED/CREATED_FROM_DISASSEMBLY history codes) and Odoo's stock.lot + mrp.production.lot_producing_ids both model input-to-output genealogy."
+      }
+    },
+    {
+      "id": "manufacturing.disassembly_unbuild",
+      "name": "Disassembly / unbuild",
+      "classification": "recommended",
+      "description": "Reversing a production order: breaking a built item back down into its component stock, e.g. for rework.",
+      "users": [
+        "shop_floor_operator"
+      ],
+      "entities": [
+        "production_order",
+        "stock_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "component_recovery"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's StockHistoryCode.DISASSEMBLED/CREATED_FROM_DISASSEMBLY and Odoo's mrp.unbuild model both implement this."
+      }
+    },
+    {
+      "id": "manufacturing.subcontracting",
+      "name": "Subcontracting",
+      "classification": "recommended",
+      "description": "Sending components to an external vendor to perform an operation, receiving back a finished or semi-finished item.",
+      "users": [
+        "production_planner",
+        "purchasing_agent"
+      ],
+      "entities": [
+        "production_order",
+        "supplier"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "external_operation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "integration"
+      ],
+      "integrations": [
+        "supplier_edi"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's Build.external boolean field ('This build order is fulfilled by an external supplier'); not found in the cloned odoo-mrp scope. Single source."
+      }
+    },
+    {
+      "id": "manufacturing.product_variants",
+      "name": "Product variants",
+      "classification": "optional",
+      "description": "Multiple sellable/buildable variants of a base template item (e.g. by size or color) sharing a common BOM structure.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "product_variant",
+        "item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "template_variant_linking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's Part.variant_of/is_template fields and Odoo's product.template/product.product (template vs. variant) both model this."
+      }
+    },
+    {
+      "id": "manufacturing.stocktake_cycle_counting",
+      "name": "Stocktake / cycle counting",
+      "classification": "optional",
+      "description": "Periodically counting physical inventory and reconciling it against system quantity.",
+      "users": [
+        "shop_floor_operator",
+        "production_planner"
+      ],
+      "entities": [
+        "stock_item"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "count_scheduling",
+        "variance_reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory",
+        "reporting"
+      ],
+      "integrations": [
+        "barcode_scanner"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree's PartStocktake model and StockItem.stocktake_date/stocktake_user fields; single source."
+      }
+    },
+    {
+      "id": "manufacturing.cost_tracking",
+      "name": "Manufacturing cost tracking",
+      "classification": "optional",
+      "description": "Rolling up material, labor (work center hours), and overhead cost into a produced item's cost.",
+      "users": [
+        "plant_manager",
+        "production_planner"
+      ],
+      "entities": [
+        "work_center",
+        "production_order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "labor_costing",
+        "cost_rollup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "management",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp",
+          "inventree"
+        ],
+        "confidence": "medium",
+        "notes": "Odoo's mrp.workcenter.costs_hour (labor cost basis) and InvenTree's PartPricing model both contribute to a cost-rollup capability, though neither cloned scope shows a complete rollup implementation."
+      }
+    },
+    {
+      "id": "manufacturing.workcenter_capacity_planning",
+      "name": "Work center capacity planning",
+      "classification": "optional",
+      "description": "Visualizing and planning work center load (queued, in-progress, blocked, late work orders) to balance capacity.",
+      "users": [
+        "production_planner",
+        "plant_manager"
+      ],
+      "entities": [
+        "work_center",
+        "work_order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "load_visualization",
+        "late_order_flagging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "bottleneck prediction"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "management",
+        "scheduling",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's mrp.workcenter computed fields (workorder_count, workorder_ready_count, workorder_progress_count, workorder_blocked_count, workorder_late_count); single source."
+      }
+    },
+    {
+      "id": "manufacturing.production_scrap_tracking",
+      "name": "Production scrap tracking",
+      "classification": "optional",
+      "description": "Recording material lost or discarded during production, separate from planned by-products.",
+      "users": [
+        "shop_floor_operator",
+        "quality_inspector"
+      ],
+      "entities": [
+        "production_order",
+        "non_conformance"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "scrap_reason_codes"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from InvenTree's StockHistoryCode.BUILD_OUTPUT_REJECTED history code; no dedicated scrap-reason model found in either cloned source."
+      }
+    },
+    {
+      "id": "manufacturing.bom_byproducts",
+      "name": "By-products and co-products",
+      "classification": "common",
+      "description": "Secondary items produced alongside the primary output of a production order, as defined on the BOM.",
+      "users": [
+        "production_planner"
+      ],
+      "entities": [
+        "bom_byproduct"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "byproduct_yield"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "inventory"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Odoo's mrp.bom.byproduct model; not found in the cloned InvenTree scope. Single source."
+      }
+    }
+  ]
+}

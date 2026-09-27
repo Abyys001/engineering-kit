@@ -1,0 +1,1516 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "name": "Fintech",
+  "aliases": [
+    "digital banking",
+    "neobank",
+    "payments platform",
+    "lending platform",
+    "embedded finance"
+  ],
+  "description": "Digital financial products — customer wallets, accounts, payments, cards, and lending — built on a double-entry ledger with KYC/AML controls.",
+  "nace": [
+    "K64.19",
+    "K64.92",
+    "K66.19"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "blnk",
+      "title": "Blnk",
+      "url": "https://github.com/blnkfinance/blnk",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "36ecff3ec7f480c38689ad4e6fedc4b9f172a6ff",
+      "local_path": "sources/domains/blnk/source",
+      "notes": "Cloned (sparse). Double-entry ledger: Ledger, Balance, Account, Transaction, Identity, reconciliation engine."
+    },
+    {
+      "id": "apache-fineract",
+      "title": "Apache Fineract",
+      "url": "https://github.com/apache/fineract",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "notes": "Not cloned (124MB Java monorepo); top-level package structure inspected via `gh api repos/apache/fineract/contents/...` (accounting, portfolio, organisation, useradministration, batch, cob). Core banking platform used by microfinance/neobank deployments."
+    },
+    {
+      "id": "formance-ledger",
+      "title": "Formance Ledger",
+      "url": "https://github.com/formancehq/ledger",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "notes": "Not cloned; repository layout inspected via `gh api repos/formancehq/ledger/contents`. Programmable double-entry ledger service, corroborates the ledger/account/transaction split seen in Blnk."
+    },
+    {
+      "id": "iso20022",
+      "title": "ISO 20022 — Universal financial industry message scheme",
+      "url": "https://www.iso20022.org/",
+      "source_type": "authoritative",
+      "license": "ISO20022.org terms; message definitions freely published",
+      "retrieved": "2026-09-27",
+      "notes": "Terminology for payments, parties, and financial messaging (pain/pacs/camt message families)."
+    },
+    {
+      "id": "iso4217",
+      "title": "ISO 4217 — Currency codes",
+      "url": "https://www.iso.org/iso-4217-currency-codes.html",
+      "source_type": "authoritative",
+      "license": "ISO copyright; standard summary freely accessible",
+      "retrieved": "2026-09-27",
+      "notes": "Currency code terminology for multi-currency ledger/wallet balances."
+    },
+    {
+      "id": "iso13616-iban",
+      "title": "ISO 13616 / IBAN Registry",
+      "url": "https://www.swift.com/standards/data-standards/iban",
+      "source_type": "authoritative",
+      "license": "Published by SWIFT under ISO 13616",
+      "retrieved": "2026-09-27",
+      "notes": "International Bank Account Number structure, referenced for account numbering."
+    },
+    {
+      "id": "fatf-recommendations",
+      "title": "FATF Recommendations",
+      "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html",
+      "source_type": "authoritative",
+      "license": "FATF public standard",
+      "retrieved": "2026-09-27",
+      "notes": "The 40 Recommendations — global AML/CFT baseline (customer due diligence, suspicious transaction reporting)."
+    },
+    {
+      "id": "eu-amlr",
+      "title": "EU Anti-Money Laundering Regulation (AMLR)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Regulation (EU) 2024/1624",
+      "notes": "Part of the 2024 EU AML package (with Directive (EU) 2024/1640 and the new AMLA authority), replacing the AMLD4/5/6 patchwork for directly-applicable rules; phased applicability through 2027 — verify current stage before relying on it."
+    },
+    {
+      "id": "us-bsa",
+      "title": "Bank Secrecy Act (BSA)",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/bank-secrecy-act",
+      "source_type": "authoritative",
+      "license": "US public law, FinCEN-administered",
+      "retrieved": "2026-09-27",
+      "notes": "US AML/CTF statute: CDD, CTRs, SARs."
+    },
+    {
+      "id": "eu-psd2",
+      "title": "EU Payment Services Directive 2 (PSD2)",
+      "url": "https://eur-lex.europa.eu/eli/dir/2015/2366/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Directive (EU) 2015/2366",
+      "notes": "Strong Customer Authentication (SCA) and open-banking access-to-account rules. A PSD3 directive plus a Payment Services Regulation (PSR) were proposed by the European Commission in 2023 to succeed/complement PSD2; their legislative status changes and must be re-checked before relying on it."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI DSS",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI Security Standards Council published standard",
+      "retrieved": "2026-09-27",
+      "version": "4.0.1",
+      "notes": "Card data handling requirements for card issuing/payments."
+    },
+    {
+      "id": "gdpr",
+      "title": "GDPR",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Regulation (EU) 2016/679",
+      "notes": "Personal data handling for party/KYC records."
+    }
+  ],
+  "features": [
+    {
+      "id": "fintech.party_management",
+      "name": "Party / Customer Management",
+      "classification": "core",
+      "description": "Maintain customer and counterparty profiles (individuals and organizations) as the root record every account, wallet, and payment attaches to.",
+      "users": [
+        "customer",
+        "compliance_officer",
+        "administrator"
+      ],
+      "entities": [
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "profile_crud",
+        "counterparty_linking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "std:fibo"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.kyc_onboarding",
+      "name": "KYC / Onboarding",
+      "classification": "core",
+      "description": "Capture identity documents, run identity verification, and produce a risk rating before a party can transact.",
+      "users": [
+        "customer",
+        "compliance_officer"
+      ],
+      "entities": [
+        "party",
+        "kyc_case"
+      ],
+      "workflows": [
+        "kyc_onboarding_lifecycle"
+      ],
+      "capabilities": [
+        "document_capture",
+        "identity_verification",
+        "risk_scoring"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "compliance",
+        "identity",
+        "customer"
+      ],
+      "integrations": [
+        "kyc_provider"
+      ],
+      "compliance": [
+        "aml_cft_fatf",
+        "eu_amlr",
+        "us_bsa",
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.ledger_accounts",
+      "name": "Ledger Accounts (Double-Entry)",
+      "classification": "core",
+      "description": "Post every balance movement as a balanced double-entry to an immutable ledger; accounts are a view over ledger entries.",
+      "users": [
+        "customer",
+        "finance_ops",
+        "administrator"
+      ],
+      "entities": [
+        "account",
+        "ledger_entry",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "double_entry_posting",
+        "balance_computation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "formance-ledger"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.wallets",
+      "name": "Wallets",
+      "classification": "core",
+      "description": "Stored-value balances a party can hold, fund, and spend from, backed by ledger accounts.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "wallet",
+        "account",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "balance_hold",
+        "top_up",
+        "spend"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "fintech.payments",
+      "name": "Payments",
+      "classification": "core",
+      "description": "Move money into or out of the platform over a payment rail (card, ACH, SEPA, wire) with a lifecycle from initiation to settlement.",
+      "users": [
+        "customer",
+        "finance_ops"
+      ],
+      "entities": [
+        "payment",
+        "ledger_entry",
+        "party"
+      ],
+      "workflows": [
+        "payment_lifecycle"
+      ],
+      "capabilities": [
+        "initiate",
+        "authorize",
+        "settle",
+        "reverse"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "payment",
+        "customer"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [
+        "psd2_sca"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract",
+          "formance-ledger",
+          "iso20022"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.internal_transfers",
+      "name": "Internal Transfers",
+      "classification": "common",
+      "description": "Move money between two wallets or accounts on the same platform without leaving the ledger.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "transfer",
+        "wallet",
+        "account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "p2p_move",
+        "own_account_move"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "common",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": "Blnk's multi-way Transaction/Distribution model supports this directly; only one implementation inspected for this specific feature so held at medium."
+      }
+    },
+    {
+      "id": "fintech.p2p_transfers",
+      "name": "Peer-to-Peer Transfers",
+      "classification": "common",
+      "description": "Send money to another party by handle, phone number, or account identifier, typically instant.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "transfer",
+        "party",
+        "wallet"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "handle_lookup",
+        "instant_settlement"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "common",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "iso20022"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.card_issuing",
+      "name": "Card Issuing",
+      "classification": "common",
+      "description": "Issue virtual or physical debit/prepaid cards linked to a wallet or account.",
+      "users": [
+        "customer",
+        "administrator"
+      ],
+      "entities": [
+        "card",
+        "wallet",
+        "account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "virtual_card",
+        "physical_card",
+        "pan_tokenization"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "payment",
+        "customer"
+      ],
+      "integrations": [
+        "card_issuing_processor"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from card-processor integration patterns; only one ledger-adjacent implementation reviewed directly, corroborated by PCI DSS scope rather than a second OSS implementation."
+      }
+    },
+    {
+      "id": "fintech.card_controls",
+      "name": "Card Controls",
+      "classification": "common",
+      "description": "Freeze/unfreeze a card and set per-card spend limits or merchant-category restrictions.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "card"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "freeze",
+        "limit_override",
+        "mcc_block"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [
+        "card_issuing_processor"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from common card-processor capabilities; not independently verified in a second OSS ledger implementation."
+      }
+    },
+    {
+      "id": "fintech.lending_origination",
+      "name": "Lending Origination",
+      "classification": "common",
+      "description": "Take a loan application, underwrite it against credit/risk data, and approve or reject.",
+      "users": [
+        "customer",
+        "loan_officer"
+      ],
+      "entities": [
+        "loan",
+        "party"
+      ],
+      "workflows": [
+        "loan_lifecycle"
+      ],
+      "capabilities": [
+        "application_intake",
+        "underwriting",
+        "decisioning"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "compliance",
+        "customer"
+      ],
+      "integrations": [
+        "credit_bureau"
+      ],
+      "compliance": [
+        "us_bsa",
+        "eu_amlr"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": "Fineract's `portfolio` module covers loan origination end to end; a second independent OSS lending implementation was not reviewed, held at medium via the authoritative core-banking reference plus domain reasoning."
+      }
+    },
+    {
+      "id": "fintech.loan_servicing",
+      "name": "Loan Servicing",
+      "classification": "common",
+      "description": "Disburse approved loans, generate repayment schedules, apply payments, and track arrears.",
+      "users": [
+        "customer",
+        "loan_officer",
+        "finance_ops"
+      ],
+      "entities": [
+        "loan",
+        "loan_schedule",
+        "ledger_entry"
+      ],
+      "workflows": [
+        "loan_lifecycle"
+      ],
+      "capabilities": [
+        "disbursement",
+        "amortization_schedule",
+        "arrears_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.interest_accrual",
+      "name": "Interest Accrual",
+      "classification": "recommended",
+      "description": "Accrue and post interest on interest-bearing balances (savings) or outstanding loan principal on a schedule.",
+      "users": [
+        "finance_ops"
+      ],
+      "entities": [
+        "account",
+        "loan",
+        "ledger_entry"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "daily_accrual",
+        "capitalization"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "recommended",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.credit_scoring",
+      "name": "Credit Scoring",
+      "classification": "recommended",
+      "description": "Compute or fetch a creditworthiness score to support lending decisions and limit setting.",
+      "users": [
+        "loan_officer",
+        "risk_analyst"
+      ],
+      "entities": [
+        "party",
+        "loan"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "bureau_pull",
+        "internal_scoring_model"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "low",
+      "tags": [
+        "recommended",
+        "ai",
+        "compliance"
+      ],
+      "integrations": [
+        "credit_bureau"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; Fineract exposes credit-bureau integration points but scoring logic itself is deployment-specific."
+      }
+    },
+    {
+      "id": "fintech.statements",
+      "name": "Statements",
+      "classification": "common",
+      "description": "Generate periodic (monthly) account or card statements summarizing balances and transactions.",
+      "users": [
+        "customer",
+        "finance_ops"
+      ],
+      "entities": [
+        "statement",
+        "account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "pdf_generation",
+        "period_close"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "document",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.fee_management",
+      "name": "Fee Management",
+      "classification": "common",
+      "description": "Define fee schedules (flat, percentage, tiered) and assess them against payments, cards, or accounts.",
+      "users": [
+        "finance_ops",
+        "administrator"
+      ],
+      "entities": [
+        "fee",
+        "account",
+        "payment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "fee_schedule",
+        "assessment",
+        "waiver"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.limits_management",
+      "name": "Limits Management",
+      "classification": "core",
+      "description": "Enforce per-transaction, daily, and velocity limits on payments, transfers, and card spend.",
+      "users": [
+        "customer",
+        "compliance_officer",
+        "administrator"
+      ],
+      "entities": [
+        "limit",
+        "party",
+        "account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "velocity_check",
+        "tier_based_limits"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "compliance",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [
+        "aml_cft_fatf"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.fraud_monitoring",
+      "name": "Fraud / Risk Monitoring",
+      "classification": "core",
+      "description": "Score transactions in real time against fraud rules/models and flag or block suspicious activity.",
+      "users": [
+        "risk_analyst",
+        "system"
+      ],
+      "entities": [
+        "fraud_alert",
+        "payment",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "rule_engine",
+        "ml_scoring",
+        "step_up_auth"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "core",
+      "tags": [
+        "core",
+        "ai",
+        "real-time",
+        "compliance"
+      ],
+      "integrations": [
+        "fraud_engine"
+      ],
+      "compliance": [
+        "psd2_sca"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from industry-standard fraud-scoring architecture; not directly modeled in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "fintech.aml_transaction_monitoring",
+      "name": "AML Transaction Monitoring",
+      "classification": "compliance",
+      "description": "Continuously screen posted transactions for structuring, unusual patterns, and thresholds requiring a suspicious activity report.",
+      "users": [
+        "compliance_officer",
+        "system"
+      ],
+      "entities": [
+        "payment",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "threshold_rules",
+        "pattern_detection",
+        "sar_case_creation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "medium",
+      "tags": [
+        "compliance",
+        "ai"
+      ],
+      "integrations": [
+        "fraud_engine"
+      ],
+      "compliance": [
+        "aml_cft_fatf",
+        "eu_amlr",
+        "us_bsa"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations",
+          "eu-amlr",
+          "us-bsa"
+        ],
+        "confidence": "high",
+        "notes": "Requirement itself is authoritative (FATF/AMLR/BSA); implementation pattern is reasoned, not sourced from a specific OSS AML engine."
+      }
+    },
+    {
+      "id": "fintech.sanctions_screening",
+      "name": "Sanctions / PEP Screening",
+      "classification": "compliance",
+      "description": "Screen parties against sanctions and politically-exposed-person lists at onboarding and periodically thereafter.",
+      "users": [
+        "compliance_officer",
+        "system"
+      ],
+      "entities": [
+        "party",
+        "kyc_case"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "watchlist_match",
+        "periodic_rescreen"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "low",
+      "tags": [
+        "compliance"
+      ],
+      "integrations": [
+        "kyc_provider"
+      ],
+      "compliance": [
+        "aml_cft_fatf",
+        "eu_amlr",
+        "us_bsa"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.dispute_management",
+      "name": "Dispute / Chargeback Management",
+      "classification": "common",
+      "description": "Let a customer dispute a transaction and route it through investigation to resolution, including card-network chargebacks.",
+      "users": [
+        "customer",
+        "support_agent"
+      ],
+      "entities": [
+        "dispute",
+        "payment"
+      ],
+      "workflows": [
+        "dispute_lifecycle"
+      ],
+      "capabilities": [
+        "case_intake",
+        "evidence_collection",
+        "chargeback_filing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer",
+        "payment"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from card-network chargeback conventions; not modeled in either OSS ledger reviewed."
+      }
+    },
+    {
+      "id": "fintech.reconciliation",
+      "name": "Reconciliation",
+      "classification": "core",
+      "description": "Match internal ledger entries against external settlement/processor/bank statements and surface discrepancies.",
+      "users": [
+        "finance_ops"
+      ],
+      "entities": [
+        "reconciliation_run",
+        "ledger_entry"
+      ],
+      "workflows": [
+        "reconciliation_workflow"
+      ],
+      "capabilities": [
+        "auto_matching",
+        "discrepancy_reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "reporting"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": "Blnk ships a dedicated reconciliation engine with matching rules; a second independent OSS reconciliation implementation was not reviewed."
+      }
+    },
+    {
+      "id": "fintech.multi_currency_ledger",
+      "name": "Multi-Currency Ledger",
+      "classification": "recommended",
+      "description": "Hold and post balances in more than one currency per party, with FX conversion at transaction time.",
+      "users": [
+        "customer",
+        "finance_ops"
+      ],
+      "entities": [
+        "account",
+        "wallet",
+        "ledger_entry"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "per_currency_balance",
+        "fx_conversion"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "recommended",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "iso4217"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.recurring_payments",
+      "name": "Recurring Payments",
+      "classification": "optional",
+      "description": "Schedule standing orders or subscription-style payments that execute automatically on a recurrence rule.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "payment",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "schedule_rule",
+        "retry_on_failure"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "customer",
+        "scheduling"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "iso20022"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from ISO 20022 standing-order message types; no OSS implementation reviewed specifically for recurrence."
+      }
+    },
+    {
+      "id": "fintech.bill_pay",
+      "name": "Bill Pay",
+      "classification": "optional",
+      "description": "Pay a registered biller (utility, telecom, government) from a wallet or account.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "payment",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "biller_directory",
+        "one_off_payment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "customer",
+        "payment"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not directly modeled in the sources reviewed."
+      }
+    },
+    {
+      "id": "fintech.savings_goals",
+      "name": "Savings Goals",
+      "classification": "optional",
+      "description": "Let a customer set aside money in a labeled sub-balance ('pot') toward a target amount.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "wallet"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "goal_tracking",
+        "auto_round_up"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from savings-product patterns in core banking; consumer neobank framing is inference, not directly sourced."
+      }
+    },
+    {
+      "id": "fintech.spend_analytics",
+      "name": "Spend Analytics",
+      "classification": "optional",
+      "description": "Categorize a customer's transactions and surface spending insights and trends.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "payment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "merchant_categorization",
+        "trend_insights"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "ai",
+        "customer",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from common neobank features; not modeled in the OSS sources reviewed."
+      }
+    },
+    {
+      "id": "fintech.virtual_accounts",
+      "name": "Virtual Account Numbers",
+      "classification": "recommended",
+      "description": "Issue a dedicated account number per customer or purpose that routes incoming funds into the right ledger account automatically.",
+      "users": [
+        "customer",
+        "finance_ops"
+      ],
+      "entities": [
+        "account",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "dedicated_number_issuance",
+        "auto_allocation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "recommended",
+        "backend"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "iso13616-iban"
+        ],
+        "confidence": "medium",
+        "notes": "IBAN/account-numbering standard is authoritative; the virtual-account pattern itself is corroborated by Fineract's client-linked GL accounts (apache-fineract), though not cited twice at feature granularity so held at medium."
+      }
+    },
+    {
+      "id": "fintech.open_banking_connectivity",
+      "name": "Open Banking Connectivity",
+      "classification": "integration",
+      "description": "Expose PSD2-style account information and payment initiation APIs to authorized third-party providers.",
+      "users": [
+        "customer",
+        "administrator"
+      ],
+      "entities": [
+        "account",
+        "party"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "consent_management",
+        "aisp_api",
+        "pisp_api"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "integration",
+        "compliance"
+      ],
+      "integrations": [
+        "payment_rail"
+      ],
+      "compliance": [
+        "psd2_sca"
+      ],
+      "provenance": {
+        "sources": [
+          "eu-psd2"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fintech.webhooks_events",
+      "name": "Webhooks / Event Notifications",
+      "classification": "integration",
+      "description": "Deliver signed webhook events for account, payment, and card lifecycle changes to integrating partners.",
+      "users": [
+        "administrator",
+        "system"
+      ],
+      "entities": [
+        "payment",
+        "account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "event_delivery",
+        "signature_verification",
+        "retry_backoff"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "integration",
+        "backend"
+      ],
+      "integrations": [
+        "webhook_delivery"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

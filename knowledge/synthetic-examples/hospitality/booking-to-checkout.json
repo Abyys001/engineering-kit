@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "description": "Fabricated example: a guest books a room with a deposit, checks in, incurs a room-service charge, checks out, and the property runs its night audit. Exercises reservation_lifecycle and folio_billing_workflow. All names, contacts, and identifiers are invented.",
+  "entities": {
+    "property": { "id": "example-property-001", "name": "Example Riverside Hotel" },
+    "room_type": { "id": "example-roomtype-deluxe", "property": "example-property-001", "name": "Deluxe Queen (Example)", "max_occupancy": 2 },
+    "room": { "id": "example-room-214", "room_type": "example-roomtype-deluxe", "number": "214", "status": "active" },
+    "rate_plan": { "id": "example-rate-standard", "room_type": "example-roomtype-deluxe", "name": "Standard Rate (Example)", "from_date": "2026-10-01", "to_date": "2026-12-31", "price": 129.00, "refundable": true },
+    "guest_profile": {
+      "id": "example-guest-001",
+      "name": "Jamie Example",
+      "email": "jamie.example@example.com",
+      "phone": "+1-555-0177",
+      "id_document": "EXAMPLE-PASSPORT-000111"
+    },
+    "reservation": {
+      "id": "example-reservation-001",
+      "guest_profile": "example-guest-001",
+      "arrival_date": "2026-10-10",
+      "departure_date": "2026-10-12",
+      "status_history": [
+        { "status": "requested", "at": "2026-10-01T09:00:00-05:00" },
+        { "status": "confirmed", "at": "2026-10-01T09:00:20-05:00" },
+        { "status": "checked_in", "at": "2026-10-10T15:12:00-05:00" },
+        { "status": "checked_out", "at": "2026-10-12T10:47:00-05:00" }
+      ],
+      "status": "checked_out"
+    },
+    "reservation_room_stay": {
+      "id": "example-stay-001",
+      "reservation": "example-reservation-001",
+      "room": "example-room-214",
+      "date_from": "2026-10-10",
+      "date_to": "2026-10-12",
+      "occupants": 2,
+      "rate": "example-rate-standard"
+    },
+    "deposit": { "id": "example-deposit-001", "reservation": "example-reservation-001", "amount": 50.00, "collected_at": "2026-10-01T09:00:25-05:00", "status": "collected" },
+    "add_on_service": { "id": "example-addon-roomservice", "reservation": "example-reservation-001", "name": "Room Service Breakfast (Example)", "price": 18.00 },
+    "folio": {
+      "id": "example-folio-001",
+      "reservation": "example-reservation-001",
+      "line_items": [
+        { "description": "Room charge x2 nights (Example)", "amount": 258.00 },
+        { "description": "Room Service Breakfast (Example)", "amount": 18.00 }
+      ],
+      "balance": 226.00,
+      "status_history": [
+        { "status": "open", "at": "2026-10-10T15:12:00-05:00" },
+        { "status": "settled", "at": "2026-10-12T10:47:00-05:00" }
+      ],
+      "status": "settled"
+    },
+    "payment": [
+      { "id": "example-payment-001", "folio": "example-folio-001", "amount": 50.00, "method": "card", "status": "captured", "note": "deposit applied" },
+      { "id": "example-payment-002", "folio": "example-folio-001", "amount": 226.00, "method": "card", "status": "captured", "note": "checkout settlement" }
+    ],
+    "night_audit_run": { "id": "example-audit-2026-10-11", "business_date": "2026-10-11", "status": "completed" }
+  },
+  "notes": "Synthetic data only — example.com email, +1-555-01xx phone, invented names/identifiers/prices/documents, no real guest or business data."
+}

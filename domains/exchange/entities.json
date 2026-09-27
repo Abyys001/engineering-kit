@@ -1,0 +1,440 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "customer",
+      "name": "Customer",
+      "description": "An individual or corporate client of the exchange business.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "exchange_transaction"
+        },
+        {
+          "type": "has_many",
+          "target": "remittance"
+        }
+      ],
+      "important_fields": [
+        "full_name",
+        "id_document_type",
+        "id_document_number",
+        "risk_rating"
+      ],
+      "states": [
+        "active",
+        "flagged",
+        "blocked"
+      ],
+      "related_features": [
+        "exchange.customer_management",
+        "exchange.kyc_thresholds"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "Party",
+          "note": "FIBO's general Party class; the exchange domain does not distinguish legal-entity sub-types as finely as fintech."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "currency",
+      "name": "Currency",
+      "description": "A currency the business trades, identified by its ISO 4217 code.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "exchange_rate"
+        },
+        {
+          "type": "has_many",
+          "target": "exchange_transaction"
+        }
+      ],
+      "important_fields": [
+        "iso_code",
+        "display_name",
+        "minor_unit_precision"
+      ],
+      "states": [],
+      "related_features": [
+        "exchange.currency_master"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "Currency",
+          "note": "FIBO/ISO 4217 alignment for currency identifiers."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules",
+          "iso4217"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange_rate",
+      "name": "Exchange Rate",
+      "description": "A buy/sell rate quote for a currency, valid as of a point in time.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "currency"
+        },
+        {
+          "type": "belongs_to",
+          "target": "branch",
+          "note": "optional, when a branch overrides the default rate"
+        }
+      ],
+      "important_fields": [
+        "buy_rate",
+        "sell_rate",
+        "mid_rate",
+        "source",
+        "effective_at"
+      ],
+      "states": [],
+      "related_features": [
+        "exchange.rate_management",
+        "exchange.rate_feed_ingestion"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange_request",
+      "name": "Exchange Request / Quote",
+      "description": "A pre-commitment quote for a customer to buy or sell a currency, before it becomes a transaction.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "belongs_to",
+          "target": "currency"
+        }
+      ],
+      "important_fields": [
+        "requested_amount",
+        "quoted_rate",
+        "status",
+        "expires_at"
+      ],
+      "states": [
+        "quoted",
+        "expired",
+        "converted"
+      ],
+      "related_features": [
+        "exchange.exchange_requests",
+        "exchange.online_ordering"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "bdc-api"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned refinement; bdc-api transacts directly without a separate quote entity."
+      }
+    },
+    {
+      "id": "exchange_transaction",
+      "name": "Exchange Transaction",
+      "description": "A completed or in-progress buy or sell of currency at a locked rate.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "belongs_to",
+          "target": "currency"
+        },
+        {
+          "type": "belongs_to",
+          "target": "till"
+        },
+        {
+          "type": "belongs_to",
+          "target": "branch"
+        }
+      ],
+      "important_fields": [
+        "txn_type",
+        "foreign_amount",
+        "used_rate",
+        "margin_pct",
+        "commission",
+        "state",
+        "transaction_ref"
+      ],
+      "states": [
+        "draft",
+        "completed",
+        "voided"
+      ],
+      "related_features": [
+        "exchange.buy_sell_transactions",
+        "exchange.aml_reporting",
+        "exchange.audit_log"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fibo",
+          "concept": "PaymentTransaction",
+          "note": "FIBO's general monetary-transfer class; exchange transactions add a buy/sell rate not present in a plain payment."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "remittance",
+      "name": "Remittance",
+      "description": "A cross-border send or receive of money on behalf of a customer via a network partner.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        },
+        {
+          "type": "belongs_to",
+          "target": "branch"
+        }
+      ],
+      "important_fields": [
+        "direction",
+        "network_partner",
+        "amount",
+        "status",
+        "pickup_code"
+      ],
+      "states": [
+        "initiated",
+        "in_transit",
+        "ready_for_pickup",
+        "paid_out",
+        "cancelled"
+      ],
+      "related_features": [
+        "exchange.remittance"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "till",
+      "name": "Till / Cash Drawer",
+      "description": "A physical cash drawer assigned to a counter, holding a per-currency cash position.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "branch"
+        },
+        {
+          "type": "has_many",
+          "target": "cash_session"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "per_currency_balance"
+      ],
+      "states": [
+        "active",
+        "inactive"
+      ],
+      "related_features": [
+        "exchange.till_cash_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cash_session",
+      "name": "Cash Session",
+      "description": "One open-to-close working session of a teller on a till.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "till"
+        },
+        {
+          "type": "belongs_to",
+          "target": "staff"
+        }
+      ],
+      "important_fields": [
+        "opened_at",
+        "closed_at",
+        "opening_float",
+        "closing_count"
+      ],
+      "states": [
+        "open",
+        "closed",
+        "reconciled"
+      ],
+      "related_features": [
+        "exchange.till_cash_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "branch",
+      "name": "Branch",
+      "description": "A physical location the exchange business operates a counter from.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "till"
+        },
+        {
+          "type": "has_many",
+          "target": "staff"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "address",
+        "active"
+      ],
+      "states": [
+        "active",
+        "closed"
+      ],
+      "related_features": [
+        "exchange.branch_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "staff",
+      "name": "Staff",
+      "description": "A teller or manager working at a branch.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "branch"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "role",
+        "active"
+      ],
+      "states": [
+        "active",
+        "inactive"
+      ],
+      "related_features": [
+        "exchange.staff_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "aml_report",
+      "name": "AML Report",
+      "description": "A suspicious-transaction or large-transaction report case filed with the relevant authority.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "exchange_transaction"
+        },
+        {
+          "type": "belongs_to",
+          "target": "customer"
+        }
+      ],
+      "important_fields": [
+        "report_type",
+        "threshold_triggered",
+        "status",
+        "filed_at"
+      ],
+      "states": [
+        "flagged",
+        "under_review",
+        "filed",
+        "dismissed"
+      ],
+      "related_features": [
+        "exchange.aml_reporting"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": "The reporting obligation is authoritative; the case-entity shape is reasoned, not sourced from an OSS implementation."
+      }
+    }
+  ]
+}

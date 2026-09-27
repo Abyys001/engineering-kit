@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "pci_dss",
+      "name": "PCI DSS",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual)",
+      "scope": "Any restaurant storing, processing, or transmitting card payment data (POS, online ordering, gift cards).",
+      "affected_features": [
+        "restaurant.payments",
+        "restaurant.tips",
+        "restaurant.gift_cards",
+        "restaurant.online_ordering"
+      ],
+      "requires_human_review": true,
+      "notes": "Compliance is typically achieved via a PCI-validated payment gateway/terminal (scope reduction), not by building card handling in-house.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "pci-dss"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "eu_food_information_regulation",
+      "name": "EU Regulation 1169/2011 (food information to consumers)",
+      "kind": "regulation",
+      "version": "consolidated text",
+      "jurisdiction": "European Union",
+      "scope": "Mandatory allergen disclosure for the 14 EU-listed allergens on menus and pre-packed food sold in the EU.",
+      "affected_features": [
+        "restaurant.menu_allergen_labeling",
+        "restaurant.menu"
+      ],
+      "requires_human_review": true,
+      "notes": "Exact disclosure format (menu text, allergen matrix, verbal-on-request) varies by EU member state implementation.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169",
+      "provenance": {
+        "sources": [
+          "eu-1169-2011"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "us_fda_menu_labeling",
+      "name": "US FDA menu labeling (21 CFR 101.11)",
+      "kind": "regulation",
+      "version": "21 CFR 101.11",
+      "jurisdiction": "United States (federal; applies to chains with 20+ locations)",
+      "scope": "Calorie disclosure on menus/menu boards and availability of additional nutrition information on request.",
+      "affected_features": [
+        "restaurant.menu_allergen_labeling",
+        "restaurant.menu"
+      ],
+      "requires_human_review": true,
+      "notes": "Threshold and scope (20+ locations under a common name) mean many independent restaurants are exempt; verify applicability per operator.",
+      "url": "https://www.fda.gov/food/food-labeling-nutrition/menu-labeling-requirements",
+      "provenance": {
+        "sources": [
+          "us-fda-menu-labeling"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "labor_tip_regulations",
+      "name": "Tip pooling and labour/wage rules",
+      "kind": "guideline",
+      "version": "varies",
+      "jurisdiction": "varies by country/state (e.g. US: FLSA tip credit rules vary by state)",
+      "scope": "Rules governing tip pooling, tip credits against minimum wage, and service-charge distribution.",
+      "affected_features": [
+        "restaurant.tips",
+        "restaurant.staff_shifts"
+      ],
+      "requires_human_review": true,
+      "notes": "Illustrative only — one example (US FLSA) is cited; tip/labour law differs sharply by jurisdiction and must be reviewed per deployment, never assumed compliant from this entry.",
+      "url": "https://www.dol.gov/agencies/whd/flsa",
+      "provenance": {
+        "sources": [
+          "us-dol-flsa-tips"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

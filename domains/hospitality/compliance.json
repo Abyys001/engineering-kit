@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "pci_dss",
+      "name": "PCI DSS",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual)",
+      "scope": "Any property storing, processing, or transmitting card data for deposits or folio settlement.",
+      "affected_features": [
+        "hospitality.deposits_advance_payment",
+        "hospitality.folio_and_charges"
+      ],
+      "requires_human_review": true,
+      "notes": "Compliance is typically achieved via a PCI-validated payment gateway (scope reduction), not by storing card data directly.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "pci-dss"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gdpr_guest_data",
+      "name": "GDPR — guest personal data",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679",
+      "jurisdiction": "European Union (and any property processing EU residents' data)",
+      "scope": "Collection, storage, and retention of guest identity documents, contact details, and stay/preference history.",
+      "affected_features": [
+        "hospitality.guest_profiles",
+        "hospitality.front_desk_checkin_checkout"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies regardless of property location if EU residents' data is processed; retention limits and right-to-erasure must be designed in, not bolted on.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "provenance": {
+        "sources": [
+          "eu-gdpr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "id_document_requirements",
+      "name": "Guest ID/passport registration requirements",
+      "kind": "guideline",
+      "version": "varies",
+      "jurisdiction": "varies by country (many jurisdictions require hotels to record ID/passport details for some or all guests)",
+      "scope": "Capturing and retaining identity document details at check-in.",
+      "affected_features": [
+        "hospitality.front_desk_checkin_checkout"
+      ],
+      "requires_human_review": true,
+      "notes": "Illustrative only — requirement, retention period, and which guests are covered (e.g. foreign nationals only) vary sharply by country; verify per deployment jurisdiction, never assumed from this entry.",
+      "url": "https://en.wikipedia.org/wiki/Hotel",
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "No authoritative single source verified across jurisdictions in this pass; general background only."
+      }
+    }
+  ]
+}

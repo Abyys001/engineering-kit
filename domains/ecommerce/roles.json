@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "customer",
+      "name": "Customer / Shopper",
+      "experience": "customer",
+      "description": "Browses the catalog, checks out, and manages their own orders/account.",
+      "responsibilities": [
+        "Browse and search products",
+        "Manage cart and checkout",
+        "Track and return orders"
+      ],
+      "related_features": [
+        "ecommerce.cart",
+        "ecommerce.checkout",
+        "ecommerce.customer_accounts"
+      ],
+      "common_permissions": [
+        "own_order:read",
+        "own_cart:update"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "merchant_admin",
+      "name": "Merchant Admin",
+      "experience": "administration",
+      "description": "Manages catalog, orders, promotions, and store configuration.",
+      "responsibilities": [
+        "Manage catalog and inventory",
+        "Process orders and returns",
+        "Configure promotions and shipping"
+      ],
+      "related_features": [
+        "ecommerce.merchant_admin",
+        "ecommerce.catalog_management",
+        "ecommerce.order_management"
+      ],
+      "common_permissions": [
+        "product:manage",
+        "order:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "fulfillment_staff",
+      "name": "Fulfillment Staff",
+      "experience": "staff",
+      "description": "Packs and ships orders from a warehouse or store.",
+      "responsibilities": [
+        "Pick and pack orders",
+        "Generate shipping labels",
+        "Update tracking"
+      ],
+      "related_features": [
+        "ecommerce.shipping_fulfillment"
+      ],
+      "common_permissions": [
+        "shipment:create",
+        "shipment:update"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "support_agent",
+      "name": "Support Agent",
+      "experience": "staff",
+      "description": "Assists customers with orders, returns, and disputes.",
+      "responsibilities": [
+        "Process return requests",
+        "Issue refunds",
+        "Answer order inquiries"
+      ],
+      "related_features": [
+        "ecommerce.returns_refunds"
+      ],
+      "common_permissions": [
+        "order:read",
+        "return_request:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

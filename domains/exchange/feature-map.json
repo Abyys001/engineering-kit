@@ -1,0 +1,891 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "name": "Currency Exchange",
+  "aliases": [
+    "bureau de change",
+    "money exchange",
+    "forex bureau",
+    "remittance counter"
+  ],
+  "description": "Business management for a currency-exchange / money-exchange operation (bureau de change, remittance counters): rates, buy/sell transactions, cash tills, branches, and AML/KYC controls. Not a crypto trading engine — see DOMAIN.md for how crypto exchange relates as a different product type.",
+  "nace": [
+    "K64.99"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "bdc-api",
+      "title": "bdc-api (Bureau de Change API)",
+      "url": "https://github.com/devmuhammad/bdc-api",
+      "source_type": "implementation",
+      "license": "none found (no LICENSE file; all-rights-reserved by default)",
+      "retrieved": "2026-09-27",
+      "notes": "Hobby-scale (1 star) TypeORM/Express API for a bureau de change: currency, daily_rate (buy/sell, official/market), purchase/purchasemain (buy transactions with cash-note serial ranges), selling (sell transactions with transaction_ref, buyingrate/soldrate, KYC fields mode_of_id/id_no/id_expirydate/bvn), users. Inspected via `gh api repos/.../contents` (not cloned; no license to extract under). Single implementation — evidence held at low/medium confidence per feature, never 'industry standard' on its own."
+    },
+    {
+      "id": "chfx-odoo-modules",
+      "title": "chfx-odoo-modules (Odoo currency-exchange counter modules)",
+      "url": "https://github.com/amustafa995-tech/chfx-odoo-modules",
+      "source_type": "implementation",
+      "license": "unknown (not stated in repository; verify before any reuse)",
+      "retrieved": "2026-09-27",
+      "notes": "Odoo addon modules (`exchange_counter`, `chfx_extension`) with real fields for exchange.branch, exchange.counter (till, linked to an accounting journal and per-currency cash accounts), exchange.session (cashier session on a counter), exchange.transaction (buy/sell with mid_rate vs used_rate vs manual_rate, margin_pct, commission, KYC required/confirmed flags, partner/client link, accounting move), exchange.rate, exchange.remittance. Inspected via `gh api repos/.../contents` (not cloned). Second independent implementation — corroborates branch/counter/session/rate/transaction/remittance as real, separately-modeled concepts."
+    },
+    {
+      "id": "fatf-recommendations",
+      "title": "FATF Recommendations",
+      "url": "https://www.fatf-gafi.org/en/topics/fatf-recommendations.html",
+      "source_type": "authoritative",
+      "license": "FATF public standard",
+      "retrieved": "2026-09-27",
+      "notes": "Recommendation 20 (suspicious transaction reporting) and the customer due diligence recommendations directly govern money-or-value-transfer services and currency exchange offices as 'obliged entities' / DNFBPs in most jurisdictions."
+    },
+    {
+      "id": "iso4217",
+      "title": "ISO 4217 — Currency codes",
+      "url": "https://www.iso.org/iso-4217-currency-codes.html",
+      "source_type": "authoritative",
+      "license": "ISO copyright; standard summary freely accessible",
+      "retrieved": "2026-09-27",
+      "notes": "Currency code terminology for buy/sell rate pairs and cash positions."
+    },
+    {
+      "id": "iso20022",
+      "title": "ISO 20022 — Universal financial industry message scheme",
+      "url": "https://www.iso20022.org/",
+      "source_type": "authoritative",
+      "license": "ISO20022.org terms; message definitions freely published",
+      "retrieved": "2026-09-27",
+      "notes": "Cross-border remittance/payment messaging terminology, used when an exchange house settles or receives via bank rails."
+    },
+    {
+      "id": "eu-amld",
+      "title": "EU Anti-Money Laundering Directive / Regulation package",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Regulation (EU) 2024/1624 + Directive (EU) 2024/1640",
+      "notes": "Currency exchange offices are named obliged entities under EU AML law; cited generically — no jurisdiction-specific (e.g. Iranian) rule is asserted anywhere in this domain."
+    }
+  ],
+  "features": [
+    {
+      "id": "exchange.customer_management",
+      "name": "Customer / Party Management",
+      "classification": "core",
+      "description": "Maintain walk-in and repeat customer records for an exchange business, including individuals and corporate clients.",
+      "users": [
+        "customer",
+        "teller",
+        "branch_manager"
+      ],
+      "entities": [
+        "customer",
+        "branch"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "profile_crud",
+        "repeat_customer_lookup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "customer",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules",
+          "bdc-api"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange.currency_master",
+      "name": "Currency Master Data",
+      "classification": "core",
+      "description": "The list of currencies an exchange business trades, with display codes and precision.",
+      "users": [
+        "administrator",
+        "teller"
+      ],
+      "entities": [
+        "currency"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "currency_crud"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules",
+          "iso4217"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange.rate_management",
+      "name": "Buy/Sell Rate & Spread Management",
+      "classification": "core",
+      "description": "Set and update buy and sell rates per currency pair, including the spread margin, either manually or from a rate source.",
+      "users": [
+        "administrator",
+        "branch_manager",
+        "teller"
+      ],
+      "entities": [
+        "exchange_rate"
+      ],
+      "workflows": [
+        "rate_update_lifecycle"
+      ],
+      "capabilities": [
+        "manual_rate_entry",
+        "spread_calculation",
+        "per_branch_override"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "core",
+      "tags": [
+        "core",
+        "real-time"
+      ],
+      "integrations": [
+        "rate_source"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Both implementations model buy/sell rates explicitly; bdc-api additionally splits official vs market rate. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "exchange.rate_feed_ingestion",
+      "name": "Rate Source Feed Ingestion",
+      "classification": "common",
+      "description": "Pull reference/mid-market rates from an external market-data source to seed or sanity-check manual rates.",
+      "users": [
+        "system",
+        "administrator"
+      ],
+      "entities": [
+        "exchange_rate"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "scheduled_pull",
+        "mid_rate_snapshot"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "core",
+      "tags": [
+        "common",
+        "real-time",
+        "integration"
+      ],
+      "integrations": [
+        "rate_source"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "chfx-odoo-modules integrates a named external rate source (Frankfurter) and stores a mid_rate distinct from the applied rate; single implementation for this specific sub-feature."
+      }
+    },
+    {
+      "id": "exchange.exchange_requests",
+      "name": "Exchange Requests / Quotes",
+      "classification": "core",
+      "description": "A customer or teller requests a quote to buy or sell a currency before committing to the transaction.",
+      "users": [
+        "customer",
+        "teller"
+      ],
+      "entities": [
+        "exchange_request",
+        "customer",
+        "currency"
+      ],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
+      "capabilities": [
+        "quote_generation",
+        "quote_expiry"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Both implementations go straight to a committed transaction; a distinct pre-commit 'quote' step is a reasoned refinement, not separately modeled in either source."
+      }
+    },
+    {
+      "id": "exchange.buy_sell_transactions",
+      "name": "Buy/Sell Transactions",
+      "classification": "core",
+      "description": "Execute a currency purchase from, or sale to, a customer at a locked-in rate, updating cash positions and the ledger.",
+      "users": [
+        "customer",
+        "teller"
+      ],
+      "entities": [
+        "exchange_transaction",
+        "till",
+        "customer"
+      ],
+      "workflows": [
+        "exchange_transaction_lifecycle"
+      ],
+      "capabilities": [
+        "rate_lock",
+        "cash_position_update",
+        "receipt_generation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "customer",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [
+        "kyc_thresholds"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "exchange.remittance",
+      "name": "Remittance / Money Transfer",
+      "classification": "common",
+      "description": "Send or receive a cross-border money transfer on behalf of a customer, typically via a remittance network partner.",
+      "users": [
+        "customer",
+        "teller"
+      ],
+      "entities": [
+        "remittance",
+        "customer"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "send",
+        "receive",
+        "network_partner_lookup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "common",
+        "customer",
+        "payment"
+      ],
+      "integrations": [
+        "remittance_network"
+      ],
+      "compliance": [
+        "aml_str"
+      ],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "Modeled as a distinct exchange.remittance record in chfx-odoo-modules; not present in bdc-api, held at medium via a single implementation plus FATF's explicit coverage of money-or-value-transfer services."
+      }
+    },
+    {
+      "id": "exchange.till_cash_management",
+      "name": "Tills / Cash Drawers & Cash Positions",
+      "classification": "core",
+      "description": "Track each teller's till (cash drawer) balance per currency, opened and closed once per cashier session.",
+      "users": [
+        "teller",
+        "branch_manager"
+      ],
+      "entities": [
+        "till",
+        "cash_session",
+        "branch"
+      ],
+      "workflows": [
+        "cash_session_lifecycle"
+      ],
+      "capabilities": [
+        "open_close_session",
+        "per_currency_position",
+        "denomination_count"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "chfx-odoo-modules models counter+session with per-currency cash accounts explicitly; single implementation, not present in bdc-api."
+      }
+    },
+    {
+      "id": "exchange.branch_management",
+      "name": "Branch Management",
+      "classification": "core",
+      "description": "Manage physical branch/counter locations a multi-site exchange business operates from.",
+      "users": [
+        "administrator",
+        "branch_manager"
+      ],
+      "entities": [
+        "branch"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "branch_crud",
+        "per_branch_rate_override"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "location",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "exchange.branch is explicit in chfx-odoo-modules; single implementation but a near-universal concept for any multi-counter cash business, so held at medium rather than low."
+      }
+    },
+    {
+      "id": "exchange.staff_management",
+      "name": "Staff / Teller Management",
+      "classification": "common",
+      "description": "Manage teller and manager accounts, their assigned branch/till, and shift scheduling.",
+      "users": [
+        "administrator",
+        "branch_manager"
+      ],
+      "entities": [
+        "staff",
+        "branch"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "staff_crud",
+        "shift_assignment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange.receipts_payments",
+      "name": "Receipts & Payment Vouchers",
+      "classification": "common",
+      "description": "Print or email a receipt/voucher for a completed exchange or remittance transaction.",
+      "users": [
+        "teller",
+        "customer"
+      ],
+      "entities": [
+        "exchange_transaction"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "receipt_generation",
+        "duplicate_reprint"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "document",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api"
+        ],
+        "confidence": "low",
+        "notes": "bdc-api generates a transaction_ref at insert time; receipt printing itself is reasoned inference from that field, not directly observed as a feature."
+      }
+    },
+    {
+      "id": "exchange.kyc_thresholds",
+      "name": "KYC with Transaction Thresholds",
+      "classification": "compliance",
+      "description": "Require identity capture above a configured transaction-amount threshold, and stronger due diligence above a second, higher threshold.",
+      "users": [
+        "teller",
+        "compliance_officer"
+      ],
+      "entities": [
+        "customer",
+        "exchange_transaction"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "threshold_config",
+        "id_capture",
+        "enhanced_due_diligence"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "compliance",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [
+        "kyc_thresholds"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "fatf-recommendations"
+        ],
+        "confidence": "medium",
+        "notes": "bdc-api's selling entity captures mode_of_id/id_no/id_expirydate/bvn per transaction; the specific threshold amount is not in either source and must be set per jurisdiction/policy."
+      }
+    },
+    {
+      "id": "exchange.aml_reporting",
+      "name": "AML Reporting (Suspicious / Large Transaction Reports)",
+      "classification": "compliance",
+      "description": "Flag and file suspicious-transaction or large-cash-transaction reports with the relevant authority.",
+      "users": [
+        "compliance_officer",
+        "system"
+      ],
+      "entities": [
+        "aml_report",
+        "exchange_transaction"
+      ],
+      "workflows": [
+        "aml_report_lifecycle"
+      ],
+      "capabilities": [
+        "threshold_flagging",
+        "str_case_management"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "medium",
+      "tags": [
+        "compliance",
+        "ai"
+      ],
+      "integrations": [],
+      "compliance": [
+        "aml_str"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": "Reporting obligation itself is authoritative (FATF R.20); no OSS implementation reviewed models an STR case workflow, so the workflow shape is reasoned."
+      }
+    },
+    {
+      "id": "exchange.audit_log",
+      "name": "Transaction Audit Log",
+      "classification": "core",
+      "description": "Immutable, time-stamped record of every rate change, transaction, and cash-session action for later audit.",
+      "users": [
+        "compliance_officer",
+        "administrator"
+      ],
+      "entities": [
+        "exchange_transaction"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "append_only_log",
+        "actor_attribution"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "exchange.reports_analytics",
+      "name": "Reports & Analytics",
+      "classification": "common",
+      "description": "Daily/periodic reports on volume, profit/margin, cash positions, and branch performance.",
+      "users": [
+        "branch_manager",
+        "administrator"
+      ],
+      "entities": [
+        "exchange_transaction",
+        "branch"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "daily_summary",
+        "margin_report",
+        "branch_comparison"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "reporting",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "chfx-odoo-modules computes profit_chf/margin_pct per transaction, implying a rollup report; the report layer itself is reasoned."
+      }
+    },
+    {
+      "id": "exchange.notifications",
+      "name": "Customer Notifications",
+      "classification": "optional",
+      "description": "Notify a customer by SMS/email when a remittance is ready for pickup or a rate alert threshold is hit.",
+      "users": [
+        "customer",
+        "system"
+      ],
+      "entities": [
+        "customer"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "remittance_ready_alert",
+        "rate_alert"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "optional",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from the remittance model; no notification feature directly observed in either source."
+      }
+    },
+    {
+      "id": "exchange.online_ordering",
+      "name": "Online Rate Lookup / Order-Ahead",
+      "classification": "optional",
+      "description": "Let a customer look up current rates and reserve/order a currency amount online for branch pickup.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "exchange_request",
+        "customer"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "rate_lookup",
+        "reserve_for_pickup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "optional",
+        "customer",
+        "web"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "bdc-api"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; bdc-api exposes a currency/rate API a storefront could read from, but no order-ahead flow is modeled."
+      }
+    },
+    {
+      "id": "exchange.commission_management",
+      "name": "Commission & Fee Management",
+      "classification": "common",
+      "description": "Configure a commission or flat fee on top of the exchanged amount, per currency, branch, or channel.",
+      "users": [
+        "administrator",
+        "branch_manager"
+      ],
+      "entities": [
+        "exchange_transaction"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "commission_rule_config",
+        "per_channel_fee"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": "commission_chf and commission_account_id are explicit fields; single implementation."
+      }
+    }
+  ]
+}

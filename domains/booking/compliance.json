@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "pci_dss",
+      "name": "PCI DSS",
+      "kind": "standard",
+      "version": "4.0.1",
+      "jurisdiction": "global (card-network contractual)",
+      "scope": "Any booking product collecting a deposit or payment via card.",
+      "affected_features": [
+        "booking.deposits"
+      ],
+      "requires_human_review": true,
+      "notes": "Compliance is typically achieved via a PCI-validated payment gateway (scope reduction), not by storing card data directly.",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "provenance": {
+        "sources": [
+          "pci-dss"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

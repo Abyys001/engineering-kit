@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "sis_integration",
+      "name": "Student Information System sync",
+      "category": "data",
+      "purpose": "Interchange roster, enrollment, and grade data with a school's system of record.",
+      "examples": [
+        "PowerSchool",
+        "Infinite Campus"
+      ],
+      "protocols": [
+        "OneRoster REST/CSV"
+      ],
+      "related_features": [
+        "education.roster_sync"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "1edtech-oneroster"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "lti_provider",
+      "name": "LTI tool provider",
+      "category": "content",
+      "purpose": "Let external tools (publisher content, proctoring, plagiarism checkers) launch inside a course.",
+      "examples": [
+        "Publisher courseware",
+        "Respondus"
+      ],
+      "protocols": [
+        "LTI 1.3"
+      ],
+      "related_features": [
+        "education.lti_tool_integration"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "moodle",
+          "1edtech-lti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "video_conferencing",
+      "name": "Video conferencing",
+      "category": "communication",
+      "purpose": "Host live class sessions.",
+      "examples": [
+        "Zoom",
+        "BigBlueButton",
+        "Microsoft Teams"
+      ],
+      "protocols": [
+        "WebRTC"
+      ],
+      "related_features": [
+        "education.live_classes"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "payment_gateway",
+      "name": "Payment gateway",
+      "category": "financial",
+      "purpose": "Collect tuition/fee payments online.",
+      "examples": [
+        "Stripe"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "education.fees_billing"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "plagiarism_checker",
+      "name": "Plagiarism / AI-writing checker",
+      "category": "content",
+      "purpose": "Scan submissions for originality.",
+      "examples": [
+        "Turnitin"
+      ],
+      "protocols": [
+        "LTI",
+        "REST"
+      ],
+      "related_features": [
+        "education.submissions",
+        "education.plagiarism_detection"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "content_repository",
+      "name": "Content package repository",
+      "category": "content",
+      "purpose": "Store/serve SCORM/H5P packaged learning content.",
+      "examples": [
+        "H5P.com"
+      ],
+      "protocols": [
+        "SCORM",
+        "xAPI"
+      ],
+      "related_features": [
+        "education.self_paced_content"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "calendar_sync",
+      "name": "Calendar sync",
+      "category": "productivity",
+      "purpose": "Sync timetable/deadlines with external calendars.",
+      "examples": [
+        "Google Calendar"
+      ],
+      "protocols": [
+        "CalDAV",
+        "REST"
+      ],
+      "related_features": [
+        "education.timetable"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "learning_record_store",
+      "name": "Learning Record Store (LRS)",
+      "category": "analytics",
+      "purpose": "Collect xAPI statements for cross-system learning analytics.",
+      "examples": [
+        "Learning Locker"
+      ],
+      "protocols": [
+        "xAPI"
+      ],
+      "related_features": [
+        "education.xapi_learning_records"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "adl-xapi"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

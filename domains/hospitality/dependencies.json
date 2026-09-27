@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "edges": [
+    {
+      "from": "hospitality.room_types",
+      "to": "hospitality.properties",
+      "type": "requires",
+      "reason": "A room type belongs to a property."
+    },
+    {
+      "from": "hospitality.rooms",
+      "to": "hospitality.room_types",
+      "type": "requires",
+      "reason": "A room belongs to a room type."
+    },
+    {
+      "from": "hospitality.rate_plans",
+      "to": "hospitality.room_types",
+      "type": "requires",
+      "reason": "A rate plan prices a room type."
+    },
+    {
+      "from": "hospitality.rate_restrictions",
+      "to": "hospitality.rate_plans",
+      "type": "requires",
+      "reason": "Restrictions attach to a rate plan."
+    },
+    {
+      "from": "hospitality.availability_inventory",
+      "to": "hospitality.rooms",
+      "type": "requires",
+      "reason": "Availability is counted from physical rooms."
+    },
+    {
+      "from": "hospitality.availability_inventory",
+      "to": "hospitality.rate_plans",
+      "type": "requires",
+      "reason": "Sellable availability is quoted against a rate plan."
+    },
+    {
+      "from": "hospitality.reservations",
+      "to": "hospitality.availability_inventory",
+      "type": "requires",
+      "reason": "A reservation can only be made against available inventory."
+    },
+    {
+      "from": "hospitality.reservations",
+      "to": "booking.availability",
+      "type": "enhances",
+      "reason": "Can reuse a generic slot/date-range availability engine instead of bespoke room-inventory logic; not required, since room-type capacity and rate-plan restrictions are domain-specific enough to stand alone, as both inspected implementations do."
+    },
+    {
+      "from": "hospitality.reservations",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Confirmation and pre-arrival messages."
+    },
+    {
+      "from": "hospitality.front_desk_checkin_checkout",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "Check-in/out transitions an existing reservation."
+    },
+    {
+      "from": "hospitality.front_desk_checkin_checkout",
+      "to": "hospitality.folio_and_charges",
+      "type": "enhances",
+      "reason": "Checkout can settle a single invoice without a full itemized folio, as Frappe Hospitality does."
+    },
+    {
+      "from": "hospitality.guest_profiles",
+      "to": "shared.users",
+      "type": "enhances",
+      "reason": "A guest profile can be a full user account or a lightweight record captured at booking."
+    },
+    {
+      "from": "hospitality.folio_and_charges",
+      "to": "shared.payments",
+      "type": "requires",
+      "reason": "Settling a folio requires payment capture."
+    },
+    {
+      "from": "hospitality.channel_manager",
+      "to": "hospitality.availability_inventory",
+      "type": "requires",
+      "reason": "ARI sync pushes real inventory/rate data."
+    },
+    {
+      "from": "hospitality.channel_manager",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "Channel bookings create internal reservations."
+    },
+    {
+      "from": "hospitality.deposits_advance_payment",
+      "to": "shared.payments",
+      "type": "requires",
+      "reason": "Deposit capture goes through a payment provider."
+    },
+    {
+      "from": "hospitality.cancellation_policies",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "A cancellation policy is evaluated against a reservation's cancellation."
+    },
+    {
+      "from": "hospitality.cancellation_policies",
+      "to": "hospitality.deposits_advance_payment",
+      "type": "enhances",
+      "reason": "Refund calculation typically applies to a collected deposit; policies can also apply to pay-at-property bookings with nothing collected yet."
+    },
+    {
+      "from": "hospitality.add_on_services",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "An add-on is attached to a reservation."
+    },
+    {
+      "from": "hospitality.add_on_services",
+      "to": "hospitality.folio_and_charges",
+      "type": "enhances",
+      "reason": "Charges post to a folio where one exists; can also settle directly on a single invoice."
+    },
+    {
+      "from": "hospitality.booking_voucher_confirmation",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "A voucher documents a confirmed reservation."
+    },
+    {
+      "from": "hospitality.connecting_rooms",
+      "to": "hospitality.rooms",
+      "type": "requires",
+      "reason": "Connecting rooms are a relationship between room records."
+    },
+    {
+      "from": "hospitality.multi_property_management",
+      "to": "shared.organizations",
+      "type": "requires",
+      "reason": "Managing several properties from one account needs a tenant/branch model."
+    },
+    {
+      "from": "hospitality.housekeeping",
+      "to": "hospitality.rooms",
+      "type": "requires",
+      "reason": "Tasks are tracked against a room."
+    },
+    {
+      "from": "hospitality.housekeeping",
+      "to": "hospitality.front_desk_checkin_checkout",
+      "type": "enhances",
+      "reason": "Checkout typically triggers a turnover task; housekeeping can also run on a fixed schedule."
+    },
+    {
+      "from": "hospitality.night_audit",
+      "to": "hospitality.folio_and_charges",
+      "type": "requires",
+      "reason": "The audit posts and reconciles folio charges."
+    },
+    {
+      "from": "hospitality.night_audit",
+      "to": "hospitality.reservations",
+      "type": "enhances",
+      "reason": "Also resolves no-shows, but core posting/reconciliation works without that step."
+    },
+    {
+      "from": "hospitality.group_bookings",
+      "to": "hospitality.reservations",
+      "type": "requires",
+      "reason": "A group booking is a reservation covering multiple rooms."
+    },
+    {
+      "from": "hospitality.loyalty_program",
+      "to": "hospitality.guest_profiles",
+      "type": "requires",
+      "reason": "Loyalty accrues against a guest profile."
+    },
+    {
+      "from": "hospitality.guest_reviews",
+      "to": "hospitality.front_desk_checkin_checkout",
+      "type": "enhances",
+      "reason": "Reviews are typically requested post-stay; can also be collected without gating on checkout data."
+    },
+    {
+      "from": "hospitality.dynamic_pricing",
+      "to": "hospitality.rate_plans",
+      "type": "requires",
+      "reason": "Dynamic pricing adjusts an underlying rate plan."
+    }
+  ]
+}

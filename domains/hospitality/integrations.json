@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "integrations": [
+    {
+      "id": "channel_manager",
+      "name": "Channel manager",
+      "category": "distribution",
+      "purpose": "Sync availability, rates, and inventory with OTAs and receive their reservations.",
+      "examples": [
+        "Booking.com",
+        "Expedia",
+        "SiteMinder"
+      ],
+      "protocols": [
+        "REST",
+        "XML (OTA-style messages)"
+      ],
+      "related_features": [
+        "hospitality.channel_manager",
+        "hospitality.availability_inventory"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "qloapps",
+          "opentravel-alliance"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "payment_gateway",
+      "name": "Payment gateway",
+      "category": "payments",
+      "purpose": "Card/wallet payment authorization and capture for deposits and folio settlement.",
+      "examples": [
+        "Stripe",
+        "Adyen"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "hospitality.deposits_advance_payment",
+        "hospitality.folio_and_charges"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "guest_messaging",
+      "name": "Guest messaging (email/SMS)",
+      "category": "communication",
+      "purpose": "Send confirmations, pre-arrival information, and booking vouchers.",
+      "examples": [
+        "Twilio",
+        "SendGrid"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "hospitality.booking_voucher_confirmation",
+        "hospitality.reservations"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "id_verification",
+      "name": "ID/passport verification",
+      "category": "identity",
+      "purpose": "Capture and verify a guest's identity document at check-in where locally required.",
+      "examples": [
+        "Jumio",
+        "Onfido"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "hospitality.front_desk_checkin_checkout"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from jurisdiction-specific guest registration requirements; not present in either inspected implementation."
+      }
+    },
+    {
+      "id": "accounting_software",
+      "name": "Accounting software",
+      "category": "finance",
+      "purpose": "Export folio, tax, and revenue data for bookkeeping.",
+      "examples": [
+        "QuickBooks",
+        "Xero"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "hospitality.night_audit"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "frappe-hospitality"
+        ],
+        "confidence": "low",
+        "notes": "Frappe/ERPNext ties hotel billing to its own accounting core; external export is reasoned inference for non-ERP products."
+      }
+    },
+    {
+      "id": "revenue_management_system",
+      "name": "Revenue management system (RMS)",
+      "category": "pricing",
+      "purpose": "Feed occupancy/demand data to and receive suggested rates from a dedicated RMS.",
+      "examples": [
+        "IDeaS",
+        "Duetto"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "hospitality.dynamic_pricing"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "wikipedia-yield-management"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

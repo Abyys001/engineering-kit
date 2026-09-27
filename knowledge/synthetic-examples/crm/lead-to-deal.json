@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "description": "Fabricated example of a lead moving through qualification, conversion, and its resulting deal reaching a won outcome. All data is invented; example.com emails, +1-555-01xx phones, fictional names. Not real customer or business data.",
+  "main_entity": "lead",
+  "lead": {
+    "id": "lead_7731",
+    "first_name": "Marta",
+    "last_name": "Kowalski",
+    "company": "Riverstone Outfitters",
+    "email": "marta.kowalski@example.com",
+    "phone": "+1-555-0142",
+    "lead_source": "webinar",
+    "lead_status": "new"
+  },
+  "lead_state_transitions": [
+    {"from": null, "to": "new", "event": "created", "at": "2026-03-01T09:00:00Z", "by": "system", "note": "captured from webinar registration form"},
+    {"from": "new", "to": "contacted", "event": "contact", "at": "2026-03-02T13:15:00Z", "by": "usr_rep_0100"},
+    {"from": "contacted", "to": "qualified", "event": "qualify", "at": "2026-03-05T10:30:00Z", "by": "usr_rep_0100",
+     "note": "confirmed budget and timeline in discovery call"},
+    {"from": "qualified", "to": "converted", "event": "convert", "at": "2026-03-05T11:00:00Z", "by": "usr_rep_0100",
+     "created_contact_id": "cont_4410", "created_company_id": "comp_2201", "created_deal_id": "deal_9981"}
+  ],
+  "resulting_contact": {"id": "cont_4410", "first_name": "Marta", "last_name": "Kowalski", "email": "marta.kowalski@example.com", "company_id": "comp_2201"},
+  "resulting_company": {"id": "comp_2201", "name": "Riverstone Outfitters", "industry": "Retail", "parent_account_id": null},
+  "resulting_deal": {
+    "id": "deal_9981",
+    "name": "Riverstone Outfitters - Annual Plan",
+    "value": 18400.00,
+    "currency": "USD",
+    "close_date_estimate": "2026-04-15",
+    "stage": "proposal"
+  },
+  "deal_state_transitions": [
+    {"from": null, "to": "open", "event": "created", "at": "2026-03-05T11:00:00Z", "by": "usr_rep_0100", "stage": "qualification"},
+    {"from": "open", "to": "open", "event": "advance_stage", "at": "2026-03-10T09:00:00Z", "by": "usr_rep_0100", "stage": "proposal"},
+    {"from": "open", "to": "won", "event": "mark_won", "at": "2026-04-12T16:45:00Z", "by": "usr_rep_0100", "stage": "closed_won"}
+  ],
+  "quote_example": {
+    "id": "quote_3301",
+    "deal_id": "deal_9981",
+    "line_items": [
+      {"product": "Annual Plan - Standard", "quantity": 1, "unit_price": 18400.00}
+    ],
+    "transitions": [
+      {"from": null, "to": "draft", "event": "created", "at": "2026-03-08T09:00:00Z", "by": "usr_rep_0100"},
+      {"from": "draft", "to": "pending_approval", "event": "request_approval", "at": "2026-03-08T09:05:00Z", "by": "usr_rep_0100"},
+      {"from": "pending_approval", "to": "approved", "event": "approve", "at": "2026-03-08T14:00:00Z", "by": "usr_manager_0050"},
+      {"from": "approved", "to": "sent", "event": "send", "at": "2026-03-08T14:10:00Z", "by": "usr_rep_0100"},
+      {"from": "sent", "to": "accepted", "event": "customer_accept", "at": "2026-04-11T10:00:00Z", "by": "marta.kowalski@example.com"}
+    ]
+  },
+  "notes": "Synthetic example demonstrating the lead_lifecycle, deal_lifecycle, and quote_approval state machines defined in workflows.json. All identifiers, names, and timestamps are fabricated for illustration only."
+}

@@ -1,0 +1,50 @@
+{
+  "_disclaimer": "Fabricated synthetic example for the project-management domain. All names, emails, and IDs are invented for illustration only.",
+  "entity": "task",
+  "workflow": "task_lifecycle",
+  "example": {
+    "id": "task_88c1",
+    "project": {"id": "proj_401", "identifier": "PLT", "name": "Platform Revamp"},
+    "sequence_id": 142,
+    "name": "Add rate-limit headers to the public API",
+    "description": "Return X-RateLimit-* headers on every public API response so client SDKs can back off proactively.",
+    "priority": "high",
+    "assignees": [
+      {"id": "usr_12", "name": "Dana Okafor", "email": "dana.okafor@example.com"}
+    ],
+    "reporter": {"id": "usr_07", "name": "Liam Petrov", "email": "liam.petrov@example.com"},
+    "labels": ["api", "reliability"],
+    "start_date": "2026-09-22",
+    "target_date": "2026-09-30",
+    "estimate_point": 5,
+    "parent": null,
+    "subtasks": [
+      {"id": "task_88c1-a", "name": "Design header schema", "is_active": false, "completed": true},
+      {"id": "task_88c1-b", "name": "Implement middleware", "is_active": true, "completed": false},
+      {"id": "task_88c1-c", "name": "Add SDK docs", "is_active": true, "completed": false}
+    ],
+    "relations": [
+      {"type": "blocked_by", "task_id": "task_77a2", "note": "Needs the new Redis rate-limit counter first"}
+    ],
+    "cycle": {"id": "cycle_09", "name": "Sprint 14", "start_date": "2026-09-21", "end_date": "2026-10-04"},
+    "comments": [
+      {"author": "usr_07", "body": "Let's ship this behind a feature flag first.", "posted_at": "2026-09-23T10:15:00Z"}
+    ],
+    "status_history": [
+      {"state": "triage", "occurred_at": "2026-09-20T09:00:00Z"},
+      {"state": "backlog", "occurred_at": "2026-09-20T09:05:00Z", "event": "accept"},
+      {"state": "unstarted", "occurred_at": "2026-09-21T08:30:00Z", "event": "prioritize"},
+      {"state": "started", "occurred_at": "2026-09-22T09:00:00Z", "event": "start_work"}
+    ],
+    "current_state": "started"
+  },
+  "state_machine_reference": {
+    "entity": "task",
+    "workflow": "task_lifecycle",
+    "transitions_exercised": [
+      {"from": "triage", "to": "backlog", "event": "accept"},
+      {"from": "backlog", "to": "unstarted", "event": "prioritize"},
+      {"from": "unstarted", "to": "started", "event": "start_work"}
+    ]
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "source": "std:nace-rev2.1",
+  "source_file": "knowledge/standards/nace-rev2.1/nace-rev2.1-structure.csv",
+  "note": "Codes and official English labels taken verbatim from the downloaded Eurostat SDMX codelist ESTAT:NACE_R2_1(13.2), never from memory. `sdmx_id` is Eurostat's own code list identifier; `code` is the EC_CORPORATE_CODE (the human-facing NACE numeric code, e.g. 62.01). Kit domains for software products (crm, support, project-management, general-saas) are horizontal: the product itself classifies as J62/J582/K62/K63 (software publishing / computer programming / computing infrastructure), while the *customer's* industry is whatever NACE code fits their business - list both where relevant.",
+  "last_reviewed": "2026-09-26",
+  "domains": {
+    "general-saas": {
+      "primary": [
+        {"sdmx_id": "J582", "code": "58.2", "label": "Software publishing"},
+        {"sdmx_id": "J5829", "code": "58.29", "label": "Other software publishing"},
+        {"sdmx_id": "K62", "code": "62", "label": "Computer programming, consultancy and related activities"},
+        {"sdmx_id": "K6210", "code": "62.10", "label": "Computer programming activities"},
+        {"sdmx_id": "K63", "code": "63", "label": "Computing infrastructure, data processing, hosting and other information service activities"}
+      ],
+      "note": "Horizontal: the vendor is J582/K62/K63; the buyer can be any NACE code."
+    },
+    "restaurant": {
+      "primary": [
+        {"sdmx_id": "I561", "code": "56.1", "label": "Restaurants and mobile food service activities"},
+        {"sdmx_id": "I5611", "code": "56.11", "label": "Restaurant activities"},
+        {"sdmx_id": "I5612", "code": "56.12", "label": "Mobile food service activities"},
+        {"sdmx_id": "I562", "code": "56.2", "label": "Event catering, contract catering service activities and other food service activities"},
+        {"sdmx_id": "I563", "code": "56.3", "label": "Beverage serving activities"}
+      ]
+    },
+    "hospitality": {
+      "primary": [
+        {"sdmx_id": "I55", "code": "55", "label": "Accommodation"},
+        {"sdmx_id": "I551", "code": "55.1", "label": "Hotels and similar accommodation"},
+        {"sdmx_id": "I5510", "code": "55.10", "label": "Hotels and similar accommodation"},
+        {"sdmx_id": "I552", "code": "55.2", "label": "Holiday and other short-stay accommodation"},
+        {"sdmx_id": "I554", "code": "55.4", "label": "Intermediation service activities for accommodation"}
+      ],
+      "note": "I554 (Intermediation service activities for accommodation) is new in Rev 2.1 - covers OTA/booking-platform style intermediaries, distinct from the property itself."
+    },
+    "healthcare": {
+      "primary": [
+        {"sdmx_id": "R86", "code": "86", "label": "Human health activities"},
+        {"sdmx_id": "R861", "code": "86.1", "label": "Hospital activities"},
+        {"sdmx_id": "R8610", "code": "86.10", "label": "Hospital activities"},
+        {"sdmx_id": "R8621", "code": "86.21", "label": "General medical practice activities"},
+        {"sdmx_id": "R869", "code": "86.9", "label": "Other human health activities"},
+        {"sdmx_id": "R8697", "code": "86.97", "label": "Intermediation service activities for medical, dental and other human health services"}
+      ]
+    },
+    "fintech": {
+      "primary": [
+        {"sdmx_id": "L64", "code": "64", "label": "Financial service activities, except insurance and pension funding"},
+        {"sdmx_id": "L641", "code": "64.1", "label": "Monetary intermediation"},
+        {"sdmx_id": "L6419", "code": "64.19", "label": "Other monetary intermediation"},
+        {"sdmx_id": "L649", "code": "64.9", "label": "Other financial service activities, except insurance and pension funding"},
+        {"sdmx_id": "L6491", "code": "64.91", "label": "Financial leasing"},
+        {"sdmx_id": "L6492", "code": "64.92", "label": "Other credit granting"},
+        {"sdmx_id": "L66", "code": "66", "label": "Activities auxiliary to financial services and insurance activities"},
+        {"sdmx_id": "L661", "code": "66.1", "label": "Activities auxiliary to financial services, except insurance and pension funding"},
+        {"sdmx_id": "L6619", "code": "66.19", "label": "Other activities auxiliary to financial services, except insurance and pension funding"}
+      ],
+      "note": "Section L in Rev 2.1 is the old Rev 2 section K (Financial and insurance activities) - see SOURCE.md renumbering note."
+    },
+    "exchange": {
+      "primary": [
+        {"sdmx_id": "L6419", "code": "64.19", "label": "Other monetary intermediation"},
+        {"sdmx_id": "L6619", "code": "66.19", "label": "Other activities auxiliary to financial services, except insurance and pension funding"}
+      ],
+      "note": "NACE has no dedicated 'bureau de change' class; currency-exchange offices are conventionally classified under 66.19 (auxiliary financial activities) or, if deposit-taking, 64.19. Confirm locally - this is Eurostat classification convention, not a distinct code in the downloaded file."
+    },
+    "ecommerce": {
+      "primary": [
+        {"sdmx_id": "G479", "code": "47.9", "label": "Intermediation service activities for retail sale"},
+        {"sdmx_id": "G4791", "code": "47.91", "label": "Intermediation service activities for non-specialised retail sale"},
+        {"sdmx_id": "G4792", "code": "47.92", "label": "Intermediation service activities for specialised retail sale"},
+        {"sdmx_id": "K639", "code": "63.9", "label": "Web search portal activities and other information service activities"}
+      ],
+      "note": "G479 is new/renamed in Rev 2.1, replacing Rev 2's G4791 'Retail sale via mail order houses or via Internet' - now framed as marketplace/platform intermediation rather than mail-order. See SOURCE.md."
+    },
+    "crm": {
+      "primary": [
+        {"sdmx_id": "J582", "code": "58.2", "label": "Software publishing"},
+        {"sdmx_id": "K62", "code": "62", "label": "Computer programming, consultancy and related activities"}
+      ],
+      "note": "Horizontal software product; customer industry is whatever NACE code the buyer has."
+    },
+    "logistics": {
+      "primary": [
+        {"sdmx_id": "H494", "code": "49.4", "label": "Freight transport by road and removal services"},
+        {"sdmx_id": "H4941", "code": "49.41", "label": "Freight transport by road"},
+        {"sdmx_id": "H52", "code": "52", "label": "Warehousing, storage and support activities for transportation"},
+        {"sdmx_id": "H5210", "code": "52.10", "label": "Warehousing and storage"},
+        {"sdmx_id": "H5231", "code": "52.31", "label": "Intermediation service activities for freight transportation"},
+        {"sdmx_id": "H53", "code": "53", "label": "Postal and courier activities"}
+      ]
+    },
+    "real-estate": {
+      "primary": [
+        {"sdmx_id": "M68", "code": "68", "label": "Real estate activities"},
+        {"sdmx_id": "M6811", "code": "68.11", "label": "Buying and selling of own real estate"},
+        {"sdmx_id": "M6820", "code": "68.20", "label": "Rental and operating of own or leased real estate"},
+        {"sdmx_id": "M6831", "code": "68.31", "label": "Intermediation service activities for real estate activities"},
+        {"sdmx_id": "M6832", "code": "68.32", "label": "Other real estate activities on a fee or contract basis"}
+      ],
+      "note": "Section M in Rev 2.1 is the old Rev 2 section L (Real estate activities) - see SOURCE.md renumbering note."
+    },
+    "education": {
+      "primary": [
+        {"sdmx_id": "Q85", "code": "85", "label": "Education"},
+        {"sdmx_id": "Q856", "code": "85.6", "label": "Educational support activities"},
+        {"sdmx_id": "Q8569", "code": "85.69", "label": "Educational support activities n.e.c."}
+      ]
+    },
+    "booking": {
+      "primary": [
+        {"sdmx_id": "O79", "code": "79", "label": "Travel agency, tour operator and other reservation service and related activities"},
+        {"sdmx_id": "O7911", "code": "79.11", "label": "Travel agency activities"},
+        {"sdmx_id": "O7912", "code": "79.12", "label": "Tour operator activities"},
+        {"sdmx_id": "O799", "code": "79.9", "label": "Other reservation service and related activities"},
+        {"sdmx_id": "O7990", "code": "79.90", "label": "Other reservation service and related activities"},
+        {"sdmx_id": "I554", "code": "55.4", "label": "Intermediation service activities for accommodation"}
+      ]
+    },
+    "support": {
+      "primary": [
+        {"sdmx_id": "J582", "code": "58.2", "label": "Software publishing"},
+        {"sdmx_id": "K62", "code": "62", "label": "Computer programming, consultancy and related activities"},
+        {"sdmx_id": "K6220", "code": "62.20", "label": "Computer consultancy and computer facilities management activities"}
+      ],
+      "note": "Horizontal software product (helpdesk/support tooling); customer industry is whatever NACE code the buyer has."
+    },
+    "project-management": {
+      "primary": [
+        {"sdmx_id": "J582", "code": "58.2", "label": "Software publishing"},
+        {"sdmx_id": "K62", "code": "62", "label": "Computer programming, consultancy and related activities"},
+        {"sdmx_id": "N7020", "code": "70.20", "label": "Business and other management consultancy activities"}
+      ],
+      "note": "Horizontal software product; N7020 is the closest NACE class for the project/management-consultancy service itself when the product is delivered as a service rather than pure software."
+    },
+    "manufacturing": {
+      "primary": [
+        {"sdmx_id": "C", "code": "C", "label": "Manufacturing"},
+        {"sdmx_id": "C26", "code": "26", "label": "Manufacture of computer, electronic and optical products"}
+      ],
+      "note": "Section C has 24 divisions (10-33); listing the section header plus one illustrative division. See the full CSV for the complete breakdown by sub-industry."
+    }
+  }
+}

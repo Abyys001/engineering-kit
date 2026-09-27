@@ -1,0 +1,1079 @@
+{
+  "schema": 1,
+  "domain": "healthcare",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "patient",
+      "name": "Patient",
+      "description": "A person receiving or registered to receive care.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "encounter"
+        },
+        {
+          "type": "has_many",
+          "target": "appointment"
+        },
+        {
+          "type": "has_many",
+          "target": "condition"
+        },
+        {
+          "type": "has_many",
+          "target": "allergy_intolerance"
+        },
+        {
+          "type": "has_many",
+          "target": "coverage"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "birth_date",
+        "gender",
+        "identifiers",
+        "contact"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.patient_registration",
+        "healthcare.patient_portal"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Patient"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "practitioner",
+      "name": "Practitioner",
+      "description": "A clinician or staff member who delivers care.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "practitioner_role"
+        },
+        {
+          "type": "has_many",
+          "target": "encounter"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "qualification",
+        "identifiers"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.practitioner_directory"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Practitioner"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "practitioner_role",
+      "name": "Practitioner role",
+      "description": "A practitioner's role, specialty, and availability at an organization/location.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "practitioner"
+        },
+        {
+          "type": "belongs_to",
+          "target": "organization"
+        },
+        {
+          "type": "belongs_to",
+          "target": "location"
+        }
+      ],
+      "important_fields": [
+        "specialty",
+        "role"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.practitioner_directory",
+        "healthcare.scheduling"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "PractitionerRole"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "organization",
+      "name": "Organization",
+      "description": "A clinic, practice group, or department.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "location"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "type"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.organization_locations"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Organization"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "location",
+      "name": "Location",
+      "description": "A physical place: clinic site, room, or telehealth virtual location.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organization"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "address",
+        "type"
+      ],
+      "states": [
+        "active",
+        "suspended",
+        "inactive"
+      ],
+      "related_features": [
+        "healthcare.organization_locations",
+        "healthcare.scheduling"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Location"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "schedule",
+      "name": "Schedule",
+      "description": "A container defining the times a practitioner/room/service is available for booking.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "practitioner_role"
+        },
+        {
+          "type": "has_many",
+          "target": "slot"
+        }
+      ],
+      "important_fields": [
+        "actor",
+        "planning_horizon"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.scheduling"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Schedule"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "slot",
+      "name": "Slot",
+      "description": "A discrete bookable time period within a schedule.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "schedule"
+        },
+        {
+          "type": "has_one",
+          "target": "appointment",
+          "note": "once booked"
+        }
+      ],
+      "important_fields": [
+        "start",
+        "end",
+        "status"
+      ],
+      "states": [
+        "free",
+        "busy",
+        "busy-unavailable",
+        "busy-tentative",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.scheduling"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Slot"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "appointment",
+      "name": "Appointment",
+      "description": "A scheduled meeting between a patient and one or more practitioners.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "slot",
+          "note": "optional"
+        },
+        {
+          "type": "has_one",
+          "target": "encounter",
+          "note": "once the visit occurs"
+        }
+      ],
+      "important_fields": [
+        "start",
+        "end",
+        "status",
+        "appointment_type",
+        "participants"
+      ],
+      "states": [
+        "proposed",
+        "pending",
+        "booked",
+        "arrived",
+        "checked-in",
+        "fulfilled",
+        "cancelled",
+        "noshow",
+        "entered-in-error",
+        "waitlist"
+      ],
+      "related_features": [
+        "healthcare.scheduling",
+        "healthcare.appointment_reminders",
+        "healthcare.telehealth",
+        "healthcare.waitlist"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Appointment",
+          "note": "states are the FHIR R4 Appointment.status value set verbatim"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "encounter",
+      "name": "Encounter",
+      "description": "An interaction between a patient and provider(s) for the purpose of care.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "location"
+        },
+        {
+          "type": "has_many",
+          "target": "clinical_note"
+        },
+        {
+          "type": "has_many",
+          "target": "condition"
+        },
+        {
+          "type": "has_many",
+          "target": "observation"
+        }
+      ],
+      "important_fields": [
+        "class",
+        "type",
+        "period",
+        "reason"
+      ],
+      "states": [
+        "planned",
+        "arrived",
+        "triaged",
+        "in-progress",
+        "onleave",
+        "finished",
+        "cancelled",
+        "entered-in-error",
+        "unknown"
+      ],
+      "related_features": [
+        "healthcare.encounters"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Encounter",
+          "note": "states are the FHIR R4 Encounter.status value set"
+        },
+        {
+          "source": "std:fhir-r6",
+          "concept": "Encounter.class",
+          "note": "Verified structural difference from R4: Encounter.class became repeatable (0..* CodeableConcept) in R6 vs. a single 0..1 Coding in R4, per knowledge/entities/fhir-r6-resources.json. Status code value set itself was not re-verified (that file records element cardinality/type, not bound ValueSet codes), so no R6 status-enum claim is made here."
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4",
+          "std:fhir-r6"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "clinical_note",
+      "name": "Clinical note",
+      "description": "Narrative or structured documentation of an encounter.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "encounter"
+        },
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "author",
+        "content",
+        "status"
+      ],
+      "states": [
+        "preliminary",
+        "final",
+        "amended",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.clinical_notes"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "DocumentReference / Composition"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "condition",
+      "name": "Condition",
+      "description": "A diagnosis, problem, or clinical concern for a patient.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "encounter",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "code",
+        "clinical_status",
+        "onset"
+      ],
+      "states": [
+        "active",
+        "recurrence",
+        "relapse",
+        "inactive",
+        "remission",
+        "resolved"
+      ],
+      "related_features": [
+        "healthcare.problem_list"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Condition"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "observation",
+      "name": "Observation",
+      "description": "A discrete measurement or finding, e.g. vitals or a lab value.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "encounter",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "code",
+        "value",
+        "effective_date",
+        "status"
+      ],
+      "states": [
+        "registered",
+        "preliminary",
+        "final",
+        "amended",
+        "cancelled",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.observations_vitals",
+        "healthcare.lab_results"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Observation"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "medication_request",
+      "name": "Medication request",
+      "description": "An order/prescription for a medication.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "encounter",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "medication",
+        "dosage_instruction",
+        "status"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "on-hold",
+        "cancelled",
+        "completed",
+        "entered-in-error",
+        "stopped",
+        "unknown"
+      ],
+      "related_features": [
+        "healthcare.e_prescribing"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "MedicationRequest",
+          "note": "states are the FHIR R4 MedicationRequest.status value set"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "allergy_intolerance",
+      "name": "Allergy/intolerance",
+      "description": "A propensity for harmful reaction to a substance.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "substance",
+        "reaction",
+        "severity",
+        "clinical_status"
+      ],
+      "states": [
+        "active",
+        "inactive",
+        "resolved"
+      ],
+      "related_features": [
+        "healthcare.allergy_tracking"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "AllergyIntolerance"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "document",
+      "name": "Document",
+      "description": "A stored file/attachment: scanned record, referral letter, imaging report.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "content_url",
+        "status"
+      ],
+      "states": [
+        "current",
+        "superseded",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.document_management"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "DocumentReference"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "service_request",
+      "name": "Service request",
+      "description": "An order for a service: lab test, imaging, or referral.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "encounter",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "code",
+        "intent",
+        "status",
+        "priority"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "on-hold",
+        "revoked",
+        "completed",
+        "entered-in-error",
+        "unknown"
+      ],
+      "related_features": [
+        "healthcare.lab_orders",
+        "healthcare.referrals"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "ServiceRequest",
+          "note": "states are the FHIR R4 ServiceRequest.status value set"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "diagnostic_report",
+      "name": "Diagnostic report",
+      "description": "A summary report of diagnostic findings, e.g. a lab panel result.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "service_request",
+          "note": "optional"
+        },
+        {
+          "type": "has_many",
+          "target": "observation"
+        }
+      ],
+      "important_fields": [
+        "code",
+        "status",
+        "conclusion"
+      ],
+      "states": [
+        "registered",
+        "partial",
+        "preliminary",
+        "final",
+        "amended",
+        "corrected",
+        "appended",
+        "cancelled",
+        "entered-in-error",
+        "unknown"
+      ],
+      "related_features": [
+        "healthcare.lab_results"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "DiagnosticReport",
+          "note": "states are the FHIR R4 DiagnosticReport.status value set"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "coverage",
+      "name": "Coverage",
+      "description": "A patient's insurance policy/benefit plan.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "payor",
+        "plan",
+        "period",
+        "status"
+      ],
+      "states": [
+        "active",
+        "cancelled",
+        "draft",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.insurance_eligibility",
+        "healthcare.billing_claims"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Coverage"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "claim",
+      "name": "Claim",
+      "description": "A request for payment submitted to a payor for services rendered.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "coverage"
+        },
+        {
+          "type": "belongs_to",
+          "target": "encounter",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "items",
+        "total",
+        "status"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "cancelled",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.billing_claims",
+        "healthcare.patient_invoicing"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Claim / ClaimResponse",
+          "note": "states are the FHIR R4 Claim.status value set; adjudication outcome comes from a separate ClaimResponse"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openemr",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "consent",
+      "name": "Consent",
+      "description": "A patient's recorded permission or restriction for treatment or data use.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "scope",
+        "category",
+        "status",
+        "period"
+      ],
+      "states": [
+        "draft",
+        "proposed",
+        "active",
+        "rejected",
+        "inactive",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.patient_consent"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Consent"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "access_policy",
+      "name": "Access policy",
+      "description": "A Medplum-pattern rule restricting which resources/compartments a user or client can access.",
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "practitioner"
+        }
+      ],
+      "important_fields": [
+        "resource_type",
+        "criteria",
+        "compartment"
+      ],
+      "states": [],
+      "related_features": [
+        "healthcare.access_policies"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "medplum"
+        ],
+        "confidence": "medium",
+        "notes": "Not a standard FHIR resource; a Medplum-specific extension pattern, so no standard_mapping and only medium confidence (single source)."
+      }
+    },
+    {
+      "id": "care_team",
+      "name": "Care team",
+      "description": "The group of practitioners and caregivers coordinating a patient's care.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "many_to_many",
+          "target": "practitioner"
+        }
+      ],
+      "important_fields": [
+        "status",
+        "category",
+        "participants"
+      ],
+      "states": [
+        "proposed",
+        "active",
+        "suspended",
+        "inactive",
+        "entered-in-error"
+      ],
+      "related_features": [
+        "healthcare.care_team"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "CareTeam"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "care_plan",
+      "name": "Care plan",
+      "description": "A structured plan of goals and activities for a patient's care.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "care_team",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "goals",
+        "activities",
+        "period",
+        "status"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "on-hold",
+        "revoked",
+        "completed",
+        "entered-in-error",
+        "unknown"
+      ],
+      "related_features": [
+        "healthcare.care_plans"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "CarePlan"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "immunization",
+      "name": "Immunization",
+      "description": "A record of a vaccine dose administered to a patient.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "patient"
+        }
+      ],
+      "important_fields": [
+        "vaccine_code",
+        "occurrence_date",
+        "lot_number",
+        "status"
+      ],
+      "states": [
+        "completed",
+        "entered-in-error",
+        "not-done"
+      ],
+      "related_features": [
+        "healthcare.immunizations"
+      ],
+      "standard_mapping": [
+        {
+          "source": "std:fhir-r4",
+          "concept": "Immunization"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "medplum",
+          "openmrs-core",
+          "std:fhir-r4"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

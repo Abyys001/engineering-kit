@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "description": "Fabricated example: a student enrolls in a course section, submits an assignment, and receives a grade, exercising the enrollment_lifecycle and assignment_workflow state machines. All names, contacts, and identifiers are invented.",
+  "entities": {
+    "student": {
+      "id": "example-student-001",
+      "name": "Sam Example",
+      "date_of_birth": "2008-02-17",
+      "student_id": "STU-000456",
+      "contact": { "email": "sam.example@example.com", "phone": "+1-555-0177" }
+    },
+    "guardian": {
+      "id": "example-guardian-001",
+      "name": "Robin Example",
+      "relationship": "parent",
+      "contact": { "email": "robin.example@example.com", "phone": "+1-555-0188" },
+      "linked_students": ["example-student-001"]
+    },
+    "instructor": { "id": "example-instructor-001", "name": "Taylor Sampleton", "department": "Mathematics" },
+    "academic_term": { "id": "example-term-2026-fall", "name": "Fall 2026", "start_date": "2026-09-01", "end_date": "2026-12-19" },
+    "course": { "id": "example-course-alg2", "title": "Algebra II (Example)", "code": "MATH-201" },
+    "course_section": {
+      "id": "example-section-001",
+      "course": "example-course-alg2",
+      "term": "example-term-2026-fall",
+      "instructor": "example-instructor-001",
+      "section_code": "MATH-201-A",
+      "capacity": 30
+    },
+    "enrollment": {
+      "id": "example-enrollment-001",
+      "student": "example-student-001",
+      "course_section": "example-section-001",
+      "status_history": [
+        { "status": "pending", "at": "2026-08-15T10:00:00-05:00" },
+        { "status": "enrolled", "at": "2026-08-15T10:00:05-05:00" }
+      ],
+      "status": "enrolled"
+    },
+    "assignment": {
+      "id": "example-assignment-001",
+      "course_section": "example-section-001",
+      "title": "Problem Set 3 (Example)",
+      "due_date": "2026-10-10T23:59:00-05:00",
+      "points_possible": 100,
+      "status": "published"
+    },
+    "submission": {
+      "id": "example-submission-001",
+      "assignment": "example-assignment-001",
+      "student": "example-student-001",
+      "status_history": [
+        { "status": "draft", "at": "2026-10-09T18:00:00-05:00" },
+        { "status": "submitted", "at": "2026-10-10T21:45:00-05:00" },
+        { "status": "graded", "at": "2026-10-14T09:00:00-05:00" },
+        { "status": "returned", "at": "2026-10-14T09:05:00-05:00" }
+      ],
+      "status": "returned"
+    },
+    "grade": {
+      "id": "example-grade-001",
+      "student": "example-student-001",
+      "course_section": "example-section-001",
+      "score": 92,
+      "scale": "percentage",
+      "recorded_at": "2026-10-14T09:00:00-05:00",
+      "status": "final"
+    },
+    "fee_invoice": {
+      "id": "example-invoice-001",
+      "student": "example-student-001",
+      "amount": 450.00,
+      "due_date": "2026-09-15",
+      "status": "paid"
+    }
+  },
+  "notes": "Synthetic data only — example.com email, +1-555-01xx phone, invented names/identifiers, no real student, guardian, or institution data."
+}

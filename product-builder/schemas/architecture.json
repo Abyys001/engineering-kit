@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-kit/product-builder/architecture.json",
+  "title": "Architecture mapped to features",
+  "type": "object",
+  "required": ["schema", "project", "surfaces", "backend", "data", "infrastructure"],
+  "$defs": {
+    "features": {"type": "array", "items": {"type": "string"}},
+    "deviation": {
+      "type": "object", "required": ["standard", "alternative", "why", "tradeoffs", "approved"],
+      "properties": {
+        "standard": {"type": "string"}, "alternative": {"type": "string"},
+        "why": {"type": "string"}, "tradeoffs": {"type": "string"}, "approved": {"type": "boolean"}
+      }
+    }
+  },
+  "properties": {
+    "schema": {"const": 1},
+    "project": {"type": "string"},
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "kind", "stack", "experiences", "features"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"enum": ["web_app", "public_site", "mobile_app", "pwa", "kiosk", "display"]},
+          "stack": {"type": "string", "description": "e.g. Next.js + shadcn/ui + TanStack Query, Flutter + go_router"},
+          "starter": {"type": "string", "description": "starters/<name>"},
+          "experiences": {"type": "array", "items": {"type": "string"}},
+          "features": {"$ref": "#/$defs/features"},
+          "design_direction": {"type": "string", "description": "path to docs/design/DESIGN.md"}
+        }
+      }
+    },
+    "backend": {
+      "type": "object", "required": ["stack", "modules"],
+      "properties": {
+        "stack": {"type": "string"},
+        "modules": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["name", "features"],
+            "properties": {"name": {"type": "string"}, "features": {"$ref": "#/$defs/features"}, "kit_paths": {"type": "array", "items": {"type": "string"}}}
+          }
+        }
+      }
+    },
+    "data": {
+      "type": "object", "required": ["database"],
+      "properties": {
+        "database": {"type": "string"},
+        "orm": {"type": "string"},
+        "entities": {"type": "array", "items": {"type": "string"}, "description": "<domain>:<entity> ids modelled"},
+        "tenancy_isolation": {"enum": ["none", "row_level", "schema", "database"]}
+      }
+    },
+    "workers": {"type": "object", "properties": {"queue": {"type": "string"}, "jobs": {"type": "array", "items": {"type": "string"}}}},
+    "storage": {"type": "object", "properties": {"provider": {"type": "string"}, "uses": {"type": "array", "items": {"type": "string"}}}},
+    "notifications": {"type": "object", "properties": {"channels": {"type": "array", "items": {"enum": ["in_app", "email", "sms", "push", "webhook"]}}}},
+    "real_time": {"type": "object", "properties": {"transport": {"enum": ["none", "polling", "sse", "websocket"]}, "channels": {"type": "array", "items": {"type": "string"}}}},
+    "ai": {"type": "object", "properties": {"service": {"type": "string"}, "capabilities": {"type": "array", "items": {"type": "string"}}}},
+    "integrations": {"type": "array", "items": {"type": "object", "required": ["ref", "adapter"], "properties": {"ref": {"type": "string"}, "adapter": {"type": "string"}, "sandbox": {"type": "boolean"}}}},
+    "infrastructure": {
+      "type": "object", "required": ["deployment"],
+      "properties": {"deployment": {"type": "string"}, "ci": {"type": "string"}, "proxy": {"type": "string"}, "environments": {"type": "array", "items": {"type": "string"}}}
+    },
+    "testing": {"type": "object", "properties": {"unit": {"type": "string"}, "integration": {"type": "string"}, "e2e": {"type": "string"}}},
+    "deviations": {"type": "array", "items": {"$ref": "#/$defs/deviation"}}
+  }
+}

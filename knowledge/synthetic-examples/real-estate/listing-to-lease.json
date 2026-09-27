@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "description": "Fabricated example: a rental listing is published, a lead views the unit, applies, and signs a lease with the first rent payment collected, exercising the listing_lifecycle, lead_to_viewing_workflow, and lease_lifecycle state machines. All names, contacts, and identifiers are invented.",
+  "entities": {
+    "property": {
+      "id": "example-property-001",
+      "address": "1200 Example Ave, Springfield, EX 00000",
+      "property_type": "apartment_building"
+    },
+    "unit": {
+      "id": "example-unit-001",
+      "property": "example-property-001",
+      "unit_number": "3B",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "square_footage": 850
+    },
+    "listing": {
+      "id": "example-listing-001",
+      "unit": "example-unit-001",
+      "agent": "example-agent-001",
+      "price": 1650.00,
+      "listing_type": "rent",
+      "status_history": [
+        { "status": "draft", "at": "2026-08-01T09:00:00-05:00" },
+        { "status": "active", "at": "2026-08-02T10:00:00-05:00" },
+        { "status": "pending", "at": "2026-08-20T14:00:00-05:00" },
+        { "status": "leased", "at": "2026-09-01T09:00:00-05:00" }
+      ],
+      "status": "leased"
+    },
+    "agent": { "id": "example-agent-001", "name": "Jordan Sampleagent", "license_number": "EX-LIC-00789" },
+    "lead": {
+      "id": "example-lead-001",
+      "listing": "example-listing-001",
+      "contact": { "name": "Casey Example", "email": "casey.example@example.com", "phone": "+1-555-0199" },
+      "status_history": [
+        { "status": "new", "at": "2026-08-05T08:00:00-05:00" },
+        { "status": "contacted", "at": "2026-08-05T09:30:00-05:00" },
+        { "status": "qualified", "at": "2026-08-10T11:00:00-05:00" },
+        { "status": "won", "at": "2026-08-20T14:00:00-05:00" }
+      ],
+      "status": "won"
+    },
+    "viewing": {
+      "id": "example-viewing-001",
+      "listing": "example-listing-001",
+      "lead": "example-lead-001",
+      "scheduled_at": "2026-08-10T10:00:00-05:00",
+      "status": "completed"
+    },
+    "tenant": {
+      "id": "example-tenant-001",
+      "name": "Casey Example",
+      "contact": { "email": "casey.example@example.com", "phone": "+1-555-0199" },
+      "status": "active"
+    },
+    "lease": {
+      "id": "example-lease-001",
+      "unit": "example-unit-001",
+      "tenant": "example-tenant-001",
+      "start_date": "2026-09-01",
+      "end_date": "2027-08-31",
+      "rent_amount": 1650.00,
+      "status_history": [
+        { "status": "draft", "at": "2026-08-20T14:05:00-05:00" },
+        { "status": "active", "at": "2026-09-01T00:00:00-05:00" }
+      ],
+      "status": "active"
+    },
+    "deposit": {
+      "id": "example-deposit-001",
+      "lease": "example-lease-001",
+      "amount": 1650.00,
+      "held_by": "Example Property Management Trust Account",
+      "status": "held"
+    },
+    "rent_payment": {
+      "id": "example-rent-payment-001",
+      "lease": "example-lease-001",
+      "amount": 1650.00,
+      "due_date": "2026-09-01",
+      "paid_at": "2026-08-29T16:00:00-05:00",
+      "status": "paid"
+    }
+  },
+  "notes": "Synthetic data only — example.com email, +1-555-01xx phone, invented names/identifiers/addresses, no real property, agent, or tenant data."
+}

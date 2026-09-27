@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "data_residency",
+      "name": "Data residency / export controls",
+      "kind": "regulation",
+      "version": "Varies by customer contract and jurisdiction",
+      "jurisdiction": "Customer- and jurisdiction-specific (e.g. EU customers requiring EU data residency)",
+      "scope": "Where project/task data (including guest/client comments and attachments) is stored and processed, relevant once external guests or enterprise customers are involved.",
+      "affected_features": ["project-management.guest_client_access", "project-management.attachments"],
+      "requires_human_review": true,
+      "notes": "Not implemented or claimed by either cloned source; flagged because guest/client access and file attachments are the points where a PM tool most often triggers a customer's data-residency requirement.",
+      "url": null,
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Reasoned from the presence of a guest/external-access feature (ProjectPublicMember); not a claim that Plane or any implementation addresses residency."}
+    }
+  ]
+}

@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "ecommerce.catalog_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.category_navigation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.inventory_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.cart",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.checkout",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.order_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.payments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.shipping_fulfillment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.returns_refunds",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.promotions_discounts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.customer_accounts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.guest_checkout",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.reviews_ratings",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.tax_calculation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.multi_currency",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.storefront_search",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.merchant_admin",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.gift_cards",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.wishlist",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.abandoned_cart_recovery",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.product_recommendations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.discount_stacking_rules",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.order_returns_rma_tracking",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.b2b_pricing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    },
+    {
+      "feature": "ecommerce.marketplace_multi_vendor",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": ""
+    }
+  ]
+}

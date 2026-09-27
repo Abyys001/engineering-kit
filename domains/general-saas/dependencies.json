@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "general-saas.workspace_management",
+      "to": "shared.organizations",
+      "type": "requires",
+      "reason": "A workspace is the product-facing view of a tenant."
+    },
+    {
+      "from": "general-saas.onboarding_flow",
+      "to": "general-saas.workspace_management",
+      "type": "enhances",
+      "reason": "Onboarding guides configuration of a newly created workspace."
+    },
+    {
+      "from": "general-saas.team_invites",
+      "to": "shared.users",
+      "type": "requires",
+      "reason": "Invitations create or link the underlying user account."
+    },
+    {
+      "from": "general-saas.team_invites",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Invite emails and reminders are sent through the notification system."
+    },
+    {
+      "from": "general-saas.plans_entitlements",
+      "to": "shared.billing",
+      "type": "requires",
+      "reason": "Plans and entitlements are enforced against the tenant's subscription."
+    },
+    {
+      "from": "general-saas.usage_metering",
+      "to": "general-saas.plans_entitlements",
+      "type": "enhances",
+      "reason": "Usage data drives entitlement limit checks and usage-based billing."
+    },
+    {
+      "from": "general-saas.api_keys",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "An API key is an authentication credential."
+    },
+    {
+      "from": "general-saas.webhooks",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Reliable delivery with retries needs a background job queue."
+    },
+    {
+      "from": "general-saas.admin_console",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Access to cross-tenant operations must be permission-gated."
+    },
+    {
+      "from": "general-saas.admin_console",
+      "to": "shared.audit_log",
+      "type": "enhances",
+      "reason": "Support actions taken in the console should be auditable."
+    },
+    {
+      "from": "general-saas.audit_log_viewer",
+      "to": "shared.audit_log",
+      "type": "requires",
+      "reason": "The viewer renders the underlying audit log records."
+    },
+    {
+      "from": "general-saas.sso_saml",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "SSO is an alternate authentication path into the same session system."
+    },
+    {
+      "from": "general-saas.scim_provisioning",
+      "to": "general-saas.sso_saml",
+      "type": "requires",
+      "reason": "SCIM provisioning is configured against the same IdP connection as SSO."
+    },
+    {
+      "from": "general-saas.scim_provisioning",
+      "to": "shared.users",
+      "type": "requires",
+      "reason": "Provisioning creates/deactivates the underlying user accounts."
+    },
+    {
+      "from": "general-saas.data_export",
+      "to": "shared.file_storage",
+      "type": "requires",
+      "reason": "Export files are generated and stored for download."
+    },
+    {
+      "from": "general-saas.feature_flags",
+      "to": "general-saas.plans_entitlements",
+      "type": "enhances",
+      "reason": "Flags are commonly used to gate features by plan tier."
+    },
+    {
+      "from": "general-saas.seat_management",
+      "to": "general-saas.plans_entitlements",
+      "type": "requires",
+      "reason": "Seat counts are enforced against the plan's entitlements."
+    },
+    {
+      "from": "general-saas.seat_management",
+      "to": "general-saas.team_invites",
+      "type": "requires",
+      "reason": "Seats are consumed as members are invited and reclaimed as they are removed."
+    },
+    {
+      "from": "general-saas.custom_roles",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Custom roles define new permission sets on top of the RBAC system."
+    },
+    {
+      "from": "general-saas.trial_management",
+      "to": "general-saas.plans_entitlements",
+      "type": "requires",
+      "reason": "A trial is a time-boxed grant of a paid plan's entitlements."
+    },
+    {
+      "from": "general-saas.trial_management",
+      "to": "shared.billing",
+      "type": "enhances",
+      "reason": "Trial-to-paid conversion transitions into real billing."
+    },
+    {
+      "from": "general-saas.workspace_deletion_export",
+      "to": "general-saas.data_export",
+      "type": "requires",
+      "reason": "Deletion offers an export before data is purged."
+    },
+    {
+      "from": "general-saas.workspace_deletion_export",
+      "to": "general-saas.workspace_management",
+      "type": "requires",
+      "reason": "Deletion acts on the workspace record itself."
+    },
+    {
+      "from": "general-saas.status_page",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Subscribers are notified of incident updates."
+    },
+    {
+      "from": "general-saas.changelog",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Major updates can be pushed as in-app notifications."
+    },
+    {
+      "from": "general-saas.sandbox_environment",
+      "to": "general-saas.api_keys",
+      "type": "requires",
+      "reason": "A sandbox is accessed through its own scoped API key."
+    },
+    {
+      "from": "general-saas.data_residency",
+      "to": "shared.organizations",
+      "type": "requires",
+      "reason": "Residency is a per-tenant configuration setting."
+    },
+    {
+      "from": "general-saas.public_api_rate_limiting",
+      "to": "general-saas.api_keys",
+      "type": "requires",
+      "reason": "Rate limits are enforced per API key."
+    }
+  ]
+}

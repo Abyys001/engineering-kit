@@ -1,0 +1,1491 @@
+{
+  "schema": 1,
+  "domain": "logistics",
+  "name": "Logistics",
+  "aliases": [
+    "shipping",
+    "delivery",
+    "3PL",
+    "fleet management",
+    "last-mile delivery",
+    "courier"
+  ],
+  "description": "Shipping, delivery, third-party logistics (3PL), and fleet/dispatch operations: rating and booking shipments across carriers, planning and dispatching routes, tracking parcels and vehicles in real time, and capturing proof of delivery.",
+  "nace": [
+    "H49.41",
+    "H52.10",
+    "H52.29",
+    "H53.10",
+    "H53.20"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "karrio",
+      "title": "Karrio",
+      "url": "https://github.com/karrioapi/karrio",
+      "source_type": "implementation",
+      "license": "LGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "deea10f8568b2d48c71bbcc11ec11c62cdaf2a6a",
+      "local_path": "sources/domains/karrio/source",
+      "notes": "reference-only (LGPL). Multi-carrier shipping API/platform. Cloned modules/manager (Address, Parcel, Commodity, Pickup, Tracking, Shipment, DocumentUploadRecord, Manifest models + PickupStatus/ShipmentStatus/TrackerStatus enums in modules/core), and modules/orders (Order model, OrderStatus). The ee/ directory (commercial add-ons, under separate LICENSE_EE) and the rating/providers/connectors modules were not cloned."
+    },
+    {
+      "id": "fleetbase",
+      "title": "Fleetbase",
+      "url": "https://github.com/fleetbase/fleetbase",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "4ff6980c6db6f3e8103b3ec425a089aa6d251af4",
+      "local_path": "sources/domains/fleetbase/source",
+      "notes": "reference-only (AGPL). Fleet operations / last-mile dispatch platform. Full DB schema inspected via the repo's own generated database.mmd (Mermaid ERD): orders, payloads, waypoints, routes, drivers, vehicles, fleets, manifests, tracking_statuses, issues, maintenance_schedules/maintenances, service_rates/quotes, places, zones. Application code beyond the schema was not deeply inspected in this pass."
+    }
+  ],
+  "features": [
+    {
+      "id": "logistics.customers_shippers",
+      "name": "Customers and shippers",
+      "classification": "core",
+      "description": "Accounts for the businesses or individuals who book shipments and orders, with saved addresses and billing details.",
+      "users": [
+        "shipper",
+        "ops_manager",
+        "support_agent"
+      ],
+      "entities": [
+        "customer"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "saved_addresses",
+        "billing_profile"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "customer",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "Both platforms scope shipments/orders under an owning account (karrio OwnedEntity, fleetbase company_uuid)."
+      }
+    },
+    {
+      "id": "logistics.orders",
+      "name": "Orders",
+      "classification": "common",
+      "description": "A customer's request to move goods, capturing line items and delivery details before it is turned into one or more shipments or dispatched jobs.",
+      "users": [
+        "shipper",
+        "dispatcher",
+        "ops_manager"
+      ],
+      "entities": [
+        "order",
+        "commodity"
+      ],
+      "workflows": [
+        "order_to_shipment"
+      ],
+      "capabilities": [
+        "line_items",
+        "fulfillment_status"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "demand forecasting from order volume"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "document"
+      ],
+      "integrations": [
+        "ecommerce_platform"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's orders module (Order, OrderStatus: unfulfilled/fulfilled/partial/delivered/cancelled) and fleetbase's fleetbase_orders table are independent implementations of the same concept, though fleetbase's 'order' is closer to a dispatched delivery job than a pre-shipment sales order."
+      }
+    },
+    {
+      "id": "logistics.shipments",
+      "name": "Shipments",
+      "classification": "core",
+      "description": "A booked movement of one or more parcels with a carrier, tracking number, label, and status from creation through delivery.",
+      "users": [
+        "shipper",
+        "ops_manager",
+        "support_agent"
+      ],
+      "entities": [
+        "shipment",
+        "parcel"
+      ],
+      "workflows": [
+        "shipment_lifecycle"
+      ],
+      "capabilities": [
+        "multi_parcel",
+        "carrier_snapshot",
+        "returns_flag"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "carrier/service auto-selection"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "customer",
+        "staff"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "Grounded directly in karrio's Shipment model (modules/manager/models.py) but only one implementation inspected."
+      }
+    },
+    {
+      "id": "logistics.parcels",
+      "name": "Parcels and packages",
+      "classification": "common",
+      "description": "The physical package(s) within a shipment: dimensions, weight, and the commodities/products packed inside.",
+      "users": [
+        "shipper",
+        "warehouse_staff"
+      ],
+      "entities": [
+        "parcel",
+        "commodity"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "dimensional_weight",
+        "commodity_lines"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's Parcel and Commodity models only; single source."
+      }
+    },
+    {
+      "id": "logistics.rates_quotes",
+      "name": "Rates and quotes",
+      "classification": "core",
+      "description": "Requesting and comparing shipping rates across carriers and service levels before a shipment is booked.",
+      "users": [
+        "shipper",
+        "ops_manager"
+      ],
+      "entities": [
+        "rate_quote",
+        "carrier_service"
+      ],
+      "workflows": [
+        "shipment_lifecycle"
+      ],
+      "capabilities": [
+        "multi_carrier_comparison",
+        "rate_selection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "cheapest/fastest rate recommendation"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "customer",
+        "staff"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "Observed via karrio's Shipment.rates (list of returned quotes) and Shipment.selected_rate fields; the rating/providers module itself was not cloned in this pass, so this is inferred from the consuming model, single source."
+      }
+    },
+    {
+      "id": "logistics.carriers",
+      "name": "Carriers and carrier connections",
+      "classification": "core",
+      "description": "The shipping carriers (and their service levels/accounts) a business ships with; a snapshot is stored on each shipment.",
+      "users": [
+        "ops_manager"
+      ],
+      "entities": [
+        "carrier",
+        "carrier_service"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "carrier_account_config",
+        "service_catalog"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin",
+        "integration"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's Shipment.carrier snapshot (JSON, keyed by carrier_code, indexed) is the only directly-inspected evidence; single source."
+      }
+    },
+    {
+      "id": "logistics.labels",
+      "name": "Shipping labels",
+      "classification": "core",
+      "description": "Generating and storing the carrier shipping label (and commercial invoice) document for a purchased shipment.",
+      "users": [
+        "shipper",
+        "warehouse_staff"
+      ],
+      "entities": [
+        "label",
+        "shipment"
+      ],
+      "workflows": [
+        "shipment_lifecycle"
+      ],
+      "capabilities": [
+        "label_formats",
+        "invoice_generation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "staff"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio Shipment.label/label_type/invoice fields; single source."
+      }
+    },
+    {
+      "id": "logistics.manifests",
+      "name": "Manifests",
+      "classification": "common",
+      "description": "Grouping shipments or stops into a single hand-off: a carrier close-out manifest for end-of-day pickup, or a driver's route manifest for the day's stops.",
+      "users": [
+        "dispatcher",
+        "driver",
+        "warehouse_staff"
+      ],
+      "entities": [
+        "manifest"
+      ],
+      "workflows": [
+        "dispatch_and_route_planning"
+      ],
+      "capabilities": [
+        "carrier_closeout",
+        "driver_stop_list"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "document"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio has a carrier close-out Manifest model; fleetbase has a driver route fleetbase_manifests table (driver_uuid, vehicle_uuid, stop_count). Same grouping concept, two different scopes."
+      }
+    },
+    {
+      "id": "logistics.pickups",
+      "name": "Pickup scheduling",
+      "classification": "common",
+      "description": "Scheduling a carrier or driver pickup for one or more shipments at a given time window.",
+      "users": [
+        "shipper",
+        "dispatcher",
+        "driver"
+      ],
+      "entities": [
+        "pickup"
+      ],
+      "workflows": [
+        "pickup_scheduling"
+      ],
+      "capabilities": [
+        "time_window",
+        "cancellation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "scheduling",
+        "customer"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's Pickup model and PickupStatus enum (scheduled/picked_up/cancelled/closed); fleetbase models pickup only as a waypoint type, not a first-class entity, so not counted as a second independent source."
+      }
+    },
+    {
+      "id": "logistics.tracking_events",
+      "name": "Tracking events",
+      "classification": "core",
+      "description": "The append-only timeline of scan/status events for a shipment or parcel, from pickup through delivery, shown to customers and staff.",
+      "users": [
+        "shipper",
+        "support_agent",
+        "system"
+      ],
+      "entities": [
+        "tracking_event",
+        "shipment"
+      ],
+      "workflows": [
+        "tracking_and_visibility"
+      ],
+      "capabilities": [
+        "event_timeline",
+        "webhook_push",
+        "geolocation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "exception prediction from scan patterns"
+      ],
+      "real_time_relevance": "core",
+      "tags": [
+        "core",
+        "customer",
+        "real-time"
+      ],
+      "integrations": [
+        "carrier_api",
+        "webhook_receiver"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's Tracking model + TrackerStatus enum and fleetbase's fleetbase_tracking_statuses table (status, code, complete flag, geolocation) are independent implementations of the same concept."
+      }
+    },
+    {
+      "id": "logistics.proof_of_delivery",
+      "name": "Proof of delivery",
+      "classification": "core",
+      "description": "Capturing a photo and/or signature at the moment of delivery and attaching it to the shipment/order record.",
+      "users": [
+        "driver",
+        "support_agent"
+      ],
+      "entities": [
+        "proof_of_delivery"
+      ],
+      "workflows": [
+        "proof_of_delivery_capture"
+      ],
+      "capabilities": [
+        "photo_capture",
+        "signature_capture"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "signature/photo fraud detection"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "mobile",
+        "document"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's TrackingStatus.delivery_image_url/signature_image_url fields and fleetbase's payloads.pod_method/pod_required fields both model this independently."
+      }
+    },
+    {
+      "id": "logistics.dispatch",
+      "name": "Dispatch",
+      "classification": "core",
+      "description": "Assigning a driver and vehicle to an order or route and releasing it for execution.",
+      "users": [
+        "dispatcher"
+      ],
+      "entities": [
+        "order",
+        "driver",
+        "vehicle"
+      ],
+      "workflows": [
+        "dispatch_and_route_planning"
+      ],
+      "capabilities": [
+        "driver_vehicle_assignment",
+        "adhoc_dispatch"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "auto-assign nearest available driver"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [
+        "driver_hours_of_service"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_orders has dispatched/dispatched_at/adhoc/driver_assigned_uuid/vehicle_assigned_uuid columns; single source."
+      }
+    },
+    {
+      "id": "logistics.routes",
+      "name": "Routes and route optimization",
+      "classification": "core",
+      "description": "Sequencing an order's or manifest's stops (waypoints) into an efficient route, with distance/time totals.",
+      "users": [
+        "dispatcher"
+      ],
+      "entities": [
+        "route",
+        "waypoint"
+      ],
+      "workflows": [
+        "dispatch_and_route_planning"
+      ],
+      "capabilities": [
+        "stop_sequencing",
+        "time_windows",
+        "distance_time_estimate"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "route optimization solver",
+        "dynamic re-routing"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_routes (order_uuid, total_distance, total_time) and fleetbase_waypoints (place_uuid, time_window_start/end, service_time, order/sequence); single source."
+      }
+    },
+    {
+      "id": "logistics.drivers",
+      "name": "Drivers",
+      "classification": "core",
+      "description": "Driver profiles, licensing, current location, availability, and skills used for dispatch and compliance.",
+      "users": [
+        "driver",
+        "fleet_manager",
+        "dispatcher"
+      ],
+      "entities": [
+        "driver"
+      ],
+      "workflows": [
+        "dispatch_and_route_planning"
+      ],
+      "capabilities": [
+        "license_tracking",
+        "location_tracking",
+        "skills_matching"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [
+        "driver_hours_of_service"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_drivers table (drivers_license_number, license_expiry, location, current_status, skills, max_travel_time/max_distance, time_window); single source."
+      }
+    },
+    {
+      "id": "logistics.vehicles",
+      "name": "Vehicles",
+      "classification": "core",
+      "description": "The fleet's vehicles: specifications, capacity, and current telemetry (location, speed, heading).",
+      "users": [
+        "fleet_manager",
+        "dispatcher"
+      ],
+      "entities": [
+        "vehicle",
+        "fleet"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "telemetry",
+        "capacity_specs"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [
+        "telematics"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_vehicles table (make/model/year, seating_capacity, payload_capacity, gvwr, fuel_type, location/speed/heading); single source."
+      }
+    },
+    {
+      "id": "logistics.warehouses",
+      "name": "Warehouses and locations",
+      "classification": "common",
+      "description": "Physical facilities (warehouses, depots, hubs) where inventory is stored or shipments are consolidated.",
+      "users": [
+        "warehouse_staff",
+        "ops_manager"
+      ],
+      "entities": [
+        "warehouse"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "location_hierarchy"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "location",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "std:gs1-epcis"
+        ],
+        "confidence": "low",
+        "notes": "Neither cloned source models a warehouse as a first-class entity. Reasoned from the domain brief and GS1's location-identification concept (GLN); std:gs1-epcis is registered globally but not yet acquired locally at time of writing, so this is a name-only reference, not a verified spec citation."
+      }
+    },
+    {
+      "id": "logistics.exceptions_returns",
+      "name": "Exceptions and returns",
+      "classification": "common",
+      "description": "Flagging delivery problems (damage, delay, failed attempt) for investigation, and processing return shipments back to origin.",
+      "users": [
+        "support_agent",
+        "ops_manager",
+        "driver"
+      ],
+      "entities": [
+        "exception",
+        "return"
+      ],
+      "workflows": [
+        "exception_and_returns_handling"
+      ],
+      "capabilities": [
+        "issue_tracking",
+        "return_label_generation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-triage exception type from scan text"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's ShipmentStatus (needs_attention, delivery_failed) and Shipment.is_return/return_shipment/return_address fields, plus fleetbase's fleetbase_issues table (type, category, priority, resolved_at) and payloads.return_uuid, are independent implementations."
+      }
+    },
+    {
+      "id": "logistics.customs_documents",
+      "name": "Customs documents",
+      "classification": "recommended",
+      "description": "Customs declaration data (commodities, values, HS codes) required for international shipments.",
+      "users": [
+        "shipper",
+        "ops_manager"
+      ],
+      "entities": [
+        "customs_document"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "hs_code_lookup",
+        "declared_value"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "HS code suggestion from product description"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "compliance",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "customs_regulations"
+      ],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio Shipment.customs embedded JSON field; single source."
+      }
+    },
+    {
+      "id": "logistics.driver_app",
+      "name": "Driver mobile app",
+      "classification": "common",
+      "description": "The driver-facing mobile app for viewing assigned stops, navigating, updating status, capturing proof of delivery, and working with limited or no connectivity.",
+      "users": [
+        "driver"
+      ],
+      "entities": [
+        "manifest",
+        "waypoint",
+        "proof_of_delivery"
+      ],
+      "workflows": [
+        "dispatch_and_route_planning",
+        "proof_of_delivery_capture"
+      ],
+      "capabilities": [
+        "offline_mode",
+        "turn_by_turn_navigation",
+        "stop_status_update"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "mobile",
+        "staff"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [
+        "driver_hours_of_service"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Inferred from fleetbase's driver-oriented schema (drivers, manifests, waypoints with service_time/time windows); no mobile client code was inspected, single source, reasoned."
+      }
+    },
+    {
+      "id": "logistics.geofencing_zones",
+      "name": "Zones and geofencing",
+      "classification": "recommended",
+      "description": "Named geographic zones (service areas, geofences) used for pricing, routing eligibility, and driver/vehicle geofence entry-exit events.",
+      "users": [
+        "ops_manager",
+        "dispatcher"
+      ],
+      "entities": [
+        "zone"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "geofence_events",
+        "service_area_boundaries"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "location",
+        "staff"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_zones, fleetbase_service_areas, fleetbase_driver_geofence_states, fleetbase_vehicle_geofence_states tables; single source."
+      }
+    },
+    {
+      "id": "logistics.fleet_maintenance",
+      "name": "Fleet maintenance",
+      "classification": "recommended",
+      "description": "Scheduling recurring vehicle maintenance (by date, distance, or engine hours) and recording completed service.",
+      "users": [
+        "fleet_manager"
+      ],
+      "entities": [
+        "maintenance_record",
+        "vehicle"
+      ],
+      "workflows": [
+        "fleet_maintenance_scheduling"
+      ],
+      "capabilities": [
+        "interval_scheduling",
+        "due_reminders"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_maintenance_schedules (interval_method/type/value, next_due_date/odometer/engine_hours, reminder_offsets) and fleetbase_maintenances; single source."
+      }
+    },
+    {
+      "id": "logistics.address_validation",
+      "name": "Address validation",
+      "classification": "recommended",
+      "description": "Verifying and normalizing shipping addresses before a label is purchased, to reduce failed deliveries.",
+      "users": [
+        "shipper",
+        "system"
+      ],
+      "entities": [
+        "customer"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "address_normalization",
+        "deliverability_check"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "integration",
+        "customer"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's Address model with a dedicated AddressManager; single source, reasoned that validation is a common capability layered on top of it."
+      }
+    },
+    {
+      "id": "logistics.contract_rates",
+      "name": "Contract and negotiated rates",
+      "classification": "recommended",
+      "description": "Custom rate cards or markups negotiated with a carrier, applied instead of or alongside published rates.",
+      "users": [
+        "ops_manager"
+      ],
+      "entities": [
+        "carrier_service",
+        "rate_quote"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "rate_sheet_upload",
+        "markup_rules"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "integration"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_service_rates/service_rate_fees/service_rate_parcel_fees/purchase_rates tables; single source, karrio's own rate-sheet PRDs mention this too but were not inspected (docs only, not code)."
+      }
+    },
+    {
+      "id": "logistics.claims",
+      "name": "Claims",
+      "classification": "optional",
+      "description": "Filing and tracking damage or loss claims against a carrier for a shipment.",
+      "users": [
+        "support_agent",
+        "shipper"
+      ],
+      "entities": [
+        "exception",
+        "shipment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "claim_filing",
+        "carrier_claim_status"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "compliance"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned extension of fleetbase's fleetbase_issues (damage/loss category) toward a carrier claim; no dedicated claims table found in either source."
+      }
+    },
+    {
+      "id": "logistics.fuel_tracking",
+      "name": "Fuel tracking",
+      "classification": "optional",
+      "description": "Recording fuel purchases and consumption per vehicle, optionally synced from a fuel card provider.",
+      "users": [
+        "fleet_manager"
+      ],
+      "entities": [
+        "vehicle"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "fuel_card_sync",
+        "consumption_reporting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "reporting",
+        "integration"
+      ],
+      "integrations": [
+        "fuel_card_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_fuel_provider_connections/sync_runs/transactions and fleetbase_fuel_reports tables; single source."
+      }
+    },
+    {
+      "id": "logistics.cod_collection",
+      "name": "Cash on delivery",
+      "classification": "optional",
+      "description": "Collecting payment from the recipient at the time of delivery instead of billing the shipper upfront.",
+      "users": [
+        "driver",
+        "support_agent"
+      ],
+      "entities": [
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "cod_amount_capture",
+        "cod_reconciliation"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "payment",
+        "mobile"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_payloads.cod_amount/cod_currency/cod_payment_method columns; single source."
+      }
+    },
+    {
+      "id": "logistics.eta_prediction",
+      "name": "ETA prediction",
+      "classification": "optional",
+      "description": "Estimating and updating a delivery's arrival window using live route, traffic, and historical performance data.",
+      "users": [
+        "shipper",
+        "dispatcher"
+      ],
+      "entities": [
+        "route",
+        "shipment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "dynamic_eta",
+        "delay_alerting"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": true
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "ML ETA model from historical route performance"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "ai",
+        "real-time",
+        "customer"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from route total_distance/total_time and waypoint time_window fields; no ML/ETA code inspected, single source."
+      }
+    },
+    {
+      "id": "logistics.driver_scoring",
+      "name": "Driver performance scoring",
+      "classification": "optional",
+      "description": "Scorecards for on-time rate, safety incidents, and customer feedback per driver.",
+      "users": [
+        "fleet_manager"
+      ],
+      "entities": [
+        "driver"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "scorecard",
+        "incident_log"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "anomaly detection on driving behavior"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "reporting",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from fleetbase_issues (driver_uuid, category, priority); no dedicated scorecard table found, single source."
+      }
+    },
+    {
+      "id": "logistics.load_planning",
+      "name": "Load planning",
+      "classification": "optional",
+      "description": "Consolidating multiple parcels or orders into a single vehicle load, respecting capacity and compatibility constraints.",
+      "users": [
+        "dispatcher",
+        "warehouse_staff"
+      ],
+      "entities": [
+        "vehicle",
+        "parcel",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "capacity_check",
+        "consolidation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "bin-packing optimization"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from fleetbase_vehicles.payload_capacity and order/parcel volume fields; no dedicated load-planning table found, single source, low confidence."
+      }
+    },
+    {
+      "id": "logistics.freight_invoicing",
+      "name": "Freight invoicing and audit",
+      "classification": "optional",
+      "description": "Reconciling carrier invoices against quoted/contracted rates and flagging billing discrepancies.",
+      "users": [
+        "ops_manager"
+      ],
+      "entities": [
+        "rate_quote",
+        "shipment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "invoice_reconciliation",
+        "discrepancy_flagging"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "reporting",
+        "payment"
+      ],
+      "integrations": [
+        "carrier_api"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from karrio's Shipment.applied_fees field (documented as 'Accounting: addons + surcharge COGS values'); single source, no dedicated invoice-audit model inspected."
+      }
+    }
+  ]
+}

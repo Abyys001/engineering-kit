@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-kit/product-builder/project.json",
+  "title": "Product understanding",
+  "type": "object",
+  "required": ["schema", "name", "request", "classification", "domains", "roles", "experiences", "assumptions", "decisions"],
+  "properties": {
+    "schema": {"const": 1},
+    "name": {"type": "string"},
+    "created": {"type": "string", "format": "date"},
+    "request": {
+      "type": "object",
+      "required": ["verbatim", "explicit_asks"],
+      "properties": {
+        "verbatim": {"type": "string", "description": "The user's request, quoted"},
+        "explicit_asks": {"type": "array", "items": {"type": "string"}, "description": "Each capability literally asked for"}
+      }
+    },
+    "classification": {
+      "type": "object",
+      "required": ["product_type", "audience", "stage"],
+      "properties": {
+        "product_type": {"type": "string"},
+        "audience": {"enum": ["internal", "b2b", "b2c", "b2b2c", "mixed"]},
+        "stage": {"enum": ["prototype", "mvp", "production"]},
+        "tenancy": {"enum": ["single", "multi", "undecided"]}
+      }
+    },
+    "domains": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "required": ["id", "role"],
+        "properties": {
+          "id": {"type": "string", "description": "domains/catalog.json id"},
+          "role": {"enum": ["primary", "secondary"]},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "experience"],
+        "properties": {
+          "id": {"type": "string", "description": "<domain>:<role id>"},
+          "experience": {"enum": ["customer", "staff", "management", "administration", "partner", "system"]}
+        }
+      }
+    },
+    "experiences": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "surface"],
+        "properties": {
+          "id": {"enum": ["customer", "staff", "management", "administration", "partner"]},
+          "surface": {"enum": ["web_routes", "web_workspace", "separate_web_app", "mobile_app", "pwa", "none"]},
+          "mobile": {"enum": ["core", "valuable", "optional", "not_needed"]},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "real_time": {"enum": ["none", "polling", "sse", "websocket"]},
+    "ai": {"enum": ["none", "optional", "feature", "core"]},
+    "compliance": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["ref", "jurisdiction", "status"],
+        "properties": {
+          "ref": {"type": "string", "description": "<domain>:<compliance id>"},
+          "jurisdiction": {"type": "string"},
+          "status": {"enum": ["applies", "may_apply", "not_applicable", "needs_human_review"]},
+          "note": {"type": "string"}
+        }
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["ref", "scope"],
+        "properties": {
+          "ref": {"type": "string", "description": "<domain>:<integration id>"},
+          "provider": {"type": ["string", "null"]},
+          "scope": {"enum": ["IN_SCOPE", "DEPENDENCY", "PROPOSED", "OPTIONAL", "OUT_OF_SCOPE", "BLOCKED"]}
+        }
+      }
+    },
+    "assumptions": {"type": "array", "items": {"type": "string"}},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["question", "status"],
+        "properties": {
+          "question": {"type": "string"},
+          "options": {"type": "array", "items": {"type": "string"}},
+          "recommendation": {"type": "string"},
+          "status": {"enum": ["open", "decided"]},
+          "answer": {"type": "string"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,504 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "listing_lifecycle",
+      "name": "Listing lifecycle",
+      "actor": "agent",
+      "trigger": "An agent or owner creates a new listing for a property/unit",
+      "steps": [
+        "Draft listing",
+        "Add media",
+        "Publish",
+        "Receive leads/offers",
+        "Go under contract",
+        "Close as sold/leased or withdraw"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "features": [
+        "real-estate.property_listings"
+      ],
+      "state_machine": {
+        "entity": "listing",
+        "initial": "draft",
+        "terminal": [
+          "sold",
+          "leased",
+          "withdrawn",
+          "expired"
+        ],
+        "states": [
+          "draft",
+          "active",
+          "pending",
+          "sold",
+          "leased",
+          "withdrawn",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "active",
+            "event": "publish"
+          },
+          {
+            "from": "active",
+            "to": "pending",
+            "event": "offer_accepted"
+          },
+          {
+            "from": "pending",
+            "to": "sold",
+            "event": "close_sale"
+          },
+          {
+            "from": "pending",
+            "to": "leased",
+            "event": "close_lease"
+          },
+          {
+            "from": "pending",
+            "to": "active",
+            "event": "deal_falls_through"
+          },
+          {
+            "from": "active",
+            "to": "withdrawn",
+            "event": "withdraw"
+          },
+          {
+            "from": "active",
+            "to": "expired",
+            "event": "listing_period_ends"
+          }
+        ]
+      },
+      "notifications": [
+        "listing published",
+        "status change"
+      ],
+      "integrations": [
+        "mls_idx_feed",
+        "listing_portal_syndication"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin",
+          "easy-property-listings"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "lead_to_viewing_workflow",
+      "name": "Lead to viewing",
+      "actor": "buyer_renter",
+      "trigger": "A prospect submits an inquiry on a listing",
+      "steps": [
+        "Capture lead",
+        "Agent follows up",
+        "Schedule viewing",
+        "Conduct viewing",
+        "Log outcome / next step"
+      ],
+      "entities": [
+        "lead",
+        "viewing"
+      ],
+      "features": [
+        "real-estate.lead_capture_inquiries",
+        "real-estate.viewings_scheduling"
+      ],
+      "state_machine": {
+        "entity": "lead",
+        "initial": "new",
+        "terminal": [
+          "won",
+          "lost"
+        ],
+        "states": [
+          "new",
+          "contacted",
+          "qualified",
+          "won",
+          "lost"
+        ],
+        "transitions": [
+          {
+            "from": "new",
+            "to": "contacted",
+            "event": "agent_responds"
+          },
+          {
+            "from": "contacted",
+            "to": "qualified",
+            "event": "viewing_scheduled"
+          },
+          {
+            "from": "qualified",
+            "to": "won",
+            "event": "offer_accepted"
+          },
+          {
+            "from": "qualified",
+            "to": "lost",
+            "event": "prospect_drops_out"
+          },
+          {
+            "from": "new",
+            "to": "lost",
+            "event": "unresponsive"
+          }
+        ]
+      },
+      "notifications": [
+        "new lead alert",
+        "viewing reminder"
+      ],
+      "integrations": [
+        "sms_email_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "offer_negotiation_workflow",
+      "name": "Offer negotiation",
+      "actor": "buyer_renter",
+      "trigger": "A prospect submits an offer on a listing",
+      "steps": [
+        "Submit offer",
+        "Seller/landlord reviews",
+        "Counter or accept/reject",
+        "Repeat until agreement or withdrawal"
+      ],
+      "entities": [
+        "offer"
+      ],
+      "features": [
+        "real-estate.offers_negotiation"
+      ],
+      "state_machine": {
+        "entity": "offer",
+        "initial": "submitted",
+        "terminal": [
+          "accepted",
+          "rejected",
+          "withdrawn"
+        ],
+        "states": [
+          "submitted",
+          "countered",
+          "accepted",
+          "rejected",
+          "withdrawn"
+        ],
+        "transitions": [
+          {
+            "from": "submitted",
+            "to": "countered",
+            "event": "counter"
+          },
+          {
+            "from": "countered",
+            "to": "countered",
+            "event": "counter_again"
+          },
+          {
+            "from": "submitted",
+            "to": "accepted",
+            "event": "accept"
+          },
+          {
+            "from": "countered",
+            "to": "accepted",
+            "event": "accept_counter"
+          },
+          {
+            "from": "submitted",
+            "to": "rejected",
+            "event": "reject"
+          },
+          {
+            "from": "submitted",
+            "to": "withdrawn",
+            "event": "withdraw"
+          }
+        ]
+      },
+      "notifications": [
+        "offer received",
+        "counter received",
+        "offer decision"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "lease_lifecycle",
+      "name": "Lease lifecycle",
+      "actor": "property_manager",
+      "trigger": "A tenant application is approved for a unit",
+      "steps": [
+        "Draft lease",
+        "Collect e-signatures and deposit",
+        "Activate lease",
+        "Renew or terminate at term end"
+      ],
+      "entities": [
+        "lease",
+        "deposit"
+      ],
+      "features": [
+        "real-estate.lease_management"
+      ],
+      "state_machine": {
+        "entity": "lease",
+        "initial": "draft",
+        "terminal": [
+          "terminated",
+          "expired"
+        ],
+        "states": [
+          "draft",
+          "active",
+          "renewed",
+          "terminated",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "active",
+            "event": "sign_and_activate"
+          },
+          {
+            "from": "active",
+            "to": "renewed",
+            "event": "renew"
+          },
+          {
+            "from": "renewed",
+            "to": "active",
+            "event": "new_term_starts"
+          },
+          {
+            "from": "active",
+            "to": "terminated",
+            "event": "terminate_early"
+          },
+          {
+            "from": "active",
+            "to": "expired",
+            "event": "term_ends_no_renewal"
+          }
+        ]
+      },
+      "notifications": [
+        "lease signed",
+        "renewal reminder"
+      ],
+      "integrations": [
+        "e_signature"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "rent_collection_workflow",
+      "name": "Rent collection",
+      "actor": "tenant",
+      "trigger": "A recurring rent due date arrives under an active lease",
+      "steps": [
+        "Generate rent invoice",
+        "Notify tenant",
+        "Tenant pays (full or partial)",
+        "Record payment",
+        "Flag late if unpaid past due date"
+      ],
+      "entities": [
+        "rent_payment"
+      ],
+      "features": [
+        "real-estate.rent_collection"
+      ],
+      "state_machine": {
+        "entity": "rent_payment",
+        "initial": "due",
+        "terminal": [
+          "paid",
+          "waived"
+        ],
+        "states": [
+          "due",
+          "paid",
+          "late",
+          "partial",
+          "waived"
+        ],
+        "transitions": [
+          {
+            "from": "due",
+            "to": "paid",
+            "event": "full_payment"
+          },
+          {
+            "from": "due",
+            "to": "partial",
+            "event": "partial_payment"
+          },
+          {
+            "from": "partial",
+            "to": "paid",
+            "event": "balance_paid"
+          },
+          {
+            "from": "due",
+            "to": "late",
+            "event": "due_date_passed"
+          },
+          {
+            "from": "due",
+            "to": "waived",
+            "event": "waive"
+          }
+        ]
+      },
+      "notifications": [
+        "invoice issued",
+        "payment receipt",
+        "late reminder"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "maintenance_request_workflow",
+      "name": "Maintenance request handling",
+      "actor": "tenant",
+      "trigger": "A tenant or owner reports an issue at a unit",
+      "steps": [
+        "Submit request",
+        "Property manager acknowledges/triages",
+        "Assign vendor",
+        "Work performed",
+        "Close out and confirm with reporter"
+      ],
+      "entities": [
+        "maintenance_request"
+      ],
+      "features": [
+        "real-estate.maintenance_requests"
+      ],
+      "state_machine": {
+        "entity": "maintenance_request",
+        "initial": "submitted",
+        "terminal": [
+          "completed",
+          "cancelled"
+        ],
+        "states": [
+          "submitted",
+          "acknowledged",
+          "in_progress",
+          "completed",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "submitted",
+            "to": "acknowledged",
+            "event": "acknowledge"
+          },
+          {
+            "from": "acknowledged",
+            "to": "in_progress",
+            "event": "assign_vendor"
+          },
+          {
+            "from": "in_progress",
+            "to": "completed",
+            "event": "work_finished"
+          },
+          {
+            "from": "submitted",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "request received",
+        "status update",
+        "completion notice"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "tenant_application_workflow",
+      "name": "Tenant application and screening",
+      "actor": "tenant",
+      "trigger": "A prospective tenant applies for a vacant unit",
+      "steps": [
+        "Submit application",
+        "Run background/credit check",
+        "Property manager decides",
+        "Approved applicant proceeds to lease"
+      ],
+      "entities": [
+        "tenant"
+      ],
+      "features": [
+        "real-estate.rental_application_screening"
+      ],
+      "notifications": [
+        "application received",
+        "decision notice"
+      ],
+      "integrations": [
+        "background_check_screening"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

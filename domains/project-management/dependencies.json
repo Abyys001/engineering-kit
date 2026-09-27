@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "project-management.workspaces",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Workspace membership needs authenticated sign-in"
+    },
+    {
+      "from": "project-management.workspaces",
+      "to": "shared.organizations",
+      "type": "enhances",
+      "reason": "A workspace is essentially a tenant/organization"
+    },
+    {
+      "from": "project-management.projects",
+      "to": "project-management.workspaces",
+      "type": "requires",
+      "reason": "A project belongs to a workspace"
+    },
+    {
+      "from": "project-management.projects",
+      "to": "shared.permissions",
+      "type": "enhances",
+      "reason": "Project membership benefits from role-based access control"
+    },
+    {
+      "from": "project-management.tasks_issues",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "A task belongs to a project"
+    },
+    {
+      "from": "project-management.statuses_workflows",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "States are configured per project"
+    },
+    {
+      "from": "project-management.boards_kanban",
+      "to": "project-management.statuses_workflows",
+      "type": "requires",
+      "reason": "Board columns are the project's states"
+    },
+    {
+      "from": "project-management.boards_kanban",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Multi-user drag-and-drop benefits from live updates"
+    },
+    {
+      "from": "project-management.subtasks",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "A subtask is a task with a parent"
+    },
+    {
+      "from": "project-management.task_dependencies",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "A relation links two existing tasks"
+    },
+    {
+      "from": "project-management.comments_mentions",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Comments are posted on a task"
+    },
+    {
+      "from": "project-management.comments_mentions",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Mentions notify the mentioned user"
+    },
+    {
+      "from": "project-management.cycles_sprints",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Cycles are scoped to a project"
+    },
+    {
+      "from": "project-management.modules_epics",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Modules are scoped to a project"
+    },
+    {
+      "from": "project-management.milestones",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Milestones are scoped to a project"
+    },
+    {
+      "from": "project-management.gantt_timeline",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "The timeline plots tasks by date"
+    },
+    {
+      "from": "project-management.gantt_timeline",
+      "to": "project-management.task_dependencies",
+      "type": "enhances",
+      "reason": "Dependency lines are drawn between related tasks"
+    },
+    {
+      "from": "project-management.time_tracking",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Time is logged against a task"
+    },
+    {
+      "from": "project-management.labels",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Labels are defined per project"
+    },
+    {
+      "from": "project-management.attachments",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Files are attached to a task"
+    },
+    {
+      "from": "project-management.attachments",
+      "to": "shared.file_storage",
+      "type": "requires",
+      "reason": "Uploaded files need durable object storage"
+    },
+    {
+      "from": "project-management.views_filters",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "A saved view is scoped to a project"
+    },
+    {
+      "from": "project-management.views_filters",
+      "to": "shared.data_tables",
+      "type": "enhances",
+      "reason": "Views build on server-side filtering/sorting/pagination"
+    },
+    {
+      "from": "project-management.saved_views_sharing",
+      "to": "project-management.views_filters",
+      "type": "requires",
+      "reason": "Sharing applies to an existing saved view"
+    },
+    {
+      "from": "project-management.guest_client_access",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "A guest is granted access to a specific project"
+    },
+    {
+      "from": "project-management.guest_client_access",
+      "to": "shared.auth",
+      "type": "enhances",
+      "reason": "Guest access may use a lighter-weight auth flow than full membership"
+    },
+    {
+      "from": "project-management.activity_feed",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Activity entries are generated from task changes"
+    },
+    {
+      "from": "project-management.activity_feed",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Live activity feeds benefit from push updates"
+    },
+    {
+      "from": "project-management.estimates_story_points",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "An estimate is set on a task"
+    },
+    {
+      "from": "project-management.recurring_tasks",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Recurrence regenerates a task"
+    },
+    {
+      "from": "project-management.workload_capacity",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "Workload is computed from assigned tasks"
+    },
+    {
+      "from": "project-management.burndown_velocity_reports",
+      "to": "project-management.cycles_sprints",
+      "type": "requires",
+      "reason": "Burndown/velocity are computed per cycle"
+    },
+    {
+      "from": "project-management.burndown_velocity_reports",
+      "to": "project-management.estimates_story_points",
+      "type": "enhances",
+      "reason": "Velocity is more meaningful with point estimates"
+    },
+    {
+      "from": "project-management.intake_triage",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Intake submissions land in a project's triage state"
+    },
+    {
+      "from": "project-management.favorites",
+      "to": "project-management.tasks_issues",
+      "type": "requires",
+      "reason": "A favorite pins an existing task"
+    },
+    {
+      "from": "project-management.private_projects",
+      "to": "project-management.projects",
+      "type": "requires",
+      "reason": "Visibility control applies to an existing project"
+    },
+    {
+      "from": "project-management.projects",
+      "to": "shared.custom_fields",
+      "type": "enhances",
+      "reason": "Projects may define tenant-specific fields on their tasks"
+    }
+  ]
+}

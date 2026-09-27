@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "domain": "booking",
+  "last_reviewed": "2026-09-26",
+  "mappings": [
+    {
+      "feature": "booking.services",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.providers",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.resources",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.availability",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.availability_exceptions",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.time_slots",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.buffers",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.bookings",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.recurring_bookings",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.buffers_and_group_capacity",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.reminders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.cancellation_policies",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.minimum_notice",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.deposits",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.calendar_sync",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.out_of_office",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.booking_widget",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.webhooks",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.multi_provider_teams",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.booking_confirmation_approval",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.waitlist",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    },
+    {
+      "feature": "booking.timezone_handling",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation yet; both reference implementations (Cal.diy, Easy!Appointments) were inspected remotely, not cloned, so there is no local sources/ path to cite as a reference."
+    }
+  ]
+}

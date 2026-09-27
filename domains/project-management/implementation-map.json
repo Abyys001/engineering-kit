@@ -1,0 +1,378 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "project-management.workspaces",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Workspace model."
+    },
+    {
+      "feature": "project-management.projects",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane Project + Kanboard ProjectModel."
+    },
+    {
+      "feature": "project-management.tasks_issues",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane Issue + Kanboard TaskModel."
+    },
+    {
+      "feature": "project-management.subtasks",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane Issue.parent + Kanboard SubtaskModel."
+    },
+    {
+      "feature": "project-management.statuses_workflows",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane State/StateGroup."
+    },
+    {
+      "feature": "project-management.boards_kanban",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/kanboard",
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Kanboard BoardModel/ColumnModel/SwimlaneModel."
+    },
+    {
+      "feature": "project-management.task_dependencies",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane IssueRelation."
+    },
+    {
+      "feature": "project-management.comments_mentions",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane IssueComment/IssueMention."
+    },
+    {
+      "feature": "project-management.cycles_sprints",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Cycle."
+    },
+    {
+      "feature": "project-management.modules_epics",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Module."
+    },
+    {
+      "feature": "project-management.milestones",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Reasoned, no dedicated model found."
+    },
+    {
+      "feature": "project-management.gantt_timeline",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Reasoned from Issue date fields."
+    },
+    {
+      "feature": "project-management.time_tracking",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Kanboard SubtaskTimeTrackingModel."
+    },
+    {
+      "feature": "project-management.labels",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane Label + Kanboard TaskTagModel."
+    },
+    {
+      "feature": "project-management.attachments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane IssueAttachment + Kanboard TaskFileModel."
+    },
+    {
+      "feature": "project-management.views_filters",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane View model."
+    },
+    {
+      "feature": "project-management.guest_client_access",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane ProjectPublicMember/ProjectDeployBoard."
+    },
+    {
+      "feature": "project-management.activity_feed",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane",
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Plane IssueActivity + Kanboard ProjectActivityModel."
+    },
+    {
+      "feature": "project-management.estimates_story_points",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Estimate + Issue.point."
+    },
+    {
+      "feature": "project-management.recurring_tasks",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/kanboard"
+      ],
+      "status": "reference",
+      "notes": "Kanboard TaskRecurrenceModel."
+    },
+    {
+      "feature": "project-management.workload_capacity",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Reasoned from CycleUserProperties/ModuleUserProperties."
+    },
+    {
+      "feature": "project-management.burndown_velocity_reports",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Reasoned from Cycle/CycleIssue/Estimate data."
+    },
+    {
+      "feature": "project-management.saved_views_sharing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Reasoned from View + ProjectDeployBoard."
+    },
+    {
+      "feature": "project-management.intake_triage",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Intake model + StateGroup.TRIAGE."
+    },
+    {
+      "feature": "project-management.favorites",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane Favorite model."
+    },
+    {
+      "feature": "project-management.private_projects",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/plane"
+      ],
+      "status": "reference",
+      "notes": "Plane ProjectNetwork enum."
+    }
+  ]
+}

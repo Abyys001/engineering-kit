@@ -1,0 +1,343 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "education.course_catalog",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.academic_calendar",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.class_sections",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.enrollment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.lesson_content",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.self_paced_content",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.assignments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.submissions",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.grading_gradebook",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.rubrics",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.attendance",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.timetable",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.exams_quizzes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.certificates",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.report_cards",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.parent_guardian_access",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.fees_billing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.announcements",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.discussion_forums",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.live_classes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.admissions",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.student_portal",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.lti_tool_integration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.roster_sync",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.xapi_learning_records",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.plagiarism_detection",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.child_data_consent_controls",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    },
+    {
+      "feature": "education.at_risk_student_prediction",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No local clone acquired for this domain; researched via GitHub API inspection only."
+    }
+  ]
+}

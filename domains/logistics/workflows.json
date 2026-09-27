@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "domain": "logistics",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "order_to_shipment",
+      "name": "Order to shipment",
+      "actor": "shipper",
+      "trigger": "A customer places an order that needs to be shipped",
+      "steps": ["Create order with line items", "Select or confirm shipping address", "Convert order to one or more shipments", "Pack parcels per shipment", "Continue into the shipment lifecycle"],
+      "entities": ["order", "shipment", "commodity", "parcel"],
+      "features": ["logistics.orders", "logistics.shipments"],
+      "notifications": ["order_confirmed"],
+      "integrations": ["ecommerce_platform"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Order.DIRECT_PROPS includes line_items/shipping_to and Shipment.order_id links back to it; single source."}
+    },
+    {
+      "id": "shipment_lifecycle",
+      "name": "Shipment lifecycle",
+      "actor": "shipper",
+      "trigger": "A shipment is booked with a carrier after rate selection",
+      "steps": ["Request rates from connected carriers", "Select a rate and purchase label", "Hand off to carrier (pickup or drop-off)", "Carrier scans update transit status", "Out for delivery", "Delivered, or exception raised"],
+      "entities": ["shipment", "rate_quote", "label", "tracking_event"],
+      "features": ["logistics.shipments", "logistics.rates_quotes", "logistics.labels", "logistics.tracking_events"],
+      "state_machine": {
+        "entity": "shipment",
+        "initial": "draft",
+        "terminal": ["delivered", "cancelled"],
+        "states": ["draft", "created", "in_transit", "out_for_delivery", "delivered", "needs_attention", "delivery_failed", "cancelled"],
+        "transitions": [
+          {"from": "draft", "to": "created", "event": "purchase_label"},
+          {"from": "draft", "to": "cancelled", "event": "cancel"},
+          {"from": "created", "to": "in_transit", "event": "carrier_pickup_scan"},
+          {"from": "created", "to": "cancelled", "event": "cancel"},
+          {"from": "in_transit", "to": "out_for_delivery", "event": "out_for_delivery_scan"},
+          {"from": "in_transit", "to": "needs_attention", "event": "exception_raised"},
+          {"from": "needs_attention", "to": "in_transit", "event": "exception_resolved"},
+          {"from": "out_for_delivery", "to": "delivered", "event": "delivered_scan"},
+          {"from": "out_for_delivery", "to": "delivery_failed", "event": "delivery_attempt_failed"},
+          {"from": "delivery_failed", "to": "out_for_delivery", "event": "redelivery_scheduled"}
+        ]
+      },
+      "notifications": ["label_purchased", "out_for_delivery", "delivered", "exception_raised"],
+      "integrations": ["carrier_api"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "State names and the linear progression are verbatim from karrio's ShipmentStatus enum (single source for exact values); the general multi-stage creation-to-delivery shape is cross-referenced against fleetbase's order lifecycle flags (dispatched/started/status), which is why this is scored medium rather than low."}
+    },
+    {
+      "id": "tracking_and_visibility",
+      "name": "Tracking and visibility",
+      "actor": "system",
+      "trigger": "A carrier or driver scan/webhook event arrives for a shipment",
+      "steps": ["Receive carrier webhook or telematics event", "Normalize to a tracking event with status/code/location", "Append to the shipment's tracking timeline", "Push update to customer-facing tracking page", "Notify customer on major status change"],
+      "entities": ["tracking_event", "shipment"],
+      "features": ["logistics.tracking_events"],
+      "notifications": ["tracking_update"],
+      "integrations": ["carrier_api", "webhook_receiver"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's TrackerStatus enum and fleetbase's fleetbase_tracking_statuses table are independent implementations. No formal state machine is included here because scans can arrive out of order across carriers; see the tracking_event entity's states list for the allowed status vocabulary."}
+    },
+    {
+      "id": "dispatch_and_route_planning",
+      "name": "Dispatch and route planning",
+      "actor": "dispatcher",
+      "trigger": "One or more orders are ready to be routed and dispatched",
+      "steps": ["Batch pending orders/stops", "Optimize stop sequence into a route", "Assign a driver and vehicle", "Dispatch the route/manifest to the driver app", "Driver executes stops in sequence", "Route/manifest marked complete"],
+      "entities": ["order", "route", "waypoint", "manifest", "driver", "vehicle"],
+      "features": ["logistics.dispatch", "logistics.routes", "logistics.manifests", "logistics.driver_app"],
+      "state_machine": {
+        "entity": "order",
+        "initial": "unfulfilled",
+        "terminal": ["fulfilled", "cancelled"],
+        "states": ["unfulfilled", "dispatched", "en_route", "fulfilled", "cancelled"],
+        "transitions": [
+          {"from": "unfulfilled", "to": "dispatched", "event": "dispatch"},
+          {"from": "unfulfilled", "to": "cancelled", "event": "cancel"},
+          {"from": "dispatched", "to": "en_route", "event": "driver_starts"},
+          {"from": "dispatched", "to": "cancelled", "event": "cancel"},
+          {"from": "en_route", "to": "fulfilled", "event": "all_stops_completed"}
+        ]
+      },
+      "notifications": ["dispatched", "driver_en_route"],
+      "integrations": ["mapping_geocoding"],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "Inferred from fleetbase_orders' dispatched/dispatched_at/started/started_at boolean+timestamp pairs; exact status string values are not enumerated in the schema, so state names are reasoned by convention. Single source."}
+    },
+    {
+      "id": "pickup_scheduling",
+      "name": "Pickup scheduling",
+      "actor": "shipper",
+      "trigger": "A shipper needs a carrier or driver to collect one or more shipments",
+      "steps": ["Choose a pickup date and time window", "Schedule pickup with carrier or dispatch", "Carrier/driver confirms or the pickup is closed out", "Pickup can be cancelled before collection"],
+      "entities": ["pickup", "shipment"],
+      "features": ["logistics.pickups"],
+      "state_machine": {
+        "entity": "pickup",
+        "initial": "scheduled",
+        "terminal": ["cancelled", "closed"],
+        "states": ["scheduled", "picked_up", "cancelled", "closed"],
+        "transitions": [
+          {"from": "scheduled", "to": "picked_up", "event": "carrier_collects"},
+          {"from": "scheduled", "to": "cancelled", "event": "cancel"},
+          {"from": "picked_up", "to": "closed", "event": "close_out"}
+        ]
+      },
+      "notifications": ["pickup_scheduled", "pickup_cancelled"],
+      "integrations": ["carrier_api"],
+      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "Verbatim from karrio's PickupStatus enum; single source."}
+    },
+    {
+      "id": "proof_of_delivery_capture",
+      "name": "Proof of delivery capture",
+      "actor": "driver",
+      "trigger": "A driver arrives at the final stop for a delivery",
+      "steps": ["Arrive at delivery stop", "Capture signature and/or photo per required pod_method", "Upload capture (queued if offline)", "Attach to the shipment/order record", "Mark stop and order complete"],
+      "entities": ["proof_of_delivery", "waypoint", "order"],
+      "features": ["logistics.proof_of_delivery", "logistics.driver_app"],
+      "notifications": ["delivered_with_pod"],
+      "integrations": [],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's delivery_image_url/signature_image_url fields and fleetbase's payloads.pod_method/pod_required columns are independent implementations. No state_machine is included; capture is a single terminal action per stop, not a multi-stage lifecycle."}
+    },
+    {
+      "id": "exception_and_returns_handling",
+      "name": "Exception and returns handling",
+      "actor": "support_agent",
+      "trigger": "A delivery attempt fails, damage is reported, or a customer requests a return",
+      "steps": ["Log the exception with type/category/priority", "Investigate (contact driver, carrier, or customer)", "Decide resolution: redeliver, return, refund, or claim", "If returning, generate a return shipment/label", "Resolve and close the exception"],
+      "entities": ["exception", "return", "shipment"],
+      "features": ["logistics.exceptions_returns", "logistics.claims"],
+      "state_machine": {
+        "entity": "exception",
+        "initial": "open",
+        "terminal": ["closed"],
+        "states": ["open", "investigating", "resolved", "closed"],
+        "transitions": [
+          {"from": "open", "to": "investigating", "event": "start_investigation"},
+          {"from": "investigating", "to": "resolved", "event": "resolve"},
+          {"from": "resolved", "to": "closed", "event": "close"}
+        ]
+      },
+      "notifications": ["exception_opened", "exception_resolved"],
+      "integrations": ["carrier_api"],
+      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "fleetbase_issues (type/category/priority/resolved_at) is the direct implementation for the exception lifecycle; karrio's needs_attention/delivery_failed status and return_shipment/is_return fields corroborate the trigger and return path from a second source. The specific open/investigating/resolved/closed state names are reasoned, not verbatim from either schema."}
+    },
+    {
+      "id": "fleet_maintenance_scheduling",
+      "name": "Fleet maintenance scheduling",
+      "actor": "fleet_manager",
+      "trigger": "A vehicle approaches a maintenance interval (date, distance, or engine hours)",
+      "steps": ["System computes next_due_date/odometer/engine_hours from the interval", "Reminder sent at configured offsets before due", "Vehicle is taken out of dispatch rotation for service", "Service is recorded, resetting the interval baseline"],
+      "entities": ["maintenance_record", "vehicle"],
+      "features": ["logistics.fleet_maintenance"],
+      "notifications": ["maintenance_due_reminder"],
+      "integrations": [],
+      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_maintenance_schedules (interval_method/type/value, next_due_date, reminder_offsets) and fleetbase_maintenance_schedule_reminders; single source."}
+    }
+  ]
+}

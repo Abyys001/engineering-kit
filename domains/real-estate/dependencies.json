@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "real-estate.listing_media",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "Media attaches to an existing listing"
+    },
+    {
+      "from": "real-estate.search_and_map",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "Search operates over published listings"
+    },
+    {
+      "from": "real-estate.saved_searches_alerts",
+      "to": "real-estate.search_and_map",
+      "type": "requires",
+      "reason": "A saved search reuses the search criteria model"
+    },
+    {
+      "from": "real-estate.lead_capture_inquiries",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "A lead is captured against a listing"
+    },
+    {
+      "from": "real-estate.lead_management_crm",
+      "to": "real-estate.lead_capture_inquiries",
+      "type": "requires",
+      "reason": "Pipeline management operates on captured leads"
+    },
+    {
+      "from": "real-estate.viewings_scheduling",
+      "to": "real-estate.lead_capture_inquiries",
+      "type": "enhances",
+      "reason": "Viewings usually follow a lead, though can be booked directly"
+    },
+    {
+      "from": "real-estate.open_houses",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "An open house is scheduled for a listing"
+    },
+    {
+      "from": "real-estate.offers_negotiation",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "An offer is made against a listing"
+    },
+    {
+      "from": "real-estate.brokerage_management",
+      "to": "real-estate.agent_broker_directory",
+      "type": "requires",
+      "reason": "A brokerage manages a roster of agents"
+    },
+    {
+      "from": "real-estate.commission_tracking",
+      "to": "real-estate.offers_negotiation",
+      "type": "requires",
+      "reason": "Commission is calculated on closed transactions"
+    },
+    {
+      "from": "real-estate.lease_management",
+      "to": "real-estate.tenant_management",
+      "type": "requires",
+      "reason": "A lease is signed with a known tenant"
+    },
+    {
+      "from": "real-estate.rent_collection",
+      "to": "real-estate.lease_management",
+      "type": "requires",
+      "reason": "Rent is billed against an active lease"
+    },
+    {
+      "from": "real-estate.deposit_management",
+      "to": "real-estate.lease_management",
+      "type": "requires",
+      "reason": "A deposit is held against a specific lease"
+    },
+    {
+      "from": "real-estate.maintenance_requests",
+      "to": "real-estate.tenant_management",
+      "type": "enhances",
+      "reason": "Requests are commonly filed by a known tenant, though owners can also file"
+    },
+    {
+      "from": "real-estate.property_management_dashboard",
+      "to": "real-estate.rent_collection",
+      "type": "enhances",
+      "reason": "Occupancy/income rollups draw on rent collection data"
+    },
+    {
+      "from": "real-estate.owner_portal",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Owner login and session management"
+    },
+    {
+      "from": "real-estate.tenant_portal",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Tenant login and session management"
+    },
+    {
+      "from": "real-estate.tenant_portal",
+      "to": "real-estate.lease_management",
+      "type": "requires",
+      "reason": "Portal content is scoped to the tenant's lease"
+    },
+    {
+      "from": "real-estate.rental_application_screening",
+      "to": "real-estate.tenant_management",
+      "type": "enhances",
+      "reason": "An approved application becomes a tenant record"
+    },
+    {
+      "from": "real-estate.fair_housing_compliance_screening",
+      "to": "real-estate.property_listings",
+      "type": "enhances",
+      "reason": "Screening runs against listing copy"
+    },
+    {
+      "from": "real-estate.mls_idx_integration",
+      "to": "real-estate.property_listings",
+      "type": "enhances",
+      "reason": "Feed sync populates or publishes listing records"
+    },
+    {
+      "from": "real-estate.listing_syndication",
+      "to": "real-estate.property_listings",
+      "type": "requires",
+      "reason": "Syndication publishes an existing listing externally"
+    },
+    {
+      "from": "real-estate.virtual_tours_3d",
+      "to": "real-estate.listing_media",
+      "type": "enhances",
+      "reason": "A 3D tour is one media type among others"
+    },
+    {
+      "from": "real-estate.valuations_cma",
+      "to": "real-estate.property_listings",
+      "type": "enhances",
+      "reason": "Valuation draws on comparable active/sold listings"
+    },
+    {
+      "from": "real-estate.price_recommendation_ai",
+      "to": "real-estate.valuations_cma",
+      "type": "requires",
+      "reason": "Price recommendation builds on valuation/comparables data"
+    },
+    {
+      "from": "real-estate.mortgage_calculator",
+      "to": "real-estate.property_listings",
+      "type": "enhances",
+      "reason": "Calculator runs off a listing's price"
+    }
+  ]
+}

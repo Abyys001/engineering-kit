@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "payment_gateway",
+      "name": "Payment Gateway",
+      "category": "payments",
+      "purpose": "Authorize, capture, and refund card/wallet payments for checkout.",
+      "examples": [
+        "Stripe",
+        "Adyen",
+        "PayPal"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "ecommerce.checkout",
+        "ecommerce.payments"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "shipping_carrier",
+      "name": "Shipping Carrier / Fulfillment Provider",
+      "category": "logistics",
+      "purpose": "Calculate shipping rates, generate labels, and provide tracking updates.",
+      "examples": [
+        "UPS",
+        "FedEx",
+        "ShipStation"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "ecommerce.shipping_fulfillment"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "tax_engine",
+      "name": "Tax Calculation Engine",
+      "category": "finance",
+      "purpose": "Compute jurisdiction-accurate VAT/sales tax at checkout.",
+      "examples": [
+        "Avalara",
+        "TaxJar",
+        "built-in tax-class rules"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "ecommerce.tax_calculation"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "search_engine",
+      "name": "Search / Indexing Engine",
+      "category": "search",
+      "purpose": "Power storefront keyword search and faceted filtering over the catalog.",
+      "examples": [
+        "Algolia",
+        "Meilisearch",
+        "Elasticsearch"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "ecommerce.storefront_search"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

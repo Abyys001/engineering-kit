@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "ticket_lifecycle",
+      "name": "Ticket lifecycle",
+      "actor": "customer",
+      "trigger": "A customer contacts support through any channel, creating a new ticket.",
+      "steps": [
+        "Ticket is created from an inbound message",
+        "An agent picks up or is assigned the ticket",
+        "Agent replies; ticket may move to pending while awaiting the customer",
+        "Issue is resolved and the ticket is marked resolved",
+        "Ticket is closed after a grace period, or reopened if the customer replies again"
+      ],
+      "entities": [
+        "ticket"
+      ],
+      "features": [
+        "support.ticket_management"
+      ],
+      "notifications": [
+        "ticket_created",
+        "ticket_resolved"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "ticket",
+        "initial": "new",
+        "terminal": [
+          "closed"
+        ],
+        "states": [
+          "new",
+          "open",
+          "pending",
+          "resolved",
+          "closed"
+        ],
+        "transitions": [
+          {
+            "from": "new",
+            "to": "open",
+            "event": "pick_up"
+          },
+          {
+            "from": "open",
+            "to": "pending",
+            "event": "await_customer"
+          },
+          {
+            "from": "pending",
+            "to": "open",
+            "event": "customer_replied"
+          },
+          {
+            "from": "open",
+            "to": "resolved",
+            "event": "resolve"
+          },
+          {
+            "from": "pending",
+            "to": "resolved",
+            "event": "resolve"
+          },
+          {
+            "from": "resolved",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "resolved",
+            "to": "open",
+            "event": "reopen"
+          },
+          {
+            "from": "closed",
+            "to": "open",
+            "event": "reopen"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sla_escalation_flow",
+      "name": "SLA escalation",
+      "actor": "system",
+      "trigger": "A ticket approaches or breaches its SLA response/resolution target.",
+      "steps": [
+        "SLA timer starts when the ticket enters an active state",
+        "Timer pauses outside business hours",
+        "A warning notification fires before breach",
+        "On breach, the escalation rule fires (reassign, raise priority, notify a manager)"
+      ],
+      "entities": [
+        "ticket",
+        "sla_policy",
+        "escalation_rule"
+      ],
+      "features": [
+        "support.sla_management",
+        "support.escalation"
+      ],
+      "notifications": [
+        "sla_warning",
+        "sla_breach"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "csat_survey_flow",
+      "name": "CSAT survey",
+      "actor": "system",
+      "trigger": "A ticket is resolved and the customer is offered a satisfaction survey.",
+      "steps": [
+        "Ticket is marked resolved",
+        "System sends a CSAT survey to the customer",
+        "Customer submits a rating and optional feedback",
+        "Result is attached to the ticket for reporting"
+      ],
+      "entities": [
+        "ticket",
+        "csat_response"
+      ],
+      "features": [
+        "support.csat_surveys"
+      ],
+      "notifications": [
+        "csat_request"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "agent",
+      "name": "Support agent",
+      "experience": "staff",
+      "description": "Handles assigned tickets: replies to customers, applies macros, adds internal notes, escalates when stuck.",
+      "responsibilities": [
+        "Reply to and resolve tickets",
+        "Apply macros/canned responses",
+        "Add internal notes"
+      ],
+      "related_features": [
+        "support.ticket_management",
+        "support.macros_canned_responses",
+        "support.internal_notes"
+      ],
+      "common_permissions": [
+        "ticket:reply",
+        "ticket:resolve",
+        "macro:apply"
+      ],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "zammad",
+          "osticket",
+          "freescout"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "team_lead",
+      "name": "Team lead / supervisor",
+      "experience": "management",
+      "description": "Monitors queue health, SLA compliance, and CSAT; reassigns tickets and reviews escalations.",
+      "responsibilities": [
+        "Monitor SLA compliance",
+        "Reassign or escalate tickets",
+        "Review CSAT results"
+      ],
+      "related_features": [
+        "support.sla_management",
+        "support.escalation",
+        "support.reporting_analytics"
+      ],
+      "common_permissions": [
+        "ticket:reassign",
+        "report:view",
+        "sla:view"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "administrator",
+      "name": "Support administrator",
+      "experience": "administration",
+      "description": "Configures queues, SLA policies, business hours, automation rules, and the knowledge base structure.",
+      "responsibilities": [
+        "Configure SLA policies and business hours",
+        "Configure automation rules",
+        "Manage the knowledge base"
+      ],
+      "related_features": [
+        "support.sla_management",
+        "support.ticket_automation_rules",
+        "support.knowledge_base"
+      ],
+      "common_permissions": [
+        "sla:configure",
+        "automation:configure",
+        "kb_article:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "zammad",
+          "osticket"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "customer",
+      "name": "Customer",
+      "experience": "customer",
+      "description": "Opens tickets, replies, browses the knowledge base, and rates resolutions via the self-service portal.",
+      "responsibilities": [
+        "Submit and track tickets",
+        "Browse the knowledge base",
+        "Submit a CSAT rating"
+      ],
+      "related_features": [
+        "support.customer_portal",
+        "support.knowledge_base",
+        "support.csat_surveys"
+      ],
+      "common_permissions": [
+        "ticket:create_own",
+        "ticket:view_own"
+      ],
+      "provenance": {
+        "sources": [
+          "osticket",
+          "chatwoot",
+          "zammad"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / automation",
+      "experience": "system",
+      "description": "Automated processes: SLA/escalation timers, trigger-based automation rules, CSAT survey dispatch.",
+      "responsibilities": [
+        "Evaluate SLA breaches and escalate",
+        "Run automation rules",
+        "Send CSAT surveys"
+      ],
+      "related_features": [
+        "support.escalation",
+        "support.ticket_automation_rules",
+        "support.csat_surveys"
+      ],
+      "common_permissions": [],
+      "provenance": {
+        "sources": [
+          "zammad"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

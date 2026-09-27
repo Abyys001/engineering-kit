@@ -1,0 +1,1212 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "name": "Project management",
+  "aliases": [
+    "issue tracking",
+    "task management",
+    "agile/scrum tooling",
+    "kanban"
+  ],
+  "description": "Workspaces and projects for planning and tracking work: tasks/issues with statuses and dependencies, kanban boards, sprints/cycles, milestones, time tracking, comments, and reporting.",
+  "nace": [
+    "J62.01",
+    "M70.22"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "plane",
+      "title": "Plane",
+      "url": "https://github.com/makeplane/plane",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "888b0869dc6a3cc993e6f2f289ee81b191139e1f",
+      "local_path": "sources/domains/plane/source",
+      "notes": "reference-only (AGPL). Modern issue-tracking/project-management app (Linear/Jira-like). Cloned apps/api (Django backend) from the `preview` branch. Covers Workspace, Project, Issue (+ Assignee/Label/Comment/Attachment/Relation/Subscriber/Reaction/Version), State/StateGroup, Cycle, Module, Estimate, View, Page, Intake, Notification models."
+    },
+    {
+      "id": "kanboard",
+      "title": "Kanboard",
+      "url": "https://github.com/kanboard/kanboard",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "cf53b54597b67b60140586c09c2fe6132ead013c",
+      "local_path": "sources/domains/kanboard/source",
+      "notes": "Permissive (MIT). A focused, mature kanban board tool (PHP). Full repository cloned (76 MB, under the 200,000 KB threshold). TaskModel/SubtaskModel/ColumnModel/SwimlaneModel/BoardModel/ProjectModel/ProjectRoleModel are the primary references. This is the domain's permissively-licensed source, per the research brief's request to find one where possible."
+    }
+  ],
+  "features": [
+    {
+      "id": "project-management.workspaces",
+      "name": "Workspaces",
+      "classification": "core",
+      "description": "A top-level container for an organization's projects, members, and settings.",
+      "users": [
+        "workspace_admin"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "member_management",
+        "workspace_settings",
+        "theming"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "admin",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Workspace/WorkspaceMember/WorkspaceTheme models; single source (Kanboard has no workspace layer above project)."
+      }
+    },
+    {
+      "id": "project-management.projects",
+      "name": "Projects",
+      "classification": "core",
+      "description": "A container for a related set of tasks, with its own members, states, and settings, inside a workspace.",
+      "users": [
+        "project_manager",
+        "contributor"
+      ],
+      "entities": [
+        "project"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "project_identifier",
+        "member_roles",
+        "network_visibility"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Project/ProjectMember/ProjectIdentifier models and Kanboard's ProjectModel/ProjectRoleModel are independent implementations."
+      }
+    },
+    {
+      "id": "project-management.tasks_issues",
+      "name": "Tasks / issues",
+      "classification": "core",
+      "description": "The core unit of work: a title, description, assignees, priority, dates, and status, belonging to a project.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [
+        "task_lifecycle"
+      ],
+      "capabilities": [
+        "rich_description",
+        "assignees",
+        "priority",
+        "due_dates"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "auto-summarize thread",
+        "priority/label suggestion"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Issue model (priority, start_date/target_date, assignees, sequence_id) and Kanboard's TaskModel (is_active open/closed, priority, due date) are independent implementations."
+      }
+    },
+    {
+      "id": "project-management.subtasks",
+      "name": "Subtasks",
+      "classification": "common",
+      "description": "Breaking a task down into smaller child tasks tracked toward the parent's completion.",
+      "users": [
+        "contributor"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [
+        "subtask_completion_rollup"
+      ],
+      "capabilities": [
+        "parent_child_linking",
+        "completion_rollup"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Issue.parent self-referencing ForeignKey and Kanboard's dedicated SubtaskModel (a distinct, lighter-weight checklist-style subtask, not a full task) are independent implementations of related but differently-scoped concepts."
+      }
+    },
+    {
+      "id": "project-management.statuses_workflows",
+      "name": "Statuses and workflows",
+      "classification": "core",
+      "description": "Configurable per-project statuses (grouped into backlog/unstarted/started/completed/cancelled) that define a task's workflow.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "state"
+      ],
+      "workflows": [
+        "task_lifecycle"
+      ],
+      "capabilities": [
+        "custom_states",
+        "state_grouping",
+        "default_state"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "workflow",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's State model and StateGroup (backlog/unstarted/started/completed/cancelled/triage); Kanboard has only a binary open/closed status plus columns, not a configurable grouped-state model, so not counted as a second independent source for this specific shape."
+      }
+    },
+    {
+      "id": "project-management.boards_kanban",
+      "name": "Kanban boards",
+      "classification": "core",
+      "description": "A visual board of columns (statuses) and swimlanes, with drag-and-drop task cards.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "state",
+        "swimlane"
+      ],
+      "workflows": [
+        "task_lifecycle"
+      ],
+      "capabilities": [
+        "drag_drop",
+        "swimlanes",
+        "wip_limits"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "kanboard",
+          "plane"
+        ],
+        "confidence": "medium",
+        "notes": "Kanboard's dedicated BoardModel/ColumnModel/SwimlaneModel (with WIP-limit-oriented ColumnRestrictionModel) is the direct implementation; Plane's State.sequence + Issue.sort_order corroborate the same board/column concept from a second source."
+      }
+    },
+    {
+      "id": "project-management.task_dependencies",
+      "name": "Task dependencies",
+      "classification": "core",
+      "description": "Linking tasks with typed relations (blocks, relates to, duplicates, must-start/finish-before) to sequence work.",
+      "users": [
+        "project_manager",
+        "contributor"
+      ],
+      "entities": [
+        "task_relation"
+      ],
+      "workflows": [
+        "dependency_management"
+      ],
+      "capabilities": [
+        "typed_relations",
+        "bidirectional_linking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "workflow",
+        "staff"
+      ],
+      "integrations": [
+        "git_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's IssueRelationChoices (duplicate, relates_to, blocked_by, start_before, finish_before, implemented_by) with defined bidirectional reverse pairs (e.g. blocked_by <-> blocking); Kanboard has a simpler TaskLinkModel/TaskLinkValidator not inspected in comparable depth. Single source scored."
+      }
+    },
+    {
+      "id": "project-management.comments_mentions",
+      "name": "Comments and mentions",
+      "classification": "core",
+      "description": "Threaded discussion on a task, with @-mentions and emoji reactions.",
+      "users": [
+        "contributor",
+        "guest_client"
+      ],
+      "entities": [
+        "comment"
+      ],
+      "workflows": [
+        "commenting_and_mentions"
+      ],
+      "capabilities": [
+        "threaded_comments",
+        "mentions",
+        "reactions"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "thread summarization"
+      ],
+      "real_time_relevance": "high",
+      "tags": [
+        "core",
+        "communication",
+        "staff"
+      ],
+      "integrations": [
+        "chat_notifications"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's IssueComment, IssueMention, CommentReaction, IssueReaction models; single source (Kanboard has plain task comments without a dedicated mention/reaction model in the areas inspected)."
+      }
+    },
+    {
+      "id": "project-management.cycles_sprints",
+      "name": "Cycles / sprints",
+      "classification": "common",
+      "description": "A fixed-duration iteration (sprint) that a set of tasks is planned into and executed within.",
+      "users": [
+        "project_manager",
+        "contributor"
+      ],
+      "entities": [
+        "cycle"
+      ],
+      "workflows": [
+        "cycle_planning"
+      ],
+      "capabilities": [
+        "date_bounded",
+        "burndown_ready"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "scope-creep detection mid-cycle"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "scheduling",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Cycle model (start_date/end_date, owned_by, CycleIssue join, CycleUserProperties); not found in the cloned Kanboard scope (Kanboard has no sprint/cycle concept). Single source."
+      }
+    },
+    {
+      "id": "project-management.modules_epics",
+      "name": "Modules / epics",
+      "classification": "recommended",
+      "description": "A larger unit of work (feature or epic) that groups related tasks, independent of the sprint/cycle timeline.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "module"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "cross_cycle_grouping",
+        "module_status"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's Module model and ModuleStatus enum (backlog/planned/in-progress/paused/completed/cancelled); single source."
+      }
+    },
+    {
+      "id": "project-management.milestones",
+      "name": "Milestones",
+      "classification": "common",
+      "description": "A target date marking a significant point in a project, used to group and track progress toward a deliverable.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "milestone"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "target_date_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "scheduling",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Plane's Module (which carries target_date-like planning fields) since no dedicated 'Milestone' model was found in either cloned source; commonly a thin layer over modules/labels in practice. Low confidence, reasoned."
+      }
+    },
+    {
+      "id": "project-management.gantt_timeline",
+      "name": "Gantt / timeline view",
+      "classification": "recommended",
+      "description": "A horizontal timeline view of tasks by start/target date, showing dependencies and overlaps.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "task",
+        "view"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "date_based_layout",
+        "dependency_lines"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "reporting",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Plane's Issue.start_date/target_date and IssueRelationChoices (start_before/finish_before); no dedicated Gantt-rendering model exists server-side (it is a client-side view), single source, reasoned."
+      }
+    },
+    {
+      "id": "project-management.time_tracking",
+      "name": "Time tracking",
+      "classification": "common",
+      "description": "Logging time spent on a task, by whom and when, for effort reporting.",
+      "users": [
+        "contributor"
+      ],
+      "entities": [
+        "time_entry"
+      ],
+      "workflows": [
+        "time_tracking_workflow"
+      ],
+      "capabilities": [
+        "manual_entry",
+        "per_task_totals"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "kanboard"
+        ],
+        "confidence": "low",
+        "notes": "Kanboard's dedicated SubtaskTimeTrackingModel (start/stop timer per subtask); not found as a first-class model in the cloned Plane scope. Single source."
+      }
+    },
+    {
+      "id": "project-management.labels",
+      "name": "Labels",
+      "classification": "common",
+      "description": "Free-form or predefined tags applied to tasks for categorization and filtering.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "label"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "color_coding",
+        "multi_label"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-labeling from description text"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Label/IssueLabel models and Kanboard's TaskTagModel/category+color model are independent implementations."
+      }
+    },
+    {
+      "id": "project-management.attachments",
+      "name": "Attachments",
+      "classification": "common",
+      "description": "Uploading files to a task for reference (screenshots, documents, designs).",
+      "users": [
+        "contributor"
+      ],
+      "entities": [
+        "attachment"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "file_upload",
+        "inline_preview"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's IssueAttachment/Asset models and Kanboard's TaskFileModel are independent implementations."
+      }
+    },
+    {
+      "id": "project-management.views_filters",
+      "name": "Saved views and filters",
+      "classification": "common",
+      "description": "Saving a combination of filters, sort order, and grouping as a reusable view.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "view"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "filter_persistence",
+        "shared_views"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "search"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's View model (view.py); not found in the cloned Kanboard scope beyond ad hoc TaskFilter classes (client-request-time filters, not a saved/persisted view). Single source."
+      }
+    },
+    {
+      "id": "project-management.guest_client_access",
+      "name": "Guest / client access",
+      "classification": "recommended",
+      "description": "A restricted external member role for clients or stakeholders to view or comment on specific projects without full workspace access.",
+      "users": [
+        "guest_client"
+      ],
+      "entities": [
+        "guest_member"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "restricted_role",
+        "public_project_link"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's ProjectPublicMember model and ProjectDeployBoard (public project board deployment); not found as a comparable guest concept in the cloned Kanboard scope. Single source."
+      }
+    },
+    {
+      "id": "project-management.activity_feed",
+      "name": "Activity feed",
+      "classification": "recommended",
+      "description": "A chronological, per-task or per-project audit trail of field changes, status moves, and comments.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "field_change_log",
+        "per_project_feed"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "staff",
+        "reporting"
+      ],
+      "integrations": [
+        "git_provider",
+        "chat_notifications"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's IssueActivity model and Kanboard's project/task Activity analytics (ProjectActivityModel, TaskEventBuilder) are independent implementations."
+      }
+    },
+    {
+      "id": "project-management.estimates_story_points",
+      "name": "Estimates / story points",
+      "classification": "recommended",
+      "description": "Sizing a task's effort, either as a raw point value or against a project-defined estimate scale.",
+      "users": [
+        "contributor",
+        "project_manager"
+      ],
+      "entities": [
+        "estimate",
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "point_scale",
+        "per_project_scale"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "estimate suggestion from historical velocity"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Issue.point (0-12 raw) and Issue.estimate_point (FK to a project-defined Estimate scale); single source, not found in the cloned Kanboard scope."
+      }
+    },
+    {
+      "id": "project-management.recurring_tasks",
+      "name": "Recurring tasks",
+      "classification": "optional",
+      "description": "Automatically regenerating a task on a schedule once the previous occurrence is completed.",
+      "users": [
+        "contributor"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "recurrence_rules"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "scheduling"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "kanboard"
+        ],
+        "confidence": "low",
+        "notes": "Kanboard's TaskRecurrenceModel/RecurringTaskSubscriber; not found in the cloned Plane scope. Single source."
+      }
+    },
+    {
+      "id": "project-management.workload_capacity",
+      "name": "Workload / capacity view",
+      "classification": "optional",
+      "description": "Visualizing how much work is assigned to each person to spot over/under-allocation.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "per_assignee_load"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "overload risk prediction"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "management",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Plane's Issue.assignees plus per-user cycle/module properties (CycleUserProperties, ModuleUserProperties); no dedicated workload/capacity model found. Single source, reasoned."
+      }
+    },
+    {
+      "id": "project-management.burndown_velocity_reports",
+      "name": "Burndown and velocity reports",
+      "classification": "optional",
+      "description": "Charting remaining work over a cycle (burndown) and completed points per cycle over time (velocity).",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "cycle",
+        "estimate"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "burndown_chart",
+        "velocity_trend"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "management",
+        "reporting",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Plane's Cycle + CycleIssue + Issue.estimate_point/point data model, which is what a burndown/velocity report would be computed from; no dedicated report-generation model inspected. Single source, reasoned."
+      }
+    },
+    {
+      "id": "project-management.saved_views_sharing",
+      "name": "View sharing",
+      "classification": "optional",
+      "description": "Sharing a saved view publicly or with specific teammates.",
+      "users": [
+        "project_manager"
+      ],
+      "entities": [
+        "view"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "public_link",
+        "access_scoping"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Plane's View model combined with its ProjectDeployBoard public-sharing pattern; single source, reasoned."
+      }
+    },
+    {
+      "id": "project-management.intake_triage",
+      "name": "Intake / triage",
+      "classification": "optional",
+      "description": "A lightweight submission form (often for non-members) that creates a triage-state task for a maintainer to accept or reject.",
+      "users": [
+        "guest_client",
+        "project_manager"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "public_submission_form",
+        "triage_queue"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-triage/dedup incoming requests"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Intake model and the dedicated StateGroup.TRIAGE value; single source, not found in the cloned Kanboard scope."
+      }
+    },
+    {
+      "id": "project-management.favorites",
+      "name": "Favorites / pinning",
+      "classification": "optional",
+      "description": "Letting a user pin frequently-used projects, views, or tasks for quick access.",
+      "users": [
+        "contributor"
+      ],
+      "entities": [
+        "task"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "per_user_pins"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Favorite model (favorite.py); not found in the cloned Kanboard scope. Single source."
+      }
+    },
+    {
+      "id": "project-management.private_projects",
+      "name": "Private projects",
+      "classification": "optional",
+      "description": "Restricting a project's visibility to explicitly invited members within the workspace.",
+      "users": [
+        "project_manager",
+        "workspace_admin"
+      ],
+      "entities": [
+        "project"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "visibility_control"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Plane's ProjectNetwork enum (private/public visibility); single source."
+      }
+    }
+  ]
+}

@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "domain": "fintech",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "customer",
+      "name": "Customer",
+      "experience": "customer",
+      "description": "The party using wallets, payments, cards, and loans.",
+      "responsibilities": [
+        "Complete onboarding",
+        "Initiate payments and transfers",
+        "Manage own cards and limits",
+        "Raise disputes"
+      ],
+      "related_features": [
+        "fintech.party_management",
+        "fintech.kyc_onboarding",
+        "fintech.payments"
+      ],
+      "common_permissions": [
+        "own_account:read",
+        "own_payment:create",
+        "own_dispute:create"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "compliance_officer",
+      "name": "Compliance Officer",
+      "experience": "staff",
+      "description": "Reviews KYC cases, sanctions hits, and AML alerts.",
+      "responsibilities": [
+        "Approve/reject KYC cases",
+        "Investigate AML alerts",
+        "File suspicious activity reports"
+      ],
+      "related_features": [
+        "fintech.kyc_onboarding",
+        "fintech.aml_transaction_monitoring",
+        "fintech.sanctions_screening"
+      ],
+      "common_permissions": [
+        "kyc_case:review",
+        "aml_alert:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "risk_analyst",
+      "name": "Risk / Fraud Analyst",
+      "experience": "staff",
+      "description": "Monitors and investigates fraud alerts in real time.",
+      "responsibilities": [
+        "Triage fraud alerts",
+        "Adjust fraud rules",
+        "Escalate confirmed fraud"
+      ],
+      "related_features": [
+        "fintech.fraud_monitoring"
+      ],
+      "common_permissions": [
+        "fraud_alert:manage",
+        "payment:block"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned role inference."
+      }
+    },
+    {
+      "id": "support_agent",
+      "name": "Support Agent",
+      "experience": "staff",
+      "description": "Handles customer support requests and disputes.",
+      "responsibilities": [
+        "Assist customers",
+        "Open and track disputes"
+      ],
+      "related_features": [
+        "fintech.dispute_management"
+      ],
+      "common_permissions": [
+        "dispute:create",
+        "dispute:update"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned role inference."
+      }
+    },
+    {
+      "id": "loan_officer",
+      "name": "Loan Officer",
+      "experience": "staff",
+      "description": "Underwrites and services loans.",
+      "responsibilities": [
+        "Review loan applications",
+        "Approve/reject",
+        "Monitor arrears"
+      ],
+      "related_features": [
+        "fintech.lending_origination",
+        "fintech.loan_servicing"
+      ],
+      "common_permissions": [
+        "loan:underwrite",
+        "loan:approve"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "finance_ops",
+      "name": "Finance Operations",
+      "experience": "staff",
+      "description": "Runs reconciliation, fee management, and statement generation.",
+      "responsibilities": [
+        "Run reconciliation",
+        "Manage fee schedules",
+        "Investigate discrepancies"
+      ],
+      "related_features": [
+        "fintech.reconciliation",
+        "fintech.fee_management",
+        "fintech.statements"
+      ],
+      "common_permissions": [
+        "reconciliation:run",
+        "fee_schedule:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk",
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "administrator",
+      "name": "Administrator",
+      "experience": "administration",
+      "description": "Configures products, limits, and integrations for the platform.",
+      "responsibilities": [
+        "Configure fee/limit policies",
+        "Manage integrations",
+        "Manage staff access"
+      ],
+      "related_features": [
+        "fintech.limits_management",
+        "fintech.open_banking_connectivity"
+      ],
+      "common_permissions": [
+        "*:configure"
+      ],
+      "provenance": {
+        "sources": [
+          "apache-fineract"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / Automation",
+      "experience": "system",
+      "description": "Automated processes: fraud scoring, webhook delivery, scheduled accrual.",
+      "responsibilities": [
+        "Score transactions",
+        "Deliver webhooks",
+        "Run scheduled jobs"
+      ],
+      "related_features": [
+        "fintech.fraud_monitoring",
+        "fintech.webhooks_events",
+        "fintech.interest_accrual"
+      ],
+      "common_permissions": [
+        "internal_service"
+      ],
+      "provenance": {
+        "sources": [
+          "blnk"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

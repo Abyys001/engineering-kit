@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "last_reviewed": "2026-09-27",
+  "note": "Global registry of standards/ontologies referenced as std:<id>. `status` records acquisition truthfully: acquired | partial | not_acquired | reference_only. Paths are relative to the kit root.",
+  "standards": [
+    {
+      "id": "nace-rev2.1",
+      "title": "NACE Rev. 2.1 — Statistical classification of economic activities in the EU",
+      "publisher": "Eurostat",
+      "url": "https://ec.europa.eu/eurostat/web/nace",
+      "source_type": "authoritative",
+      "purpose": "Industry taxonomy for structuring domains; not a feature catalog",
+      "domains": ["*"],
+      "license": "CC BY 4.0 (Eurostat copyright notice and free re-use of data policy)",
+      "version": "SDMX codelist NACE_R2_1 v13.2",
+      "retrieved": "2026-09-26",
+      "local_path": "knowledge/standards/nace-rev2.1",
+      "status": "acquired"
+    },
+    {
+      "id": "fhir-r6",
+      "title": "HL7 FHIR R6 (6.0.0-snapshot1)",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/6.0.0-snapshot1/downloads.html",
+      "source_type": "authoritative",
+      "purpose": "Healthcare resource definitions, value sets, profiles, examples",
+      "domains": ["healthcare"],
+      "license": "CC0 (FHIR specification content); HL7 IP policy for trademarks",
+      "version": "6.0.0-snapshot1",
+      "retrieved": "2026-09-26",
+      "local_path": "knowledge/standards/fhir-r6",
+      "status": "acquired"
+    },
+    {
+      "id": "fhir-r4",
+      "title": "HL7 FHIR R4 (4.0.1)",
+      "publisher": "HL7 International",
+      "url": "https://hl7.org/fhir/R4/",
+      "source_type": "authoritative",
+      "purpose": "The FHIR release most production systems (incl. Medplum) implement; do not mix with R6 without saying so",
+      "domains": ["healthcare"],
+      "license": "CC0",
+      "version": "4.0.1",
+      "retrieved": null,
+      "local_path": null,
+      "status": "reference_only"
+    },
+    {
+      "id": "fibo",
+      "title": "Financial Industry Business Ontology (FIBO)",
+      "publisher": "EDM Council",
+      "url": "https://github.com/edmcouncil/fibo",
+      "source_type": "authoritative",
+      "purpose": "Financial terminology, entities, relationships",
+      "domains": ["fintech", "exchange"],
+      "license": "MIT",
+      "version": "20260701",
+      "retrieved": "2026-09-26",
+      "local_path": "knowledge/ontologies/fibo",
+      "status": "acquired"
+    },
+    {
+      "id": "gs1-epcis",
+      "title": "GS1 EPCIS 2.0 and Core Business Vocabulary (CBV)",
+      "publisher": "GS1",
+      "url": "https://github.com/gs1/EPCIS",
+      "source_type": "authoritative",
+      "purpose": "Supply-chain event model and vocabulary (what/when/where/why)",
+      "domains": ["logistics", "manufacturing", "ecommerce"],
+      "license": "GS1 IP Policy disclaimer (no OSI license; preserve GS1 copyright and disclaimer verbatim)",
+      "version": "EPCIS/CBV 2.0 (development + public-review content)",
+      "retrieved": "2026-09-26",
+      "local_path": "knowledge/standards/gs1-epcis",
+      "status": "acquired"
+    },
+    {
+      "id": "openapi",
+      "title": "OpenAPI Specification",
+      "publisher": "OpenAPI Initiative",
+      "url": "https://github.com/OAI/OpenAPI-Specification",
+      "source_type": "authoritative",
+      "purpose": "API contract modeling, schemas, tooling",
+      "domains": ["*"],
+      "license": "Apache-2.0",
+      "version": "3.2.1 (latest); 1.2-3.2.1 all present",
+      "retrieved": "2026-09-26",
+      "local_path": "knowledge/standards/openapi",
+      "status": "acquired"
+    }
+  ]
+}

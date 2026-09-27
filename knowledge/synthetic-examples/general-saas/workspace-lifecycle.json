@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "description": "Fabricated example of a workspace and its team-invite / API-key / deletion lifecycle. All data is invented; example.com emails, +1-555-01xx phones, fictional names. Not real customer or business data.",
+  "main_entity": "workspace",
+  "workspace": {
+    "id": "ws_9f2c1a7e",
+    "name": "Northwind Kites Co",
+    "slug": "northwind-kites",
+    "plan_id": "plan_growth",
+    "status": "active",
+    "created_at": "2026-01-14T09:03:00Z",
+    "owner_user_id": "usr_owner_0001",
+    "seats_included": 10,
+    "seats_used": 6
+  },
+  "members": [
+    {"user_id": "usr_owner_0001", "email": "priya.shah@example.com", "role": "tenant_owner", "joined_at": "2026-01-14T09:03:00Z"},
+    {"user_id": "usr_admin_0002", "email": "diego.ramirez@example.com", "role": "tenant_admin", "joined_at": "2026-01-15T10:00:00Z"},
+    {"user_id": "usr_member_0003", "email": "amara.okafor@example.com", "role": "tenant_member", "joined_at": "2026-01-20T14:22:00Z"}
+  ],
+  "invitation_state_transitions": [
+    {
+      "invitation_id": "inv_5501",
+      "invitee_email": "liu.wen@example.com",
+      "invited_role": "tenant_member",
+      "transitions": [
+        {"from": null, "to": "pending", "event": "created", "at": "2026-02-01T08:00:00Z", "by": "usr_admin_0002"},
+        {"from": "pending", "to": "accepted", "event": "accept", "at": "2026-02-02T11:45:00Z", "by": "liu.wen@example.com"}
+      ]
+    },
+    {
+      "invitation_id": "inv_5502",
+      "invitee_email": "old.contractor@example.com",
+      "invited_role": "tenant_member",
+      "transitions": [
+        {"from": null, "to": "pending", "event": "created", "at": "2026-02-03T09:00:00Z", "by": "usr_admin_0002"},
+        {"from": "pending", "to": "revoked", "event": "revoke", "at": "2026-02-04T16:10:00Z", "by": "usr_admin_0002",
+         "reason": "Invited to the wrong workspace by mistake"}
+      ]
+    },
+    {
+      "invitation_id": "inv_5503",
+      "invitee_email": "unresponsive.person@example.com",
+      "invited_role": "developer",
+      "transitions": [
+        {"from": null, "to": "pending", "event": "created", "at": "2026-01-10T09:00:00Z", "by": "usr_owner_0001"},
+        {"from": "pending", "to": "expired", "event": "expire", "at": "2026-01-17T09:00:00Z", "by": "system"}
+      ]
+    }
+  ],
+  "api_key_lifecycle": {
+    "api_key_id": "key_ab12cd34",
+    "name": "Production integration",
+    "prefix": "nk_live_ab12",
+    "scopes": ["read:contacts", "write:webhooks"],
+    "transitions": [
+      {"from": null, "to": "active", "event": "created", "at": "2026-01-16T12:00:00Z", "by": "usr_admin_0002"},
+      {"from": "active", "to": "revoked", "event": "revoke", "at": "2026-03-01T09:30:00Z", "by": "usr_admin_0002",
+       "reason": "Rotated after a contractor offboarded"}
+    ]
+  },
+  "workspace_offboarding_example": {
+    "workspace_id": "ws_stale_demo_001",
+    "transitions": [
+      {"from": "active", "to": "pending_deletion", "event": "request_deletion", "at": "2026-04-01T10:00:00Z", "by": "usr_owner_demo"},
+      {"from": null, "to": null, "event": "export_offered", "at": "2026-04-01T10:00:05Z", "note": "System offered a CSV/JSON export before purge, per GDPR Art. 20/17 motivation."},
+      {"from": "pending_deletion", "to": "deleted", "event": "purge_after_grace_period", "at": "2026-04-15T10:00:00Z", "by": "system"}
+    ]
+  },
+  "notes": "Synthetic example demonstrating the invitation, api_key, and workspace state machines defined in workflows.json. All identifiers, names, and timestamps are fabricated for illustration only."
+}

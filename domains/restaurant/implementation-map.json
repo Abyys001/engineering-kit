@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "domain": "restaurant",
+  "last_reviewed": "2026-09-26",
+  "mappings": [
+    {
+      "feature": "restaurant.tables",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's restaurant DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "restaurant.menu",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's restaurant DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "restaurant.menu_modifiers",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.reservations",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's restaurant DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "restaurant.waitlist",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.dine_in_orders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's restaurant DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "restaurant.kitchen_display",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.pos_integration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.payments",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/frappe-hospitality/source"
+      ],
+      "status": "reference",
+      "notes": "Kit has no implementation yet; Frappe Hospitality's restaurant DocTypes cover this feature's data model for reference (GPL-3.0, not copied)."
+    },
+    {
+      "feature": "restaurant.split_bills",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.tips",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.takeout_orders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.delivery_orders",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.third_party_delivery_integration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.inventory",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.recipes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.staff_shifts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.loyalty",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.reviews",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.online_ordering",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.menu_allergen_labeling",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.qr_code_table_ordering",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.gift_cards",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.self_service_kiosk",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    },
+    {
+      "feature": "restaurant.multi_location_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "unknown",
+      "notes": "No kit implementation and no local reference clone covers this feature yet."
+    }
+  ]
+}

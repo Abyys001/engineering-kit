@@ -1,0 +1,232 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "student",
+      "name": "Student",
+      "experience": "customer",
+      "description": "The learner enrolled in courses.",
+      "responsibilities": [
+        "Enroll in courses",
+        "Submit work",
+        "Take exams",
+        "View grades"
+      ],
+      "related_features": [
+        "education.student_portal",
+        "education.enrollment"
+      ],
+      "common_permissions": [
+        "submission:create_own",
+        "grade:read_own"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "guardian",
+      "name": "Parent / guardian",
+      "experience": "customer",
+      "description": "A parent or legal guardian monitoring a student's progress.",
+      "responsibilities": [
+        "View grades/attendance",
+        "Pay fees",
+        "Receive announcements"
+      ],
+      "related_features": [
+        "education.parent_guardian_access",
+        "education.fees_billing"
+      ],
+      "common_permissions": [
+        "student:read_linked"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "instructor",
+      "name": "Instructor / teacher",
+      "experience": "staff",
+      "description": "Delivers course content, creates assignments/exams, and grades student work.",
+      "responsibilities": [
+        "Author content",
+        "Create assignments/exams",
+        "Grade submissions",
+        "Take attendance"
+      ],
+      "related_features": [
+        "education.assignments",
+        "education.grading_gradebook",
+        "education.attendance"
+      ],
+      "common_permissions": [
+        "assignment:write",
+        "grade:write"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "teaching_assistant",
+      "name": "Teaching assistant",
+      "experience": "staff",
+      "description": "Assists an instructor with grading, discussion moderation, and student support.",
+      "responsibilities": [
+        "Grade submissions",
+        "Moderate discussions"
+      ],
+      "related_features": [
+        "education.grading_gradebook",
+        "education.discussion_forums"
+      ],
+      "common_permissions": [
+        "grade:write_assisted"
+      ],
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "academic_admin",
+      "name": "Academic administrator / registrar",
+      "experience": "administration",
+      "description": "Manages course catalog, terms, sections, enrollment, and admissions.",
+      "responsibilities": [
+        "Manage catalog and terms",
+        "Process enrollment/admissions",
+        "Publish report cards"
+      ],
+      "related_features": [
+        "education.course_catalog",
+        "education.enrollment",
+        "education.admissions"
+      ],
+      "common_permissions": [
+        "course:write",
+        "enrollment:write"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "school_admin",
+      "name": "School / platform administrator",
+      "experience": "management",
+      "description": "Oversees institution-wide configuration, staff, and policy.",
+      "responsibilities": [
+        "Manage institution settings",
+        "Manage staff accounts",
+        "Oversee compliance"
+      ],
+      "related_features": [
+        "education.course_catalog"
+      ],
+      "common_permissions": [
+        "institution:write"
+      ],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "billing_staff",
+      "name": "Billing / fees staff",
+      "experience": "staff",
+      "description": "Manages fee structures, invoices, and payment collection.",
+      "responsibilities": [
+        "Issue invoices",
+        "Record payments",
+        "Follow up on overdue fees"
+      ],
+      "related_features": [
+        "education.fees_billing"
+      ],
+      "common_permissions": [
+        "fee_invoice:write"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "proctor",
+      "name": "Exam proctor",
+      "experience": "staff",
+      "description": "Supervises exam sessions for integrity.",
+      "responsibilities": [
+        "Monitor exam sessions",
+        "Flag irregularities"
+      ],
+      "related_features": [
+        "education.exams_quizzes"
+      ],
+      "common_permissions": [
+        "exam_attempt:read"
+      ],
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from exam-integrity tooling common in the space; not a distinct first-class role in the inspected data models."
+      }
+    },
+    {
+      "id": "system_integration",
+      "name": "System / integration account",
+      "experience": "system",
+      "description": "Non-human client syncing rosters/grades or launching LTI tools.",
+      "responsibilities": [
+        "Sync roster/grade data",
+        "Broker LTI launches"
+      ],
+      "related_features": [
+        "education.roster_sync",
+        "education.lti_tool_integration"
+      ],
+      "common_permissions": [
+        "roster:read",
+        "roster:write"
+      ],
+      "provenance": {
+        "sources": [
+          "1edtech-oneroster",
+          "1edtech-lti"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

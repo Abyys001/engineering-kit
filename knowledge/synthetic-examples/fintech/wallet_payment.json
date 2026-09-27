@@ -1,0 +1,91 @@
+{
+  "_fabricated": true,
+  "_note": "Synthetic example for domains/fintech per RESEARCH-BRIEF.md. All names, emails, phones, ids, and amounts are invented. Do not treat as real customer or business data.",
+  "party": {
+    "id": "party_9f2c1a",
+    "party_type": "individual",
+    "full_name_or_legal_name": "Jordan A. Rivera",
+    "email": "jordan.rivera@example.com",
+    "phone": "+1-555-0142",
+    "risk_rating": "low",
+    "status": "active",
+    "created_at": "2026-08-01T09:14:00Z"
+  },
+  "kyc_case": {
+    "id": "kyc_77a310",
+    "party_id": "party_9f2c1a",
+    "status": "approved",
+    "risk_score": 12,
+    "verification_method": "document_plus_liveness",
+    "submitted_at": "2026-08-01T09:16:00Z",
+    "decided_at": "2026-08-01T09:22:40Z",
+    "history": [
+      {"status": "pending", "at": "2026-08-01T09:16:00Z", "event": "documents_submitted"},
+      {"status": "in_review", "at": "2026-08-01T09:18:12Z", "event": "submit_for_review"},
+      {"status": "approved", "at": "2026-08-01T09:22:40Z", "event": "approve"}
+    ]
+  },
+  "wallet": {
+    "id": "wallet_5b0e44",
+    "party_id": "party_9f2c1a",
+    "account_id": "acct_001af9",
+    "currency": "USD",
+    "balance": "482.10",
+    "status": "active"
+  },
+  "account": {
+    "id": "acct_001af9",
+    "party_id": "party_9f2c1a",
+    "account_number": "US00-EXAMPLE-0000000001",
+    "currency": "USD",
+    "account_type": "wallet_ledger",
+    "status": "active"
+  },
+  "payment": {
+    "id": "pay_c41d02",
+    "party_id": "party_9f2c1a",
+    "direction": "inbound",
+    "amount": "500.00",
+    "currency": "USD",
+    "rail": "ach",
+    "status": "completed",
+    "history": [
+      {"status": "initiated", "at": "2026-09-20T14:00:00Z", "event": "submit"},
+      {"status": "pending", "at": "2026-09-20T14:00:05Z", "event": "submit"},
+      {"status": "completed", "at": "2026-09-22T02:00:00Z", "event": "settle"}
+    ],
+    "ledger_entries": [
+      {"id": "le_1", "account_id": "acct_001af9", "direction": "credit", "amount": "500.00", "currency": "USD", "posted_at": "2026-09-22T02:00:00Z", "transaction_ref": "pay_c41d02"},
+      {"id": "le_2", "account_id": "acct_fees_0007", "direction": "debit", "amount": "500.00", "currency": "USD", "posted_at": "2026-09-22T02:00:00Z", "transaction_ref": "pay_c41d02"}
+    ]
+  },
+  "fee": {
+    "id": "fee_2c9911",
+    "account_id": "acct_001af9",
+    "payment_id": "pay_c41d02",
+    "fee_type": "inbound_ach_flat",
+    "amount": "1.50",
+    "currency": "USD"
+  },
+  "card": {
+    "id": "card_a10efb",
+    "party_id": "party_9f2c1a",
+    "wallet_id": "wallet_5b0e44",
+    "pan_last4": "4242",
+    "expiry": "2030-08",
+    "form_factor": "virtual",
+    "status": "active"
+  },
+  "dispute": {
+    "id": "disp_88bb02",
+    "payment_id": "pay_prior_e0091a",
+    "reason": "unrecognized_charge",
+    "amount": "39.99",
+    "status": "resolved_customer",
+    "history": [
+      {"status": "opened", "at": "2026-09-10T10:00:00Z", "event": "customer_opened"},
+      {"status": "investigating", "at": "2026-09-10T15:00:00Z", "event": "start_investigation"},
+      {"status": "resolved_customer", "at": "2026-09-14T11:30:00Z", "event": "rule_for_customer"}
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-kit/product-builder/feature-selection.json",
+  "title": "Feature selection and scope",
+  "type": "object",
+  "required": ["schema", "project", "features"],
+  "properties": {
+    "schema": {"const": 1},
+    "project": {"type": "string"},
+    "features": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "scope", "requested", "reason"],
+        "properties": {
+          "id": {"type": "string", "description": "domain feature id, shared.* id, or custom.<snake> for asks with no catalog match"},
+          "name": {"type": "string"},
+          "domain_classification": {"enum": ["core", "common", "recommended", "optional", "premium", "compliance", "integration", "platform", "infrastructure", "custom"]},
+          "requested": {"type": "boolean", "description": "true only when the user explicitly asked for it"},
+          "scope": {"enum": ["IN_SCOPE", "DEPENDENCY", "PROPOSED", "OPTIONAL", "OUT_OF_SCOPE", "BLOCKED"]},
+          "reason": {"type": "string"},
+          "required_by": {"type": "array", "items": {"type": "string"}, "description": "feature ids whose requires-edge pulled this in"},
+          "blocked_by": {"type": "string"},
+          "platforms": {"type": "array", "items": {"enum": ["web", "mobile", "admin", "customer_portal", "backend", "ai", "real_time"]}},
+          "implementation": {
+            "type": "object",
+            "required": ["status", "plan"],
+            "properties": {
+              "status": {"enum": ["unknown", "reference", "partial", "curated", "tested", "production_ready"]},
+              "plan": {"enum": ["reuse", "adapt", "build", "integrate"]},
+              "kit_paths": {"type": "array", "items": {"type": "string"}},
+              "references": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "tenant_owner",
+      "name": "Workspace owner",
+      "experience": "administration",
+      "description": "The primary account holder for a workspace; the only role that can delete the workspace or change billing ownership.",
+      "responsibilities": [
+        "Manage billing and plan",
+        "Delete or transfer the workspace",
+        "Assign the admin role"
+      ],
+      "related_features": [
+        "general-saas.workspace_management",
+        "general-saas.billing_portal",
+        "general-saas.workspace_deletion_export"
+      ],
+      "common_permissions": [
+        "workspace:delete",
+        "billing:manage",
+        "member:assign_role"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "tenant_admin",
+      "name": "Workspace admin",
+      "experience": "administration",
+      "description": "Manages members, roles, and workspace-level settings, integrations, and security configuration.",
+      "responsibilities": [
+        "Invite and remove members",
+        "Configure SSO/SCIM",
+        "Manage API keys and webhooks"
+      ],
+      "related_features": [
+        "general-saas.team_invites",
+        "general-saas.sso_saml",
+        "general-saas.scim_provisioning"
+      ],
+      "common_permissions": [
+        "member:invite",
+        "member:remove",
+        "sso:configure",
+        "api_key:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "tenant_member",
+      "name": "Workspace member",
+      "experience": "staff",
+      "description": "A regular user of the product inside a workspace, scoped by whatever domain-specific role they hold in the vertical product.",
+      "responsibilities": [
+        "Use the product within their assigned permissions",
+        "View the workspace's changelog/status"
+      ],
+      "related_features": [
+        "general-saas.changelog"
+      ],
+      "common_permissions": [
+        "workspace:view"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "developer",
+      "name": "Developer / integrator",
+      "experience": "staff",
+      "description": "A technical user who integrates with the product's API on behalf of a workspace.",
+      "responsibilities": [
+        "Create and rotate API keys",
+        "Configure webhook subscriptions",
+        "Test against a sandbox"
+      ],
+      "related_features": [
+        "general-saas.api_keys",
+        "general-saas.webhooks",
+        "general-saas.sandbox_environment"
+      ],
+      "common_permissions": [
+        "api_key:create",
+        "webhook:configure"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "platform_support",
+      "name": "Platform support / operations",
+      "experience": "administration",
+      "description": "The SaaS vendor's own internal staff who operate the admin console, investigate incidents, and provide customer support across tenants.",
+      "responsibilities": [
+        "Search and inspect tenant workspaces",
+        "Publish status incidents",
+        "Toggle feature flags for rollout"
+      ],
+      "related_features": [
+        "general-saas.admin_console",
+        "general-saas.status_page",
+        "general-saas.feature_flags"
+      ],
+      "common_permissions": [
+        "admin_console:access",
+        "incident:publish",
+        "feature_flag:toggle"
+      ],
+      "provenance": {
+        "sources": [
+          "soc2-tsc"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / automation",
+      "experience": "system",
+      "description": "Automated processes: usage metering collectors, webhook delivery workers, scheduled billing jobs.",
+      "responsibilities": [
+        "Record usage events",
+        "Deliver webhook payloads",
+        "Evaluate entitlement limits"
+      ],
+      "related_features": [
+        "general-saas.usage_metering",
+        "general-saas.webhooks"
+      ],
+      "common_permissions": [],
+      "provenance": {
+        "sources": [
+          "lago-api"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

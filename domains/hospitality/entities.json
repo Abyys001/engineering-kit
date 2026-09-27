@@ -1,0 +1,528 @@
+{
+  "schema": 1,
+  "domain": "hospitality",
+  "last_reviewed": "2026-09-26",
+  "entities": [
+    {
+      "id": "property",
+      "name": "Property",
+      "description": "A single hotel/lodging property.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "room_type"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "address",
+        "default_currency"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.properties",
+        "hospitality.multi_property_management"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "room_type",
+      "name": "Room type",
+      "description": "A category of room shared across many physical rooms.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        },
+        {
+          "type": "has_many",
+          "target": "room"
+        },
+        {
+          "type": "has_many",
+          "target": "rate_plan"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "max_occupancy",
+        "base_rate"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.room_types"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "room",
+      "name": "Room",
+      "description": "A single physical room belonging to a room type.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "room_type"
+        }
+      ],
+      "important_fields": [
+        "number",
+        "floor",
+        "status"
+      ],
+      "states": [
+        "active",
+        "inactive",
+        "temporarily_inactive",
+        "out_of_order"
+      ],
+      "related_features": [
+        "hospitality.rooms",
+        "hospitality.connecting_rooms"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "rate_plan",
+      "name": "Rate plan",
+      "description": "A date-ranged price (and conditions) for a room type.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "room_type"
+        },
+        {
+          "type": "has_many",
+          "target": "rate_restriction"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "from_date",
+        "to_date",
+        "price",
+        "refundable"
+      ],
+      "states": [
+        "enabled",
+        "disabled"
+      ],
+      "related_features": [
+        "hospitality.rate_plans"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "rate_restriction",
+      "name": "Rate restriction",
+      "description": "A constraint on a rate plan: min/max stay, closed-to-arrival/departure, blackout dates.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "rate_plan"
+        }
+      ],
+      "important_fields": [
+        "min_stay",
+        "max_stay",
+        "closed_to_arrival"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.rate_restrictions"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "reservation",
+      "name": "Reservation",
+      "description": "A guest's booking of one or more rooms for a date range.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "guest_profile"
+        },
+        {
+          "type": "has_many",
+          "target": "reservation_room_stay"
+        },
+        {
+          "type": "has_one",
+          "target": "folio"
+        }
+      ],
+      "important_fields": [
+        "arrival_date",
+        "departure_date",
+        "status",
+        "total"
+      ],
+      "states": [
+        "requested",
+        "confirmed",
+        "checked_in",
+        "checked_out",
+        "cancelled",
+        "no_show"
+      ],
+      "related_features": [
+        "hospitality.reservations",
+        "hospitality.group_bookings"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "reservation_room_stay",
+      "name": "Reservation room stay",
+      "description": "One room's date range and rate within a reservation (a reservation can cover several rooms/room types).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "reservation"
+        },
+        {
+          "type": "belongs_to",
+          "target": "room"
+        }
+      ],
+      "important_fields": [
+        "date_from",
+        "date_to",
+        "occupants",
+        "rate"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.reservations",
+        "hospitality.availability_inventory"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "guest_profile",
+      "name": "Guest profile",
+      "description": "A guest's identity, contact info, and stay history.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "email",
+        "phone",
+        "id_document"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.guest_profiles",
+        "hospitality.loyalty_program"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "folio",
+      "name": "Folio",
+      "description": "The itemized ledger of charges and payments for a stay.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "reservation"
+        },
+        {
+          "type": "has_many",
+          "target": "payment"
+        }
+      ],
+      "important_fields": [
+        "balance",
+        "status"
+      ],
+      "states": [
+        "open",
+        "settled"
+      ],
+      "related_features": [
+        "hospitality.folio_and_charges"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-hotel"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; neither implementation has a distinct per-stay folio separate from a single order/invoice."
+      }
+    },
+    {
+      "id": "payment",
+      "name": "Payment",
+      "description": "A payment or deposit applied against a folio.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "folio"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "method",
+        "status"
+      ],
+      "states": [
+        "pending",
+        "captured",
+        "refunded"
+      ],
+      "related_features": [
+        "hospitality.deposits_advance_payment"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "deposit",
+      "name": "Deposit",
+      "description": "An advance payment collected at booking time, applied against the folio at checkout.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "reservation"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "collected_at"
+      ],
+      "states": [
+        "collected",
+        "applied",
+        "refunded"
+      ],
+      "related_features": [
+        "hospitality.deposits_advance_payment"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "cancellation_policy",
+      "name": "Cancellation policy",
+      "description": "Rules for refund percentage based on cancellation timing relative to arrival.",
+      "relationships": [],
+      "important_fields": [
+        "cutoff_hours",
+        "refund_percentage"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.cancellation_policies"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "channel",
+      "name": "Channel",
+      "description": "A connected OTA/distribution channel that receives ARI updates and sends reservations.",
+      "relationships": [],
+      "important_fields": [
+        "name",
+        "connection_status"
+      ],
+      "states": [
+        "connected",
+        "disconnected",
+        "error"
+      ],
+      "related_features": [
+        "hospitality.channel_manager"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "amenity",
+      "name": "Amenity",
+      "description": "A named feature attached to a property or room type.",
+      "relationships": [],
+      "important_fields": [
+        "name"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.amenities"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-hospitality",
+          "qloapps"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "add_on_service",
+      "name": "Add-on service",
+      "description": "A purchasable extra attached to a reservation.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "reservation"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "price"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.add_on_services"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "booking_voucher",
+      "name": "Booking voucher",
+      "description": "The guest-facing confirmation document for a reservation.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "reservation"
+        }
+      ],
+      "important_fields": [
+        "issued_at",
+        "document_url"
+      ],
+      "states": [],
+      "related_features": [
+        "hospitality.booking_voucher_confirmation"
+      ],
+      "provenance": {
+        "sources": [
+          "qloapps"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "housekeeping_task",
+      "name": "Housekeeping task",
+      "description": "A cleaning/turnover task assigned for a room.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "room"
+        }
+      ],
+      "important_fields": [
+        "assigned_to",
+        "status"
+      ],
+      "states": [
+        "dirty",
+        "cleaning",
+        "clean",
+        "inspected"
+      ],
+      "related_features": [
+        "hospitality.housekeeping"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-housekeeping"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "night_audit_run",
+      "name": "Night audit run",
+      "description": "One execution of the end-of-day close/reconciliation/date-rollover process.",
+      "relationships": [],
+      "important_fields": [
+        "business_date",
+        "status"
+      ],
+      "states": [
+        "in_progress",
+        "completed",
+        "failed"
+      ],
+      "related_features": [
+        "hospitality.night_audit"
+      ],
+      "provenance": {
+        "sources": [
+          "wikipedia-night-audit"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

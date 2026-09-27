@@ -1,0 +1,1323 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "name": "Education (LMS / school management)",
+  "aliases": [
+    "learning management system",
+    "school management",
+    "e-learning"
+  ],
+  "description": "Learning management and school/institution administration: courses, enrollment, content delivery, assessment, grading, attendance, and fees.",
+  "nace": [
+    "P85.59",
+    "P85.60"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "frappe-education",
+      "title": "Frappe Education",
+      "url": "https://github.com/frappe/education",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API doctype listing (license.txt confirms 'GNU GPL V3'). Reference-only. Very rich doctype set: academic_year/term, course/course_enrollment, class_room, fee_plan/fee_schedule/fees, grade_book/grading_scale, assessment_plan/assessment_result, student_attendance, student_guardian, admission_register, ceremony (certificate/graduation). No code copied."
+    },
+    {
+      "id": "moodle",
+      "title": "Moodle",
+      "url": "https://github.com/moodle/moodle",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (`public/mod/` activity module list: assign, quiz, forum, lesson, workshop, feedback, choice, scorm, h5pactivity, lti, glossary, wiki, book, bigbluebuttonbn). Reference-only. Confirms LTI as a first-class integration and the assignment/quiz/forum activity taxonomy. No code copied."
+    },
+    {
+      "id": "canvas-lms",
+      "title": "Canvas LMS",
+      "url": "https://github.com/instructure/canvas-lms",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "main branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (repo license field AGPL-3.0; `app/models/` listing). Reference-only. Confirms assignment/assignment_group/assignment_override, appointment_group + calendar_event (scheduling), context_module (course content organization), conversation (messaging), announcement models. No code copied."
+    },
+    {
+      "id": "1edtech-lti",
+      "title": "1EdTech Learning Tools Interoperability (LTI)",
+      "url": "https://www.1edtech.org/standards/lti",
+      "source_type": "authoritative",
+      "license": "1EdTech public specification; free to implement, certification/trademark use requires 1EdTech membership",
+      "retrieved": "2026-09-27",
+      "version": "LTI 1.3 / Advantage",
+      "local_path": null,
+      "notes": "Standard for launching external learning tools from an LMS with authenticated context. Well-established industry standard (also confirmed present as Moodle's `mod/lti`); this pass could not independently re-verify the publisher page live (sandboxed network blocked the fetch), so confidence is kept medium rather than high pending a live re-check."
+    },
+    {
+      "id": "1edtech-oneroster",
+      "title": "1EdTech OneRoster",
+      "url": "https://www.1edtech.org/standards/oneroster",
+      "source_type": "authoritative",
+      "license": "1EdTech public specification; free to implement, certification/trademark use requires 1EdTech membership",
+      "retrieved": "2026-09-27",
+      "version": "OneRoster 1.2",
+      "local_path": null,
+      "notes": "Standard for interchange of roster/enrollment/gradebook data between a school SIS and an LMS. Same live-verification caveat as 1edtech-lti."
+    },
+    {
+      "id": "1edtech-qti",
+      "title": "1EdTech Question and Test Interoperability (QTI)",
+      "url": "https://www.1edtech.org/standards/qti",
+      "source_type": "authoritative",
+      "license": "1EdTech public specification; free to implement, certification/trademark use requires 1EdTech membership",
+      "retrieved": "2026-09-27",
+      "version": "QTI 3.0",
+      "local_path": null,
+      "notes": "Standard for representing assessment/quiz items and results portably. Same live-verification caveat as 1edtech-lti."
+    },
+    {
+      "id": "adl-xapi",
+      "title": "xAPI (Experience API)",
+      "url": "https://adlnet.gov/projects/xapi/",
+      "source_type": "authoritative",
+      "license": "Published by ADL Initiative (US DoD); specification is openly published, exact reuse terms not independently re-verified this pass",
+      "retrieved": "2026-09-27",
+      "version": "xAPI 2.0",
+      "local_path": null,
+      "notes": "Standard for recording learning experience statements ('actor verb object') across systems, successor to SCORM's tracking model. Live re-verification of the publisher page failed in this sandbox (network/TLS restrictions); treated as well-established from training knowledge, confidence kept medium."
+    }
+  ],
+  "features": [
+    {
+      "id": "education.course_catalog",
+      "name": "Course catalog",
+      "classification": "core",
+      "description": "Define courses/subjects offered, with descriptions, credits, and prerequisites.",
+      "users": [
+        "academic_admin",
+        "instructor"
+      ],
+      "entities": [
+        "course"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.academic_calendar",
+      "name": "Academic terms and calendar",
+      "classification": "core",
+      "description": "Define academic years/terms/semesters that courses and enrollment are scoped to.",
+      "users": [
+        "academic_admin"
+      ],
+      "entities": [
+        "academic_term"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "calendar",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.class_sections",
+      "name": "Classes / sections",
+      "classification": "core",
+      "description": "A scheduled offering (cohort) of a course, with an assigned instructor and roster capacity.",
+      "users": [
+        "academic_admin",
+        "instructor"
+      ],
+      "entities": [
+        "course_section"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "canvas-lms"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "education.enrollment",
+      "name": "Enrollment",
+      "classification": "core",
+      "description": "Register a student into a course/section, tracking status through the term.",
+      "users": [
+        "student",
+        "academic_admin"
+      ],
+      "entities": [
+        "enrollment",
+        "student"
+      ],
+      "workflows": [
+        "enrollment_lifecycle"
+      ],
+      "capabilities": [
+        "capacity/waitlist"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "customer",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.lesson_content",
+      "name": "Lesson / course content",
+      "classification": "core",
+      "description": "Author and deliver lesson content: pages, files, video, links, structured modules.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "lesson"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "sequencing",
+        "conditional release"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "customer"
+      ],
+      "integrations": [
+        "content_repository"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "education.self_paced_content",
+      "name": "Self-paced / packaged content",
+      "classification": "recommended",
+      "description": "Deliver SCORM/H5P-style interactive packages that track completion and score.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "lesson"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "customer"
+      ],
+      "integrations": [
+        "content_repository"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "medium",
+        "notes": "Confirmed by Moodle's scorm and h5pactivity modules; single independent implementation source so kept medium."
+      }
+    },
+    {
+      "id": "education.assignments",
+      "name": "Assignments",
+      "classification": "core",
+      "description": "Create graded or ungraded tasks with due dates, instructions, and rubrics.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "assignment"
+      ],
+      "workflows": [
+        "assignment_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.submissions",
+      "name": "Submissions",
+      "classification": "core",
+      "description": "Students submit files/text/links against an assignment, with late tracking.",
+      "users": [
+        "student",
+        "instructor"
+      ],
+      "entities": [
+        "submission"
+      ],
+      "workflows": [
+        "assignment_workflow"
+      ],
+      "capabilities": [
+        "plagiarism scan"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "plagiarism/AI-writing detection"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "customer",
+        "document"
+      ],
+      "integrations": [
+        "plagiarism_checker"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.grading_gradebook",
+      "name": "Grading and gradebook",
+      "classification": "core",
+      "description": "Score submissions/exams and aggregate into a per-course, per-term gradebook.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "grade"
+      ],
+      "workflows": [
+        "assignment_workflow"
+      ],
+      "capabilities": [
+        "weighted categories",
+        "curves"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "grade anomaly detection"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.rubrics",
+      "name": "Rubrics",
+      "classification": "recommended",
+      "description": "Structured scoring criteria attached to assignments/exams for consistent grading.",
+      "users": [
+        "instructor"
+      ],
+      "entities": [
+        "rubric"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.attendance",
+      "name": "Attendance",
+      "classification": "core",
+      "description": "Record student presence/absence per class session or day.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "attendance_record"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "absence-pattern flagging"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium",
+        "notes": "Strongly confirmed in Frappe Education (student_attendance, student_attendance_tool doctypes); single independent source among the three, so kept medium despite being near-universal in school-management products specifically."
+      }
+    },
+    {
+      "id": "education.timetable",
+      "name": "Timetable / class schedule",
+      "classification": "common",
+      "description": "Weekly schedule of class sections, rooms, and instructors.",
+      "users": [
+        "academic_admin",
+        "student",
+        "instructor"
+      ],
+      "entities": [
+        "timetable_slot"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "conflict detection"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "scheduling",
+        "calendar",
+        "staff",
+        "customer"
+      ],
+      "integrations": [
+        "calendar_sync"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.exams_quizzes",
+      "name": "Exams and quizzes",
+      "classification": "core",
+      "description": "Timed or untimed assessments with question banks, auto-grading, and attempts.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "exam",
+        "exam_attempt"
+      ],
+      "workflows": [
+        "exam_workflow"
+      ],
+      "capabilities": [
+        "question banks",
+        "auto-grading"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "adaptive question selection"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms",
+          "1edtech-qti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.certificates",
+      "name": "Certificates",
+      "classification": "common",
+      "description": "Issue a completion/achievement certificate once course or program requirements are met.",
+      "users": [
+        "academic_admin",
+        "student"
+      ],
+      "entities": [
+        "certificate"
+      ],
+      "workflows": [
+        "certificate_issuance_workflow"
+      ],
+      "capabilities": [
+        "verification"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium",
+        "notes": "Frappe Education models this explicitly (ceremony, ceremony_document doctypes); Moodle/Canvas support it via plugins/badges rather than a first-class model."
+      }
+    },
+    {
+      "id": "education.report_cards",
+      "name": "Report cards / transcripts",
+      "classification": "common",
+      "description": "Aggregate grades across a term/program into a formatted report or transcript.",
+      "users": [
+        "academic_admin",
+        "student",
+        "guardian"
+      ],
+      "entities": [
+        "grade"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "customer",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.parent_guardian_access",
+      "name": "Parent/guardian access",
+      "classification": "common",
+      "description": "Let a guardian view a student's grades, attendance, and fees, and receive notices.",
+      "users": [
+        "guardian"
+      ],
+      "entities": [
+        "student"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "compliance"
+      ],
+      "integrations": [],
+      "compliance": [
+        "coppa",
+        "ferpa"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium",
+        "notes": "Explicit in Frappe Education (guardian, student_guardian, guardian_interest doctypes); common in K-12-oriented products specifically, less so in higher-ed-only LMS products."
+      }
+    },
+    {
+      "id": "education.fees_billing",
+      "name": "Fees and billing",
+      "classification": "common",
+      "description": "Define fee structures/plans and collect tuition or program fees from students/guardians.",
+      "users": [
+        "billing_staff",
+        "guardian",
+        "student"
+      ],
+      "entities": [
+        "fee_invoice"
+      ],
+      "workflows": [
+        "fee_payment_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "payment",
+        "customer",
+        "staff"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.announcements",
+      "name": "Announcements",
+      "classification": "common",
+      "description": "Broadcast messages from staff to a course, section, or the whole institution.",
+      "users": [
+        "instructor",
+        "academic_admin",
+        "student"
+      ],
+      "entities": [
+        "announcement"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "communication",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "canvas-lms",
+          "moodle"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "education.discussion_forums",
+      "name": "Discussion forums",
+      "classification": "recommended",
+      "description": "Threaded course discussion between students and instructors.",
+      "users": [
+        "student",
+        "instructor"
+      ],
+      "entities": [
+        "discussion_thread"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "communication",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "education.live_classes",
+      "name": "Live / virtual classes",
+      "classification": "common",
+      "description": "Video-conferenced class sessions linked to a section's timetable.",
+      "users": [
+        "instructor",
+        "student"
+      ],
+      "entities": [
+        "timetable_slot"
+      ],
+      "workflows": [
+        "live_class_session_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "high",
+      "tags": [
+        "real-time",
+        "customer",
+        "web"
+      ],
+      "integrations": [
+        "video_conferencing"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "medium",
+        "notes": "Confirmed by Moodle's bigbluebuttonbn module; single independent source, common but not universal (many LMS delegate entirely to Zoom/Teams via LTI)."
+      }
+    },
+    {
+      "id": "education.admissions",
+      "name": "Admissions / applications",
+      "classification": "recommended",
+      "description": "Manage prospective-student applications before they become enrollments.",
+      "users": [
+        "academic_admin",
+        "student"
+      ],
+      "entities": [
+        "student"
+      ],
+      "workflows": [
+        "admissions_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "application screening assist"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "customer",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium",
+        "notes": "Explicit in Frappe Education (admission_register, student_applicant doctypes); more relevant to school/program admissions than to open-enrollment MOOC-style LMS."
+      }
+    },
+    {
+      "id": "education.student_portal",
+      "name": "Student portal",
+      "classification": "common",
+      "description": "Student-facing hub for courses, grades, assignments, timetable, and messages.",
+      "users": [
+        "student"
+      ],
+      "entities": [
+        "student"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "customer",
+        "web",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "education.lti_tool_integration",
+      "name": "LTI tool integration",
+      "classification": "integration",
+      "description": "Launch external learning tools (publisher content, proctoring, plagiarism checkers) from inside a course with passed-through identity/context.",
+      "users": [
+        "instructor",
+        "academic_admin"
+      ],
+      "entities": [
+        "course_section"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "staff"
+      ],
+      "integrations": [
+        "lti_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "1edtech-lti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "education.roster_sync",
+      "name": "Roster and gradebook sync",
+      "classification": "integration",
+      "description": "Interchange enrollment, class, and grade data with a school's Student Information System.",
+      "users": [
+        "academic_admin",
+        "system_integration"
+      ],
+      "entities": [
+        "enrollment",
+        "grade"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "backend"
+      ],
+      "integrations": [
+        "sis_integration"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "1edtech-oneroster"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.xapi_learning_records",
+      "name": "Learning record tracking (xAPI)",
+      "classification": "optional",
+      "description": "Emit fine-grained learning activity statements to a Learning Record Store for cross-system analytics.",
+      "users": [
+        "academic_admin"
+      ],
+      "entities": [
+        "submission"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "engagement/at-risk analytics feed"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "analytics",
+        "integration",
+        "ai"
+      ],
+      "integrations": [
+        "learning_record_store"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "adl-xapi"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "education.plagiarism_detection",
+      "name": "Plagiarism / AI-writing detection",
+      "classification": "optional",
+      "description": "Scan submissions against reference corpora and flag similarity or AI-generated content.",
+      "users": [
+        "instructor"
+      ],
+      "entities": [
+        "submission"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "similarity scoring",
+        "AI-generated-text detection"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "compliance",
+        "staff"
+      ],
+      "integrations": [
+        "plagiarism_checker"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "canvas-lms"
+        ],
+        "confidence": "low",
+        "notes": "Confirmed only as a common third-party LTI integration (e.g. Turnitin) rather than a native feature in any of the three reference implementations; reasoned inference for confidence."
+      }
+    },
+    {
+      "id": "education.child_data_consent_controls",
+      "name": "Child data / consent controls",
+      "classification": "compliance",
+      "description": "Age-gate signup and require verifiable parental consent before collecting a minor's data.",
+      "users": [
+        "guardian",
+        "academic_admin"
+      ],
+      "entities": [
+        "student",
+        "guardian"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "coppa",
+        "ferpa",
+        "gdpr_education"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from COPPA/FERPA applicability to K-12 products with a guardian model; not a distinct shipped feature confirmed in any reference implementation's public doctype/model listing."
+      }
+    },
+    {
+      "id": "education.at_risk_student_prediction",
+      "name": "At-risk student prediction",
+      "classification": "premium",
+      "description": "Flag students likely to fail or drop out from attendance, grade, and engagement signals.",
+      "users": [
+        "academic_admin",
+        "instructor"
+      ],
+      "entities": [
+        "student"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "dropout/failure risk model"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "adl-xapi"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from the general availability of xAPI-fed learning analytics products; not confirmed as a native feature in any of the three core reference implementations."
+      }
+    }
+  ],
+  "maturity_note": "Authoritative standards (1EdTech/xAPI/RESO etc.) could not be re-verified at their publishers during research; promote after verification."
+}

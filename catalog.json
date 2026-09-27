@@ -1,0 +1,1034 @@
+{
+  "schema": 1,
+  "updated": "2026-09-27",
+  "item_fields": [
+    "name",
+    "category",
+    "path",
+    "platform",
+    "tags",
+    "source",
+    "license",
+    "dependencies",
+    "use_cases",
+    "avoid_when",
+    "related"
+  ],
+  "items": [],
+  "sources": [
+    {
+      "name": "shadcn-ui",
+      "title": "shadcn/ui",
+      "category": "web",
+      "path": "sources/web/shadcn-ui",
+      "repo": "shadcn-ui/ui",
+      "revision": "98a1fe67b439324ddc857f47fbdce056600a4329",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "radix-ui",
+        "react-aria",
+        "shadcn-registry",
+        "sidebar",
+        "dashboard",
+        "data-table",
+        "forms",
+        "charts",
+        "auth-blocks",
+        "command"
+      ],
+      "use_cases": [
+        "base ui primitives",
+        "sidebar layouts",
+        "dashboard shell",
+        "login and signup screens",
+        "data table",
+        "forms",
+        "date picker",
+        "command menu",
+        "charts",
+        "empty state"
+      ],
+      "caveats": [
+        "monorepo: use apps/v4/registry/bases/<flavor>, not the docs site"
+      ]
+    },
+    {
+      "name": "originui",
+      "title": "Origin UI",
+      "category": "web",
+      "path": "sources/web/originui",
+      "repo": "shadcn/originui",
+      "revision": "f4f366ae39759248d46b1252c52fbdc0bc01c285",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind-v4",
+        "radix-ui",
+        "shadcn-compatible",
+        "date-time",
+        "event-calendar",
+        "file-upload",
+        "timeline",
+        "stepper",
+        "tree",
+        "notifications",
+        "navbar",
+        "pagination",
+        "filters"
+      ],
+      "use_cases": [
+        "advanced inputs",
+        "date and time pickers",
+        "event calendar",
+        "file upload",
+        "activity timeline",
+        "stepper",
+        "tree view",
+        "navbar pieces",
+        "notification menu",
+        "filters"
+      ],
+      "caveats": [
+        "stale fork (2025-07-25); canonical project is origin-space/originui",
+        "components are numbered comp-XXX: search config/components.ts or registry.json tags"
+      ]
+    },
+    {
+      "name": "cult-ui",
+      "title": "Cult UI",
+      "category": "web",
+      "path": "sources/web/cult-ui",
+      "repo": "nolly-studio/cult-ui",
+      "revision": "ee98a5dd2e319b63cc2e707dd968d6af04209b7e",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "radix-ui",
+        "motion",
+        "cards",
+        "hero-sections",
+        "shaders",
+        "dock",
+        "dynamic-island",
+        "landing",
+        "interactive-controls"
+      ],
+      "use_cases": [
+        "distinctive cards",
+        "shader hero sections",
+        "dock navigation",
+        "floating panels",
+        "auth page",
+        "landing pages"
+      ],
+      "caveats": [
+        "no sidebar or topbar components",
+        "bundled font apps/www/fonts/haskoy.ttf has no stated license: don't reuse"
+      ]
+    },
+    {
+      "name": "kokonutui",
+      "title": "Kokonut UI",
+      "category": "web",
+      "path": "sources/web/kokonutui",
+      "repo": "kokonut-labs/kokonutui",
+      "revision": "83eec6d982d400a18438001a8efdbac1f159dd43",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "radix-ui",
+        "motion",
+        "dashboard",
+        "saas",
+        "kpi-cards",
+        "ai-chat",
+        "navbar",
+        "file-upload",
+        "search",
+        "hooks"
+      ],
+      "use_cases": [
+        "kpi and activity cards",
+        "ai prompt input",
+        "navbar and toolbar",
+        "file upload",
+        "search bar",
+        "animated drawer and tabs"
+      ],
+      "caveats": []
+    },
+    {
+      "name": "reactbits",
+      "title": "React Bits",
+      "category": "web",
+      "path": "sources/web/reactbits",
+      "repo": "epodak/reactbits",
+      "revision": "cdba9dc374d100f3f719f529ad840f481bc1b743",
+      "license": "MIT + Commons Clause",
+      "status": "REVIEW_REQUIRED",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind",
+        "gsap",
+        "motion",
+        "three-fiber",
+        "backgrounds",
+        "text-animation",
+        "scroll-effects",
+        "commons-clause"
+      ],
+      "use_cases": [
+        "animated backgrounds (inspiration)",
+        "text animation (inspiration)",
+        "scroll effects (inspiration)"
+      ],
+      "caveats": [
+        "Commons Clause forbids redistribution as part of a component library or UI kit",
+        "stale fork of DavidHDev/react-bits",
+        "bundled .glb models and OFL font carry separate terms"
+      ]
+    },
+    {
+      "name": "tremor",
+      "title": "Tremor",
+      "category": "dashboards",
+      "path": "sources/dashboards/tremor",
+      "repo": "tremorlabs/tremor",
+      "revision": "ca4d588f47820ff3d514d37fa4ee08a4222dec11",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "tailwind-v4",
+        "radix-ui",
+        "recharts",
+        "charts",
+        "kpi",
+        "data-viz",
+        "analytics"
+      ],
+      "use_cases": [
+        "charts",
+        "kpi metrics",
+        "analytics dashboards",
+        "tracker and bar lists"
+      ],
+      "caveats": [
+        "React 18 + Recharts 2: port before use in React 19 apps",
+        "no commits since 2025-10-10"
+      ]
+    },
+    {
+      "name": "next-shadcn-dashboard",
+      "title": "next-shadcn-dashboard",
+      "category": "dashboards",
+      "path": "sources/dashboards/next-shadcn-dashboard",
+      "repo": "shadcndashboard/next-shadcn-dashboard",
+      "revision": "91deb10215bc6b567d881c608a9ad794e894994f",
+      "license": "MIT (README asks for a footer credit)",
+      "status": "REVIEW_REQUIRED",
+      "attribution_required": true,
+      "tags": [
+        "nextjs",
+        "react",
+        "base-ui",
+        "tailwind-v4",
+        "sidebar",
+        "app-shell",
+        "data-table",
+        "auth-screens",
+        "admin-template"
+      ],
+      "use_cases": [
+        "app shell reference",
+        "table style variants",
+        "auth screens reference"
+      ],
+      "caveats": [
+        "README demands a footer link to shadcndashboard.dev",
+        "public/images marketing art has no stated license",
+        "TypeScript ^7 is experimental"
+      ]
+    },
+    {
+      "name": "kiranism-dashboard-starter",
+      "title": "Kiranism next-shadcn-dashboard-starter",
+      "category": "dashboards",
+      "path": "sources/dashboards/kiranism-dashboard-starter",
+      "repo": "Kiranism/next-shadcn-dashboard-starter",
+      "revision": "7705dfc0d13889e45c26a55ad5908da6a7a9a605",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "react",
+        "base-ui",
+        "tailwind-v4",
+        "clerk",
+        "nuqs",
+        "zustand",
+        "tanstack-form",
+        "tanstack-table",
+        "feature-folders",
+        "kbar",
+        "ai-sdk"
+      ],
+      "use_cases": [
+        "web-saas starter base",
+        "url-state data tables",
+        "forms",
+        "command menu",
+        "users feature",
+        "dashboard overview",
+        "kanban"
+      ],
+      "caveats": [
+        "auth and RBAC nav are built on Clerk: replace, don't port",
+        "TanStack Table v8"
+      ]
+    },
+    {
+      "name": "shadcn-chatbot-template",
+      "title": "shadcn chatbot template",
+      "category": "ai",
+      "path": "sources/ai/shadcn-chatbot-template",
+      "repo": "shadcn-ui/chatbot-template",
+      "revision": "f79416827acd90244683903a34343f58193432ac",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "ai-sdk",
+        "base-ui",
+        "chat-ui",
+        "streaming",
+        "tool-calls",
+        "citations",
+        "questionnaire",
+        "ai-gateway"
+      ],
+      "use_cases": [
+        "chat ui",
+        "message parts rendering",
+        "tool-call ui",
+        "citations",
+        "questionnaire"
+      ],
+      "caveats": [
+        "model calls go through the Vercel AI Gateway: needs our own provider path"
+      ]
+    },
+    {
+      "name": "vercel-chatbot",
+      "title": "Vercel chatbot",
+      "category": "ai",
+      "path": "sources/ai/vercel-chatbot",
+      "repo": "vercel/chatbot",
+      "revision": "c2f8235e1f3ea903ad8b7f61447c4f74164b5c58",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "ai-sdk",
+        "radix-ui",
+        "drizzle",
+        "postgres",
+        "redis",
+        "artifacts",
+        "streaming",
+        "tool-calls",
+        "playwright",
+        "next-auth"
+      ],
+      "use_cases": [
+        "drizzle schema and migrations",
+        "ai elements chat components",
+        "artifacts pattern",
+        "redis rate limiting",
+        "playwright e2e tests",
+        "typed error codes"
+      ],
+      "caveats": [
+        "LICENSE is the short Apache-2.0 notice: ship the full text with extracted code",
+        "Vercel-only services: AI Gateway, Blob, analytics, botid"
+      ]
+    },
+    {
+      "name": "nestjs-starter",
+      "title": "NestJS starter",
+      "category": "backend",
+      "path": "sources/backend/nestjs-starter",
+      "repo": "hmake98/nestjs-starter",
+      "revision": "b5f05bd036260f6970b6f031e0c0fe0276b69a84",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nestjs",
+        "typescript",
+        "jwt",
+        "rbac",
+        "pino",
+        "correlation-id",
+        "bullmq",
+        "redis",
+        "swagger",
+        "terminus",
+        "docker",
+        "prisma"
+      ],
+      "use_cases": [
+        "backend-api starter base",
+        "structured logging",
+        "error envelope",
+        "jwt and rbac guards",
+        "bullmq setup",
+        "health checks",
+        "swagger docs",
+        "dockerfile"
+      ],
+      "caveats": [
+        "Prisma-coupled database layer: reimplement with Drizzle",
+        "env config has no schema validation"
+      ]
+    },
+    {
+      "name": "fastapi-full-stack-template",
+      "title": "FastAPI full-stack template",
+      "category": "backend",
+      "path": "sources/backend/fastapi-full-stack-template",
+      "repo": "fastapi/full-stack-fastapi-template",
+      "revision": "cb740b656d7a0a6c5e12c7bf8e50343ec94ee9c7",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "python",
+        "fastapi",
+        "pydantic-settings",
+        "jwt",
+        "alembic",
+        "sqlmodel",
+        "docker",
+        "traefik",
+        "pytest",
+        "github-actions",
+        "uv"
+      ],
+      "use_cases": [
+        "ai-service starter base",
+        "settings",
+        "jwt auth",
+        "dependency injection",
+        "docker and ci"
+      ],
+      "caveats": [
+        "SQLModel throughout: don't adopt",
+        "requires Python 3.14"
+      ]
+    },
+    {
+      "name": "flutter-structure",
+      "title": "flutter-structure",
+      "category": "mobile",
+      "path": "sources/mobile/flutter-structure",
+      "repo": "MiguelCovarrubiasdaiz/flutter-structure",
+      "revision": "d50c69974a23db3f5bd18e756ebe159521924bc9",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "flutter",
+        "dart",
+        "riverpod",
+        "go-router",
+        "dio",
+        "clean-architecture",
+        "secure-storage",
+        "i18n",
+        "material3",
+        "mocktail"
+      ],
+      "use_cases": [
+        "flutter-app starter base",
+        "app shell and navigation",
+        "networking",
+        "storage",
+        "theme",
+        "error handling",
+        "common widgets",
+        "auth flow"
+      ],
+      "caveats": [
+        "low adoption (1 star): quality judged from the code",
+        "features/counter is a throwaway demo"
+      ]
+    },
+    {
+      "name": "shadcn-registry-template",
+      "title": "shadcn registry template",
+      "category": "registries",
+      "path": "sources/registries/shadcn-registry-template",
+      "repo": "shadcn-ui/registry-template",
+      "revision": "906f859db0125965cba71c51da1707c0a4c6d045",
+      "license": "none",
+      "status": "REVIEW_REQUIRED",
+      "attribution_required": false,
+      "tags": [
+        "shadcn",
+        "registry",
+        "registry-json",
+        "static-hosting",
+        "private-registry"
+      ],
+      "use_cases": [
+        "future @siavash registry layout (reference only)"
+      ],
+      "caveats": [
+        "no license: don't copy files; use shadcn's MIT registry schemas instead",
+        "no private-registry auth"
+      ]
+    },
+    {
+      "name": "agent-elements",
+      "title": "Agent Elements",
+      "category": "ai",
+      "path": "sources/ai/agent-elements",
+      "repo": "21st-dev/agent-elements",
+      "revision": "b04b36cb6381a1dd1a0e86cc7c90564ddcd56d37",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "shadcn-registry",
+        "ai-sdk",
+        "agent-ui",
+        "tool-rendering",
+        "streaming-markdown"
+      ],
+      "use_cases": [
+        "agent chat shell",
+        "tool-call cards (bash, edit + diff, search, todo, plan, mcp)",
+        "input bar with attachments",
+        "model picker and mode selector"
+      ],
+      "caveats": [
+        "bundled Geist .ttf files in public/fonts have no license file: source Geist separately",
+        "skills/agent-elements/ is upstream agent config: never install"
+      ]
+    },
+    {
+      "name": "assistant-ui",
+      "title": "assistant-ui",
+      "category": "ai",
+      "path": "sources/ai/assistant-ui",
+      "repo": "assistant-ui/assistant-ui",
+      "revision": "2980cafdf4f894995daa77c34f3db09e74205ff",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "chat-ui",
+        "headless-primitives",
+        "radix-ui",
+        "ai-sdk",
+        "langgraph",
+        "monorepo"
+      ],
+      "use_cases": [
+        "thread/composer/message compound primitives",
+        "runtime adapters (AI SDK, LangGraph)",
+        "tool-call and generative UI rendering",
+        "human approval flows"
+      ],
+      "caveats": [
+        "Radix-based: port to Base UI",
+        "packages/cloud is a hosted-service client: don't depend on it",
+        "132 MB monorepo: extract narrowly"
+      ]
+    },
+    {
+      "name": "openterminal",
+      "title": "OpenTerminal",
+      "category": "dashboards",
+      "path": "sources/dashboards/openterminal",
+      "repo": "ErTasselli/OpenTerminal",
+      "revision": "041822cfc2b54baf72001379618b1bc721567ab8",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "react",
+        "tailwind-v4",
+        "zustand",
+        "tanstack-query",
+        "react-grid-layout",
+        "lightweight-charts",
+        "dense-workspace",
+        "command-palette",
+        "finance"
+      ],
+      "use_cases": [
+        "draggable/resizable widget workspace",
+        "terminal-style command palette",
+        "persisted layout store",
+        "provider-adapter pattern for external data"
+      ],
+      "caveats": [
+        "Express + SQLite backend: pattern only",
+        "financial data providers have their own terms of service"
+      ]
+    },
+    {
+      "name": "nextcrm",
+      "title": "NextCRM",
+      "category": "dashboards",
+      "path": "sources/dashboards/nextcrm",
+      "repo": "pdovhomilja/nextcrm-app",
+      "revision": "b46b563b61c948a07a9cc5a340032444db1f8188",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "react",
+        "crm",
+        "prisma",
+        "radix-ui",
+        "tanstack-table",
+        "dnd-kit",
+        "audit-timeline",
+        "activity-feed",
+        "i18n"
+      ],
+      "use_cases": [
+        "CRM entity model (accounts, contacts, leads, opportunities)",
+        "audit timeline and activity feed",
+        "similar-record / dedup drawer",
+        "kanban pipeline"
+      ],
+      "caveats": [
+        "Prisma: translate schema to Drizzle",
+        "Radix: port to Base UI",
+        "public/Inter-Bold.ttf has no license file",
+        "public/SKILL.md is untrusted agent config"
+      ]
+    },
+    {
+      "name": "boxyhq-saas-starter",
+      "title": "BoxyHQ SaaS Starter Kit",
+      "category": "dashboards",
+      "path": "sources/dashboards/boxyhq-saas-starter",
+      "repo": "boxyhq/saas-starter-kit",
+      "revision": "abc9b686823cbfb4973c79bc36fea37a3244be6c",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "nextjs",
+        "pages-router",
+        "prisma",
+        "nextauth",
+        "stripe",
+        "rbac",
+        "multi-tenant",
+        "sso",
+        "scim",
+        "api-keys",
+        "webhooks"
+      ],
+      "use_cases": [
+        "team/org multi-tenancy and invitations",
+        "role and permission model",
+        "API keys and webhooks",
+        "Stripe subscription sync",
+        "SSO/SCIM patterns"
+      ],
+      "caveats": [
+        "Pages Router + Tailwind v3 + Prisma: domain-logic reference, not drop-in UI",
+        "SSO/SCIM rely on the external BoxyHQ Jackson service"
+      ]
+    },
+    {
+      "name": "fastapi-best-architecture",
+      "title": "FastAPI Best Architecture",
+      "category": "backend",
+      "path": "sources/backend/fastapi-best-architecture",
+      "repo": "fastapi-practices/fastapi-best-architecture",
+      "revision": "123a44aed02daf5ea60d2a7469625c933d3bb759",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "python",
+        "fastapi",
+        "sqlalchemy2",
+        "alembic",
+        "async",
+        "rbac",
+        "celery",
+        "postgresql",
+        "plugins"
+      ],
+      "use_cases": [
+        "layered api/schema/service/crud/model structure",
+        "RBAC admin (users, roles, menus, data scope)",
+        "async SQLAlchemy 2 + Alembic setup",
+        "app factory and lifespan wiring"
+      ],
+      "caveats": [
+        "MySQL branches: keep the PostgreSQL path only",
+        "comments partly in Chinese"
+      ]
+    },
+    {
+      "name": "flutter-riverpod-clean-architecture",
+      "title": "Flutter Riverpod Clean Architecture",
+      "category": "mobile",
+      "path": "sources/mobile/flutter-riverpod-clean-architecture",
+      "repo": "ssoad/flutter_riverpod_clean_architecture",
+      "revision": "7d898f67eced53a212de2beb60241b6dee1f23fa",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "flutter",
+        "dart",
+        "riverpod",
+        "go_router",
+        "clean-architecture",
+        "dio",
+        "hive",
+        "feature-first"
+      ],
+      "use_cases": [
+        "feature slices (data/domain/presentation)",
+        "Dio client + interceptors",
+        "secure storage + cache",
+        "guarded go_router",
+        "shared widget kit"
+      ],
+      "caveats": [
+        "asset folders hold empty placeholders",
+        "regenerate platform dirs with flutter create instead of copying"
+      ]
+    },
+    {
+      "name": "workflowbuilder",
+      "title": "Workflow Builder",
+      "category": "web",
+      "path": "sources/web/workflowbuilder",
+      "repo": "synergycodes/workflowbuilder",
+      "revision": "052c396cc90aeebe5b8a1055b7625ec43a88a38e",
+      "license": "Apache-2.0",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "xyflow",
+        "react-flow",
+        "base-ui",
+        "design-tokens",
+        "workflow-editor",
+        "temporal",
+        "monorepo"
+      ],
+      "use_cases": [
+        "visual node/workflow editor",
+        "runtime-agnostic execution engine",
+        "Base UI component package",
+        "design token package"
+      ],
+      "caveats": [
+        "Temporal backend: pattern only (we use BullMQ)",
+        "README advertises a paid Enterprise Edition; none of it is in this checkout"
+      ]
+    },
+    {
+      "name": "data-table-filters",
+      "title": "Data Table Filters",
+      "category": "web",
+      "path": "sources/web/data-table-filters",
+      "repo": "openstatusHQ/data-table-filters",
+      "revision": "b3b085f34ac7f67dd3af73f40c0ea25a57290787",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tanstack-table-v9",
+        "radix-ui",
+        "nuqs",
+        "zustand",
+        "drizzle",
+        "filters",
+        "command-palette",
+        "ai-filter"
+      ],
+      "use_cases": [
+        "table-agnostic filter DSL (types, normalize, evaluate)",
+        "filter command palette",
+        "row detail sheet",
+        "AI natural-language filters",
+        "pluggable URL/zustand/memory state"
+      ],
+      "caveats": [
+        "Radix: port to Base UI",
+        "uses babel-plugin-react-compiler"
+      ]
+    },
+    {
+      "name": "tablecn",
+      "title": "tablecn",
+      "category": "web",
+      "path": "sources/web/tablecn",
+      "repo": "sadmann7/tablecn",
+      "revision": "b6e365f303ed728357493bc97e0cb7292c4b4f71",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "tanstack-table-v9",
+        "nuqs",
+        "zod-4",
+        "drizzle",
+        "data-table",
+        "data-grid",
+        "filters"
+      ],
+      "use_cases": [
+        "server-side data table on Base UI",
+        "Notion/Linear-style filter list and menu",
+        "selection action bar",
+        "spreadsheet-style data grid",
+        "use-data-table state hook"
+      ],
+      "caveats": [
+        "ships base and radix variants: take registry/bases/base",
+        "party/ PartyKit realtime is demo only"
+      ]
+    },
+    {
+      "name": "dnd-kanban",
+      "title": "Accessible dnd-kit Kanban",
+      "category": "web",
+      "path": "sources/web/dnd-kanban",
+      "repo": "Georgegriff/react-dnd-kit-tailwind-shadcn-ui",
+      "revision": "3e1dbb0b872125191d5f9c3686060f64d304b99e",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "dnd-kit",
+        "kanban",
+        "keyboard-a11y",
+        "tailwind-v3",
+        "radix-ui"
+      ],
+      "use_cases": [
+        "multi-column kanban with keyboard drag",
+        "dnd-kit multiple-containers pattern",
+        "screen-reader announcements"
+      ],
+      "caveats": [
+        "stale (2024-05): React 18, Tailwind v3 — port the logic, not the versions"
+      ]
+    },
+    {
+      "name": "shadcnspace",
+      "title": "Shadcn Space",
+      "category": "web",
+      "path": "sources/web/shadcnspace",
+      "repo": "shadcnspace/shadcnspace",
+      "revision": "cf4c7dd8d5c832d72049256d5b4ccb3bc1aa0188",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "base-ui",
+        "shadcn-registry",
+        "marketing-blocks",
+        "dashboard",
+        "auth",
+        "motion"
+      ],
+      "use_cases": [
+        "marketing sections (hero, pricing, testimonial, CTA)",
+        "dashboard shell and widgets",
+        "auth screens"
+      ],
+      "caveats": [
+        "both radix-ui and @base-ui/react installed: check imports per block",
+        "zod v3"
+      ]
+    },
+    {
+      "name": "magicui",
+      "title": "Magic UI",
+      "category": "web",
+      "path": "sources/web/magicui",
+      "repo": "magicuidesign/magicui",
+      "revision": "d7207e5692d14c00dceafa8488d6d01f197fa0e4",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "nextjs",
+        "tailwind-v4",
+        "motion",
+        "micro-interactions",
+        "number-ticker",
+        "marquee",
+        "animated-list"
+      ],
+      "use_cases": [
+        "number tickers",
+        "animated notification/feed lists",
+        "subtle reveals",
+        "circular progress",
+        "logo marquees",
+        "file tree"
+      ],
+      "caveats": [
+        "decorative glow/particle/gradient effects conflict with ui-design-policy §7: use only when the product calls for them",
+        "skills/magic-ui/ is upstream agent config: never install"
+      ]
+    },
+    {
+      "name": "schedule-x",
+      "title": "Schedule-X",
+      "category": "web",
+      "path": "sources/web/schedule-x",
+      "repo": "schedule-x/schedule-x",
+      "revision": "0c197b798e97fbadcf8a13166999fca875835db6",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "calendar",
+        "scheduler",
+        "recurrence",
+        "rrule",
+        "ical",
+        "date-picker",
+        "theme-shadcn",
+        "framework-agnostic"
+      ],
+      "use_cases": [
+        "month/week/day/agenda calendar",
+        "recurring events",
+        "ICS import/export",
+        "shadcn-themed calendar"
+      ],
+      "caveats": [
+        "drag-and-drop, resize, drag-to-create, resource scheduler, gantt are paid @sx-premium packages and absent here",
+        "React adapter lives in a separate repo"
+      ]
+    },
+    {
+      "name": "full-stack-ai-agent-template",
+      "title": "Full-Stack AI Agent Template",
+      "category": "ai",
+      "path": "sources/ai/full-stack-ai-agent-template",
+      "repo": "vstorm-co/full-stack-ai-agent-template",
+      "revision": "3428d9a6214619d3514312886d59a36400747b7d",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "python",
+        "fastapi",
+        "pydantic-ai",
+        "langchain",
+        "langgraph",
+        "rag",
+        "pgvector",
+        "streaming",
+        "websocket",
+        "tool-calling",
+        "observability",
+        "nextjs",
+        "cookiecutter"
+      ],
+      "use_cases": [
+        "LLM provider abstraction",
+        "RAG pipeline (ingestion, embeddings, retrieval, reranking)",
+        "WebSocket agent streaming",
+        "agent tool calling",
+        "Logfire/Sentry observability"
+      ],
+      "caveats": [
+        "tarball snapshot, no .git: refresh by re-downloading the pinned commit",
+        "cookiecutter template: strip {% if %} conditionals when promoting",
+        "several parallel agent frameworks: pick PydanticAI + pgvector"
+      ]
+    },
+    {
+      "name": "refine",
+      "title": "Refine",
+      "category": "dashboards",
+      "path": "sources/dashboards/refine",
+      "repo": "refinedev/refine",
+      "revision": "2352eb5b6539e2f39ad9aef652279ad1dcf2c467",
+      "license": "MIT",
+      "status": "extraction-safe",
+      "attribution_required": false,
+      "tags": [
+        "react",
+        "headless",
+        "data-provider",
+        "access-control",
+        "audit-log",
+        "live-provider",
+        "crud"
+      ],
+      "use_cases": [
+        "data-provider contract",
+        "can() access-control contract",
+        "audit-log provider pattern",
+        "live/real-time provider contract"
+      ],
+      "caveats": [
+        "most packages are UI-framework integrations: out of scope",
+        "documentation/ and images excluded via sparse-checkout"
+      ]
+    }
+  ]
+}

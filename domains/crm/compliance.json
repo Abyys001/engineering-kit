@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "gdpr_crm",
+      "name": "General Data Protection Regulation (as applied to CRM contact/lead data)",
+      "kind": "regulation",
+      "version": "OJ L 119, 4.5.2016 (in force, consolidated to 2016)",
+      "jurisdiction": "European Union / EEA",
+      "scope": "CRM records personal data (names, emails, phone numbers) of contacts and leads; GDPR governs its lawful basis, retention, and subjects' rights.",
+      "affected_features": [
+        "crm.contacts",
+        "crm.leads",
+        "crm.email_sync"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever a CRM's contacts/leads include EU/EEA individuals; consent/legitimate-interest basis for cold outreach varies by jurisdiction within the EU and must be reviewed with counsel.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "can_spam",
+      "name": "CAN-SPAM Act",
+      "kind": "regulation",
+      "version": "FTC compliance guide, current as retrieved 2026-09-26",
+      "jurisdiction": "United States",
+      "scope": "Governs commercial email sent from campaign/segmentation features: requires accurate headers, honest subject lines, a working opt-out, and physical address.",
+      "affected_features": [
+        "crm.campaign_management",
+        "crm.segmentation",
+        "crm.email_sync"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies to commercial email sent to US recipients regardless of where the sender is based.",
+      "url": "https://www.ftc.gov/business-guidance/resources/can-spam-act-compliance-guide-business",
+      "provenance": {
+        "sources": [
+          "can-spam"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

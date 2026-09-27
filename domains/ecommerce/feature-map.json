@@ -1,0 +1,1267 @@
+{
+  "schema": 1,
+  "domain": "ecommerce",
+  "name": "Ecommerce",
+  "aliases": [
+    "online store",
+    "webshop",
+    "direct-to-consumer",
+    "marketplace"
+  ],
+  "description": "Storefront and merchant-admin platform for selling physical or digital products online: catalog, cart, checkout, orders, payments, shipping, and returns.",
+  "nace": [
+    "G47.91"
+  ],
+  "maturity": "curated",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "medusa",
+      "title": "Medusa",
+      "url": "https://github.com/medusajs/medusa",
+      "source_type": "implementation",
+      "license": "MIT (core); Enterprise Edition materials under a separate license per ENTERPRISE-LICENSE.md — not used here",
+      "retrieved": "2026-09-27",
+      "notes": "Not cloned (893MB monorepo); module list inspected via `gh api repos/medusajs/medusa/contents/packages/modules` (cart, checkout via order, order, payment, product, promotion, pricing, customer, fulfillment, inventory, tax, region, sales-channel, store)."
+    },
+    {
+      "id": "saleor",
+      "title": "Saleor",
+      "url": "https://github.com/saleor/saleor",
+      "source_type": "implementation",
+      "license": "BSD-3-Clause",
+      "retrieved": "2026-09-27",
+      "notes": "Not cloned (247MB Django monorepo); top-level app list inspected via `gh api repos/saleor/saleor/contents/saleor` (account, attribute, channel, checkout, discount, giftcard, invoice, order, payment, product, shipping, tax, warehouse, webhook)."
+    },
+    {
+      "id": "vendure",
+      "title": "Vendure",
+      "url": "https://github.com/vendure-ecommerce/vendure",
+      "source_type": "implementation",
+      "license": "GPL-3.0 (Vendure Community Edition) — verified from repository LICENSE.md; a paid Vendure Commercial License is the alternative. Reference-only: GPL code is never copied into the kit.",
+      "retrieved": "2026-09-27",
+      "notes": "Not cloned (164MB monorepo); core entity list inspected via `gh api repos/vendure-ecommerce/vendure/contents/packages/core/src/entity` (order, order-line, payment, product, product-variant, promotion, shipping-method, stock-level, stock-location, customer, customer-group, channel, zone, tax-rate, fulfillment, refund, surcharge)."
+    },
+    {
+      "id": "schema-org",
+      "title": "schema.org — Product, Offer, Order",
+      "url": "https://schema.org/Product",
+      "source_type": "authoritative",
+      "license": "CC BY-SA 3.0 (schema.org vocabulary)",
+      "retrieved": "2026-09-27",
+      "notes": "Authoritative vocabulary for product, offer, and order structured data (also schema.org/Offer, schema.org/Order)."
+    },
+    {
+      "id": "gs1-gtin",
+      "title": "GS1 GTIN (Global Trade Item Number)",
+      "url": "https://www.gs1.org/standards/id-keys/gtin",
+      "source_type": "authoritative",
+      "license": "GS1 published standard",
+      "retrieved": "2026-09-27",
+      "notes": "Product identifier standard (barcodes/GTIN-13 etc.) for catalog items; distinct from GS1 EPCIS (`std:gs1-epcis`), which is for supply-chain *events* and is not used for plain product identification here."
+    },
+    {
+      "id": "eu-crd",
+      "title": "EU Consumer Rights Directive (CRD)",
+      "url": "https://eur-lex.europa.eu/eli/dir/2011/83/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Directive 2011/83/EU",
+      "notes": "Distance-selling consumer rights: pre-contract information, 14-day withdrawal/return right, refund timelines."
+    },
+    {
+      "id": "pci-dss",
+      "title": "PCI DSS",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "source_type": "authoritative",
+      "license": "PCI Security Standards Council published standard",
+      "retrieved": "2026-09-27",
+      "version": "4.0.1",
+      "notes": "Card data handling for checkout/payment capture."
+    },
+    {
+      "id": "gdpr",
+      "title": "GDPR",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "source_type": "authoritative",
+      "license": "EU public law (EUR-Lex)",
+      "retrieved": "2026-09-27",
+      "version": "Regulation (EU) 2016/679",
+      "notes": "Personal data handling for customer accounts, order history, and marketing consent."
+    }
+  ],
+  "features": [
+    {
+      "id": "ecommerce.catalog_management",
+      "name": "Catalog / Product Management",
+      "classification": "core",
+      "description": "Create and maintain products with variants, options, media, and attributes.",
+      "users": [
+        "merchant_admin",
+        "customer"
+      ],
+      "entities": [
+        "product",
+        "product_variant",
+        "category"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "product_crud",
+        "variant_matrix",
+        "media_management"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure",
+          "schema-org"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.category_navigation",
+      "name": "Categories / Collections",
+      "classification": "core",
+      "description": "Organize products into browsable categories or curated collections.",
+      "users": [
+        "merchant_admin",
+        "customer"
+      ],
+      "entities": [
+        "category",
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "category_tree",
+        "collection_curation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "catalog",
+        "web"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.inventory_management",
+      "name": "Inventory Management",
+      "classification": "core",
+      "description": "Track stock levels per variant and location, reserve stock on order, and release it on cancellation.",
+      "users": [
+        "merchant_admin"
+      ],
+      "entities": [
+        "inventory_item",
+        "product_variant"
+      ],
+      "workflows": [
+        "order_lifecycle"
+      ],
+      "capabilities": [
+        "stock_tracking",
+        "multi_location",
+        "reservation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "inventory",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.cart",
+      "name": "Shopping Cart",
+      "classification": "core",
+      "description": "Let a shopper accumulate items, adjust quantities, and apply a promotion code before checking out.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "cart",
+        "cart_line_item",
+        "product_variant"
+      ],
+      "workflows": [
+        "checkout_lifecycle"
+      ],
+      "capabilities": [
+        "add_remove_items",
+        "quantity_update",
+        "promo_code_apply"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "customer",
+        "web",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.checkout",
+      "name": "Checkout",
+      "classification": "core",
+      "description": "Collect shipping/billing details, shipping method, and payment, then convert a cart into an order.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "cart",
+        "order",
+        "payment"
+      ],
+      "workflows": [
+        "checkout_lifecycle"
+      ],
+      "capabilities": [
+        "address_capture",
+        "shipping_method_select",
+        "payment_capture",
+        "order_creation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "payment",
+        "web",
+        "mobile"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.order_management",
+      "name": "Orders & Order State Machine",
+      "classification": "core",
+      "description": "Track an order through payment, fulfillment, and completion, or cancellation/return, as the single source of truth for what was sold.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "order",
+        "order_line_item"
+      ],
+      "workflows": [
+        "order_lifecycle"
+      ],
+      "capabilities": [
+        "status_tracking",
+        "line_item_history",
+        "order_edit"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [
+        "eu_crd"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure",
+          "schema-org"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.payments",
+      "name": "Payments",
+      "classification": "core",
+      "description": "Authorize, capture, and refund payment for an order through one or more payment providers.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "payment",
+        "order"
+      ],
+      "workflows": [
+        "order_lifecycle"
+      ],
+      "capabilities": [
+        "authorize",
+        "capture",
+        "refund",
+        "multi_provider"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "payment"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [
+        "pci_dss"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.shipping_fulfillment",
+      "name": "Shipping & Fulfilment",
+      "classification": "core",
+      "description": "Choose a shipping method/rate at checkout, then pack and ship the order via a fulfillment provider or in-house.",
+      "users": [
+        "merchant_admin"
+      ],
+      "entities": [
+        "shipment",
+        "order"
+      ],
+      "workflows": [
+        "order_lifecycle"
+      ],
+      "capabilities": [
+        "rate_calculation",
+        "label_generation",
+        "tracking_update"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "backend"
+      ],
+      "integrations": [
+        "shipping_carrier"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.returns_refunds",
+      "name": "Returns & Refunds",
+      "classification": "common",
+      "description": "Let a customer request a return or exchange for a delivered order, and process the refund once received.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "return_request",
+        "order",
+        "payment"
+      ],
+      "workflows": [
+        "return_lifecycle"
+      ],
+      "capabilities": [
+        "rma_intake",
+        "refund_processing",
+        "restock_on_return"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [
+        "eu_crd"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.promotions_discounts",
+      "name": "Promotions & Discounts",
+      "classification": "common",
+      "description": "Configure percentage/fixed discounts, coupon codes, and automatic promotions with eligibility rules.",
+      "users": [
+        "merchant_admin",
+        "customer"
+      ],
+      "entities": [
+        "promotion",
+        "cart",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "coupon_codes",
+        "automatic_promotions",
+        "eligibility_rules"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.customer_accounts",
+      "name": "Customer Accounts",
+      "classification": "core",
+      "description": "Let a shopper register, sign in, and view their order history, addresses, and saved payment methods.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "customer_account",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "registration",
+        "order_history",
+        "address_book"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "customer",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.guest_checkout",
+      "name": "Guest Checkout",
+      "classification": "common",
+      "description": "Let a shopper complete an order without creating an account.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "order",
+        "cart"
+      ],
+      "workflows": [
+        "checkout_lifecycle"
+      ],
+      "capabilities": [
+        "email_only_checkout"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.reviews_ratings",
+      "name": "Reviews & Ratings",
+      "classification": "common",
+      "description": "Let a verified purchaser leave a rating and written review on a product.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "review",
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "star_rating",
+        "moderation_queue",
+        "verified_purchase_badge"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "none",
+      "tags": [
+        "common",
+        "customer",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "saleor"
+        ],
+        "confidence": "low",
+        "notes": "Reviews are commonly bolted on via a plugin/app rather than a core module in any of the three references reviewed; held at low/reasoned rather than corroborated by module inspection."
+      }
+    },
+    {
+      "id": "ecommerce.tax_calculation",
+      "name": "Tax Calculation",
+      "classification": "core",
+      "description": "Compute VAT/sales tax per line item based on customer location, product tax class, and jurisdiction rules.",
+      "users": [
+        "merchant_admin"
+      ],
+      "entities": [
+        "order_line_item",
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "jurisdiction_rules",
+        "tax_class_per_product",
+        "tax_inclusive_pricing"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "compliance",
+        "backend"
+      ],
+      "integrations": [
+        "tax_engine"
+      ],
+      "compliance": [
+        "vat_sales_tax"
+      ],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.multi_currency",
+      "name": "Multi-Currency",
+      "classification": "recommended",
+      "description": "Display prices and accept payment in more than one currency, with per-currency price lists or live FX conversion.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "product_variant",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "price_list_per_currency",
+        "fx_conversion"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "low",
+      "tags": [
+        "recommended",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "vendure"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.storefront_search",
+      "name": "Storefront Search",
+      "classification": "common",
+      "description": "Let a shopper search and filter the catalog by keyword, category, price, and attribute facets.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "keyword_search",
+        "faceted_filtering",
+        "autocomplete"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "real_time_relevance": "low",
+      "tags": [
+        "common",
+        "search",
+        "customer",
+        "web"
+      ],
+      "integrations": [
+        "search_engine"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.merchant_admin",
+      "name": "Merchant Admin Dashboard",
+      "classification": "core",
+      "description": "Back-office console for managing catalog, orders, customers, and store settings.",
+      "users": [
+        "merchant_admin"
+      ],
+      "entities": [
+        "product",
+        "order",
+        "customer_account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "order_queue",
+        "catalog_editor",
+        "sales_dashboard"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "admin"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa",
+          "saleor",
+          "vendure"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.gift_cards",
+      "name": "Gift Cards",
+      "classification": "optional",
+      "description": "Sell a stored-value gift card that a recipient can redeem toward a future order.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "gift_card",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "issue",
+        "redeem",
+        "balance_check"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer",
+        "payment"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "saleor",
+          "medusa"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.wishlist",
+      "name": "Wishlist / Saved Items",
+      "classification": "optional",
+      "description": "Let a shopper save products to a list to revisit or share later.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "save_item",
+        "share_list"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "customer",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "saleor"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not a core module in any of the three references, typically a storefront-layer feature."
+      }
+    },
+    {
+      "id": "ecommerce.abandoned_cart_recovery",
+      "name": "Abandoned Cart Recovery",
+      "classification": "optional",
+      "description": "Detect a cart left inactive and prompt the shopper by email/notification to complete checkout.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "cart"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "inactivity_detection",
+        "recovery_email"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "marketing"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from cart/event data available in all three platforms; not directly observed as a named module."
+      }
+    },
+    {
+      "id": "ecommerce.product_recommendations",
+      "name": "Product Recommendations",
+      "classification": "optional",
+      "description": "Surface related, similar, or personalized product recommendations on product and cart pages.",
+      "users": [
+        "customer"
+      ],
+      "entities": [
+        "product"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "similar_items",
+        "personalized_ranking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "real_time_relevance": "low",
+      "tags": [
+        "optional",
+        "ai",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; typically a bolted-on service/app rather than a core module."
+      }
+    },
+    {
+      "id": "ecommerce.discount_stacking_rules",
+      "name": "Promotion Eligibility & Stacking Rules",
+      "classification": "optional",
+      "description": "Define whether multiple promotions can combine on one order and in what priority.",
+      "users": [
+        "merchant_admin"
+      ],
+      "entities": [
+        "promotion"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "priority_rules",
+        "exclusivity_rules"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "vendure"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "ecommerce.order_returns_rma_tracking",
+      "name": "RMA Tracking",
+      "classification": "optional",
+      "description": "Track a return-merchandise-authorization shipment back to the warehouse with a carrier tracking number.",
+      "users": [
+        "customer",
+        "merchant_admin"
+      ],
+      "entities": [
+        "return_request"
+      ],
+      "workflows": [
+        "return_lifecycle"
+      ],
+      "capabilities": [
+        "rma_number_issuance",
+        "return_shipment_tracking"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "optional",
+        "backend"
+      ],
+      "integrations": [
+        "shipping_carrier"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "saleor"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned refinement of returns_refunds; not separately modeled in the sources reviewed."
+      }
+    },
+    {
+      "id": "ecommerce.b2b_pricing",
+      "name": "B2B / Tiered Pricing",
+      "classification": "premium",
+      "description": "Offer customer-group- or quantity-based price lists distinct from public retail pricing.",
+      "users": [
+        "merchant_admin",
+        "customer"
+      ],
+      "entities": [
+        "product_variant",
+        "customer_account"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "customer_group_pricing",
+        "volume_discounts"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "premium",
+        "catalog"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "vendure"
+        ],
+        "confidence": "medium",
+        "notes": "Vendure models `customer-group` explicitly; single implementation for this specific feature."
+      }
+    },
+    {
+      "id": "ecommerce.marketplace_multi_vendor",
+      "name": "Multi-Vendor Marketplace",
+      "classification": "premium",
+      "description": "Let multiple independent sellers list products on one storefront, with per-vendor order splitting and payout.",
+      "users": [
+        "merchant_admin",
+        "customer"
+      ],
+      "entities": [
+        "product",
+        "order"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "vendor_onboarding",
+        "order_splitting",
+        "vendor_payout"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "real_time_relevance": "none",
+      "tags": [
+        "premium",
+        "backend"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "medusa"
+        ],
+        "confidence": "low",
+        "notes": "Medusa's `sales-channel` module supports multi-channel selling, which a marketplace can be built on; true multi-vendor (separate seller accounts/payouts) is a reasoned extension, not directly observed."
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "rate_source",
+      "name": "Market Rate Source",
+      "category": "data",
+      "purpose": "Provide a reference/mid-market exchange rate to seed or validate manually-set buy/sell rates.",
+      "examples": [
+        "Frankfurter (ECB reference rates)",
+        "Open Exchange Rates",
+        "a bank's rate feed"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "exchange.rate_feed_ingestion",
+        "exchange.rate_management"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "remittance_network",
+      "name": "Remittance Network Partner",
+      "category": "payments",
+      "purpose": "Send or receive cross-border transfers on behalf of the exchange business's customers.",
+      "examples": [
+        "Western Union",
+        "MoneyGram",
+        "Ria"
+      ],
+      "protocols": [
+        "REST",
+        "proprietary partner APIs"
+      ],
+      "related_features": [
+        "exchange.remittance"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    }
+  ]
+}

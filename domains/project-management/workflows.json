@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "domain": "project-management",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "task_lifecycle",
+      "name": "Task lifecycle",
+      "actor": "contributor",
+      "trigger": "A task is created in a project",
+      "steps": ["Task created in the project's default (backlog) state", "Prioritized into an unstarted/to-do state", "Work begins, moved to a started state", "Work finishes, moved to a completed state", "Or the task is cancelled at any point before completion"],
+      "entities": ["task", "state"],
+      "features": ["project-management.tasks_issues", "project-management.statuses_workflows", "project-management.boards_kanban"],
+      "state_machine": {
+        "entity": "task",
+        "initial": "backlog",
+        "terminal": ["completed", "cancelled"],
+        "states": ["triage", "backlog", "unstarted", "started", "completed", "cancelled"],
+        "transitions": [
+          {"from": "triage", "to": "backlog", "event": "accept"},
+          {"from": "triage", "to": "cancelled", "event": "reject"},
+          {"from": "backlog", "to": "unstarted", "event": "prioritize"},
+          {"from": "unstarted", "to": "started", "event": "start_work"},
+          {"from": "started", "to": "completed", "event": "complete"},
+          {"from": "started", "to": "unstarted", "event": "move_back"},
+          {"from": "backlog", "to": "cancelled", "event": "cancel"},
+          {"from": "unstarted", "to": "cancelled", "event": "cancel"},
+          {"from": "started", "to": "cancelled", "event": "cancel"}
+        ]
+      },
+      "notifications": ["task_completed", "task_assigned"],
+      "integrations": [],
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "State names are verbatim from Plane's StateGroup enum (backlog/unstarted/started/completed/cancelled/triage); transition/event names are reasoned, not literal from source. Kanboard's simpler is_active open/closed status is a degenerate case of this same shape (backlog+unstarted+started collapse to 'open'), which is why this isn't scored medium: the multi-state grouping itself is only verified in one implementation."}
+    },
+    {
+      "id": "subtask_completion_rollup",
+      "name": "Subtask completion rollup",
+      "actor": "contributor",
+      "trigger": "A subtask's state changes",
+      "steps": ["Contributor completes a subtask", "Parent task shows updated sub-task completion count/ratio", "Once all subtasks are completed, parent task may be flagged ready to complete (not auto-completed)"],
+      "entities": ["task"],
+      "features": ["project-management.subtasks"],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {"sources": ["plane", "kanboard"], "confidence": "medium", "notes": "Plane's Issue.parent self-FK (sub_issues_count is computed) and Kanboard's SubtaskModel (with its own status) both support this rollup pattern, though neither source was observed to auto-complete the parent."}
+    },
+    {
+      "id": "dependency_management",
+      "name": "Task dependency management",
+      "actor": "project_manager",
+      "trigger": "Two tasks need to be sequenced or linked",
+      "steps": ["Select the related task", "Choose a relation type (blocks, relates to, duplicate, start/finish before)", "The reverse relation is recorded automatically on the related task", "Dependency is surfaced on the board/Gantt view as a blocker or link"],
+      "entities": ["task_relation", "task"],
+      "features": ["project-management.task_dependencies", "project-management.gantt_timeline"],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Verbatim from Plane's IssueRelationChoices and its _RELATION_PAIRS/_REVERSE_MAPPING (e.g. blocked_by <-> blocking is auto-derived, not a stored second row); single source."}
+    },
+    {
+      "id": "commenting_and_mentions",
+      "name": "Commenting and mentions",
+      "actor": "contributor",
+      "trigger": "A contributor wants to discuss or notify someone about a task",
+      "steps": ["Write a comment on the task", "Optionally @-mention a teammate", "Mentioned user receives a notification", "Other participants can react to the comment"],
+      "entities": ["comment", "task"],
+      "features": ["project-management.comments_mentions"],
+      "notifications": ["mentioned_in_comment"],
+      "integrations": [],
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's IssueComment/IssueMention/CommentReaction models; single source."}
+    },
+    {
+      "id": "cycle_planning",
+      "name": "Cycle (sprint) planning",
+      "actor": "project_manager",
+      "trigger": "A new iteration is about to start",
+      "steps": ["Create a cycle with start/end dates", "Add tasks from the backlog into the cycle", "Cycle becomes active once its start date arrives", "Track burndown as tasks complete during the cycle", "Cycle closes at its end date; incomplete tasks roll to the next cycle or backlog"],
+      "entities": ["cycle", "task"],
+      "features": ["project-management.cycles_sprints", "project-management.burndown_velocity_reports"],
+      "notifications": ["cycle_started", "cycle_ending_soon"],
+      "integrations": [],
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Reasoned from Plane's Cycle.start_date/end_date and CycleIssue join table; Plane computes cycle status from these dates rather than storing an explicit status enum, so the steps here are reasoned, not verbatim. Single source."}
+    },
+    {
+      "id": "time_tracking_workflow",
+      "name": "Time tracking",
+      "actor": "contributor",
+      "trigger": "A contributor starts working on a task",
+      "steps": ["Start a timer on the task (or subtask)", "Stop the timer when work pauses or finishes", "Duration is recorded as a time entry", "Totals roll up for reporting"],
+      "entities": ["time_entry", "task"],
+      "features": ["project-management.time_tracking"],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {"sources": ["kanboard"], "confidence": "low", "notes": "Kanboard's SubtaskTimeTrackingModel start/stop timer pattern; single source, modeled per-subtask rather than per top-level task in Kanboard specifically."}
+    }
+  ]
+}

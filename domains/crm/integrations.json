@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "email_provider",
+      "name": "Email provider",
+      "category": "communication",
+      "purpose": "Two-way sync of sent/received email into the CRM timeline.",
+      "examples": [
+        "Gmail / Google Workspace",
+        "Microsoft 365 / Outlook",
+        "generic IMAP/SMTP"
+      ],
+      "protocols": [
+        "IMAP",
+        "SMTP",
+        "OAuth2",
+        "REST"
+      ],
+      "related_features": [
+        "crm.email_sync"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "calendar_provider",
+      "name": "Calendar provider",
+      "category": "scheduling",
+      "purpose": "Two-way sync of meetings between the CRM and an external calendar.",
+      "examples": [
+        "Google Calendar",
+        "Microsoft Outlook Calendar"
+      ],
+      "protocols": [
+        "OAuth2",
+        "REST",
+        "iCal"
+      ],
+      "related_features": [
+        "crm.calendar_sync"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

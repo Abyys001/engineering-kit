@@ -1,0 +1,245 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "mappings": [
+    {
+      "feature": "crm.contacts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Contacts model."
+    },
+    {
+      "feature": "crm.companies_accounts",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Accounts model with member_of hierarchy field."
+    },
+    {
+      "feature": "crm.leads",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Leads model with source/status/type lookups."
+    },
+    {
+      "feature": "crm.deals_pipelines",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Opportunities + crm_Opportunities_Sales_Stages."
+    },
+    {
+      "feature": "crm.activities_tasks",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Activities + Tasks models."
+    },
+    {
+      "feature": "crm.contact_timeline",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "Documents-to-* polymorphic join tables + crm_Activities."
+    },
+    {
+      "feature": "crm.record_assignment",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "assigned_to relations on crm_Leads and crm_Opportunities."
+    },
+    {
+      "feature": "crm.email_sync",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "EmailAccount/Email models."
+    },
+    {
+      "feature": "crm.calendar_sync",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "CalendarConnection/crm_CalendarEvents models."
+    },
+    {
+      "feature": "crm.campaign_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_campaigns model."
+    },
+    {
+      "feature": "crm.segmentation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Targets/crm_TargetLists models."
+    },
+    {
+      "feature": "crm.quotes",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "approval_status workflow + crm_OpportunityLineItems on crm_Opportunities."
+    },
+    {
+      "feature": "crm.deal_products",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Products/crm_ProductCategories/crm_AccountProducts models."
+    },
+    {
+      "feature": "crm.pipeline_automation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_FunnelSettings model."
+    },
+    {
+      "feature": "crm.account_hierarchy",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Accounts.member_of field."
+    },
+    {
+      "feature": "crm.reports_dashboards",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "crm_Report_Config/crm_Report_Schedule models."
+    },
+    {
+      "feature": "crm.data_import",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/nextcrm/source"
+      ],
+      "status": "reference",
+      "notes": "import-targets.ts and import-products.ts actions with dedicated tests."
+    }
+  ]
+}

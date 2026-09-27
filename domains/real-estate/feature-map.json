@@ -1,0 +1,1338 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "name": "Real Estate",
+  "aliases": [
+    "property listings",
+    "property management",
+    "lettings"
+  ],
+  "description": "Property listing/search for buyers and renters, plus rental property management: leases, tenants, rent collection, and maintenance.",
+  "nace": [
+    "L68.10",
+    "L68.20",
+    "L68.31",
+    "L68.32"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-27",
+  "sources": [
+    {
+      "id": "openproperty",
+      "title": "OpenProperty",
+      "url": "https://github.com/clawnify/OpenProperty",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "a493028ad12ba969990ee916fbc8cd2a98807a2d",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (root LICENSE file confirms MIT). Reference-only, extraction-safe if cloned later. Self-hosted rental property management (TenantCloud/AppFolio/Buildium alternative): units, tenants, leases, rent collection, maintenance work orders (`src/server/schema.sql`, `src/client/components/{tenants,leases,maintenance}`)."
+    },
+    {
+      "id": "movinin",
+      "title": "Movin' In (rental property management platform)",
+      "url": "https://github.com/aelassas/movinin",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-27",
+      "version": "b9110a087406d3532f1337e47ff121c95dd659b7",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (root LICENSE file confirms MIT). Reference-only. MERN-stack property rental platform with mobile app: `backend/src/models/{Property,Booking,Location,User}.ts` — confirms property type enum (House/Apartment/Townhouse/Plot/Farm/Commercial/Industrial) and a booking(lease)-style status lifecycle (Void/Pending/Deposit/Paid/Reserved/Cancelled)."
+    },
+    {
+      "id": "easy-property-listings",
+      "title": "Easy Property Listings (WordPress plugin)",
+      "url": "https://github.com/easypropertylistings/Easy-Property-Listings",
+      "source_type": "implementation",
+      "license": "GPL-2.0",
+      "retrieved": "2026-09-27",
+      "version": "master branch, 2026-09-26 snapshot",
+      "local_path": null,
+      "notes": "Not cloned; inspected via GitHub API (`license.txt` confirms GPL-2.0). Reference-only (GPL). Mature real-estate-agency-specific listing plugin: post types for property/rental/land/commercial/business/contact (agent) confirm the sales-vs-rental listing split and an agent/contact entity distinct from the property-management-focused sources above."
+    },
+    {
+      "id": "reso-data-dictionary",
+      "title": "RESO Data Dictionary / Web API",
+      "url": "https://www.reso.org/data-dictionary/",
+      "source_type": "authoritative",
+      "license": "Published by RESO (Real Estate Standards Organization); fields are openly documented for implementers, exact redistribution terms not independently re-verified this pass",
+      "retrieved": "2026-09-27",
+      "version": "Data Dictionary 2.1",
+      "local_path": null,
+      "notes": "Industry-standard field/entity vocabulary (Property, Member, Office, OpenHouse, etc.) used by North American MLS systems. This session's sandboxed network blocked a live re-fetch of reso.org, so this is cited from well-established prior knowledge at medium confidence rather than high. Not to be confused with `NationalAssociationOfRealtors/reso-data-dictionary` on GitHub, which is a thin MIT-licensed OData client wrapper, not the dictionary itself."
+    },
+    {
+      "id": "schema-org-real-estate",
+      "title": "schema.org RealEstateListing / Residence / Offer",
+      "url": "https://schema.org/RealEstateListing",
+      "source_type": "authoritative",
+      "license": "schema.org vocabulary is free to use; site content under CC BY-SA (per schema.org's stated terms; not independently re-verified live this pass)",
+      "retrieved": "2026-09-27",
+      "version": "schema.org current release",
+      "local_path": null,
+      "notes": "Structured-data vocabulary for listing search-engine markup (RealEstateListing, Offer, Residence/Apartment/SingleFamilyResidence types). Live re-verification failed in this sandbox (network/TLS restrictions); treated as well-established from training knowledge."
+    }
+  ],
+  "features": [
+    {
+      "id": "real-estate.property_listings",
+      "name": "Property listings",
+      "classification": "core",
+      "description": "Create and manage for-sale/for-rent listings for a property or unit, with pricing and status.",
+      "users": [
+        "agent",
+        "owner"
+      ],
+      "entities": [
+        "property",
+        "unit",
+        "listing"
+      ],
+      "workflows": [
+        "listing_lifecycle"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin",
+          "easy-property-listings",
+          "reso-data-dictionary",
+          "schema-org-real-estate"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "real-estate.listing_media",
+      "name": "Listing media",
+      "classification": "core",
+      "description": "Attach photos, floor plans, and video/virtual tours to a listing.",
+      "users": [
+        "agent",
+        "owner"
+      ],
+      "entities": [
+        "media_asset",
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-tagging rooms/features from photos"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.search_and_map",
+      "name": "Search and map",
+      "classification": "core",
+      "description": "Public-facing search with filters (price, beds, location) and a map view of results.",
+      "users": [
+        "buyer_renter"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [
+        "geocoding",
+        "radius/polygon search"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "semantic/natural-language search"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "search",
+        "customer",
+        "location"
+      ],
+      "integrations": [
+        "mapping_geocoding"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "schema-org-real-estate"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "real-estate.saved_searches_alerts",
+      "name": "Saved searches and alerts",
+      "classification": "common",
+      "description": "Let a buyer/renter save a search and get notified of new matching listings.",
+      "users": [
+        "buyer_renter"
+      ],
+      "entities": [
+        "saved_search"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "match-relevance ranking"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "customer",
+        "search"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.lead_capture_inquiries",
+      "name": "Lead capture / inquiries",
+      "classification": "core",
+      "description": "Capture a prospect's contact request against a listing.",
+      "users": [
+        "buyer_renter",
+        "agent"
+      ],
+      "entities": [
+        "lead"
+      ],
+      "workflows": [
+        "lead_to_viewing_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "lead scoring"
+      ],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.lead_management_crm",
+      "name": "Lead / pipeline management",
+      "classification": "common",
+      "description": "Track and follow up on leads through a pipeline (new, contacted, qualified, won, lost).",
+      "users": [
+        "agent",
+        "broker"
+      ],
+      "entities": [
+        "lead"
+      ],
+      "workflows": [
+        "lead_to_viewing_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "next-best-action suggestions"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.viewings_scheduling",
+      "name": "Viewings / showings",
+      "classification": "core",
+      "description": "Schedule a property viewing between a prospect and an agent.",
+      "users": [
+        "buyer_renter",
+        "agent"
+      ],
+      "entities": [
+        "viewing"
+      ],
+      "workflows": [
+        "lead_to_viewing_workflow"
+      ],
+      "capabilities": [
+        "availability"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "no-show risk scoring"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "calendar",
+        "customer",
+        "staff"
+      ],
+      "integrations": [
+        "sms_email_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.open_houses",
+      "name": "Open houses",
+      "classification": "recommended",
+      "description": "Publish a scheduled open-house event for a listing and track attendee sign-ins.",
+      "users": [
+        "agent",
+        "buyer_renter"
+      ],
+      "entities": [
+        "open_house"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "scheduling",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.agent_broker_directory",
+      "name": "Agent / broker directory",
+      "classification": "core",
+      "description": "Manage agents/brokers, their profile, license info, and listing assignments.",
+      "users": [
+        "broker",
+        "agent"
+      ],
+      "entities": [
+        "agent",
+        "brokerage"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "staff"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "reso-data-dictionary"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "real-estate.brokerage_management",
+      "name": "Brokerage / agency management",
+      "classification": "common",
+      "description": "Manage a multi-agent brokerage: office roster, listing assignment, commission splits.",
+      "users": [
+        "broker"
+      ],
+      "entities": [
+        "brokerage",
+        "agent"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "management"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.offers_negotiation",
+      "name": "Offers and negotiation",
+      "classification": "core",
+      "description": "Submit, counter, and accept/reject purchase or rental offers on a listing.",
+      "users": [
+        "buyer_renter",
+        "agent",
+        "owner"
+      ],
+      "entities": [
+        "offer"
+      ],
+      "workflows": [
+        "offer_negotiation_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "customer",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.lease_management",
+      "name": "Lease management",
+      "classification": "core",
+      "description": "Create and manage a lease/rental agreement between a tenant and a property/unit.",
+      "users": [
+        "property_manager",
+        "tenant"
+      ],
+      "entities": [
+        "lease"
+      ],
+      "workflows": [
+        "lease_lifecycle"
+      ],
+      "capabilities": [
+        "e-signature"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "customer",
+        "document"
+      ],
+      "integrations": [
+        "e_signature"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.tenant_management",
+      "name": "Tenant management",
+      "classification": "core",
+      "description": "Track tenants, their contact info, lease history, and communication.",
+      "users": [
+        "property_manager"
+      ],
+      "entities": [
+        "tenant"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "staff",
+        "identity"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.rent_collection",
+      "name": "Rent collection",
+      "classification": "core",
+      "description": "Generate rent invoices and collect recurring payments from tenants.",
+      "users": [
+        "tenant",
+        "property_manager"
+      ],
+      "entities": [
+        "rent_payment",
+        "lease"
+      ],
+      "workflows": [
+        "rent_collection_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "late-payment risk prediction"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "payment",
+        "customer"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.deposit_management",
+      "name": "Security deposit management",
+      "classification": "common",
+      "description": "Collect, hold, and reconcile a tenant's security deposit against a lease.",
+      "users": [
+        "property_manager",
+        "tenant"
+      ],
+      "entities": [
+        "deposit"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "payment",
+        "compliance",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [
+        "deposit_protection_schemes"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.maintenance_requests",
+      "name": "Maintenance requests",
+      "classification": "core",
+      "description": "Let a tenant report an issue and track it through to resolution via a work order.",
+      "users": [
+        "tenant",
+        "property_manager",
+        "maintenance_vendor"
+      ],
+      "entities": [
+        "maintenance_request"
+      ],
+      "workflows": [
+        "maintenance_request_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "issue triage/urgency classification"
+      ],
+      "real_time_relevance": "medium",
+      "tags": [
+        "core",
+        "customer",
+        "staff",
+        "workflow"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.property_management_dashboard",
+      "name": "Owner portfolio dashboard",
+      "classification": "common",
+      "description": "Give an owner a rollup view of their properties' occupancy, income, and maintenance status.",
+      "users": [
+        "owner"
+      ],
+      "entities": [
+        "property",
+        "unit"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "portfolio performance insights"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "reporting",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.document_management",
+      "name": "Document management",
+      "classification": "common",
+      "description": "Store lease agreements, disclosures, inspection reports, and other property documents.",
+      "users": [
+        "property_manager",
+        "tenant",
+        "owner"
+      ],
+      "entities": [
+        "document"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "low",
+      "ai_opportunities": [
+        "auto-classification/expiry extraction"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "staff",
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "easy-property-listings"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.valuations_cma",
+      "name": "Valuations / comparative market analysis",
+      "classification": "optional",
+      "description": "Estimate a property's market value from comparable listings/sales.",
+      "users": [
+        "agent",
+        "owner"
+      ],
+      "entities": [
+        "valuation",
+        "property"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "automated valuation model (AVM)"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference; not confirmed as a native feature in any of the three implementation sources, which are rental-management or listing-display focused rather than valuation tools."
+      }
+    },
+    {
+      "id": "real-estate.mortgage_calculator",
+      "name": "Mortgage / affordability calculator",
+      "classification": "optional",
+      "description": "Estimate monthly payments for a listed sale price given rate/term/down-payment inputs.",
+      "users": [
+        "buyer_renter"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "real-estate.mls_idx_integration",
+      "name": "MLS / IDX feed integration",
+      "classification": "integration",
+      "description": "Pull in or syndicate listings via an MLS's IDX feed or RESO Web API.",
+      "users": [
+        "agent",
+        "system_integration"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "backend"
+      ],
+      "integrations": [
+        "mls_idx_feed"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "real-estate.listing_syndication",
+      "name": "Listing syndication",
+      "classification": "recommended",
+      "description": "Publish a listing out to third-party portals in addition to the operator's own site.",
+      "users": [
+        "agent"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "staff"
+      ],
+      "integrations": [
+        "listing_portal_syndication"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.virtual_tours_3d",
+      "name": "3D / virtual tours",
+      "classification": "optional",
+      "description": "Embed a 3D walkthrough or 360° tour on a listing.",
+      "users": [
+        "buyer_renter"
+      ],
+      "entities": [
+        "media_asset"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "document"
+      ],
+      "integrations": [
+        "virtual_tour_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "real-estate.owner_portal",
+      "name": "Owner portal",
+      "classification": "common",
+      "description": "Self-service access for an owner to view their properties, statements, and requests.",
+      "users": [
+        "owner"
+      ],
+      "entities": [
+        "property"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "web",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.tenant_portal",
+      "name": "Tenant portal",
+      "classification": "common",
+      "description": "Self-service access for a tenant to pay rent, view lease documents, and submit maintenance requests.",
+      "users": [
+        "tenant"
+      ],
+      "entities": [
+        "lease",
+        "rent_payment",
+        "maintenance_request"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "web",
+        "mobile"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "medium",
+        "notes": "Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+      }
+    },
+    {
+      "id": "real-estate.rental_application_screening",
+      "name": "Rental application and screening",
+      "classification": "common",
+      "description": "Collect a prospective tenant's application and run background/credit checks.",
+      "users": [
+        "tenant",
+        "property_manager"
+      ],
+      "entities": [
+        "tenant",
+        "lease"
+      ],
+      "workflows": [
+        "tenant_application_workflow"
+      ],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "risk scoring from application data"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "customer",
+        "staff",
+        "compliance"
+      ],
+      "integrations": [
+        "background_check_screening"
+      ],
+      "compliance": [
+        "fair_housing_act"
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "real-estate.fair_housing_compliance_screening",
+      "name": "Fair housing compliance screening",
+      "classification": "compliance",
+      "description": "Flag listing copy or screening criteria that risks violating fair-housing / anti-discrimination rules.",
+      "users": [
+        "compliance_officer",
+        "agent"
+      ],
+      "entities": [
+        "listing"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "medium",
+      "ai_opportunities": [
+        "discriminatory-language detection in listing copy"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "ai"
+      ],
+      "integrations": [],
+      "compliance": [
+        "fair_housing_act"
+      ],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference connecting the well-documented Fair Housing Act advertising rules to a plausible product feature; not confirmed as shipped in any inspected reference implementation."
+      }
+    },
+    {
+      "id": "real-estate.commission_tracking",
+      "name": "Commission tracking",
+      "classification": "recommended",
+      "description": "Calculate and track agent/broker commission owed per closed transaction.",
+      "users": [
+        "broker",
+        "agent"
+      ],
+      "entities": [
+        "offer",
+        "agent"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "staff",
+        "payment",
+        "reporting"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "real-estate.price_recommendation_ai",
+      "name": "AI price recommendation",
+      "classification": "premium",
+      "description": "Suggest a listing or renewal price using comparable listings and market trend data.",
+      "users": [
+        "agent",
+        "property_manager"
+      ],
+      "entities": [
+        "listing",
+        "valuation"
+      ],
+      "workflows": [],
+      "capabilities": [],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "high",
+      "ai_opportunities": [
+        "price optimization model"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "analytics"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference from general market prevalence of AVM-driven pricing tools; not confirmed in any of the three implementation sources."
+      }
+    }
+  ],
+  "maturity_note": "Authoritative standards (1EdTech/xAPI/RESO etc.) could not be re-verified at their publishers during research; promote after verification."
+}

@@ -1,0 +1,390 @@
+{
+  "schema": 1,
+  "domain": "education",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "enrollment_lifecycle",
+      "name": "Enrollment lifecycle",
+      "actor": "student",
+      "trigger": "Student requests enrollment in a course section",
+      "steps": [
+        "Check prerequisites/capacity",
+        "Create enrollment",
+        "Confirm or waitlist",
+        "Term proceeds",
+        "Mark completed or dropped"
+      ],
+      "entities": [
+        "enrollment",
+        "course_section"
+      ],
+      "features": [
+        "education.enrollment"
+      ],
+      "state_machine": {
+        "entity": "enrollment",
+        "initial": "pending",
+        "terminal": [
+          "dropped",
+          "completed"
+        ],
+        "states": [
+          "pending",
+          "enrolled",
+          "waitlisted",
+          "dropped",
+          "completed"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "enrolled",
+            "event": "approve"
+          },
+          {
+            "from": "pending",
+            "to": "waitlisted",
+            "event": "capacity_full"
+          },
+          {
+            "from": "waitlisted",
+            "to": "enrolled",
+            "event": "seat_opens"
+          },
+          {
+            "from": "enrolled",
+            "to": "dropped",
+            "event": "withdraw"
+          },
+          {
+            "from": "enrolled",
+            "to": "completed",
+            "event": "term_ends"
+          }
+        ]
+      },
+      "notifications": [
+        "enrollment confirmation",
+        "waitlist update"
+      ],
+      "integrations": [
+        "sis_integration"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "assignment_workflow",
+      "name": "Assignment submission and grading",
+      "actor": "student",
+      "trigger": "Instructor publishes an assignment",
+      "steps": [
+        "Publish assignment",
+        "Student submits work",
+        "Instructor grades",
+        "Grade posted/returned",
+        "Student views feedback"
+      ],
+      "entities": [
+        "assignment",
+        "submission",
+        "grade"
+      ],
+      "features": [
+        "education.assignments",
+        "education.submissions",
+        "education.grading_gradebook"
+      ],
+      "state_machine": {
+        "entity": "submission",
+        "initial": "draft",
+        "terminal": [
+          "graded",
+          "returned"
+        ],
+        "states": [
+          "draft",
+          "submitted",
+          "late",
+          "graded",
+          "returned"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "submitted",
+            "event": "submit_on_time"
+          },
+          {
+            "from": "draft",
+            "to": "late",
+            "event": "submit_after_due"
+          },
+          {
+            "from": "submitted",
+            "to": "graded",
+            "event": "grade"
+          },
+          {
+            "from": "late",
+            "to": "graded",
+            "event": "grade"
+          },
+          {
+            "from": "graded",
+            "to": "returned",
+            "event": "release_feedback"
+          }
+        ]
+      },
+      "notifications": [
+        "submission received",
+        "grade posted"
+      ],
+      "integrations": [
+        "plagiarism_checker"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education",
+          "moodle",
+          "canvas-lms"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "exam_workflow",
+      "name": "Exam / quiz lifecycle",
+      "actor": "student",
+      "trigger": "An exam's scheduled window opens",
+      "steps": [
+        "Open exam window",
+        "Student starts attempt",
+        "Student submits (or time expires)",
+        "Auto/manual grading",
+        "Results published"
+      ],
+      "entities": [
+        "exam",
+        "exam_attempt"
+      ],
+      "features": [
+        "education.exams_quizzes"
+      ],
+      "state_machine": {
+        "entity": "exam_attempt",
+        "initial": "in_progress",
+        "terminal": [
+          "graded",
+          "expired"
+        ],
+        "states": [
+          "in_progress",
+          "submitted",
+          "graded",
+          "expired"
+        ],
+        "transitions": [
+          {
+            "from": "in_progress",
+            "to": "submitted",
+            "event": "submit"
+          },
+          {
+            "from": "in_progress",
+            "to": "expired",
+            "event": "time_runs_out"
+          },
+          {
+            "from": "submitted",
+            "to": "graded",
+            "event": "grade"
+          }
+        ]
+      },
+      "notifications": [
+        "results published"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "moodle",
+          "canvas-lms",
+          "1edtech-qti"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "admissions_workflow",
+      "name": "Admissions workflow",
+      "actor": "student",
+      "trigger": "A prospective student submits an application",
+      "steps": [
+        "Submit application",
+        "Document review",
+        "Decision (accept/reject/waitlist)",
+        "Accepted applicant converts to enrollment"
+      ],
+      "entities": [
+        "student"
+      ],
+      "features": [
+        "education.admissions"
+      ],
+      "notifications": [
+        "decision notice"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "certificate_issuance_workflow",
+      "name": "Certificate issuance",
+      "actor": "academic_admin",
+      "trigger": "A student meets course/program completion requirements",
+      "steps": [
+        "Verify completion criteria",
+        "Generate certificate",
+        "Issue to student",
+        "Make verifiable via code/link"
+      ],
+      "entities": [
+        "certificate",
+        "student"
+      ],
+      "features": [
+        "education.certificates"
+      ],
+      "notifications": [
+        "certificate issued"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "fee_payment_workflow",
+      "name": "Fee payment",
+      "actor": "guardian",
+      "trigger": "A fee plan generates an invoice for a student/term",
+      "steps": [
+        "Issue invoice",
+        "Guardian/student pays (in full or in part)",
+        "Record payment",
+        "Flag overdue if unpaid past due date"
+      ],
+      "entities": [
+        "fee_invoice"
+      ],
+      "features": [
+        "education.fees_billing"
+      ],
+      "state_machine": {
+        "entity": "fee_invoice",
+        "initial": "issued",
+        "terminal": [
+          "paid",
+          "waived"
+        ],
+        "states": [
+          "issued",
+          "partially_paid",
+          "paid",
+          "overdue",
+          "waived"
+        ],
+        "transitions": [
+          {
+            "from": "issued",
+            "to": "partially_paid",
+            "event": "partial_payment"
+          },
+          {
+            "from": "issued",
+            "to": "paid",
+            "event": "full_payment"
+          },
+          {
+            "from": "partially_paid",
+            "to": "paid",
+            "event": "final_payment"
+          },
+          {
+            "from": "issued",
+            "to": "overdue",
+            "event": "due_date_passed"
+          },
+          {
+            "from": "issued",
+            "to": "waived",
+            "event": "waive"
+          }
+        ]
+      },
+      "notifications": [
+        "invoice issued",
+        "payment receipt",
+        "overdue reminder"
+      ],
+      "integrations": [
+        "payment_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "frappe-education"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "live_class_session_workflow",
+      "name": "Live class session",
+      "actor": "instructor",
+      "trigger": "A timetabled live class session's start time approaches",
+      "steps": [
+        "Session room opens",
+        "Instructor starts session",
+        "Students join",
+        "Session recorded (optional)",
+        "Session ends and attendance logged"
+      ],
+      "entities": [
+        "timetable_slot",
+        "attendance_record"
+      ],
+      "features": [
+        "education.live_classes"
+      ],
+      "notifications": [
+        "session starting soon"
+      ],
+      "integrations": [
+        "video_conferencing"
+      ],
+      "provenance": {
+        "sources": [
+          "moodle"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

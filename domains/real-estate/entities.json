@@ -1,0 +1,688 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "entities": [
+    {
+      "id": "property",
+      "name": "Property",
+      "description": "A physical real-estate asset: a single-family home, building, or land parcel.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "unit"
+        },
+        {
+          "type": "has_many",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "address",
+        "property_type",
+        "bedrooms",
+        "bathrooms"
+      ],
+      "states": [
+        "active",
+        "under_contract",
+        "sold",
+        "inactive"
+      ],
+      "related_features": [
+        "real-estate.property_listings",
+        "real-estate.property_management_dashboard"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Property"
+        },
+        {
+          "source": "schema-org-real-estate",
+          "concept": "Residence"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "movinin",
+          "reso-data-dictionary",
+          "schema-org-real-estate"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "unit",
+      "name": "Unit",
+      "description": "A rentable/sellable sub-division of a property, e.g. one apartment in a multi-unit building.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        },
+        {
+          "type": "has_many",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "unit_number",
+        "bedrooms",
+        "bathrooms",
+        "square_footage"
+      ],
+      "states": [
+        "vacant",
+        "occupied",
+        "under_maintenance"
+      ],
+      "related_features": [
+        "real-estate.property_listings",
+        "real-estate.tenant_management"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Unit"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "media_asset",
+      "name": "Media asset",
+      "description": "A photo, video, floor plan, or 3D tour attached to a listing.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "url",
+        "order"
+      ],
+      "states": [],
+      "related_features": [
+        "real-estate.listing_media",
+        "real-estate.virtual_tours_3d"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Media"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "listing",
+      "name": "Listing",
+      "description": "A published for-sale or for-rent advertisement of a property or unit.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        },
+        {
+          "type": "belongs_to",
+          "target": "unit",
+          "note": "optional"
+        },
+        {
+          "type": "belongs_to",
+          "target": "agent"
+        },
+        {
+          "type": "has_many",
+          "target": "lead"
+        },
+        {
+          "type": "has_many",
+          "target": "offer"
+        }
+      ],
+      "important_fields": [
+        "price",
+        "listing_type",
+        "status",
+        "published_at"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "pending",
+        "sold",
+        "leased",
+        "withdrawn",
+        "expired"
+      ],
+      "related_features": [
+        "real-estate.property_listings",
+        "real-estate.search_and_map"
+      ],
+      "standard_mapping": [
+        {
+          "source": "schema-org-real-estate",
+          "concept": "RealEstateListing"
+        },
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Property (listing-status fields)"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin",
+          "easy-property-listings",
+          "reso-data-dictionary",
+          "schema-org-real-estate"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "agent",
+      "name": "Agent",
+      "description": "A licensed real-estate agent representing buyers, sellers, landlords, or tenants.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "brokerage"
+        },
+        {
+          "type": "has_many",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "license_number",
+        "contact"
+      ],
+      "states": [
+        "active",
+        "inactive"
+      ],
+      "related_features": [
+        "real-estate.agent_broker_directory"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Member"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "reso-data-dictionary"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "brokerage",
+      "name": "Brokerage / agency",
+      "description": "The firm/office an agent operates under.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "agent"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "license_number"
+      ],
+      "states": [],
+      "related_features": [
+        "real-estate.brokerage_management"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "Office"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "lead",
+      "name": "Lead",
+      "description": "A prospect's inquiry about a listing.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "contact",
+        "message",
+        "source"
+      ],
+      "states": [
+        "new",
+        "contacted",
+        "qualified",
+        "won",
+        "lost"
+      ],
+      "related_features": [
+        "real-estate.lead_capture_inquiries",
+        "real-estate.lead_management_crm"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "viewing",
+      "name": "Viewing",
+      "description": "A scheduled showing of a property/unit to a prospect.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "listing"
+        },
+        {
+          "type": "belongs_to",
+          "target": "lead",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "scheduled_at",
+        "status"
+      ],
+      "states": [
+        "scheduled",
+        "confirmed",
+        "completed",
+        "cancelled",
+        "no_show"
+      ],
+      "related_features": [
+        "real-estate.viewings_scheduling"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "ShowingAvailability"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "movinin"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "open_house",
+      "name": "Open house",
+      "description": "A scheduled public viewing window for a listing.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "start",
+        "end"
+      ],
+      "states": [
+        "scheduled",
+        "completed",
+        "cancelled"
+      ],
+      "related_features": [
+        "real-estate.open_houses"
+      ],
+      "standard_mapping": [
+        {
+          "source": "reso-data-dictionary",
+          "concept": "OpenHouse"
+        }
+      ],
+      "provenance": {
+        "sources": [
+          "easy-property-listings",
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "offer",
+      "name": "Offer",
+      "description": "A prospective buyer's or renter's proposed price/terms for a listing.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "listing"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "terms",
+        "submitted_at"
+      ],
+      "states": [
+        "submitted",
+        "countered",
+        "accepted",
+        "rejected",
+        "withdrawn"
+      ],
+      "related_features": [
+        "real-estate.offers_negotiation"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "lease",
+      "name": "Lease",
+      "description": "A rental agreement between a tenant and a property/unit.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "unit"
+        },
+        {
+          "type": "belongs_to",
+          "target": "tenant"
+        },
+        {
+          "type": "has_many",
+          "target": "rent_payment"
+        },
+        {
+          "type": "has_one",
+          "target": "deposit"
+        }
+      ],
+      "important_fields": [
+        "start_date",
+        "end_date",
+        "rent_amount"
+      ],
+      "states": [
+        "draft",
+        "active",
+        "renewed",
+        "terminated",
+        "expired"
+      ],
+      "related_features": [
+        "real-estate.lease_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "tenant",
+      "name": "Tenant",
+      "description": "A renter under a lease.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "lease"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "contact"
+      ],
+      "states": [
+        "applicant",
+        "active",
+        "former"
+      ],
+      "related_features": [
+        "real-estate.tenant_management",
+        "real-estate.tenant_portal"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "movinin"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "rent_payment",
+      "name": "Rent payment",
+      "description": "A single billed or paid rent installment under a lease.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "lease"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "due_date",
+        "paid_at"
+      ],
+      "states": [
+        "due",
+        "paid",
+        "late",
+        "partial",
+        "waived"
+      ],
+      "related_features": [
+        "real-estate.rent_collection"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "maintenance_request",
+      "name": "Maintenance request",
+      "description": "A reported issue at a property/unit tracked to resolution.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "unit"
+        },
+        {
+          "type": "belongs_to",
+          "target": "tenant",
+          "note": "optional; owner can also file"
+        }
+      ],
+      "important_fields": [
+        "description",
+        "priority",
+        "status"
+      ],
+      "states": [
+        "submitted",
+        "acknowledged",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "related_features": [
+        "real-estate.maintenance_requests"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "deposit",
+      "name": "Security deposit",
+      "description": "Funds held against a lease as security for damage/unpaid rent.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "lease"
+        }
+      ],
+      "important_fields": [
+        "amount",
+        "held_by",
+        "status"
+      ],
+      "states": [
+        "held",
+        "partially_returned",
+        "returned",
+        "forfeited"
+      ],
+      "related_features": [
+        "real-estate.deposit_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "document",
+      "name": "Document",
+      "description": "A stored file: lease agreement, disclosure, inspection report, ID verification.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "lease",
+          "note": "optional"
+        },
+        {
+          "type": "belongs_to",
+          "target": "property",
+          "note": "optional"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "url",
+        "uploaded_at"
+      ],
+      "states": [
+        "current",
+        "superseded"
+      ],
+      "related_features": [
+        "real-estate.document_management"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "openproperty",
+          "easy-property-listings"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "saved_search",
+      "name": "Saved search",
+      "description": "A buyer/renter's stored search criteria with alerting.",
+      "relationships": [],
+      "important_fields": [
+        "criteria",
+        "alert_frequency"
+      ],
+      "states": [
+        "active",
+        "paused"
+      ],
+      "related_features": [
+        "real-estate.saved_searches_alerts"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "easy-property-listings"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "valuation",
+      "name": "Valuation",
+      "description": "An estimated market value for a property at a point in time.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "property"
+        }
+      ],
+      "important_fields": [
+        "estimated_value",
+        "method",
+        "as_of_date"
+      ],
+      "states": [],
+      "related_features": [
+        "real-estate.valuations_cma",
+        "real-estate.price_recommendation_ai"
+      ],
+      "standard_mapping": [],
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

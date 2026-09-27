@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "edges": [
+    {
+      "from": "crm.contacts",
+      "to": "shared.search",
+      "type": "enhances",
+      "reason": "Contacts need to be searchable across name/email/company."
+    },
+    {
+      "from": "crm.companies_accounts",
+      "to": "shared.data_tables",
+      "type": "enhances",
+      "reason": "Account lists need filtering, sorting, and pagination."
+    },
+    {
+      "from": "crm.leads",
+      "to": "crm.contacts",
+      "type": "enhances",
+      "reason": "A converted lead becomes a contact."
+    },
+    {
+      "from": "crm.lead_conversion",
+      "to": "crm.leads",
+      "type": "requires",
+      "reason": "Conversion acts on an existing lead."
+    },
+    {
+      "from": "crm.lead_conversion",
+      "to": "crm.contacts",
+      "type": "requires",
+      "reason": "Conversion creates a contact."
+    },
+    {
+      "from": "crm.lead_conversion",
+      "to": "crm.companies_accounts",
+      "type": "requires",
+      "reason": "Conversion creates or links an account."
+    },
+    {
+      "from": "crm.lead_conversion",
+      "to": "crm.deals_pipelines",
+      "type": "enhances",
+      "reason": "Conversion commonly also creates an opportunity."
+    },
+    {
+      "from": "crm.deals_pipelines",
+      "to": "crm.companies_accounts",
+      "type": "requires",
+      "reason": "A deal is tied to an account."
+    },
+    {
+      "from": "crm.activities_tasks",
+      "to": "crm.contacts",
+      "type": "enhances",
+      "reason": "Activities are commonly logged against a contact."
+    },
+    {
+      "from": "crm.activities_tasks",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Task due dates and reminders are delivered via notifications."
+    },
+    {
+      "from": "crm.contact_timeline",
+      "to": "crm.activities_tasks",
+      "type": "requires",
+      "reason": "The timeline renders logged activities."
+    },
+    {
+      "from": "crm.contact_timeline",
+      "to": "crm.email_sync",
+      "type": "enhances",
+      "reason": "Synced emails appear in the same timeline."
+    },
+    {
+      "from": "crm.record_assignment",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Assignment changes ownership, which gates edit access."
+    },
+    {
+      "from": "crm.email_sync",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "New synced emails can trigger notifications."
+    },
+    {
+      "from": "crm.calendar_sync",
+      "to": "shared.calendar",
+      "type": "requires",
+      "reason": "Calendar sync relies on the shared calendar UI/scheduling capability."
+    },
+    {
+      "from": "crm.campaign_management",
+      "to": "crm.leads",
+      "type": "enhances",
+      "reason": "Campaigns attribute and group leads."
+    },
+    {
+      "from": "crm.segmentation",
+      "to": "crm.contacts",
+      "type": "requires",
+      "reason": "A segment is a filtered set of contacts/leads."
+    },
+    {
+      "from": "crm.segmentation",
+      "to": "shared.import_export",
+      "type": "enhances",
+      "reason": "Segments are commonly built or seeded from a CSV import."
+    },
+    {
+      "from": "crm.quotes",
+      "to": "crm.deals_pipelines",
+      "type": "requires",
+      "reason": "A quote is generated from a deal."
+    },
+    {
+      "from": "crm.quotes",
+      "to": "crm.deal_products",
+      "type": "requires",
+      "reason": "A quote's line items come from the product catalog."
+    },
+    {
+      "from": "crm.quotes",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Approval requests and customer sends are delivered via notifications."
+    },
+    {
+      "from": "crm.pipeline_automation",
+      "to": "crm.deals_pipelines",
+      "type": "requires",
+      "reason": "Automation rules act on deal/stage changes."
+    },
+    {
+      "from": "crm.pipeline_automation",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Timers and scheduled follow-ups run as background jobs."
+    },
+    {
+      "from": "crm.forecasting",
+      "to": "crm.deals_pipelines",
+      "type": "requires",
+      "reason": "A forecast is computed from open deals and their stage probabilities."
+    },
+    {
+      "from": "crm.forecasting",
+      "to": "shared.reporting",
+      "type": "requires",
+      "reason": "Forecasts are presented through the shared reporting/analytics engine."
+    },
+    {
+      "from": "crm.account_hierarchy",
+      "to": "crm.companies_accounts",
+      "type": "requires",
+      "reason": "Hierarchy is a relationship between account records."
+    },
+    {
+      "from": "crm.reports_dashboards",
+      "to": "shared.reporting",
+      "type": "requires",
+      "reason": "Dashboards are built on the shared reporting/analytics engine."
+    },
+    {
+      "from": "crm.data_import",
+      "to": "shared.import_export",
+      "type": "requires",
+      "reason": "Bulk import uses the shared CSV import/validation engine."
+    }
+  ]
+}

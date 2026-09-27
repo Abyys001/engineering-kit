@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "domain": "exchange",
+  "last_reviewed": "2026-09-27",
+  "workflows": [
+    {
+      "id": "exchange_transaction_lifecycle",
+      "name": "Exchange Transaction Lifecycle",
+      "actor": "teller",
+      "trigger": "A customer requests to buy or sell a currency at the counter or online.",
+      "steps": [
+        "Quote a rate",
+        "Customer accepts",
+        "Capture ID if above threshold",
+        "Lock the rate and record the transaction",
+        "Update the till's cash position",
+        "Print/send a receipt"
+      ],
+      "entities": [
+        "exchange_request",
+        "exchange_transaction",
+        "till"
+      ],
+      "features": [
+        "exchange.exchange_requests",
+        "exchange.buy_sell_transactions",
+        "exchange.kyc_thresholds"
+      ],
+      "state_machine": {
+        "entity": "exchange_transaction",
+        "initial": "draft",
+        "terminal": [
+          "completed",
+          "voided"
+        ],
+        "states": [
+          "draft",
+          "completed",
+          "voided"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "completed",
+            "event": "confirm"
+          },
+          {
+            "from": "draft",
+            "to": "voided",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [
+        "transaction_receipt"
+      ],
+      "integrations": [
+        "rate_source"
+      ],
+      "provenance": {
+        "sources": [
+          "bdc-api",
+          "chfx-odoo-modules"
+        ],
+        "confidence": "high",
+        "notes": ""
+      }
+    },
+    {
+      "id": "rate_update_lifecycle",
+      "name": "Rate Update Lifecycle",
+      "actor": "administrator",
+      "trigger": "A rate source feed updates, or a manager manually adjusts a currency's buy/sell rate.",
+      "steps": [
+        "Pull or enter a new mid/buy/sell rate",
+        "Apply spread policy",
+        "Publish the new rate to branches/counters"
+      ],
+      "entities": [
+        "exchange_rate"
+      ],
+      "features": [
+        "exchange.rate_management",
+        "exchange.rate_feed_ingestion"
+      ],
+      "state_machine": null,
+      "notifications": [
+        "rate_updated"
+      ],
+      "integrations": [
+        "rate_source"
+      ],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "cash_session_lifecycle",
+      "name": "Cash Session Lifecycle",
+      "actor": "teller",
+      "trigger": "A teller starts their shift on a till.",
+      "steps": [
+        "Open session with an opening float",
+        "Process transactions during the session",
+        "Count cash at close",
+        "Reconcile against expected position"
+      ],
+      "entities": [
+        "cash_session",
+        "till"
+      ],
+      "features": [
+        "exchange.till_cash_management"
+      ],
+      "state_machine": {
+        "entity": "cash_session",
+        "initial": "open",
+        "terminal": [
+          "reconciled"
+        ],
+        "states": [
+          "open",
+          "closed",
+          "reconciled"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "closed",
+            "event": "close_session"
+          },
+          {
+            "from": "closed",
+            "to": "reconciled",
+            "event": "reconcile"
+          }
+        ]
+      },
+      "notifications": [
+        "session_discrepancy_found"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chfx-odoo-modules"
+        ],
+        "confidence": "medium",
+        "notes": ""
+      }
+    },
+    {
+      "id": "aml_report_lifecycle",
+      "name": "AML Report Lifecycle",
+      "actor": "compliance_officer",
+      "trigger": "A transaction crosses a configured large-transaction or suspicious-pattern threshold.",
+      "steps": [
+        "Auto-flag the transaction",
+        "Compliance officer reviews",
+        "File a report with the relevant authority or dismiss"
+      ],
+      "entities": [
+        "aml_report",
+        "exchange_transaction"
+      ],
+      "features": [
+        "exchange.aml_reporting"
+      ],
+      "state_machine": {
+        "entity": "aml_report",
+        "initial": "flagged",
+        "terminal": [
+          "filed",
+          "dismissed"
+        ],
+        "states": [
+          "flagged",
+          "under_review",
+          "filed",
+          "dismissed"
+        ],
+        "transitions": [
+          {
+            "from": "flagged",
+            "to": "under_review",
+            "event": "start_review"
+          },
+          {
+            "from": "under_review",
+            "to": "filed",
+            "event": "file_report"
+          },
+          {
+            "from": "under_review",
+            "to": "dismissed",
+            "event": "dismiss"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "fatf-recommendations"
+        ],
+        "confidence": "high",
+        "notes": "Obligation is authoritative; the specific case workflow is reasoned, not sourced from an OSS implementation."
+      }
+    }
+  ]
+}

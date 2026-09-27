@@ -1,0 +1,134 @@
+{
+  "schema": 1,
+  "domain": "general-saas",
+  "last_reviewed": "2026-09-27",
+  "integrations": [
+    {
+      "id": "stripe_billing",
+      "name": "Payment/billing provider",
+      "category": "billing",
+      "purpose": "Handle subscription billing, invoicing, and payment collection for workspace plans.",
+      "examples": [
+        "Stripe Billing",
+        "Paddle",
+        "Lago"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "general-saas.plans_entitlements",
+        "general-saas.billing_portal",
+        "general-saas.trial_management"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "saml_idp",
+      "name": "SAML identity provider",
+      "category": "identity",
+      "purpose": "Authenticate workspace members via the customer's own identity provider.",
+      "examples": [
+        "Okta",
+        "Azure AD / Entra ID",
+        "OneLogin",
+        "Google Workspace"
+      ],
+      "protocols": [
+        "SAML 2.0"
+      ],
+      "related_features": [
+        "general-saas.sso_saml"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "saml-core-2.0"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "scim_idp",
+      "name": "SCIM identity provider",
+      "category": "identity",
+      "purpose": "Automatically provision and deprovision workspace members from the customer's identity provider.",
+      "examples": [
+        "Okta",
+        "Azure AD / Entra ID",
+        "OneLogin"
+      ],
+      "protocols": [
+        "SCIM 2.0 (REST)"
+      ],
+      "related_features": [
+        "general-saas.scim_provisioning"
+      ],
+      "classification": "recommended",
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "scim-rfc"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "svix",
+      "name": "Webhook delivery infrastructure",
+      "category": "messaging",
+      "purpose": "Sign, queue, retry, and log outbound webhook deliveries on behalf of the product.",
+      "examples": [
+        "Svix",
+        "Hookdeck"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "general-saas.webhooks"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "generic_webhook_receiver",
+      "name": "Customer webhook endpoint",
+      "category": "messaging",
+      "purpose": "The workspace's own HTTP endpoint that receives outbound event payloads.",
+      "examples": [
+        "Zapier",
+        "Make",
+        "a customer's own backend"
+      ],
+      "protocols": [
+        "webhooks"
+      ],
+      "related_features": [
+        "general-saas.webhooks"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

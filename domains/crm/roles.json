@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "domain": "crm",
+  "last_reviewed": "2026-09-27",
+  "roles": [
+    {
+      "id": "sales_rep",
+      "name": "Sales representative",
+      "experience": "staff",
+      "description": "Works contacts, leads, and deals day to day: logging activities, moving deals through stages, sending quotes.",
+      "responsibilities": [
+        "Log calls/meetings/notes",
+        "Move deals through pipeline stages",
+        "Send quotes"
+      ],
+      "related_features": [
+        "crm.contacts",
+        "crm.deals_pipelines",
+        "crm.activities_tasks"
+      ],
+      "common_permissions": [
+        "contact:edit",
+        "deal:edit",
+        "activity:create"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "sales_manager",
+      "name": "Sales manager",
+      "experience": "management",
+      "description": "Oversees a team's pipeline, forecasts revenue, assigns records, and reviews reports.",
+      "responsibilities": [
+        "Review pipeline and forecast",
+        "Assign leads/deals to reps",
+        "Approve quotes"
+      ],
+      "related_features": [
+        "crm.forecasting",
+        "crm.record_assignment",
+        "crm.reports_dashboards"
+      ],
+      "common_permissions": [
+        "deal:reassign",
+        "report:view",
+        "quote:approve"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "marketing_user",
+      "name": "Marketing user",
+      "experience": "staff",
+      "description": "Builds segments and campaigns to generate and nurture leads.",
+      "responsibilities": [
+        "Build segments/target lists",
+        "Create and track campaigns",
+        "Import contact/lead lists"
+      ],
+      "related_features": [
+        "crm.segmentation",
+        "crm.campaign_management",
+        "crm.data_import"
+      ],
+      "common_permissions": [
+        "segment:create",
+        "campaign:create"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm",
+          "espocrm"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "sales_ops_admin",
+      "name": "Sales operations administrator",
+      "experience": "administration",
+      "description": "Configures pipelines, product catalog, and imports; maintains data quality.",
+      "responsibilities": [
+        "Configure pipeline stages",
+        "Manage product catalog",
+        "Run bulk imports"
+      ],
+      "related_features": [
+        "crm.deal_products",
+        "crm.data_import",
+        "crm.pipeline_automation"
+      ],
+      "common_permissions": [
+        "pipeline:configure",
+        "product:manage",
+        "import:run"
+      ],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "system",
+      "name": "System / automation",
+      "experience": "system",
+      "description": "Automated processes: email/calendar sync workers, pipeline-automation timers, scheduled reports.",
+      "responsibilities": [
+        "Sync email and calendar",
+        "Apply pipeline automation rules",
+        "Run scheduled reports"
+      ],
+      "related_features": [
+        "crm.email_sync",
+        "crm.calendar_sync",
+        "crm.pipeline_automation"
+      ],
+      "common_permissions": [],
+      "provenance": {
+        "sources": [
+          "nextcrm"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

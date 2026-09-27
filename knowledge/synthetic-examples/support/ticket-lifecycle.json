@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "domain": "support",
+  "description": "Fabricated example of a support ticket moving through its full lifecycle, including an SLA breach and escalation, and a CSAT survey. All data is invented; example.com emails, +1-555-01xx phones, fictional names. Not real customer or business data.",
+  "main_entity": "ticket",
+  "ticket": {
+    "id": "tkt_00042",
+    "subject": "Cannot export invoices to CSV",
+    "customer_email": "helen.tran@example.com",
+    "queue": "billing_support",
+    "channel": "email",
+    "priority": "high",
+    "sla_policy_id": "sla_high_priority",
+    "created_at": "2026-05-10T08:00:00Z"
+  },
+  "state_transitions": [
+    {"from": null, "to": "new", "event": "created", "at": "2026-05-10T08:00:00Z", "by": "system", "note": "inbound email created the ticket"},
+    {"from": "new", "to": "open", "event": "pick_up", "at": "2026-05-10T08:20:00Z", "by": "agent_priya"},
+    {"from": "open", "to": "pending", "event": "await_customer", "at": "2026-05-10T09:05:00Z", "by": "agent_priya",
+     "note": "asked customer for a screenshot of the error"},
+    {"from": "pending", "to": "open", "event": "customer_replied", "at": "2026-05-11T14:30:00Z", "by": "helen.tran@example.com"},
+    {"from": "open", "to": "resolved", "event": "resolve", "at": "2026-05-11T15:10:00Z", "by": "agent_priya",
+     "note": "identified a locale-formatting bug in the CSV exporter, shipped a fix"},
+    {"from": "resolved", "to": "closed", "event": "close", "at": "2026-05-14T00:00:00Z", "by": "system",
+     "note": "auto-closed after 72h grace period with no further reply"}
+  ],
+  "internal_notes": [
+    {"id": "note_1", "author": "agent_priya", "body": "Reproduced locally: CSV export fails when tenant locale is de-DE due to a decimal-separator mismatch. Filed BUG-3391.", "at": "2026-05-11T15:05:00Z", "visible_to_customer": false}
+  ],
+  "sla_escalation_example": {
+    "ticket_id": "tkt_00099",
+    "sla_policy_id": "sla_high_priority",
+    "first_response_target_minutes": 60,
+    "events": [
+      {"event": "sla_timer_started", "at": "2026-05-12T09:00:00Z"},
+      {"event": "sla_warning", "at": "2026-05-12T09:50:00Z", "note": "10 minutes remaining, no agent response yet"},
+      {"event": "sla_breach", "at": "2026-05-12T10:00:00Z"},
+      {"event": "escalation_rule_fired", "at": "2026-05-12T10:00:05Z", "action": "reassign_to_team_lead", "escalated_to": "agent_marcus_lead"}
+    ]
+  },
+  "csat_response": {
+    "ticket_id": "tkt_00042",
+    "rating": 5,
+    "feedback": "Quick fix, thank you!",
+    "submitted_at": "2026-05-14T10:00:00Z"
+  },
+  "notes": "Synthetic example demonstrating the ticket_lifecycle and sla_escalation_flow state machines defined in workflows.json. All identifiers, names, and timestamps are fabricated for illustration only."
+}

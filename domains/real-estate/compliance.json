@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "domain": "real-estate",
+  "last_reviewed": "2026-09-27",
+  "disclaimer": "Domain knowledge, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer.",
+  "items": [
+    {
+      "id": "fair_housing_act",
+      "name": "Fair Housing Act (US) / anti-discrimination advertising rules",
+      "kind": "regulation",
+      "version": "42 U.S.C. §§ 3601–3619, as amended",
+      "jurisdiction": "United States",
+      "scope": "Prohibits discrimination in the sale, rental, or advertising of housing based on protected classes (race, color, religion, sex, national origin, familial status, disability).",
+      "affected_features": [
+        "real-estate.property_listings",
+        "real-estate.rental_application_screening",
+        "real-estate.fair_housing_compliance_screening"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies to listing copy, image selection, and tenant screening criteria; other countries have analogous anti-discrimination housing law.",
+      "url": "https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview",
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gdpr_real_estate",
+      "name": "GDPR — buyer/tenant personal data",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679",
+      "jurisdiction": "European Union / EEA",
+      "scope": "General data protection obligations for lead, applicant, tenant, and owner personal data.",
+      "affected_features": [
+        "real-estate.lead_capture_inquiries",
+        "real-estate.rental_application_screening"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies whenever an EU/EEA data subject's data is processed, regardless of operator location.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "aml_estate_agents",
+      "name": "Anti-money-laundering obligations for estate/letting agents",
+      "kind": "regulation",
+      "version": "varies (e.g. UK MLR 2017; EU AMLD)",
+      "jurisdiction": "United Kingdom, European Union (varies by member state)",
+      "scope": "Estate agency and, in the UK, high-value letting businesses must register as an AML-regulated business, perform customer due diligence, and report suspicious activity.",
+      "affected_features": [
+        "real-estate.offers_negotiation",
+        "real-estate.lease_management"
+      ],
+      "requires_human_review": true,
+      "notes": "Highly jurisdiction-specific; cited as an illustrative UK/EU example, not a global requirement.",
+      "url": "https://www.gov.uk/guidance/money-laundering-regulations-estate-agency-business-guidance-for-anti-money-laundering-supervision",
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "deposit_protection_schemes",
+      "name": "Tenant deposit protection schemes",
+      "kind": "regulation",
+      "version": "varies (e.g. UK Housing Act 2004, Part 6)",
+      "jurisdiction": "Varies (e.g. UK, several US states, other jurisdictions)",
+      "scope": "Requires a landlord/agent to place a tenant's deposit in a government-approved protection scheme within a set period and provide prescribed information.",
+      "affected_features": [
+        "real-estate.deposit_management"
+      ],
+      "requires_human_review": true,
+      "notes": "Not universal — many jurisdictions have no equivalent requirement; must be checked per jurisdiction.",
+      "url": "https://www.gov.uk/deposit-protection-schemes-and-landlords",
+      "provenance": {
+        "sources": [
+          "openproperty"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "property_disclosure_requirements",
+      "name": "Property condition / seller disclosure requirements",
+      "kind": "regulation",
+      "version": "varies by jurisdiction (e.g. US state seller-disclosure statutes)",
+      "jurisdiction": "Varies (state/country-specific)",
+      "scope": "Requires a seller/landlord to disclose known material defects or hazards (e.g. lead paint, flood risk) before a sale or lease.",
+      "affected_features": [
+        "real-estate.document_management",
+        "real-estate.offers_negotiation"
+      ],
+      "requires_human_review": true,
+      "notes": "No single global rule; scope and required forms vary sharply by jurisdiction.",
+      "url": null,
+      "provenance": {
+        "sources": [
+          "reso-data-dictionary"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}
