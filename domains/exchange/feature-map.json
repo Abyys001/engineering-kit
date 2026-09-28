@@ -170,6 +170,16 @@
       "retrieved": "2026-09-27",
       "version": "2022",
       "notes": "Industry (non-binding) due-diligence principles relevant when an exchange/remittance business relies on a correspondent bank or network partner to settle cross-border transfers."
+    },
+    {
+      "id": "apache-fineract",
+      "title": "Apache Fineract",
+      "url": "https://github.com/apache/fineract",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "develop @ 9d70a6ebaab505f249c28d82fb9fd14e035837ef",
+      "notes": "Apache-2.0 core banking platform, read over the GitHub API (not cloned). Not a bureau de change, but it models the branch-counter mechanics this domain shares with any cash-handling financial institution, which is what makes it a genuine second source rather than an analogy: `organisation/teller/domain/` has Teller (with its own TellerStatus enum), Cashier, CashierTransaction, CashierTxnType and TellerJournal — a till allocated to a named cashier with audited cash in/out; `organisation/office/domain/Office.java` plus OfficeTransaction — hierarchical branches with inter-branch transfers; `organisation/staff/domain/Staff.java` with StaffOrganisationalRoleType; `portfolio/charge/domain/ChargeCalculationType.java` — FLAT vs PERCENT_OF_AMOUNT, exactly the flat-fee-or-percentage commission choice; `fineract-command-audit/` — audit implemented as before/after/error command hooks; `infrastructure/dataqueries/domain/Report.java` with ReportType and a reportmailingjob scheduler. It has no FX rate feed and no remittance, which is why neither of those features cites it."
     }
   ],
   "features": [
@@ -361,8 +371,8 @@
         "sources": [
           "chfx-odoo-modules"
         ],
-        "confidence": "medium",
-        "notes": "chfx-odoo-modules integrates a named external rate source (Frankfurter) and stores a mid_rate distinct from the applied rate; single implementation for this specific sub-feature."
+        "confidence": "low",
+        "notes": "Deliberately LOWERED from medium to low in this pass: only chfx-odoo-modules implements it, and neither Apache Fineract nor any other source inspected has an FX rate feed at all. Pulling a reference rate is obviously possible, but 'exchange businesses commonly ingest a rate feed rather than keying rates by hand' is a single-source claim and is now recorded as one."
       }
     },
     {
@@ -508,10 +518,12 @@
       ],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "eu-tfr-2023-1113",
+          "iso20022"
         ],
         "confidence": "medium",
-        "notes": "Modeled as a distinct exchange.remittance record in chfx-odoo-modules; not present in bdc-api, held at medium via a single implementation plus FATF's explicit coverage of money-or-value-transfer services."
+        "notes": "One implementation plus two authoritative sources, which is why this is medium and not low: chfx-odoo-modules models exchange.remittance directly; EU Regulation 2023/1113 governs the originator and payee information that must accompany a transfer of funds, and ISO 20022 pacs.008 is the message it travels in. The regulation establishes that the concept and its data requirements are real; it does not tell us how a bureau's UI should work, and no second implementation was found."
       }
     },
     {
@@ -555,10 +567,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract"
         ],
         "confidence": "medium",
-        "notes": "chfx-odoo-modules models counter+session with per-currency cash accounts explicitly; single implementation, not present in bdc-api."
+        "notes": "Two independent implementations: chfx-odoo-modules models exchange.counter (a till bound to an accounting journal with per-currency cash accounts) and exchange.session (a cashier session on that counter); Apache Fineract models the same shape as Teller + Cashier + CashierTransaction + TellerJournal, with its own TellerStatus lifecycle. The agreement between an Odoo addon and a core banking platform on 'a till is allocated to a named cashier and every cash movement is journalled' is what raises this above single-source."
       }
     },
     {
@@ -601,10 +614,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract"
         ],
         "confidence": "medium",
-        "notes": "exchange.branch is explicit in chfx-odoo-modules; single implementation but a near-universal concept for any multi-counter cash business, so held at medium rather than low."
+        "notes": "Two independent implementations: chfx-odoo-modules has exchange.branch; Fineract has a hierarchical Office with OfficeTransaction for inter-branch movements. The hierarchy and the inter-branch transfer come from Fineract only, so multi-level branch structures are the weaker half of this claim."
       }
     },
     {
@@ -647,10 +661,11 @@
       "provenance": {
         "sources": [
           "bdc-api",
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract"
         ],
-        "confidence": "medium",
-        "notes": ""
+        "confidence": "high",
+        "notes": "Three independent implementations: bdc-api has users, chfx-odoo-modules binds staff to a counter and session, Fineract has Staff with StaffOrganisationalRoleType and an office assignment. All three tie a staff record to a branch and a role, which is the whole of this feature's claim."
       }
     },
     {
@@ -845,10 +860,12 @@
       ],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract",
+          "blnk"
         ],
         "confidence": "medium",
-        "notes": ""
+        "notes": "Three sources, but not three of the same kind, so this stays medium rather than high: chfx-odoo-modules inherits Odoo's mail.thread change tracking; Fineract implements audit as before/after/error command hooks in fineract-command-audit, i.e. at the command boundary rather than the table; blnk enforces an immutable ledger so corrections are compensating entries. All three agree that the record is append-only; none is an authoritative standard for it."
       }
     },
     {
@@ -892,10 +909,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract"
         ],
         "confidence": "medium",
-        "notes": "chfx-odoo-modules computes profit_chf/margin_pct per transaction, implying a rollup report; the report layer itself is reasoned."
+        "notes": "Two independent implementations: chfx-odoo-modules reports through Odoo's reporting layer; Fineract has a first-class Report entity with ReportType plus a reportmailingjob scheduler for recurring delivery. Scheduled delivery of a daily position report is corroborated; the specific report set (volume, margin, cash position, branch performance) is from chfx only."
       }
     },
     {
@@ -1027,10 +1045,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "chfx-odoo-modules"
+          "chfx-odoo-modules",
+          "apache-fineract"
         ],
         "confidence": "medium",
-        "notes": "commission_chf and commission_account_id are explicit fields; single implementation."
+        "notes": "Two independent implementations: chfx-odoo-modules carries margin_pct and commission on the transaction; Fineract's ChargeCalculationType enumerates FLAT and PERCENT_OF_AMOUNT (among others) with ChargeAppliesTo and ChargePaymentMode. The flat-or-percentage choice is corroborated; per-branch and per-channel variation is from chfx only."
       }
     },
     {

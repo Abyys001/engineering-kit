@@ -33,9 +33,9 @@
     },
     {
       "id": "saml_idp",
-      "name": "SAML identity provider",
+      "name": "SAML / OIDC identity provider",
       "category": "identity",
-      "purpose": "Authenticate workspace members via the customer's own identity provider.",
+      "purpose": "Authenticate workspace members via the customer's own identity provider, using SAML 2.0 or OpenID Connect.",
       "examples": [
         "Okta",
         "Azure AD / Entra ID",
@@ -43,7 +43,8 @@
         "Google Workspace"
       ],
       "protocols": [
-        "SAML 2.0"
+        "SAML 2.0",
+        "OpenID Connect"
       ],
       "related_features": [
         "general-saas.sso_saml"
@@ -52,7 +53,8 @@
       "provenance": {
         "sources": [
           "boxyhq-saas-starter",
-          "saml-core-2.0"
+          "saml-core-2.0",
+          "oidc-core"
         ],
         "confidence": "high"
       }

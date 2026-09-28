@@ -8,28 +8,28 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `exchange.audit_log` Transaction Audit Log | Immutable, time-stamped record of every rate change, transaction, and cash-session action for later audit. | medium | web, admin, backend | low | none | missing | chfx-odoo-modules |
-| `exchange.branch_management` Branch Management | Manage physical branch/counter locations a multi-site exchange business operates from. | medium | web, admin, backend | none | none | missing | chfx-odoo-modules |
+| `exchange.audit_log` Transaction Audit Log | Immutable, time-stamped record of every rate change, transaction, and cash-session action for later audit. | medium | web, admin, backend | low | none | missing | chfx-odoo-modules, apache-fineract, blnk |
+| `exchange.branch_management` Branch Management | Manage physical branch/counter locations a multi-site exchange business operates from. | medium | web, admin, backend | none | none | missing | chfx-odoo-modules, apache-fineract |
 | `exchange.buy_sell_transactions` Buy/Sell Transactions | Execute a currency purchase from, or sale to, a customer at a locked-in rate, updating cash positions and the ledger. | medium | web, admin, customer_portal, backend, real_time | high | none | missing | bdc-api, chfx-odoo-modules |
 | `exchange.currency_master` Currency Master Data | The list of currencies an exchange business trades, with display codes and precision. | high | web, admin, backend | none | none | missing | bdc-api, chfx-odoo-modules, iso4217 |
 | `exchange.customer_management` Customer / Party Management | Maintain walk-in and repeat customer records for an exchange business, including individuals and corporate clients. | medium | web, admin, customer_portal, backend | none | none | missing | chfx-odoo-modules, bdc-api |
 | `exchange.exchange_requests` Exchange Requests / Quotes | A customer or teller requests a quote to buy or sell a currency before committing to the transaction. | medium | web, admin, customer_portal, backend, real_time | high | none | missing | bdc-api, chfx-odoo-modules |
 | `exchange.rate_management` Buy/Sell Rate & Spread Management | Set and update buy and sell rates per currency pair, including the spread margin, either manually or from a rate source. | medium | web, admin, backend, real_time | core | none | missing | bdc-api, chfx-odoo-modules |
-| `exchange.till_cash_management` Tills / Cash Drawers & Cash Positions | Track each teller's till (cash drawer) balance per currency, opened and closed once per cashier session. | medium | web, admin, backend | high | none | missing | chfx-odoo-modules |
+| `exchange.till_cash_management` Tills / Cash Drawers & Cash Positions | Track each teller's till (cash drawer) balance per currency, opened and closed once per cashier session. | medium | web, admin, backend | high | none | missing | chfx-odoo-modules, apache-fineract |
 
 ## Common (9)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `exchange.beneficiary_management` Remittance Beneficiary Management | Save and reuse a remittance recipient's details across multiple sends for a customer, instead of re-entering them every time. | low | web, admin, customer_portal, backend | none | none | missing | chfx-odoo-modules |
-| `exchange.commission_management` Commission & Fee Management | Configure a commission or flat fee on top of the exchanged amount, per currency, branch, or channel. | medium | web, admin, backend | none | none | missing | chfx-odoo-modules |
-| `exchange.rate_feed_ingestion` Rate Source Feed Ingestion | Pull reference/mid-market rates from an external market-data source to seed or sanity-check manual rates. | medium | web, admin, backend, real_time | core | none | missing | chfx-odoo-modules |
+| `exchange.commission_management` Commission & Fee Management | Configure a commission or flat fee on top of the exchanged amount, per currency, branch, or channel. | medium | web, admin, backend | none | none | missing | chfx-odoo-modules, apache-fineract |
+| `exchange.rate_feed_ingestion` Rate Source Feed Ingestion | Pull reference/mid-market rates from an external market-data source to seed or sanity-check manual rates. | low | web, admin, backend, real_time | core | none | missing | chfx-odoo-modules |
 | `exchange.receipts_payments` Receipts & Payment Vouchers | Print or email a receipt/voucher for a completed exchange or remittance transaction. | medium | web, admin, customer_portal, backend | none | none | missing | bdc-api, chfx-odoo-modules |
 | `exchange.refunds_cancellations` Transaction Refunds & Cancellations | Cancel a not-yet-settled exchange request or transaction, or reverse a completed transaction with a refund, restoring the till position. | medium | web, admin, backend | low | none | reference | blnk, bdc-api, chfx-odoo-modules |
-| `exchange.remittance` Remittance / Money Transfer | Send or receive a cross-border money transfer on behalf of a customer, typically via a remittance network partner. | medium | web, admin, customer_portal, backend | medium | none | missing | chfx-odoo-modules |
-| `exchange.reports_analytics` Reports & Analytics | Daily/periodic reports on volume, profit/margin, cash positions, and branch performance. | medium | web, admin, backend | low | low | missing | chfx-odoo-modules |
+| `exchange.remittance` Remittance / Money Transfer | Send or receive a cross-border money transfer on behalf of a customer, typically via a remittance network partner. | medium | web, admin, customer_portal, backend | medium | none | missing | chfx-odoo-modules, eu-tfr-2023-1113, iso20022 |
+| `exchange.reports_analytics` Reports & Analytics | Daily/periodic reports on volume, profit/margin, cash positions, and branch performance. | medium | web, admin, backend | low | low | missing | chfx-odoo-modules, apache-fineract |
 | `exchange.settlement_reconciliation` Settlement & Cash Reconciliation | Reconcile a branch's or period's completed transactions and cash positions against bank statements or the accounting ledger, matching entries and flagging discrepancies. | medium | web, admin, backend | low | low | reference | blnk, chfx-odoo-modules |
-| `exchange.staff_management` Staff / Teller Management | Manage teller and manager accounts, their assigned branch/till, and shift scheduling. | medium | web, admin, backend | none | none | missing | bdc-api, chfx-odoo-modules |
+| `exchange.staff_management` Staff / Teller Management | Manage teller and manager accounts, their assigned branch/till, and shift scheduling. | high | web, admin, backend | none | none | missing | bdc-api, chfx-odoo-modules, apache-fineract |
 
 ## Optional (2)
 

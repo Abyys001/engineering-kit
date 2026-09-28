@@ -8,89 +8,579 @@
       "name": "Task lifecycle",
       "actor": "contributor",
       "trigger": "A task is created in a project",
-      "steps": ["Task created in the project's default (backlog) state", "Prioritized into an unstarted/to-do state", "Work begins, moved to a started state", "Work finishes, moved to a completed state", "Or the task is cancelled at any point before completion"],
-      "entities": ["task", "state"],
-      "features": ["project-management.tasks_issues", "project-management.statuses_workflows", "project-management.boards_kanban"],
+      "steps": [
+        "Task created in the project's default (backlog) state",
+        "Prioritized into an unstarted/to-do state",
+        "Work begins, moved to a started state",
+        "Work finishes, moved to a completed state",
+        "Or the task is cancelled at any point before completion"
+      ],
+      "entities": [
+        "task",
+        "state"
+      ],
+      "features": [
+        "project-management.tasks_issues",
+        "project-management.statuses_workflows",
+        "project-management.boards_kanban"
+      ],
       "state_machine": {
         "entity": "task",
         "initial": "backlog",
-        "terminal": ["completed", "cancelled"],
-        "states": ["triage", "backlog", "unstarted", "started", "completed", "cancelled"],
+        "terminal": [
+          "completed",
+          "cancelled"
+        ],
+        "states": [
+          "triage",
+          "backlog",
+          "unstarted",
+          "started",
+          "completed",
+          "cancelled"
+        ],
         "transitions": [
-          {"from": "triage", "to": "backlog", "event": "accept"},
-          {"from": "triage", "to": "cancelled", "event": "reject"},
-          {"from": "backlog", "to": "unstarted", "event": "prioritize"},
-          {"from": "unstarted", "to": "started", "event": "start_work"},
-          {"from": "started", "to": "completed", "event": "complete"},
-          {"from": "started", "to": "unstarted", "event": "move_back"},
-          {"from": "backlog", "to": "cancelled", "event": "cancel"},
-          {"from": "unstarted", "to": "cancelled", "event": "cancel"},
-          {"from": "started", "to": "cancelled", "event": "cancel"}
+          {
+            "from": "triage",
+            "to": "backlog",
+            "event": "accept"
+          },
+          {
+            "from": "triage",
+            "to": "cancelled",
+            "event": "reject"
+          },
+          {
+            "from": "backlog",
+            "to": "unstarted",
+            "event": "prioritize"
+          },
+          {
+            "from": "unstarted",
+            "to": "started",
+            "event": "start_work"
+          },
+          {
+            "from": "started",
+            "to": "completed",
+            "event": "complete"
+          },
+          {
+            "from": "started",
+            "to": "unstarted",
+            "event": "move_back"
+          },
+          {
+            "from": "backlog",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "unstarted",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "started",
+            "to": "cancelled",
+            "event": "cancel"
+          }
         ]
       },
-      "notifications": ["task_completed", "task_assigned"],
+      "notifications": [
+        "task_completed",
+        "task_assigned"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "State names are verbatim from Plane's StateGroup enum (backlog/unstarted/started/completed/cancelled/triage); transition/event names are reasoned, not literal from source. Kanboard's simpler is_active open/closed status is a degenerate case of this same shape (backlog+unstarted+started collapse to 'open'), which is why this isn't scored medium: the multi-state grouping itself is only verified in one implementation."}
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "State names are verbatim from Plane's StateGroup enum (backlog/unstarted/started/completed/cancelled/triage); transition/event names are reasoned, not literal from source. Kanboard's simpler is_active open/closed status is a degenerate case of this same shape (backlog+unstarted+started collapse to 'open'), which is why this isn't scored medium: the multi-state grouping itself is only verified in one implementation."
+      }
     },
     {
       "id": "subtask_completion_rollup",
       "name": "Subtask completion rollup",
       "actor": "contributor",
       "trigger": "A subtask's state changes",
-      "steps": ["Contributor completes a subtask", "Parent task shows updated sub-task completion count/ratio", "Once all subtasks are completed, parent task may be flagged ready to complete (not auto-completed)"],
-      "entities": ["task"],
-      "features": ["project-management.subtasks"],
+      "steps": [
+        "Contributor completes a subtask",
+        "Parent task shows updated sub-task completion count/ratio",
+        "Once all subtasks are completed, parent task may be flagged ready to complete (not auto-completed)"
+      ],
+      "entities": [
+        "task"
+      ],
+      "features": [
+        "project-management.subtasks"
+      ],
       "notifications": [],
       "integrations": [],
-      "provenance": {"sources": ["plane", "kanboard"], "confidence": "medium", "notes": "Plane's Issue.parent self-FK (sub_issues_count is computed) and Kanboard's SubtaskModel (with its own status) both support this rollup pattern, though neither source was observed to auto-complete the parent."}
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard"
+        ],
+        "confidence": "medium",
+        "notes": "Plane's Issue.parent self-FK (sub_issues_count is computed) and Kanboard's SubtaskModel (with its own status) both support this rollup pattern, though neither source was observed to auto-complete the parent. No state_machine: the rollup is a computed count/ratio on the parent task, derived from its subtasks' own states (see task_lifecycle) -- it is not itself a distinct stateful entity in either inspected source, so no separate state machine is defined here."
+      }
     },
     {
       "id": "dependency_management",
       "name": "Task dependency management",
       "actor": "project_manager",
       "trigger": "Two tasks need to be sequenced or linked",
-      "steps": ["Select the related task", "Choose a relation type (blocks, relates to, duplicate, start/finish before)", "The reverse relation is recorded automatically on the related task", "Dependency is surfaced on the board/Gantt view as a blocker or link"],
-      "entities": ["task_relation", "task"],
-      "features": ["project-management.task_dependencies", "project-management.gantt_timeline"],
+      "steps": [
+        "Select the related task",
+        "Choose a relation type (blocks, relates to, duplicate, start/finish before)",
+        "The reverse relation is recorded automatically on the related task",
+        "Dependency is surfaced on the board/Gantt view as a blocker or link"
+      ],
+      "entities": [
+        "task_relation",
+        "task"
+      ],
+      "features": [
+        "project-management.task_dependencies",
+        "project-management.gantt_timeline"
+      ],
       "notifications": [],
       "integrations": [],
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Verbatim from Plane's IssueRelationChoices and its _RELATION_PAIRS/_REVERSE_MAPPING (e.g. blocked_by <-> blocking is auto-derived, not a stored second row); single source."}
+      "provenance": {
+        "sources": [
+          "plane",
+          "vikunja",
+          "redmine"
+        ],
+        "confidence": "low",
+        "notes": "The relation TYPES (blocked_by/blocking, relates_to, duplicate, start/finish-before) are verbatim from Plane's IssueRelationChoices and corroborated by Vikunja's RelationKind and Redmine's IssueRelation (see task_relation entity, confidence high). This active/resolved/removed STATE MACHINE, however, is a reasoned synthesis, not a literal stored status column in any inspected source -- all three compute 'is this still blocking' dynamically from the related task's own state rather than storing a relation-level status. Left at low confidence and stated here per the research brief's honesty rule."
+      },
+      "state_machine": {
+        "entity": "task_relation",
+        "initial": "active",
+        "terminal": [
+          "removed"
+        ],
+        "states": [
+          "active",
+          "resolved",
+          "removed"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "resolved",
+            "event": "blocking_task_completed"
+          },
+          {
+            "from": "resolved",
+            "to": "active",
+            "event": "blocking_task_reopened"
+          },
+          {
+            "from": "active",
+            "to": "removed",
+            "event": "relation_deleted"
+          },
+          {
+            "from": "resolved",
+            "to": "removed",
+            "event": "relation_deleted"
+          }
+        ]
+      }
     },
     {
       "id": "commenting_and_mentions",
       "name": "Commenting and mentions",
       "actor": "contributor",
       "trigger": "A contributor wants to discuss or notify someone about a task",
-      "steps": ["Write a comment on the task", "Optionally @-mention a teammate", "Mentioned user receives a notification", "Other participants can react to the comment"],
-      "entities": ["comment", "task"],
-      "features": ["project-management.comments_mentions"],
-      "notifications": ["mentioned_in_comment"],
+      "steps": [
+        "Write a comment on the task",
+        "Optionally @-mention a teammate",
+        "Mentioned user receives a notification",
+        "Other participants can react to the comment"
+      ],
+      "entities": [
+        "comment",
+        "task"
+      ],
+      "features": [
+        "project-management.comments_mentions"
+      ],
+      "notifications": [
+        "mentioned_in_comment"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's IssueComment/IssueMention/CommentReaction models; single source."}
+      "provenance": {
+        "sources": [
+          "plane",
+          "kanboard",
+          "vikunja"
+        ],
+        "confidence": "medium",
+        "notes": "No state_machine: a comment's lifecycle is post/edit/delete (plain CRUD), not a meaningful multi-state process, in any of the three inspected sources -- left without one deliberately rather than inventing states. Plane's IssueComment/IssueMention/CommentReaction, Kanboard's CommentModel (comment.user.mention event), and Vikunja's task_comments.go/mentions.go are independent implementations of the comment+mention steps described."
+      }
     },
     {
       "id": "cycle_planning",
       "name": "Cycle (sprint) planning",
       "actor": "project_manager",
       "trigger": "A new iteration is about to start",
-      "steps": ["Create a cycle with start/end dates", "Add tasks from the backlog into the cycle", "Cycle becomes active once its start date arrives", "Track burndown as tasks complete during the cycle", "Cycle closes at its end date; incomplete tasks roll to the next cycle or backlog"],
-      "entities": ["cycle", "task"],
-      "features": ["project-management.cycles_sprints", "project-management.burndown_velocity_reports"],
-      "notifications": ["cycle_started", "cycle_ending_soon"],
+      "steps": [
+        "Review and reprioritize the backlog before planning (see backlog_refinement)",
+        "Create a cycle with start/end dates",
+        "Add tasks from the backlog into the cycle",
+        "Cycle becomes active once its start date arrives",
+        "Track burndown as tasks complete during the cycle (see reporting_and_dashboards)",
+        "The cycle can be cancelled before it ends if its goal becomes obsolete",
+        "Cycle closes at its end date; incomplete tasks roll to the next cycle or backlog"
+      ],
+      "entities": [
+        "cycle",
+        "task"
+      ],
+      "features": [
+        "project-management.cycles_sprints",
+        "project-management.burndown_velocity_reports"
+      ],
+      "notifications": [
+        "cycle_started",
+        "cycle_ending_soon"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Reasoned from Plane's Cycle.start_date/end_date and CycleIssue join table; Plane computes cycle status from these dates rather than storing an explicit status enum, so the steps here are reasoned, not verbatim. Single source."}
+      "provenance": {
+        "sources": [
+          "plane",
+          "leantime",
+          "scrum-guide-2020"
+        ],
+        "confidence": "medium",
+        "notes": "Plane computes cycle status from start_date/end_date rather than storing an explicit status enum (state names here are reasoned, not literal); Leantime's Sprints model independently implements the same start/end-dated iteration. The Scrum Guide (2020) is authoritative that a Sprint starts immediately after the previous one ends and can be cancelled (only by the Product Owner, if the Sprint Goal becomes obsolete) -- it does not use the state names 'upcoming' or 'active'."
+      },
+      "state_machine": {
+        "entity": "cycle",
+        "initial": "upcoming",
+        "terminal": [
+          "completed",
+          "cancelled"
+        ],
+        "states": [
+          "upcoming",
+          "active",
+          "completed",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "upcoming",
+            "to": "active",
+            "event": "cycle_starts"
+          },
+          {
+            "from": "active",
+            "to": "completed",
+            "event": "cycle_ends"
+          },
+          {
+            "from": "upcoming",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "active",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      }
     },
     {
       "id": "time_tracking_workflow",
       "name": "Time tracking",
       "actor": "contributor",
       "trigger": "A contributor starts working on a task",
-      "steps": ["Start a timer on the task (or subtask)", "Stop the timer when work pauses or finishes", "Duration is recorded as a time entry", "Totals roll up for reporting"],
-      "entities": ["time_entry", "task"],
-      "features": ["project-management.time_tracking"],
+      "steps": [
+        "Start a timer on the task (or subtask), or add a manual time entry with hours and a description",
+        "Stop the timer when work pauses or finishes; duration is recorded as a time entry",
+        "Mark the entry billable or not, and optionally against a milestone/cycle for reporting",
+        "Totals roll up per task/project for reporting",
+        "An admin marks entries invoiced once billed to the client and/or the team"
+      ],
+      "entities": [
+        "time_entry",
+        "task"
+      ],
+      "features": [
+        "project-management.time_tracking"
+      ],
       "notifications": [],
       "integrations": [],
-      "provenance": {"sources": ["kanboard"], "confidence": "low", "notes": "Kanboard's SubtaskTimeTrackingModel start/stop timer pattern; single source, modeled per-subtask rather than per top-level task in Kanboard specifically."}
+      "provenance": {
+        "sources": [
+          "kanboard",
+          "leantime"
+        ],
+        "confidence": "low",
+        "notes": "Kanboard's start/stop timer model has no billing/approval dimension at all. Leantime's Timesheets has independent invoicedEmpl/invoicedComp boolean+date pairs (employee-side vs company-side), which this simplifies to a single logged -> invoiced transition; neither source has a literal intermediate 'submitted'/'approved' status, so those states are deliberately NOT included here rather than reasoned in without evidence. Left at low confidence."
+      },
+      "state_machine": {
+        "entity": "time_entry",
+        "initial": "logged",
+        "terminal": [
+          "invoiced"
+        ],
+        "states": [
+          "logged",
+          "invoiced"
+        ],
+        "transitions": [
+          {
+            "from": "logged",
+            "to": "invoiced",
+            "event": "mark_invoiced"
+          }
+        ]
+      }
+    },
+    {
+      "id": "issue_intake_and_triage",
+      "name": "Issue intake and triage",
+      "actor": "guest_client",
+      "trigger": "An external or internal request needs review before it becomes committed work",
+      "steps": [
+        "Requester submits via a public/lightweight intake form (no full project membership required)",
+        "Submission lands in the project's triage state",
+        "A project manager reviews the submission for validity and duplicates",
+        "Accepted: the item moves into the backlog (project-management.task_lifecycle's triage -> backlog transition), optionally labeled and prioritized",
+        "Rejected: the item is cancelled and the requester notified"
+      ],
+      "entities": [
+        "task"
+      ],
+      "features": [
+        "project-management.intake_triage",
+        "project-management.tasks_issues"
+      ],
+      "notifications": [
+        "intake_submitted",
+        "intake_accepted",
+        "intake_rejected"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "plane"
+        ],
+        "confidence": "low",
+        "notes": "Plane's Intake model and dedicated StateGroup.TRIAGE value are the only source found for a distinct external-submission flow (as opposed to ordinary issue creation); not found in Kanboard, Redmine, OpenProject, Vikunja, Focalboard, Leantime, or Taiga. This workflow reuses project-management.task_lifecycle's triage->backlog/cancelled transitions rather than defining a second, competing state machine for the same task entity."
+      }
+    },
+    {
+      "id": "backlog_refinement",
+      "name": "Backlog refinement",
+      "actor": "project_manager",
+      "trigger": "The backlog needs review before the next cycle can be planned",
+      "steps": [
+        "Review backlog items in priority order",
+        "Add or clarify descriptions and acceptance criteria",
+        "Break a large item into smaller ones, or group related items under a module/epic",
+        "Estimate effort (story points) for items likely to be picked up soon",
+        "Reorder the backlog to reflect current priority",
+        "Refined items are ready to be pulled into the next cycle (see cycle_planning)"
+      ],
+      "entities": [
+        "task",
+        "module",
+        "estimate"
+      ],
+      "features": [
+        "project-management.tasks_issues",
+        "project-management.modules_epics",
+        "project-management.estimates_story_points",
+        "project-management.cycles_sprints"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "scrum-guide-2020",
+          "plane",
+          "leantime"
+        ],
+        "confidence": "high",
+        "notes": "The Scrum Guide (2020) is directly authoritative here: 'Product Backlog refinement is the act of breaking down and further defining Product Backlog items into smaller more precise items... an ongoing activity to add details, such as a description, order, and size.' The mapping onto this domain's module/estimate entities (which Scrum itself does not define) is reasoned, informed by Plane's Module and Leantime's effort-point scale."
+      }
+    },
+    {
+      "id": "release_version_cut",
+      "name": "Release / version cut",
+      "actor": "project_manager",
+      "trigger": "A deliverable or release date is approaching",
+      "steps": [
+        "Create a milestone/version with a target (effective) date",
+        "Assign relevant tasks to the milestone",
+        "Lock the milestone once its scope is frozen, so new tasks can no longer be added",
+        "Close the milestone once all included tasks are done, or move incomplete ones out",
+        "Stakeholders are notified the milestone is closed"
+      ],
+      "entities": [
+        "milestone",
+        "task"
+      ],
+      "features": [
+        "project-management.milestones"
+      ],
+      "state_machine": {
+        "entity": "milestone",
+        "initial": "open",
+        "terminal": [
+          "closed"
+        ],
+        "states": [
+          "open",
+          "locked",
+          "closed"
+        ],
+        "transitions": [
+          {
+            "from": "open",
+            "to": "locked",
+            "event": "freeze_scope"
+          },
+          {
+            "from": "locked",
+            "to": "open",
+            "event": "reopen"
+          },
+          {
+            "from": "open",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "locked",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "closed",
+            "to": "open",
+            "event": "reopen"
+          }
+        ]
+      },
+      "notifications": [
+        "milestone_closed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "redmine",
+          "openproject",
+          "leantime"
+        ],
+        "confidence": "medium",
+        "notes": "The open/locked/closed state names and the effective(target)-date field are verbatim from Redmine's and OpenProject's Version model (VERSION_STATUSES); note the two share code lineage so are not counted as fully independent. Leantime independently corroborates a milestone as a real, distinctly-modeled entity (a Ticket with type='milestone'), though Leantime itself has no locked-state equivalent -- its status is a boolean, so the lock step is Redmine/OpenProject-only evidence, stated honestly here."
+      }
+    },
+    {
+      "id": "board_column_wip_and_automation",
+      "name": "Board column transitions, WIP limits, and automation rules",
+      "actor": "contributor",
+      "trigger": "A task card is dragged to a different board column",
+      "steps": [
+        "Card is dropped on the target column",
+        "If the target column has a WIP limit, the move is blocked (or flagged) once the limit is reached",
+        "The task's underlying state is updated to the state the target column represents",
+        "If the target column is the board's designated 'done' column, the task is marked done",
+        "Any automation rule bound to that state/column transition fires (e.g. auto-assign, add a label, notify a channel)"
+      ],
+      "entities": [
+        "task",
+        "state",
+        "swimlane"
+      ],
+      "features": [
+        "project-management.boards_kanban"
+      ],
+      "notifications": [],
+      "integrations": [
+        "chat_notifications"
+      ],
+      "provenance": {
+        "sources": [
+          "kanboard",
+          "vikunja",
+          "kanban-method-guide"
+        ],
+        "confidence": "medium",
+        "notes": "Kanboard's ColumnRestrictionModel (per-column WIP limits) and Vikunja's Bucket.Limit + DoneBucketID (a bucket that auto-marks a task Done when it lands there) are independent implementations of column-limit and done-column behavior. The Kanban Method Guide (Kanban University) is authoritative that limiting WIP is a core practice, though it does not specify implementation mechanics. The automation-rule-firing step is sourced only from Kanboard's dedicated ActionModel (an event_name-based rule engine) -- a single source, not found in the other inspected tools, stated honestly rather than generalized."
+      }
+    },
+    {
+      "id": "reporting_and_dashboards",
+      "name": "Workload, burndown, and timeline reporting",
+      "actor": "project_manager",
+      "trigger": "A project manager wants to check project health mid-cycle",
+      "steps": [
+        "Open the workload/capacity view to see how much work is assigned to each person",
+        "Open the burndown/velocity chart to see remaining vs. completed work in the current cycle",
+        "Open the Gantt/timeline view to see date-based scheduling and any blocked dependencies",
+        "Flag over-allocated people or at-risk dates",
+        "Adjust assignments, dates, or cycle scope in response"
+      ],
+      "entities": [
+        "task",
+        "cycle",
+        "estimate"
+      ],
+      "features": [
+        "project-management.workload_capacity",
+        "project-management.burndown_velocity_reports",
+        "project-management.gantt_timeline"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "plane",
+          "openproject",
+          "taiga-back"
+        ],
+        "confidence": "medium",
+        "notes": "This groups three read-only reporting features into one review process; it is a reasoned grouping, not a single literal workflow in any source. Each underlying capability has its own evidence: OpenProject's dedicated resource_management module for workload, Taiga's Milestone.closed_points/total_closed_points_by_date for burndown, and OpenProject's ScheduleDependency/DependencyGraph for Gantt. No state machine: this is a read-only review, not a lifecycle."
+      }
+    },
+    {
+      "id": "recurring_task_regeneration",
+      "name": "Recurring task regeneration",
+      "actor": "system",
+      "trigger": "A task with a recurrence rule is marked done",
+      "steps": [
+        "Contributor marks the recurring task done",
+        "The system checks whether the task has a recurrence rule",
+        "Depending on implementation: either a new task instance is created with dates offset by the interval (subscription-style), or the same task is reopened with its due date/reminders bumped forward by the interval",
+        "The recurrence link (to the rule, or to the prior/next instance) carries forward"
+      ],
+      "entities": [
+        "task"
+      ],
+      "features": [
+        "project-management.recurring_tasks"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "kanboard",
+          "vikunja"
+        ],
+        "confidence": "medium",
+        "notes": "Kanboard's TaskRecurrenceModel/RecurringTaskSubscriber spawns a NEW task on completion. Vikunja's RepeatAfter/RepeatMode (default interval / monthly / from-current-date) instead reopens and bumps the dates on the SAME task. Both are genuine, independently-built implementations of 'recurring task', but they differ in mechanism -- the steps above describe both rather than picking one and presenting it as universal."
+      }
     }
   ]
 }

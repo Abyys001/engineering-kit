@@ -18,7 +18,7 @@
     "H53.10",
     "H53.20"
   ],
-  "maturity": "partial",
+  "maturity": "curated",
   "last_reviewed": "2026-09-27",
   "sources": [
     {
@@ -42,6 +42,126 @@
       "version": "4ff6980c6db6f3e8103b3ec425a089aa6d251af4",
       "local_path": "sources/domains/fleetbase/source",
       "notes": "reference-only (AGPL). Fleet operations / last-mile dispatch platform. Full DB schema inspected via the repo's own generated database.mmd (Mermaid ERD): orders, payloads, waypoints, routes, drivers, vehicles, fleets, manifests, tracking_statuses, issues, maintenance_schedules/maintenances, service_rates/quotes, places, zones. Application code beyond the schema was not deeply inspected in this pass."
+    },
+    {
+      "id": "gs1-general-specifications",
+      "title": "GS1 General Specifications (GTIN, SSCC, GS1-128 Application Identifiers)",
+      "url": "https://www.gs1.org/standards/barcodes-epcrfid-id-keys/gs1-general-specifications",
+      "source_type": "authoritative",
+      "license": "GS1 IP Policy disclaimer (no OSI license; preserve GS1 copyright/disclaimer verbatim)",
+      "retrieved": "2026-09-27",
+      "version": "Release 26.0 (January 2026)",
+      "notes": "Defines the GTIN (product identifier), SSCC (18-digit logistic-unit identifier, printed as a GS1-128 barcode with Application Identifier (00)), and the surrounding AI framework. The GS1 Logistic Label Guideline (a GS1 implementation guideline built on these same GS1-128/SSCC primitives) was checked via its gs1.org landing page for existence but its own version/date could not be fetched directly (403); only General Specifications 26.0 is cited with a verified version."
+    },
+    {
+      "id": "upu-s10",
+      "title": "UPU S10 - Identification of postal items (13-character identifier)",
+      "url": "https://www.upu.int/UPU/media/upu/files/postalSolutions/programmesAndServices/standards/S10-12.pdf",
+      "source_type": "authoritative",
+      "license": "UPU standard, publicly published; no OSI license",
+      "retrieved": "2026-09-27",
+      "version": "S10, edition 12",
+      "notes": "13-character international postal item identifier (2-letter service indicator + 8-digit serial + check digit + 2-letter ISO country code of the issuing postal operator). Relevant to international parcel/label tracking numbers issued by postal operators rather than integrator carriers."
+    },
+    {
+      "id": "uncefact-iftmin-ifcsum",
+      "title": "UN/EDIFACT IFTMIN (Transport Instruction) and IFCSUM (Forwarding and Consolidation Summary) messages",
+      "url": "https://service.unece.org/trade/untdid/trmd/iftmin_c.htm",
+      "source_type": "authoritative",
+      "license": "UN/EDIFACT (UNECE/UNTDID), publicly published; no OSI license",
+      "retrieved": "2026-09-27",
+      "version": "UNTDID message directory (multiple co-existing releases, e.g. D.03B through D.12A+; no single current release number independently pinned in this pass)",
+      "notes": "IFTMIN is the shipper/forwarder-to-carrier transport instruction message for a single consignment (final consignment details, dispatch instruction); IFCSUM is the forwarding/consolidation summary message describing consolidated cargo on a voyage/consignment run. Read via UNECE's own service.unece.org message-directory pages and corroborating summaries, not fetched as a full page in this pass; message existence, purpose and field-level intent are confirmed, exact current release edition is not."
+    },
+    {
+      "id": "uncefact-mmt-rdm",
+      "title": "UN/CEFACT Multi-Modal Transport Reference Data Model (MMT RDM)",
+      "url": "https://unece.org/trade/documents/2018/01/standards/multi-modal-transport-reference-data-model-brs",
+      "source_type": "authoritative",
+      "license": "UN/CEFACT (UNECE), publicly published; no OSI license",
+      "retrieved": "2026-09-27",
+      "version": "Multi-Modal Transport Reference Data Model BRS (Business Requirements Specification), part of the UN/CEFACT global Buy-Ship-Pay / Supply Chain Reference Data Model",
+      "notes": "Technical specifications and data structures (subsets, XSDs) for documents accompanying goods moved across sea/inland-water/air/road/rail legs. Corroborates the general shape of multi-leg/multi-stop consignment and transport-plan data, not a route-optimization algorithm. Read via search-indexed UNECE page summaries in this pass, not the full BRS document text."
+    },
+    {
+      "id": "x12-transportation",
+      "title": "ASC X12 transportation transaction sets 204/990/214/210",
+      "url": "https://www.spscommerce.com/edi-document/edi-204-motor-carrier-load-tender/",
+      "source_type": "secondary",
+      "license": "ASC X12 standard; official transaction-set text is a paid X12.org publication and was not accessed directly",
+      "retrieved": "2026-09-27",
+      "version": "Set numbers verified: 204 (Motor Carrier Load Tender), 990 (Response to Load Tender), 214 (Transportation Carrier Shipment Status), 210 (Motor Carrier Freight Details and Invoice); X12 version/release (e.g. 004010/005010) not independently confirmed",
+      "notes": "Corroborated across multiple independent EDI service-provider documentation pages (SPS Commerce, EDI2XML, 1EDISource, EDI Elevate) describing the same four set numbers and the same tender->accept->status->invoice flow. Marked source_type 'secondary' rather than 'authoritative' because the official ASC X12 standard text itself (X12.org) was not accessed."
+    },
+    {
+      "id": "iata-eawb-cargoxml",
+      "title": "IATA e-AWB (Resolution 672) and Cargo-XML Toolkit",
+      "url": "https://www.iata.org/en/programs/cargo/e/efreight/",
+      "source_type": "authoritative",
+      "license": "IATA standard; publicly described on iata.org, full toolkit is a member publication",
+      "retrieved": "2026-09-27",
+      "version": "e-AWB: IATA Resolution 672 (Multilateral e-AWB Agreement, paper AWB no longer required); Cargo-XML: current IATA Cargo-XML Toolkit (successor to the retired Cargo-IMP message set since 2014)",
+      "notes": "Air-freight-specific electronic air waybill and the XML messaging standard used between airlines, forwarders, ground handlers, customs and security agencies."
+    },
+    {
+      "id": "incoterms-2020",
+      "title": "Incoterms 2020",
+      "url": "https://iccwbo.org/business-solutions/incoterms-rules/incoterms-2020/",
+      "source_type": "authoritative",
+      "license": "ICC copyrighted rules; publicly summarized, full text is a paid ICC publication",
+      "retrieved": "2026-09-27",
+      "version": "Incoterms 2020 (effective 1 January 2020), 11 rules, each with A1-A10/B1-B10 seller/buyer obligations",
+      "notes": "Standardizes where risk, cost, and delivery/customs responsibility transfer between buyer and seller for a given shipment; used here for the responsibility-transfer dimension of customs and shipment features, never as evidence that a product is legally compliant."
+    },
+    {
+      "id": "wco-data-model",
+      "title": "WCO Data Model",
+      "url": "https://www.wcoomd.org/en/media/newsroom/2026/july/the-wco-data-model-at-30-wco-celebrates-three-decades-of-data-interoperability.aspx",
+      "source_type": "authoritative",
+      "license": "World Customs Organization standard; publicly described, full data model publication has WCO usage terms",
+      "retrieved": "2026-09-27",
+      "version": "4.3.0 (approved by WCO Council June 2026, presented July 2026)",
+      "notes": "Harmonized customs data elements and packages (goods declaration, AEO mutual recognition, passenger/crew advance information, etc.) used by customs administrations worldwide; cited for the customs-declaration data-modeling dimension of logistics.customs_documents only, not as proof of customs compliance."
+    },
+    {
+      "id": "adr-2025",
+      "title": "ADR - European Agreement concerning the International Carriage of Dangerous Goods by Road",
+      "url": "https://unece.org/info/Transport/Dangerous-Goods/pub/395786",
+      "source_type": "authoritative",
+      "license": "UNECE treaty text, publicly published; no OSI license",
+      "retrieved": "2026-09-27",
+      "version": "ADR 2025 (ECE/TRANS/352), in force 1 January 2025",
+      "notes": "Road dangerous-goods classification, packaging, marking, labelling, documentation and vehicle/driver requirements across 53 contracting parties."
+    },
+    {
+      "id": "iata-dgr-67",
+      "title": "IATA Dangerous Goods Regulations (DGR)",
+      "url": "https://www.iata.org/en/publications/dgr/",
+      "source_type": "authoritative",
+      "license": "IATA standard; publicly described, full manual is a paid IATA publication",
+      "retrieved": "2026-09-27",
+      "version": "67th Edition, effective 1 January 2026",
+      "notes": "Global reference for classifying, packaging, marking, labelling and documenting dangerous goods shipped by air; the only DG standard recognized by airlines."
+    },
+    {
+      "id": "imdg-2024",
+      "title": "IMDG Code - International Maritime Dangerous Goods Code",
+      "url": "https://www.imo.org/en/ourwork/safety/pages/dangerousgoods-default.aspx",
+      "source_type": "authoritative",
+      "license": "IMO instrument, publicly described; full code is a paid IMO publication",
+      "retrieved": "2026-09-27",
+      "version": "2024 Edition, Amendment 42-24 (voluntary from 1 January 2025, mandatory from 1 January 2026)",
+      "notes": "Sea dangerous-goods classification, packing, marking and documentation requirements, published in two volumes plus a supplement."
+    },
+    {
+      "id": "traccar",
+      "title": "Traccar",
+      "url": "https://github.com/traccar/traccar",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "HEAD (default branch) at retrieval time, verified via `gh api repos/traccar/traccar`",
+      "notes": "Read only via `gh api` (not cloned to disk), per the research brief's no-new-downloads rule. Open-source GPS/telematics platform (200+ device protocols). Inspected src/main/java/org/traccar/model/{Device,Driver,Position,Geofence,Maintenance}.java: Device/Position carry live telemetry (odometer, engine hours, fuel level/consumption, battery, GPS position); Geofence carries a named boundary with schedule; Maintenance carries name/type/start/period (interval-based service scheduling); Driver is a thin name+uniqueId record. Independent second implementation for vehicle telemetry, geofencing, fuel tracking, and (thinly) driver and fleet-maintenance concepts, alongside fleetbase."
     }
   ],
   "features": [
@@ -58,7 +178,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "capabilities": [
         "saved_addresses",
         "billing_profile"
@@ -138,10 +260,11 @@
       "provenance": {
         "sources": [
           "karrio",
-          "fleetbase"
+          "fleetbase",
+          "uncefact-iftmin-ifcsum"
         ],
-        "confidence": "medium",
-        "notes": "karrio's orders module (Order, OrderStatus: unfulfilled/fulfilled/partial/delivered/cancelled) and fleetbase's fleetbase_orders table are independent implementations of the same concept, though fleetbase's 'order' is closer to a dispatched delivery job than a pre-shipment sales order."
+        "confidence": "high",
+        "notes": "karrio's orders module (Order, OrderStatus) and fleetbase_orders are independent implementations. UN/EDIFACT IFTMIN is the standard message that turns an order/instruction into a transport contract for a consignment, corroborating the order-to-shipment concept from an authoritative standards source."
       }
     },
     {
@@ -191,10 +314,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "std:gs1-epcis",
+          "gs1-general-specifications"
         ],
-        "confidence": "low",
-        "notes": "Grounded directly in karrio's Shipment model (modules/manager/models.py) but only one implementation inspected."
+        "confidence": "high",
+        "notes": "karrio's Shipment model is the direct implementation. GS1 EPCIS 2.0 (std:gs1-epcis, verified on disk) models exactly this concept as a trackable object moving through ObjectEvent/AggregationEvent scans (what/when/where/why), and GS1 General Specifications' SSCC is the identifier standard for the logistic unit a shipment represents. Authoritative source present."
       }
     },
     {
@@ -210,7 +335,9 @@
         "parcel",
         "commodity"
       ],
-      "workflows": [],
+      "workflows": [
+        "warehouse_fulfillment"
+      ],
       "capabilities": [
         "dimensional_weight",
         "commodity_lines"
@@ -235,10 +362,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "gs1-general-specifications",
+          "std:gs1-epcis"
         ],
-        "confidence": "low",
-        "notes": "karrio's Parcel and Commodity models only; single source."
+        "confidence": "high",
+        "notes": "karrio's Parcel/Commodity models are the direct implementation. GS1 General Specifications defines the GTIN (product inside) and SSCC (the physical logistic unit/parcel itself, printed as GS1-128); EPCIS's epcList/quantityList 'what' dimension is the standard's model of the same physical-object concept. Authoritative source present."
       }
     },
     {
@@ -286,10 +415,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "fleetbase"
         ],
-        "confidence": "low",
-        "notes": "Observed via karrio's Shipment.rates (list of returned quotes) and Shipment.selected_rate fields; the rating/providers module itself was not cloned in this pass, so this is inferred from the consuming model, single source."
+        "confidence": "medium",
+        "notes": "karrio's Shipment.rates/selected_rate fields and fleetbase's fleetbase_purchase_rates/fleetbase_service_quotes tables (already cross-referenced for the rate_quote entity) are independent implementations of the same concept; the rating/providers module itself was not cloned from karrio."
       }
     },
     {
@@ -304,7 +434,9 @@
         "carrier",
         "carrier_service"
       ],
-      "workflows": [],
+      "workflows": [
+        "carrier_manifest_closeout"
+      ],
       "capabilities": [
         "carrier_account_config",
         "service_catalog"
@@ -381,10 +513,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "gs1-general-specifications",
+          "upu-s10"
         ],
-        "confidence": "low",
-        "notes": "karrio Shipment.label/label_type/invoice fields; single source."
+        "confidence": "high",
+        "notes": "karrio's Shipment.label/label_type/invoice fields are the direct implementation. The GS1 Logistic Label / GS1-128 symbology is the authoritative standard for what a carrier-agnostic logistics label actually encodes (SSCC via Application Identifier (00)); UPU S10 is the parallel standard for the identifier printed on international postal labels. Authoritative source present."
       }
     },
     {
@@ -401,7 +535,8 @@
         "manifest"
       ],
       "workflows": [
-        "dispatch_and_route_planning"
+        "dispatch_and_route_planning",
+        "carrier_manifest_closeout"
       ],
       "capabilities": [
         "carrier_closeout",
@@ -431,10 +566,11 @@
       "provenance": {
         "sources": [
           "karrio",
-          "fleetbase"
+          "fleetbase",
+          "gs1-general-specifications"
         ],
-        "confidence": "medium",
-        "notes": "karrio has a carrier close-out Manifest model; fleetbase has a driver route fleetbase_manifests table (driver_uuid, vehicle_uuid, stop_count). Same grouping concept, two different scopes."
+        "confidence": "high",
+        "notes": "karrio's carrier close-out Manifest model and fleetbase's driver route fleetbase_manifests table are independent implementations of a shipment/stop grouping. GS1's SSCC is the authoritative standard identifier for exactly this kind of grouped 'logistic unit' handed off as a batch. Authoritative source present."
       }
     },
     {
@@ -480,10 +616,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "uncefact-iftmin-ifcsum"
         ],
-        "confidence": "low",
-        "notes": "karrio's Pickup model and PickupStatus enum (scheduled/picked_up/cancelled/closed); fleetbase models pickup only as a waypoint type, not a first-class entity, so not counted as a second independent source."
+        "confidence": "medium",
+        "notes": "karrio's Pickup model and PickupStatus enum (scheduled/picked_up/cancelled/closed) is the direct implementation. UN/EDIFACT IFTMIN is the standard shipper-to-carrier instruction message that, among other things, carries pickup/collection scheduling details for a consignment, corroborating the general concept from a second, independent (standards) source."
       }
     },
     {
@@ -535,10 +672,11 @@
       "provenance": {
         "sources": [
           "karrio",
-          "fleetbase"
+          "fleetbase",
+          "std:gs1-epcis"
         ],
-        "confidence": "medium",
-        "notes": "karrio's Tracking model + TrackerStatus enum and fleetbase's fleetbase_tracking_statuses table (status, code, complete flag, geolocation) are independent implementations of the same concept."
+        "confidence": "high",
+        "notes": "karrio's TrackerStatus enum and fleetbase's fleetbase_tracking_statuses table are independent implementations. GS1 EPCIS 2.0 (verified on disk) is the authoritative supply-chain event-visibility standard for exactly this concept (what/when/where/why per event). Authoritative source present."
       }
     },
     {
@@ -635,10 +773,11 @@
       ],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "uncefact-iftmin-ifcsum"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_orders has dispatched/dispatched_at/adhoc/driver_assigned_uuid/vehicle_assigned_uuid columns; single source."
+        "confidence": "medium",
+        "notes": "fleetbase_orders' dispatched/dispatched_at/adhoc/driver_assigned_uuid/vehicle_assigned_uuid columns are the direct implementation. UN/EDIFACT IFTMIN is the standard message by which a shipper instructs a carrier/forwarder to move a consignment, i.e. the EDI-level equivalent of dispatching a job."
       }
     },
     {
@@ -687,10 +826,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "uncefact-mmt-rdm"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_routes (order_uuid, total_distance, total_time) and fleetbase_waypoints (place_uuid, time_window_start/end, service_time, order/sequence); single source."
+        "confidence": "medium",
+        "notes": "fleetbase_routes/fleetbase_waypoints tables are the direct implementation. UN/CEFACT's Multi-Modal Transport Reference Data Model standardizes multi-leg/multi-stop consignment and transport-plan data structures, corroborating the general shape of a sequenced route/waypoint plan; it does not standardize a route-optimization algorithm, so this is a data-structure-level corroboration only."
       }
     },
     {
@@ -737,10 +877,11 @@
       ],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "traccar"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_drivers table (drivers_license_number, license_expiry, location, current_status, skills, max_travel_time/max_distance, time_window); single source."
+        "confidence": "medium",
+        "notes": "fleetbase_drivers table is the direct implementation. traccar's Driver model (name, uniqueId, associated with device/position events) is a second, independent but thin implementation read via `gh api` without cloning; kept at medium rather than high because traccar's driver model itself is minimal."
       }
     },
     {
@@ -756,7 +897,9 @@
         "vehicle",
         "fleet"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "capabilities": [
         "telemetry",
         "capacity_specs"
@@ -783,10 +926,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "traccar"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_vehicles table (make/model/year, seating_capacity, payload_capacity, gvwr, fuel_type, location/speed/heading); single source."
+        "confidence": "medium",
+        "notes": "fleetbase_vehicles table (make/model/year, capacities, fuel_type, location/speed/heading) and traccar's Device+Position models (odometer, engine hours, fuel, battery, GPS position) are independent implementations of vehicle/telemetry data, read via `gh api` without cloning."
       }
     },
     {
@@ -801,7 +945,9 @@
       "entities": [
         "warehouse"
       ],
-      "workflows": [],
+      "workflows": [
+        "warehouse_fulfillment"
+      ],
       "capabilities": [
         "location_hierarchy"
       ],
@@ -826,10 +972,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "std:gs1-epcis"
+          "std:gs1-epcis",
+          "gs1-general-specifications"
         ],
-        "confidence": "low",
-        "notes": "Neither cloned source models a warehouse as a first-class entity. Reasoned from the domain brief and GS1's location-identification concept (GLN); std:gs1-epcis is registered globally but not yet acquired locally at time of writing, so this is a name-only reference, not a verified spec citation."
+        "confidence": "medium",
+        "notes": "Neither cloned implementation models a warehouse as a first-class entity, so this remains standards-only rather than implementation-corroborated. GS1 EPCIS's bizLocation/readPoint fields and CBV business steps (receiving, storing, staging_outbound, stocking) model warehouse-type facilities as event context; GS1 General Specifications defines the GLN (Global Location Number) used to identify such facilities. Kept at medium, not high, because there is still no product-feature implementation observed, only the underlying identifier/location concepts."
       }
     },
     {
@@ -877,10 +1024,11 @@
       "provenance": {
         "sources": [
           "karrio",
-          "fleetbase"
+          "fleetbase",
+          "std:gs1-epcis"
         ],
-        "confidence": "medium",
-        "notes": "karrio's ShipmentStatus (needs_attention, delivery_failed) and Shipment.is_return/return_shipment/return_address fields, plus fleetbase's fleetbase_issues table (type, category, priority, resolved_at) and payloads.return_uuid, are independent implementations."
+        "confidence": "high",
+        "notes": "fleetbase_issues table and karrio's needs_attention/delivery_failed/return_shipment fields are independent implementations. GS1 CBV's disposition vocabulary (damaged, destroyed, returned, recalled, stolen, non_conformant, etc.) is the authoritative standard vocabulary for exactly these exception/return states. Authoritative source present."
       }
     },
     {
@@ -895,7 +1043,9 @@
       "entities": [
         "customs_document"
       ],
-      "workflows": [],
+      "workflows": [
+        "customs_export_declaration"
+      ],
       "capabilities": [
         "hs_code_lookup",
         "declared_value"
@@ -925,10 +1075,12 @@
       ],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "wco-data-model",
+          "incoterms-2020"
         ],
-        "confidence": "low",
-        "notes": "karrio Shipment.customs embedded JSON field; single source."
+        "confidence": "high",
+        "notes": "karrio's Shipment.customs embedded field is the direct implementation. The WCO Data Model is the authoritative harmonized data model for customs (goods) declarations; Incoterms 2020 standardizes the responsibility-transfer/cost-allocation data a customs declaration and commercial invoice both depend on. Authoritative source present. Citing these standards is not a claim that any implementation is customs-compliant."
       }
     },
     {
@@ -996,7 +1148,9 @@
       "entities": [
         "zone"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "capabilities": [
         "geofence_events",
         "service_area_boundaries"
@@ -1023,10 +1177,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "traccar"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_zones, fleetbase_service_areas, fleetbase_driver_geofence_states, fleetbase_vehicle_geofence_states tables; single source."
+        "confidence": "medium",
+        "notes": "fleetbase_zones/fleetbase_service_areas/geofence_states tables and traccar's Geofence model (named boundary with schedule) are independent implementations of the same concept, read via `gh api` without cloning."
       }
     },
     {
@@ -1068,10 +1223,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "traccar"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_maintenance_schedules (interval_method/type/value, next_due_date/odometer/engine_hours, reminder_offsets) and fleetbase_maintenances; single source."
+        "confidence": "medium",
+        "notes": "fleetbase_maintenance_schedules (interval_method/type/value, next_due_date, reminder_offsets) and traccar's Maintenance model (name/type/start/period) are independent implementations of interval-based vehicle service scheduling, read via `gh api` without cloning."
       }
     },
     {
@@ -1086,7 +1242,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "capabilities": [
         "address_normalization",
         "deliverability_check"
@@ -1131,7 +1289,9 @@
         "carrier_service",
         "rate_quote"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "capabilities": [
         "rate_sheet_upload",
         "markup_rules"
@@ -1177,7 +1337,9 @@
         "exception",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "capabilities": [
         "claim_filing",
         "carrier_claim_status"
@@ -1221,7 +1383,9 @@
       "entities": [
         "vehicle"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "capabilities": [
         "fuel_card_sync",
         "consumption_reporting"
@@ -1249,10 +1413,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "fleetbase"
+          "fleetbase",
+          "traccar"
         ],
-        "confidence": "low",
-        "notes": "fleetbase_fuel_provider_connections/sync_runs/transactions and fleetbase_fuel_reports tables; single source."
+        "confidence": "medium",
+        "notes": "fleetbase_fuel_provider_connections/sync_runs/transactions tables and traccar's Position telemetry fields (KEY_FUEL, KEY_FUEL_USED, KEY_FUEL_CONSUMPTION, KEY_FUEL_LEVEL) are independent implementations of per-vehicle fuel data, read via `gh api` without cloning."
       }
     },
     {
@@ -1267,7 +1432,9 @@
       "entities": [
         "order"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "capabilities": [
         "cod_amount_capture",
         "cod_reconciliation"
@@ -1313,7 +1480,9 @@
         "route",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "load_planning_and_eta"
+      ],
       "capabilities": [
         "dynamic_eta",
         "delay_alerting"
@@ -1360,7 +1529,9 @@
       "entities": [
         "driver"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "capabilities": [
         "scorecard",
         "incident_log"
@@ -1408,7 +1579,9 @@
         "parcel",
         "order"
       ],
-      "workflows": [],
+      "workflows": [
+        "load_planning_and_eta"
+      ],
       "capabilities": [
         "capacity_check",
         "consolidation"
@@ -1453,7 +1626,9 @@
         "rate_quote",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "capabilities": [
         "invoice_reconciliation",
         "discrepancy_flagging"
@@ -1481,10 +1656,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "karrio"
+          "karrio",
+          "x12-transportation"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from karrio's Shipment.applied_fees field (documented as 'Accounting: addons + surcharge COGS values'); single source, no dedicated invoice-audit model inspected."
+        "confidence": "medium",
+        "notes": "karrio's Shipment.applied_fees field is the direct implementation. ASC X12 210 (Motor Carrier Freight Details and Invoice) is the standard EDI transaction set for exactly this document, corroborated across multiple independent EDI service-provider descriptions (official X12.org text not accessed)."
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "domain": "restaurant",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "edges": [
     {
       "from": "restaurant.reservations",
@@ -218,6 +218,12 @@
       "to": "shared.organizations",
       "type": "requires",
       "reason": "Chain management needs a tenant/branch model across locations."
+    },
+    {
+      "from": "restaurant.reviews",
+      "to": "shared.reviews",
+      "type": "requires",
+      "reason": "The moderated rating/review/reply mechanics are generic; only tying a review to a visit or reservation is restaurant-specific."
     }
   ]
 }

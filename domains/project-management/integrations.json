@@ -7,12 +7,16 @@
       "id": "git_provider",
       "name": "Git provider (issue linking)",
       "category": "development",
-      "purpose": "Link tasks to commits, branches, and pull requests, and optionally auto-transition a task's state when a linked PR merges.",
+      "purpose": "Link tasks to commits, branches, and pull requests; surface CI/commit status on the linked task; optionally auto-transition a task's state when a linked PR merges.",
       "examples": ["GitHub", "GitLab"],
       "protocols": ["REST", "webhooks"],
       "related_features": ["project-management.task_dependencies", "project-management.activity_feed"],
       "classification": "integration",
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's db/models/integration/github.py; single source."}
+      "provenance": {
+        "sources": ["plane", "openproject"],
+        "confidence": "medium",
+        "notes": "Plane's db/models/integration/github.py (GithubRepository/GithubRepositorySync/GithubIssueSync) implements the commit/PR-linking side. OpenProject documents and ships separate GitHub and GitLab integrations (docs/system-admin-guide/integrations/github-integration, gitlab-integration) each configured with a webhook secret, an independent second implementation. CI/build-status specifically is only documented at the docs level (not verified in a data model in either source), so it is stated here as part of this integration's purpose rather than as a separate, evidenced integration."
+      }
     },
     {
       "id": "chat_notifications",
@@ -23,7 +27,52 @@
       "protocols": ["webhooks", "REST"],
       "related_features": ["project-management.comments_mentions", "project-management.activity_feed"],
       "classification": "integration",
-      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's db/models/integration/slack.py; single source."}
+      "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Plane's db/models/integration/slack.py; single source. No second implementation of a dedicated chat-notification model was found among the other inspected tools (most rely on the generic outbound-webhook mechanism instead -- see public_api_webhooks)."}
+    },
+    {
+      "id": "public_api_webhooks",
+      "name": "Public API and outbound webhooks",
+      "category": "development",
+      "purpose": "A REST API (commonly OAuth 2.0-authenticated) for third-party access, plus configurable outbound webhooks that POST a signed payload to an external URL when chosen events occur (task created/updated, comment added, etc.), so other systems can react without polling.",
+      "examples": ["Zapier", "n8n", "a custom internal integration"],
+      "protocols": ["REST", "OAuth 2.0", "webhooks", "HMAC request signing"],
+      "related_features": ["project-management.tasks_issues", "project-management.activity_feed", "project-management.comments_mentions"],
+      "classification": "integration",
+      "provenance": {
+        "sources": ["plane", "vikunja", "openproject", "rfc6749-oauth2"],
+        "confidence": "high",
+        "notes": "Three independent implementations of outbound webhooks: Plane's Webhook/WebhookLog model (per-workspace URL, secret key, per-resource-type toggles, full request/response logging), Vikunja's Webhook model (target URL, a registered event list, HMAC-SHA256 signing, optional Basic Auth), and OpenProject's dedicated `webhooks` module (with an outgoing-deliveries log UI). OAuth 2.0 (RFC 6749) is cited for the API-authentication half; OpenProject additionally ships its own OAuth applications/clients for API access, corroborating that specific pairing."
+      }
+    },
+    {
+      "id": "calendar_sync",
+      "name": "Calendar sync",
+      "category": "scheduling",
+      "purpose": "Expose tasks with due dates (and milestones) as calendar events, via a subscribable feed or two-way CalDAV sync, so deadlines show up alongside a user's other calendar events.",
+      "examples": ["Apple Calendar", "Google Calendar (via CalDAV or an ICS subscription)"],
+      "protocols": ["CalDAV", "iCalendar (ICS)"],
+      "related_features": ["project-management.tasks_issues", "project-management.milestones"],
+      "classification": "integration",
+      "provenance": {
+        "sources": ["vikunja", "rfc4791-caldav"],
+        "confidence": "high",
+        "notes": "Vikunja ships a real CalDAV server (pkg/caldav: discovery, CRUD, client-compatibility tests against real CalDAV clients) implementing RFC 4791, the authoritative CalDAV standard. Single implementation among the inspected tools, but backed directly by the authoritative protocol specification it implements."
+      }
+    },
+    {
+      "id": "importer_migration",
+      "name": "Importer / migration from another tracker",
+      "category": "data",
+      "purpose": "One-time import of projects, tasks, and their metadata from another issue tracker or a spreadsheet, used when a team switches tools.",
+      "examples": ["Jira", "Trello", "Asana", "CSV"],
+      "protocols": ["REST", "OAuth 2.0", "file upload"],
+      "related_features": ["project-management.tasks_issues", "project-management.projects"],
+      "classification": "integration",
+      "provenance": {
+        "sources": ["plane", "vikunja"],
+        "confidence": "medium",
+        "notes": "Plane's Importer model supports GitHub and Jira as source services with a queued/processing/completed/failed status. Vikunja's pkg/modules/migration package ships real importers for Trello, Todoist, TickTick, Wekan, Planka, Microsoft To Do, and CSV, plus its own file-based export/import format -- a considerably broader, independently-built second implementation of the same concept."
+      }
     }
   ]
 }

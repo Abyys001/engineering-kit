@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-09-27",
+  "generated": "2026-09-28",
   "generator": "tools/kb.py build",
   "domains": [
     {
@@ -16,7 +16,7 @@
         "N82.99"
       ],
       "maturity": "curated",
-      "last_reviewed": "2026-09-26",
+      "last_reviewed": "2026-09-27",
       "feature_count": 22,
       "features_by_classification": {
         "core": 5,
@@ -26,8 +26,8 @@
       },
       "features_by_confidence": {
         "high": 2,
-        "medium": 17,
-        "low": 3
+        "medium": 15,
+        "low": 5
       },
       "entity_count": 13,
       "role_count": 4,
@@ -41,9 +41,10 @@
       ],
       "implementation_references": [
         "caldiy",
-        "easyappointments"
+        "easyappointments",
+        "librebooking"
       ],
-      "source_count": 7,
+      "source_count": 8,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -62,7 +63,7 @@
       "nace": [
         "J62.01"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
       "feature_count": 21,
       "features_by_classification": {
@@ -234,9 +235,9 @@
         "optional": 2
       },
       "features_by_confidence": {
-        "high": 3,
-        "medium": 16,
-        "low": 4
+        "high": 4,
+        "medium": 14,
+        "low": 5
       },
       "entity_count": 14,
       "role_count": 6,
@@ -262,9 +263,10 @@
         "moov-io-watchman",
         "moov-io-customers",
         "moov-io-ach",
-        "moov-io-iso20022"
+        "moov-io-iso20022",
+        "apache-fineract"
       ],
-      "source_count": 16,
+      "source_count": 17,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -354,7 +356,7 @@
       "nace": [
         "J62.01"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
       "feature_count": 23,
       "features_by_classification": {
@@ -368,13 +370,13 @@
       },
       "features_by_confidence": {
         "high": 2,
-        "medium": 8,
-        "low": 13
+        "medium": 20,
+        "low": 1
       },
-      "entity_count": 14,
+      "entity_count": 15,
       "role_count": 6,
-      "workflow_count": 7,
-      "state_machine_count": 7,
+      "workflow_count": 22,
+      "state_machine_count": 12,
       "compliance_count": 4,
       "integration_count": 5,
       "standards": [
@@ -391,9 +393,14 @@
         "nextcrm",
         "unleash",
         "lago-api",
-        "cachet"
+        "cachet",
+        "chatwoot",
+        "twenty-crm",
+        "openstatus",
+        "flagsmith",
+        "openmeter"
       ],
-      "source_count": 12,
+      "source_count": 17,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -429,8 +436,8 @@
         "premium": 1
       },
       "features_by_confidence": {
-        "high": 14,
-        "medium": 10,
+        "high": 15,
+        "medium": 9,
         "low": 4
       },
       "entity_count": 24,
@@ -528,7 +535,7 @@
         "H53.10",
         "H53.20"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
       "feature_count": 30,
       "features_by_classification": {
@@ -538,24 +545,35 @@
         "optional": 7
       },
       "features_by_confidence": {
-        "high": 0,
-        "medium": 6,
-        "low": 24
+        "high": 8,
+        "medium": 13,
+        "low": 9
       },
       "entity_count": 26,
       "role_count": 9,
-      "workflow_count": 8,
-      "state_machine_count": 4,
+      "workflow_count": 15,
+      "state_machine_count": 11,
       "compliance_count": 3,
-      "integration_count": 7,
+      "integration_count": 8,
       "standards": [
-        "std:gs1-epcis"
+        "std:gs1-epcis",
+        "gs1-general-specifications",
+        "upu-s10",
+        "uncefact-iftmin-ifcsum",
+        "uncefact-mmt-rdm",
+        "iata-eawb-cargoxml",
+        "incoterms-2020",
+        "wco-data-model",
+        "adr-2025",
+        "iata-dgr-67",
+        "imdg-2024"
       ],
       "implementation_references": [
         "karrio",
-        "fleetbase"
+        "fleetbase",
+        "traccar"
       ],
-      "source_count": 2,
+      "source_count": 14,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -578,7 +596,7 @@
         "C28.29",
         "C33.12"
       ],
-      "maturity": "partial",
+      "maturity": "curated",
       "last_reviewed": "2026-09-27",
       "feature_count": 25,
       "features_by_classification": {
@@ -588,22 +606,34 @@
         "common": 5
       },
       "features_by_confidence": {
-        "high": 0,
-        "medium": 8,
-        "low": 17
+        "high": 4,
+        "medium": 20,
+        "low": 1
       },
-      "entity_count": 16,
+      "entity_count": 18,
       "role_count": 8,
-      "workflow_count": 6,
-      "state_machine_count": 2,
-      "compliance_count": 2,
-      "integration_count": 2,
-      "standards": [],
+      "workflow_count": 13,
+      "state_machine_count": 8,
+      "compliance_count": 7,
+      "integration_count": 8,
+      "standards": [
+        "isa-95-iec-62264",
+        "b2mml",
+        "gs1-general-specifications",
+        "opc-ua-iec-62541",
+        "iso-9001",
+        "iso-10012",
+        "fda-qmsr-21cfr820",
+        "fda-21cfr-part11",
+        "eu-mdr-2017-745",
+        "fda-fsma-204"
+      ],
       "implementation_references": [
         "inventree",
-        "odoo-mrp"
+        "odoo-mrp",
+        "erpnext-manufacturing"
       ],
-      "source_count": 2,
+      "source_count": 13,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
@@ -635,22 +665,35 @@
         "optional": 7
       },
       "features_by_confidence": {
-        "high": 0,
-        "medium": 7,
-        "low": 19
+        "high": 4,
+        "medium": 19,
+        "low": 3
       },
       "entity_count": 16,
       "role_count": 5,
-      "workflow_count": 6,
-      "state_machine_count": 1,
-      "compliance_count": 1,
-      "integration_count": 2,
-      "standards": [],
+      "workflow_count": 12,
+      "state_machine_count": 5,
+      "compliance_count": 3,
+      "integration_count": 5,
+      "standards": [
+        "scrum-guide-2020",
+        "iso-21502",
+        "pmbok-guide-7",
+        "kanban-method-guide",
+        "rfc6749-oauth2",
+        "rfc4791-caldav"
+      ],
       "implementation_references": [
         "plane",
-        "kanboard"
+        "kanboard",
+        "redmine",
+        "openproject",
+        "vikunja",
+        "focalboard",
+        "leantime",
+        "taiga-back"
       ],
-      "source_count": 2,
+      "source_count": 14,
       "implementation_coverage": {
         "web": 0,
         "backend": 0,

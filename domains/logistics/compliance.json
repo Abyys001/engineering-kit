@@ -11,37 +11,68 @@
       "version": "US: 49 CFR Part 395 (FMCSA); EU: Regulation (EC) No 561/2006",
       "jurisdiction": "United States (FMCSA); European Union",
       "scope": "Limits on commercial driver on-duty/driving time and mandatory rest breaks; typically enforced via an electronic logging device (ELD) in the US.",
-      "affected_features": ["logistics.dispatch", "logistics.drivers", "logistics.driver_app"],
+      "affected_features": [
+        "logistics.dispatch",
+        "logistics.drivers",
+        "logistics.driver_app"
+      ],
       "requires_human_review": true,
       "notes": "Applies mainly to commercial motor vehicles above regulatory weight/passenger thresholds; exact thresholds and rest-break rules differ by jurisdiction and are flagged, not implemented, here. Neither cloned source (karrio, fleetbase) implements HOS logic; this entry is domain knowledge, not a claim that either product is compliant.",
       "url": "https://www.fmcsa.dot.gov/regulations/hours-of-service",
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase models driver time_window_start/end and schedule_constraints, which HOS compliance would build on, but does not implement HOS rules itself. Reasoned applicability."}
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase models driver time_window_start/end and schedule_constraints, which HOS compliance would build on, but does not implement HOS rules itself. Reasoned applicability."
+      }
     },
     {
       "id": "dangerous_goods",
       "name": "Dangerous goods (hazmat) shipping",
       "kind": "regulation",
-      "version": "Road: ADR (UNECE); Air: IATA Dangerous Goods Regulations (DGR)",
-      "jurisdiction": "ADR: Europe (road); IATA DGR: global (air, contractual via carriers)",
+      "version": "Road: ADR 2025 (UNECE ECE/TRANS/352), in force 1 Jan 2025; Air: IATA Dangerous Goods Regulations (DGR), 67th Edition, effective 1 Jan 2026; Sea: IMDG Code 2024 Edition, Amendment 42-24, mandatory from 1 Jan 2026",
+      "jurisdiction": "ADR: Europe and UNECE contracting parties (road, 53 countries); IATA DGR: global (air, contractual via IATA member airlines); IMDG Code: global (sea, IMO member states via SOLAS/MARPOL)",
       "scope": "Classification, labeling, packaging, and documentation requirements for shipments containing hazardous materials.",
-      "affected_features": ["logistics.customs_documents", "logistics.parcels"],
+      "affected_features": [
+        "logistics.customs_documents",
+        "logistics.parcels"
+      ],
       "requires_human_review": true,
-      "notes": "Neither cloned source models a dangerous-goods classification field; flagged from the domain brief as a jurisdiction-specific concern for any product that ships or transports regulated materials, not verified against either implementation.",
+      "notes": "Neither cloned source (karrio, fleetbase) models a dangerous-goods classification field. All three regimes require classification (UN number/class), packaging, marking/labelling, and shipping documentation for regulated materials; specifics differ by mode and are flagged for human review, not implemented here. Citing these standards is not a claim that any product is DG-compliant.",
       "url": "https://unece.org/transport/dangerous-goods",
-      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Commodity/Parcel models carry declared value and content fields that a DG classification would extend; not itself evidence of DG support. Single source, reasoned."}
+      "provenance": {
+        "sources": [
+          "adr-2025",
+          "iata-dgr-67",
+          "imdg-2024"
+        ],
+        "confidence": "high",
+        "notes": "All three editions/versions independently verified via their publishing bodies' own pages (UNECE, IATA, IMO) in this pass; this confirms the regulations and their current versions exist and apply to road/air/sea dangerous-goods transport respectively, not that any implementation satisfies them."
+      }
     },
     {
       "id": "customs_regulations",
       "name": "Customs and import/export regulations",
       "kind": "regulation",
-      "version": "Varies by jurisdiction (e.g. US CBP, EU Union Customs Code)",
+      "version": "Varies by jurisdiction (e.g. US CBP, EU Union Customs Code), harmonized at the data-element level by the WCO Data Model 4.3.0; responsibility/cost allocation standardized by Incoterms 2020 (ICC)",
       "jurisdiction": "Destination and origin country of an international shipment",
       "scope": "Declaration of contents, value, and origin for cross-border shipments; duties and taxes calculation.",
-      "affected_features": ["logistics.customs_documents"],
+      "affected_features": [
+        "logistics.customs_documents"
+      ],
       "requires_human_review": true,
-      "notes": "Flagged per the brief's guidance that customs is jurisdiction-specific and requires human review; not a claim that any implementation is customs-compliant.",
-      "url": null,
-      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's Shipment.customs embedded field is the only direct evidence; single source, no specific jurisdiction's rules verified."}
+      "notes": "Flagged per the brief's guidance that customs is jurisdiction-specific and requires human review. The WCO Data Model standardizes the data elements customs administrations exchange, and Incoterms 2020 standardizes who is responsible for duties/customs at each stage of a shipment; neither, nor citing them here, is a claim that any implementation is customs-compliant in any specific jurisdiction.",
+      "url": "https://www.wcoomd.org/en/topics/facilitation/instrument-and-tools/tools/data-model.aspx",
+      "provenance": {
+        "sources": [
+          "karrio",
+          "wco-data-model",
+          "incoterms-2020"
+        ],
+        "confidence": "high",
+        "notes": "karrio's Shipment.customs embedded field is the direct implementation evidence; the WCO Data Model and Incoterms 2020 are authoritative, independently verified standards for the data-modeling and responsibility-allocation dimensions respectively. Enforcement specifics still vary per destination/origin jurisdiction and require human review."
+      }
     }
   ]
 }

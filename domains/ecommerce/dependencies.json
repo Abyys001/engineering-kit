@@ -182,6 +182,12 @@
       "to": "shared.notifications",
       "type": "enhances",
       "reason": "Order/account events are delivered via the shared notification capability."
+    },
+    {
+      "from": "ecommerce.reviews_ratings",
+      "to": "shared.reviews",
+      "type": "requires",
+      "reason": "The moderated rating/review/reply mechanics are generic; only purchase verification is ecommerce-specific."
     }
   ]
 }

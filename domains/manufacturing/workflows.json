@@ -8,102 +8,841 @@
       "name": "BOM management",
       "actor": "production_planner",
       "trigger": "A new item needs a manufacturing recipe, or an existing one changes",
-      "steps": ["Define BOM header for the parent item", "Add component lines with quantities", "Optionally add operations/routing and by-products", "Validate the BOM against current component costs/checksum", "Activate for use in production orders"],
-      "entities": ["bill_of_materials", "bom_line", "bom_byproduct", "routing_operation"],
-      "features": ["manufacturing.bill_of_materials", "manufacturing.bom_byproducts", "manufacturing.routings_operations"],
+      "steps": [
+        "Define BOM header for the parent item",
+        "Add component lines with quantities",
+        "Optionally add operations/routing and by-products",
+        "Validate the BOM against current component costs/checksum",
+        "Activate for use in production orders"
+      ],
+      "entities": [
+        "bill_of_materials",
+        "bom_line",
+        "bom_byproduct",
+        "routing_operation"
+      ],
+      "features": [
+        "manufacturing.bill_of_materials",
+        "manufacturing.bom_byproducts",
+        "manufacturing.routings_operations"
+      ],
       "notifications": [],
       "integrations": [],
-      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's bom_validated/bom_checksum fields and Odoo's mrp.bom active/type fields both imply this lifecycle, though neither source enumerates a formal BOM approval state machine, so no state_machine is included."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's Part.bom_validated boolean plus validate_bom(user, valid)/is_bom_valid() methods (part/models.py, verified) give a real, if modest, two-state lifecycle: a BOM is 'draft' until a user validates it (recording a checksum + validating user/date), and becomes stale/'draft' again once components change and the stored checksum no longer matches. Neither InvenTree nor the cloned odoo-mrp scope models a richer approval workflow (e.g. pending-review, multi-step ECO); Odoo's mrp.bom has only an 'active' boolean and a 'type' select (normal/phantom), no lifecycle field. This state machine is therefore intentionally minimal rather than invented beyond the evidence."
+      },
+      "state_machine": {
+        "entity": "bill_of_materials",
+        "initial": "draft",
+        "terminal": [],
+        "states": [
+          "draft",
+          "validated"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "validated",
+            "event": "validate"
+          },
+          {
+            "from": "validated",
+            "to": "draft",
+            "event": "edit_or_invalidate"
+          }
+        ]
+      }
     },
     {
       "id": "production_order_lifecycle",
       "name": "Production order lifecycle",
       "actor": "production_planner",
       "trigger": "Demand (a sales order, stock shortage, or manual plan) requires building a quantity of an item",
-      "steps": ["Create production order for item/quantity/target date", "Confirm order, reserving components", "Release to the shop floor and begin production", "Report progress and consume components", "Mark ready to close once output is produced", "Close the order, done or cancelled"],
-      "entities": ["production_order", "item", "bill_of_materials"],
-      "features": ["manufacturing.production_orders"],
+      "steps": [
+        "Create production order for item/quantity/target date",
+        "Confirm order, reserving components",
+        "Release to the shop floor and begin production",
+        "Report progress and consume components",
+        "Mark ready to close once output is produced",
+        "Close the order, done or cancelled"
+      ],
+      "entities": [
+        "production_order",
+        "item",
+        "bill_of_materials"
+      ],
+      "features": [
+        "manufacturing.production_orders"
+      ],
       "state_machine": {
         "entity": "production_order",
         "initial": "confirmed",
-        "terminal": ["complete", "cancelled"],
-        "states": ["pending", "confirmed", "in_progress", "to_close", "on_hold", "complete", "cancelled"],
+        "terminal": [
+          "complete",
+          "cancelled"
+        ],
+        "states": [
+          "pending",
+          "confirmed",
+          "in_progress",
+          "to_close",
+          "on_hold",
+          "complete",
+          "cancelled"
+        ],
         "transitions": [
-          {"from": "pending", "to": "confirmed", "event": "confirm"},
-          {"from": "confirmed", "to": "in_progress", "event": "start_production"},
-          {"from": "in_progress", "to": "on_hold", "event": "hold"},
-          {"from": "on_hold", "to": "in_progress", "event": "resume"},
-          {"from": "in_progress", "to": "to_close", "event": "production_done"},
-          {"from": "to_close", "to": "complete", "event": "close"},
-          {"from": "pending", "to": "cancelled", "event": "cancel"},
-          {"from": "confirmed", "to": "cancelled", "event": "cancel"},
-          {"from": "on_hold", "to": "cancelled", "event": "cancel"}
+          {
+            "from": "pending",
+            "to": "confirmed",
+            "event": "confirm"
+          },
+          {
+            "from": "confirmed",
+            "to": "in_progress",
+            "event": "start_production"
+          },
+          {
+            "from": "in_progress",
+            "to": "on_hold",
+            "event": "hold"
+          },
+          {
+            "from": "on_hold",
+            "to": "in_progress",
+            "event": "resume"
+          },
+          {
+            "from": "in_progress",
+            "to": "to_close",
+            "event": "production_done"
+          },
+          {
+            "from": "to_close",
+            "to": "complete",
+            "event": "close"
+          },
+          {
+            "from": "pending",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "confirmed",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "on_hold",
+            "to": "cancelled",
+            "event": "cancel"
+          }
         ]
       },
-      "notifications": ["production_order_completed", "production_order_on_hold"],
+      "notifications": [
+        "production_order_completed",
+        "production_order_on_hold"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "State names here follow Odoo's mrp.production.state verbatim (draft/confirmed/progress/to_close/done/cancel, renamed pending/confirmed/in_progress/to_close/complete/cancelled here for cross-source consistency) with an on_hold state added from InvenTree's BuildStatus.ON_HOLD, since InvenTree's own vocabulary (pending/production/on_hold/cancelled/complete) independently confirms the same overall shape. Exact event names are reasoned, not verbatim from either source."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp"
+        ],
+        "confidence": "medium",
+        "notes": "State names here follow Odoo's mrp.production.state verbatim (draft/confirmed/progress/to_close/done/cancel, renamed pending/confirmed/in_progress/to_close/complete/cancelled here for cross-source consistency) with an on_hold state added from InvenTree's BuildStatus.ON_HOLD, since InvenTree's own vocabulary (pending/production/on_hold/cancelled/complete) independently confirms the same overall shape. Exact event names are reasoned, not verbatim from either source."
+      }
     },
     {
       "id": "work_order_execution",
       "name": "Work order execution",
       "actor": "shop_floor_operator",
       "trigger": "A production order is released and its first operation becomes available",
-      "steps": ["Operator selects the next ready work order at their work center", "Start the operation (blocked until prerequisite operations are done)", "Record quantity produced as work progresses", "Complete the operation, unblocking the next one", "Work center becomes available for the next work order"],
-      "entities": ["work_order", "work_center", "production_order"],
-      "features": ["manufacturing.work_order_scheduling", "manufacturing.shop_floor_data_collection", "manufacturing.routings_operations"],
+      "steps": [
+        "Operator selects the next ready work order at their work center",
+        "Start the operation (blocked until prerequisite operations are done)",
+        "Record quantity produced as work progresses",
+        "Complete the operation, unblocking the next one",
+        "Work center becomes available for the next work order",
+        "Record scrapped/rejected quantity separately from planned output (Odoo stock.move.is_scrap / mrp.production.action_scrap)"
+      ],
+      "entities": [
+        "work_order",
+        "work_center",
+        "production_order"
+      ],
+      "features": [
+        "manufacturing.work_order_scheduling",
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.routings_operations",
+        "manufacturing.production_scrap_tracking"
+      ],
       "state_machine": {
         "entity": "work_order",
         "initial": "blocked",
-        "terminal": ["done", "cancel"],
-        "states": ["blocked", "ready", "progress", "done", "cancel"],
+        "terminal": [
+          "done",
+          "cancel"
+        ],
+        "states": [
+          "blocked",
+          "ready",
+          "progress",
+          "done",
+          "cancel"
+        ],
         "transitions": [
-          {"from": "blocked", "to": "ready", "event": "prerequisite_completed"},
-          {"from": "ready", "to": "progress", "event": "start"},
-          {"from": "progress", "to": "done", "event": "complete"},
-          {"from": "ready", "to": "cancel", "event": "cancel"},
-          {"from": "blocked", "to": "cancel", "event": "cancel"}
+          {
+            "from": "blocked",
+            "to": "ready",
+            "event": "prerequisite_completed"
+          },
+          {
+            "from": "ready",
+            "to": "progress",
+            "event": "start"
+          },
+          {
+            "from": "progress",
+            "to": "done",
+            "event": "complete"
+          },
+          {
+            "from": "ready",
+            "to": "cancel",
+            "event": "cancel"
+          },
+          {
+            "from": "blocked",
+            "to": "cancel",
+            "event": "cancel"
+          }
         ]
       },
       "notifications": [],
-      "integrations": ["barcode_scanner"],
-      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Verbatim from Odoo's mrp.workorder.state selection field and its _compute_state logic (blocked while a prerequisite blocked_by_workorder is not done/cancel, otherwise ready, then progress once qty_produced > 0); single source, InvenTree does not model this granularity."}
+      "integrations": [
+        "barcode_scanner"
+      ],
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Verbatim from Odoo's mrp.workorder.state selection field and its _compute_state logic (blocked while a prerequisite blocked_by_workorder is not done/cancel, otherwise ready, then progress once qty_produced > 0); single source, InvenTree does not model this granularity. Scrap recording (manufacturing.production_scrap_tracking) is folded into this workflow rather than given its own, since scrapping happens during operation execution: Odoo has a genuine, verbatim is_scrap flag on stock.move plus mrp.production.action_scrap()/scrap_count (stock_move.py, mrp_production.py), and InvenTree has StockHistoryCode.BUILD_OUTPUT_REJECTED — two independent implementations, raising that feature to medium confidence."
+      }
     },
     {
       "id": "material_requirements_planning",
       "name": "Material requirements planning run",
       "actor": "system",
       "trigger": "A scheduled or on-demand MRP run, or a reorder point is crossed",
-      "steps": ["Compute on-hand plus incoming minus demand per item", "Compare against the item's reorder point/minimum stock", "For make items, suggest or auto-create a production order using the effective BOM", "For buy items, suggest or auto-create a purchase order"],
-      "entities": ["item", "stock_item", "purchase_order", "production_order"],
-      "features": ["manufacturing.material_requirements_planning"],
-      "notifications": ["shortage_detected"],
+      "steps": [
+        "Create or schedule a production plan run (manual or on a schedule)",
+        "Compute on-hand plus incoming minus demand per item against reorder points/minimum stock",
+        "For make items, add planned production quantities to the plan using the effective BOM",
+        "For buy items, add planned purchase/material-request quantities to the plan",
+        "Submit the plan to move it out of draft",
+        "Release the plan: generate production orders and/or material requests/purchase orders from it",
+        "Track the plan through to completion or closure"
+      ],
+      "entities": [
+        "production_plan",
+        "item",
+        "stock_item",
+        "purchase_order",
+        "production_order"
+      ],
+      "features": [
+        "manufacturing.material_requirements_planning"
+      ],
+      "notifications": [
+        "shortage_detected"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["odoo-mrp"], "confidence": "low", "notes": "Reasoned from Odoo's stock.warehouse.orderpoint (bom_id/effective_bom_id) bundled in addons/mrp; this is reorder-point-triggered replenishment, not a full multi-level MRP II netting run. Single source, no state_machine (this is a scheduled computation, not an entity lifecycle)."}
+      "provenance": {
+        "sources": [
+          "erpnext-manufacturing",
+          "odoo-mrp",
+          "inventree"
+        ],
+        "confidence": "medium",
+        "notes": "States are verbatim from ERPNext's Production Plan doctype status field (verified via gh api), which is a genuine stateful MRP-run entity - this replaces the earlier assessment that this workflow was purely computational. Odoo's addons/mrp scope (stock.warehouse.orderpoint) and InvenTree's Part.minimum_stock/is_low_stock() corroborate the reorder-point-triggered variant of this workflow but do not themselves expose a planned-order entity with its own lifecycle; only ERPNext does. Transition event names beyond the verbatim status list are reasoned, not verbatim from ERPNext's code."
+      },
+      "state_machine": {
+        "entity": "production_plan",
+        "initial": "draft",
+        "terminal": [
+          "completed",
+          "closed",
+          "cancelled"
+        ],
+        "states": [
+          "draft",
+          "submitted",
+          "not_started",
+          "in_process",
+          "material_requested",
+          "completed",
+          "closed",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "submitted",
+            "event": "submit"
+          },
+          {
+            "from": "submitted",
+            "to": "not_started",
+            "event": "confirm"
+          },
+          {
+            "from": "not_started",
+            "to": "material_requested",
+            "event": "request_materials"
+          },
+          {
+            "from": "material_requested",
+            "to": "in_process",
+            "event": "release_orders"
+          },
+          {
+            "from": "not_started",
+            "to": "in_process",
+            "event": "release_orders"
+          },
+          {
+            "from": "in_process",
+            "to": "completed",
+            "event": "all_orders_complete"
+          },
+          {
+            "from": "completed",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "draft",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "submitted",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "not_started",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      }
     },
     {
       "id": "quality_inspection_workflow",
       "name": "Quality inspection",
       "actor": "quality_inspector",
       "trigger": "A stock item reaches a test point defined by its part's test templates",
-      "steps": ["Select the test template(s) required for the item", "Perform the test and record pass/fail plus any measured value", "If failed, raise a non-conformance for disposition", "If passed, the item proceeds (e.g. to stock or shipment)"],
-      "entities": ["quality_inspection", "stock_item", "non_conformance"],
-      "features": ["manufacturing.quality_inspections", "manufacturing.non_conformance_management"],
-      "notifications": ["inspection_failed"],
+      "steps": [
+        "Select the test template(s)/inspection type required for the item (incoming, in-process, or outgoing)",
+        "Perform the test and record Accepted/Rejected plus any measured value",
+        "If accepted, the item proceeds (e.g. to stock or shipment)",
+        "If rejected, raise a non-conformance record",
+        "Investigate and record root cause on the non-conformance",
+        "Disposition the non-conformance (accept-as-is, rework, scrap, or return to supplier) and mark it resolved",
+        "Raise a linked corrective/preventive action (quality action) where the root cause requires a process fix",
+        "Close the corrective/preventive action once complete"
+      ],
+      "entities": [
+        "quality_inspection",
+        "stock_item",
+        "non_conformance"
+      ],
+      "features": [
+        "manufacturing.quality_inspections",
+        "manufacturing.non_conformance_management"
+      ],
+      "notifications": [
+        "inspection_failed"
+      ],
       "integrations": [],
-      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's PartTestTemplate + StockItemTestResult models; single source, no formal state machine enumerated in the source beyond a boolean result field."}
+      "provenance": {
+        "sources": [
+          "erpnext-manufacturing",
+          "inventree"
+        ],
+        "confidence": "medium",
+        "notes": "Accepted/Rejected/Cancelled is verbatim from ERPNext's Quality Inspection doctype status field (verified via gh api); the field's options list has a leading blank entry (no value assigned yet), reasoned here as an explicit 'pending' initial state rather than left implicit. The state machine is deliberately thin (inspection outcome is normally set once, not a multi-step transition chain) - the richer lifecycle in this workflow lives on the linked non_conformance entity (open/resolved/cancelled, see entities.json), which is where ERPNext's own CAPA process (Non Conformance -> Quality Action) actually has multiple steps. InvenTree's StockItemTestResult (boolean result) corroborates pass/fail recording generally but has no named status enum of its own."
+      },
+      "state_machine": {
+        "entity": "quality_inspection",
+        "initial": "pending",
+        "terminal": [
+          "accepted",
+          "rejected",
+          "cancelled"
+        ],
+        "states": [
+          "pending",
+          "accepted",
+          "rejected",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "accepted",
+            "event": "record_pass"
+          },
+          {
+            "from": "pending",
+            "to": "rejected",
+            "event": "record_fail"
+          },
+          {
+            "from": "pending",
+            "to": "cancelled",
+            "event": "cancel_inspection"
+          },
+          {
+            "from": "rejected",
+            "to": "cancelled",
+            "event": "cancel_inspection"
+          }
+        ]
+      }
     },
     {
       "id": "traceability_lookup",
       "name": "Traceability lookup",
       "actor": "quality_inspector",
       "trigger": "A recall, customer complaint, or audit requires tracing a lot/serial forward or backward",
-      "steps": ["Look up the stock item's traceability records", "Trace backward: which component lots/serials were consumed to produce it", "Trace forward: which output lots/serials or shipments contain this component", "Compile the genealogy for the audit or recall scope"],
-      "entities": ["traceability_record", "stock_item", "production_order"],
-      "features": ["manufacturing.traceability"],
+      "steps": [
+        "Look up the stock item's traceability records",
+        "Trace backward: which component lots/serials were consumed to produce it",
+        "Trace forward: which output lots/serials or shipments contain this component",
+        "Compile the genealogy for the audit or recall scope"
+      ],
+      "entities": [
+        "traceability_record",
+        "stock_item",
+        "production_order"
+      ],
+      "features": [
+        "manufacturing.traceability"
+      ],
       "notifications": [],
       "integrations": [],
-      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "medium", "notes": "InvenTree's StockItemTracking history and Odoo's stock.lot/mrp.production.lot_producing_ids both provide the underlying data for this lookup; the lookup workflow itself is reasoned, not a literal feature in either source."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp",
+          "std:gs1-epcis"
+        ],
+        "confidence": "medium",
+        "notes": "Deliberately left without a state_machine: a traceability lookup is a read/query operation over existing traceability_record events, not an entity with its own lifecycle - there is no 'from'/'to' status to transition through. InvenTree's StockItemTracking history and Odoo's stock.lot/mrp.production.lot_producing_ids both provide the underlying event data for this lookup. GS1 EPCIS (std:gs1-epcis, already registered in the kit's shared standards registry) is the authoritative event model (what/when/where/why) this lookup conceptually maps onto, though this domain does not yet implement or assert EPCIS-format output."
+      }
+    },
+    {
+      "id": "manufacturing_master_data_setup",
+      "name": "Manufacturing master data setup",
+      "actor": "production_planner",
+      "trigger": "A new item, variant, work center, stock location, or supplier needs to be onboarded before it can be used in a BOM or production order",
+      "steps": [
+        "Define the item/part master record (identifiers, unit of measure, make/buy flags)",
+        "Optionally define template/variant relationships for buildable variants",
+        "Define stock locations the item will be held in",
+        "Define lot/serial tracking requirements for the item",
+        "Define or select the work center(s) that will produce the item",
+        "Define supplier records and, if purchased, link supplier parts",
+        "Define BOM substitute components and by-products where applicable"
+      ],
+      "entities": [
+        "item",
+        "product_variant",
+        "work_center",
+        "stock_location",
+        "stock_item",
+        "supplier",
+        "bom_line",
+        "bom_byproduct"
+      ],
+      "features": [
+        "manufacturing.items_products",
+        "manufacturing.product_variants",
+        "manufacturing.work_centers",
+        "manufacturing.stock_locations",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.supplier_management",
+        "manufacturing.bom_substitutes",
+        "manufacturing.bom_byproducts"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "This is master-data CRUD across several features rather than a single stateful process, grouped into one workflow per the research brief's guidance that 'a workflow per feature is wrong'. Each underlying model is independently corroborated in feature-map.json/entities.json; no state_machine is included because none of these are, individually, a genuinely stateful entity lifecycle."
+      }
+    },
+    {
+      "id": "purchase_to_receipt",
+      "name": "Purchase requisition to goods receipt",
+      "actor": "purchasing_agent",
+      "trigger": "A shortage is identified (manually, or suggested by an MRP/production-plan run) for a buy item",
+      "steps": [
+        "Identify the need and select or confirm the supplier/supplier part",
+        "Create the purchase order and place it with the supplier",
+        "Supplier confirms and ships",
+        "Receive goods against the purchase order into a stock location",
+        "Optionally route received lots/serials through incoming quality inspection",
+        "Close the purchase order once fully received and reconciled, or return/cancel if rejected"
+      ],
+      "entities": [
+        "purchase_order",
+        "supplier",
+        "stock_item",
+        "quality_inspection"
+      ],
+      "features": [
+        "manufacturing.purchase_orders"
+      ],
+      "state_machine": {
+        "entity": "purchase_order",
+        "initial": "pending",
+        "terminal": [
+          "complete",
+          "cancelled",
+          "lost",
+          "returned"
+        ],
+        "states": [
+          "pending",
+          "placed",
+          "on_hold",
+          "complete",
+          "cancelled",
+          "lost",
+          "returned"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "placed",
+            "event": "place_order"
+          },
+          {
+            "from": "placed",
+            "to": "on_hold",
+            "event": "hold"
+          },
+          {
+            "from": "on_hold",
+            "to": "placed",
+            "event": "resume"
+          },
+          {
+            "from": "placed",
+            "to": "complete",
+            "event": "fully_received"
+          },
+          {
+            "from": "pending",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "placed",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "placed",
+            "to": "lost",
+            "event": "mark_lost"
+          },
+          {
+            "from": "complete",
+            "to": "returned",
+            "event": "return_to_supplier"
+          }
+        ]
+      },
+      "notifications": [
+        "po_received",
+        "po_on_hold"
+      ],
+      "integrations": [
+        "supplier_edi"
+      ],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "State machine reuses the purchase_order entity's states, verbatim from InvenTree's PurchaseOrderStatus enum (see entities.json). ERPNext's independently-named Purchase Order status field (Draft/On Hold/To Receive and Bill/To Bill/To Receive/Completed/Cancelled/Closed/Delivered) corroborates the same overall shape with a different, more billing-oriented vocabulary; not merged in to avoid presenting a blended enum as verbatim. Transition event names are reasoned."
+      }
+    },
+    {
+      "id": "subcontract_operation_execution",
+      "name": "Subcontract operation execution",
+      "actor": "purchasing_agent",
+      "trigger": "A production order includes an operation that must be performed by an external supplier",
+      "steps": [
+        "Create a subcontract order for the operation, referencing the production order",
+        "Transfer the required components/materials to the subcontractor",
+        "Subcontractor performs the operation",
+        "Receive the finished or semi-finished output back into stock (fully or partially)",
+        "Optionally inspect the received output",
+        "Close the subcontract order once fully received"
+      ],
+      "entities": [
+        "subcontract_order",
+        "production_order",
+        "supplier",
+        "stock_item"
+      ],
+      "features": [
+        "manufacturing.subcontracting"
+      ],
+      "state_machine": {
+        "entity": "subcontract_order",
+        "initial": "draft",
+        "terminal": [
+          "completed",
+          "closed",
+          "cancelled"
+        ],
+        "states": [
+          "draft",
+          "open",
+          "partially_received",
+          "material_transferred",
+          "partial_material_transferred",
+          "completed",
+          "closed",
+          "cancelled"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "open",
+            "event": "confirm"
+          },
+          {
+            "from": "open",
+            "to": "material_transferred",
+            "event": "transfer_materials"
+          },
+          {
+            "from": "open",
+            "to": "partial_material_transferred",
+            "event": "transfer_materials_partial"
+          },
+          {
+            "from": "partial_material_transferred",
+            "to": "material_transferred",
+            "event": "complete_transfer"
+          },
+          {
+            "from": "material_transferred",
+            "to": "partially_received",
+            "event": "receive_partial"
+          },
+          {
+            "from": "material_transferred",
+            "to": "completed",
+            "event": "receive_all"
+          },
+          {
+            "from": "partially_received",
+            "to": "completed",
+            "event": "receive_remainder"
+          },
+          {
+            "from": "completed",
+            "to": "closed",
+            "event": "close"
+          },
+          {
+            "from": "draft",
+            "to": "cancelled",
+            "event": "cancel"
+          },
+          {
+            "from": "open",
+            "to": "cancelled",
+            "event": "cancel"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [
+        "supplier_edi"
+      ],
+      "provenance": {
+        "sources": [
+          "erpnext-manufacturing",
+          "inventree"
+        ],
+        "confidence": "medium",
+        "notes": "States are verbatim from ERPNext's Subcontracting Order status field (verified via gh api). InvenTree only models this as a boolean (Build.external), with no distinct order lifecycle, so InvenTree corroborates the concept of subcontracting but not this specific state machine."
+      }
+    },
+    {
+      "id": "equipment_maintenance_workflow",
+      "name": "Equipment maintenance",
+      "actor": "maintenance_technician",
+      "trigger": "A preventive maintenance schedule comes due, or a work center reports a problem/blocked state",
+      "steps": [
+        "Schedule preventive maintenance for a work center/asset, or log a corrective request when a problem is reported",
+        "Take the work center out of production (blocked/maintenance state)",
+        "Perform the maintenance task and log parts/time used",
+        "Record completion",
+        "Return the work center to service (normal/production state)"
+      ],
+      "entities": [
+        "work_center"
+      ],
+      "features": [
+        "manufacturing.equipment_maintenance"
+      ],
+      "notifications": [
+        "maintenance_due",
+        "work_center_blocked"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "Steps are reasoned from Odoo's mrp.workcenter.working_state/blocked_time/productive_time computed fields and ERPNext's Maintenance Schedule (status: Draft/Submitted/Cancelled) plus Asset Maintenance/Asset Maintenance Log doctypes (verified via gh api). No state_machine is included: ERPNext's Maintenance Schedule status is the generic Frappe submittable-document pattern (draft/submitted/cancelled), not a maintenance-specific lifecycle, and neither source models a richer preventive/corrective task lifecycle worth asserting as verbatim."
+      }
+    },
+    {
+      "id": "disassembly_unbuild_workflow",
+      "name": "Disassembly / unbuild",
+      "actor": "shop_floor_operator",
+      "trigger": "A completed (or partially completed) production order's output needs to be broken back down into components, e.g. for rework or reclaiming parts",
+      "steps": [
+        "Select the production order/stock item to unbuild",
+        "Create an unbuild/disassembly record referencing the quantity to reverse",
+        "Move recovered components back into stock at a destination location",
+        "Mark the unbuild record done"
+      ],
+      "entities": [
+        "production_order",
+        "stock_item"
+      ],
+      "features": [
+        "manufacturing.disassembly_unbuild"
+      ],
+      "state_machine": {
+        "entity": "production_order",
+        "initial": "draft",
+        "terminal": [
+          "done"
+        ],
+        "states": [
+          "draft",
+          "done"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "done",
+            "event": "complete_unbuild"
+          }
+        ]
+      },
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp",
+          "inventree"
+        ],
+        "confidence": "medium",
+        "notes": "The draft/done states are verbatim from Odoo's mrp.unbuild.state selection field (mrp_unbuild.py). This is modeled here as reusing the production_order entity for simplicity (an unbuild order is conceptually the reverse of a production order); Odoo actually implements mrp.unbuild as its own doctype/model, not a state of mrp.production itself - noted as a simplification, not a claim that InvenTree/Odoo share one literal table for this. InvenTree's StockHistoryCode.DISASSEMBLED/CREATED_FROM_DISASSEMBLY corroborates the general capability without its own state enum."
+      }
+    },
+    {
+      "id": "stocktake_cycle_counting_workflow",
+      "name": "Stocktake / cycle counting",
+      "actor": "shop_floor_operator",
+      "trigger": "A scheduled or ad-hoc physical inventory count is due for a location or item",
+      "steps": [
+        "Schedule a count for a location, category, or item",
+        "Operator physically counts on-hand quantity, typically scanning barcodes",
+        "System compares counted quantity to system on-hand quantity",
+        "Variances above a threshold are reviewed/approved",
+        "Stock quantity is adjusted to match the count"
+      ],
+      "entities": [
+        "stock_item",
+        "stock_location"
+      ],
+      "features": [
+        "manufacturing.stocktake_cycle_counting"
+      ],
+      "notifications": [
+        "stock_variance_detected"
+      ],
+      "integrations": [
+        "barcode_scanner"
+      ],
+      "provenance": {
+        "sources": [
+          "inventree",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's PartStocktake model (stocktake_date/stocktake_user fields) and ERPNext's Stock Reconciliation doctype (confirmed to exist via gh api tree listing; a dedicated physical-count/variance-reconciliation entity) independently corroborate this process. No state_machine included: neither source's count/reconciliation record exposes a named status enum beyond the generic Frappe draft/submitted/cancelled document pattern for ERPNext, which was not judged worth asserting as domain-specific."
+      }
+    },
+    {
+      "id": "production_cost_and_capacity_reporting",
+      "name": "Production cost rollup and capacity reporting",
+      "actor": "plant_manager",
+      "trigger": "A production order completes an operation or closes, or a planner needs to review work center load",
+      "steps": [
+        "Accumulate material cost from components consumed",
+        "Accumulate labor cost from work center hourly rate x actual operation time",
+        "Roll material and labor cost up onto the produced item's cost",
+        "Visualize work center load (queued/in-progress/blocked/late work orders) across the plan horizon",
+        "Flag late or over-capacity work centers for replanning"
+      ],
+      "entities": [
+        "work_center",
+        "production_order"
+      ],
+      "features": [
+        "manufacturing.cost_tracking",
+        "manufacturing.workcenter_capacity_planning"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "odoo-mrp",
+          "isa-95-iec-62264"
+        ],
+        "confidence": "medium",
+        "notes": "Steps are reasoned from Odoo's mrp.workcenter.costs_hour (labor cost basis) and computed workorder_count/workorder_ready_count/workorder_progress_count/workorder_blocked_count/workorder_late_count fields. ISA-95/IEC 62264's Production Capability model (which includes equipment capacity as a named element) corroborates capacity as a standard concept, not an implementation. No cited source models a complete cost-rollup or capacity-planning UI end to end, so this is reported as reasoned/computational, not backed by a full verbatim implementation; no state_machine (this is a recurring computation/report, not an entity lifecycle)."
+      }
     }
   ]
 }

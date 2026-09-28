@@ -10,27 +10,27 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 |---|---|---|---|---|---|---|---|
 | `logistics.carriers` Carriers and carrier connections | The shipping carriers (and their service levels/accounts) a business ships with; a snapshot is stored on each shipment. | low | admin, backend | none | none | reference | karrio |
 | `logistics.customers_shippers` Customers and shippers | Accounts for the businesses or individuals who book shipments and orders, with saved addresses and billing details. | medium | web, admin, customer_portal, backend | none | none | reference | karrio, fleetbase |
-| `logistics.dispatch` Dispatch | Assigning a driver and vehicle to an order or route and releasing it for execution. | low | web, admin, backend, real_time | high | medium | reference | fleetbase |
-| `logistics.drivers` Drivers | Driver profiles, licensing, current location, availability, and skills used for dispatch and compliance. | low | web, mobile, admin, backend, real_time | high | none | reference | fleetbase |
-| `logistics.labels` Shipping labels | Generating and storing the carrier shipping label (and commercial invoice) document for a purchased shipment. | low | web, mobile, admin, customer_portal, backend | none | none | reference | karrio |
+| `logistics.dispatch` Dispatch | Assigning a driver and vehicle to an order or route and releasing it for execution. | medium | web, admin, backend, real_time | high | medium | reference | fleetbase, uncefact-iftmin-ifcsum |
+| `logistics.drivers` Drivers | Driver profiles, licensing, current location, availability, and skills used for dispatch and compliance. | medium | web, mobile, admin, backend, real_time | high | none | reference | fleetbase, traccar |
+| `logistics.labels` Shipping labels | Generating and storing the carrier shipping label (and commercial invoice) document for a purchased shipment. | high | web, mobile, admin, customer_portal, backend | none | none | reference | karrio, gs1-general-specifications, upu-s10 |
 | `logistics.proof_of_delivery` Proof of delivery | Capturing a photo and/or signature at the moment of delivery and attaching it to the shipment/order record. | medium | mobile, admin, customer_portal, backend | medium | low | reference | karrio, fleetbase |
-| `logistics.rates_quotes` Rates and quotes | Requesting and comparing shipping rates across carriers and service levels before a shipment is booked. | low | web, admin, customer_portal, backend | medium | low | reference | karrio |
-| `logistics.routes` Routes and route optimization | Sequencing an order's or manifest's stops (waypoints) into an efficient route, with distance/time totals. | low | web, mobile, admin, backend, ai, real_time | high | high | reference | fleetbase |
-| `logistics.shipments` Shipments | A booked movement of one or more parcels with a carrier, tracking number, label, and status from creation through delivery. | low | web, admin, customer_portal, backend, real_time | high | low | reference | karrio |
-| `logistics.tracking_events` Tracking events | The append-only timeline of scan/status events for a shipment or parcel, from pickup through delivery, shown to customers and staff. | medium | web, mobile, admin, customer_portal, backend, real_time | core | low | reference | karrio, fleetbase |
-| `logistics.vehicles` Vehicles | The fleet's vehicles: specifications, capacity, and current telemetry (location, speed, heading). | low | web, admin, backend, real_time | high | none | reference | fleetbase |
+| `logistics.rates_quotes` Rates and quotes | Requesting and comparing shipping rates across carriers and service levels before a shipment is booked. | medium | web, admin, customer_portal, backend | medium | low | reference | karrio, fleetbase |
+| `logistics.routes` Routes and route optimization | Sequencing an order's or manifest's stops (waypoints) into an efficient route, with distance/time totals. | medium | web, mobile, admin, backend, ai, real_time | high | high | reference | fleetbase, uncefact-mmt-rdm |
+| `logistics.shipments` Shipments | A booked movement of one or more parcels with a carrier, tracking number, label, and status from creation through delivery. | high | web, admin, customer_portal, backend, real_time | high | low | reference | karrio, std:gs1-epcis, gs1-general-specifications |
+| `logistics.tracking_events` Tracking events | The append-only timeline of scan/status events for a shipment or parcel, from pickup through delivery, shown to customers and staff. | high | web, mobile, admin, customer_portal, backend, real_time | core | low | reference | karrio, fleetbase, std:gs1-epcis |
+| `logistics.vehicles` Vehicles | The fleet's vehicles: specifications, capacity, and current telemetry (location, speed, heading). | medium | web, admin, backend, real_time | high | none | reference | fleetbase, traccar |
 
 ## Common (7)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `logistics.driver_app` Driver mobile app | The driver-facing mobile app for viewing assigned stops, navigating, updating status, capturing proof of delivery, and working with limited or no connectivity. | low | mobile, backend, real_time | high | none | reference | fleetbase |
-| `logistics.exceptions_returns` Exceptions and returns | Flagging delivery problems (damage, delay, failed attempt) for investigation, and processing return shipments back to origin. | medium | web, mobile, admin, customer_portal, backend | medium | low | reference | karrio, fleetbase |
-| `logistics.manifests` Manifests | Grouping shipments or stops into a single hand-off: a carrier close-out manifest for end-of-day pickup, or a driver's route manifest for the day's stops. | medium | web, mobile, admin, backend | low | none | reference | karrio, fleetbase |
-| `logistics.orders` Orders | A customer's request to move goods, capturing line items and delivery details before it is turned into one or more shipments or dispatched jobs. | medium | web, admin, customer_portal, backend | low | low | reference | karrio, fleetbase |
-| `logistics.parcels` Parcels and packages | The physical package(s) within a shipment: dimensions, weight, and the commodities/products packed inside. | low | web, mobile, admin, customer_portal, backend | none | none | reference | karrio |
-| `logistics.pickups` Pickup scheduling | Scheduling a carrier or driver pickup for one or more shipments at a given time window. | low | web, mobile, admin, customer_portal, backend | low | none | reference | karrio |
-| `logistics.warehouses` Warehouses and locations | Physical facilities (warehouses, depots, hubs) where inventory is stored or shipments are consolidated. | low | web, mobile, admin, backend | none | none | missing | std:gs1-epcis |
+| `logistics.exceptions_returns` Exceptions and returns | Flagging delivery problems (damage, delay, failed attempt) for investigation, and processing return shipments back to origin. | high | web, mobile, admin, customer_portal, backend | medium | low | reference | karrio, fleetbase, std:gs1-epcis |
+| `logistics.manifests` Manifests | Grouping shipments or stops into a single hand-off: a carrier close-out manifest for end-of-day pickup, or a driver's route manifest for the day's stops. | high | web, mobile, admin, backend | low | none | reference | karrio, fleetbase, gs1-general-specifications |
+| `logistics.orders` Orders | A customer's request to move goods, capturing line items and delivery details before it is turned into one or more shipments or dispatched jobs. | high | web, admin, customer_portal, backend | low | low | reference | karrio, fleetbase, uncefact-iftmin-ifcsum |
+| `logistics.parcels` Parcels and packages | The physical package(s) within a shipment: dimensions, weight, and the commodities/products packed inside. | high | web, mobile, admin, customer_portal, backend | none | none | reference | karrio, gs1-general-specifications, std:gs1-epcis |
+| `logistics.pickups` Pickup scheduling | Scheduling a carrier or driver pickup for one or more shipments at a given time window. | medium | web, mobile, admin, customer_portal, backend | low | none | reference | karrio, uncefact-iftmin-ifcsum |
+| `logistics.warehouses` Warehouses and locations | Physical facilities (warehouses, depots, hubs) where inventory is stored or shipments are consolidated. | medium | web, mobile, admin, backend | none | none | missing | std:gs1-epcis, gs1-general-specifications |
 
 ## Recommended (5)
 
@@ -38,9 +38,9 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 |---|---|---|---|---|---|---|---|
 | `logistics.address_validation` Address validation | Verifying and normalizing shipping addresses before a label is purchased, to reduce failed deliveries. | low | web, admin, customer_portal, backend | low | low | reference | karrio |
 | `logistics.contract_rates` Contract and negotiated rates | Custom rate cards or markups negotiated with a carrier, applied instead of or alongside published rates. | low | web, admin, backend | none | none | reference | fleetbase |
-| `logistics.customs_documents` Customs documents | Customs declaration data (commodities, values, HS codes) required for international shipments. | low | web, admin, customer_portal, backend | none | low | reference | karrio |
-| `logistics.fleet_maintenance` Fleet maintenance | Scheduling recurring vehicle maintenance (by date, distance, or engine hours) and recording completed service. | low | web, mobile, admin, backend | none | none | reference | fleetbase |
-| `logistics.geofencing_zones` Zones and geofencing | Named geographic zones (service areas, geofences) used for pricing, routing eligibility, and driver/vehicle geofence entry-exit events. | low | web, admin, backend, real_time | medium | none | reference | fleetbase |
+| `logistics.customs_documents` Customs documents | Customs declaration data (commodities, values, HS codes) required for international shipments. | high | web, admin, customer_portal, backend | none | low | reference | karrio, wco-data-model, incoterms-2020 |
+| `logistics.fleet_maintenance` Fleet maintenance | Scheduling recurring vehicle maintenance (by date, distance, or engine hours) and recording completed service. | medium | web, mobile, admin, backend | none | none | reference | fleetbase, traccar |
+| `logistics.geofencing_zones` Zones and geofencing | Named geographic zones (service areas, geofences) used for pricing, routing eligibility, and driver/vehicle geofence entry-exit events. | medium | web, admin, backend, real_time | medium | none | reference | fleetbase, traccar |
 
 ## Optional (7)
 
@@ -50,6 +50,6 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | `logistics.cod_collection` Cash on delivery | Collecting payment from the recipient at the time of delivery instead of billing the shipper upfront. | low | mobile, admin, backend | low | none | reference | fleetbase |
 | `logistics.driver_scoring` Driver performance scoring | Scorecards for on-time rate, safety incidents, and customer feedback per driver. | low | web, admin, backend, ai | none | medium | reference | fleetbase |
 | `logistics.eta_prediction` ETA prediction | Estimating and updating a delivery's arrival window using live route, traffic, and historical performance data. | low | web, mobile, admin, customer_portal, backend, ai, real_time | high | high | reference | fleetbase |
-| `logistics.freight_invoicing` Freight invoicing and audit | Reconciling carrier invoices against quoted/contracted rates and flagging billing discrepancies. | low | web, admin, backend | none | low | reference | karrio |
-| `logistics.fuel_tracking` Fuel tracking | Recording fuel purchases and consumption per vehicle, optionally synced from a fuel card provider. | low | web, admin, backend | none | none | reference | fleetbase |
+| `logistics.freight_invoicing` Freight invoicing and audit | Reconciling carrier invoices against quoted/contracted rates and flagging billing discrepancies. | medium | web, admin, backend | none | low | reference | karrio, x12-transportation |
+| `logistics.fuel_tracking` Fuel tracking | Recording fuel purchases and consumption per vehicle, optionally synced from a fuel card provider. | medium | web, admin, backend | none | none | reference | fleetbase, traccar |
 | `logistics.load_planning` Load planning | Consolidating multiple parcels or orders into a single vehicle load, respecting capacity and compatibility constraints. | low | web, admin, backend | none | low | reference | fleetbase |

@@ -1,5 +1,7 @@
 # General SaaS
 
+## Maturity: curated
+
 The cross-cutting product layer every B2B SaaS application needs, independent of its vertical
 (CRM, support, booking, ...). Depends on `shared.*` for auth, users, organizations, permissions,
 audit log, notifications, billing, and file storage rather than redefining them; this domain adds
@@ -34,7 +36,7 @@ See `workflows.json` for full steps and state machines.
 - **Team invites** — email invites with a pre-assigned role.
 - **Plans & entitlements** — plan tiers gating features and limits.
 - **API keys** — scoped programmatic-access credentials per workspace.
-- **SSO (SAML)** — enterprise sign-in against the customer's IdP.
+- **Enterprise SSO (SAML / OIDC)** — enterprise sign-in against the customer's IdP.
 - **Billing portal** — self-serve subscription/invoice/payment-method management.
 
 ## Common capabilities
@@ -64,7 +66,7 @@ webhook receiver endpoint.
 
 `workspace`, `invitation`, `api_key`, `webhook_subscription`, `webhook_delivery`, `plan`,
 `entitlement`, `usage_event`, `feature_flag`, `sso_connection`, `scim_connection`, `export_job`,
-`status_incident`, `changelog_entry`.
+`status_incident`, `changelog_entry`, `system_component`.
 
 ## UI patterns
 

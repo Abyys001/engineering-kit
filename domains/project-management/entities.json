@@ -193,10 +193,11 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's State model and StateGroup TextChoices; single source (Kanboard's is_active is a plain open/closed boolean, not a grouped multi-state model)."
+        "confidence": "medium",
+        "notes": "Plane's State/StateGroup enum is verbatim for the states list. Leantime's statusListSeed independently implements the same grouped-status idea via a statusType of NEW/INPROGRESS/DONE, corroborating the shape (a configurable status grouped into a small lifecycle bucket set) though not the exact state names."
       }
     },
     {
@@ -254,10 +255,12 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "vikunja",
+          "redmine"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's IssueRelationChoices (duplicate, relates_to, blocked_by, start_before, finish_before, implemented_by) with defined reverse pairs; single source."
+        "confidence": "high",
+        "notes": "The relation_type values are verbatim from Plane's IssueRelationChoices, and independently corroborated by Vikunja's RelationKind and Redmine's IssueRelation TYPE_* constants, which converge on the same blocks/relates/duplicates/precedes(+reverse pair) shape across three separately-built codebases."
       }
     },
     {
@@ -280,10 +283,12 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "kanboard",
+          "vikunja"
         ],
-        "confidence": "low",
-        "notes": "Plane's IssueComment/IssueMention models; single source."
+        "confidence": "high",
+        "notes": "Plane's IssueComment/IssueMention, Kanboard's CommentModel (comment.user.mention event), and Vikunja's task_comments.go/mentions.go are three independent implementations of threaded comments with @-mentions."
       }
     },
     {
@@ -317,10 +322,12 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime",
+          "scrum-guide-2020"
         ],
-        "confidence": "low",
-        "notes": "Plane's Cycle model; single source. The states list is reasoned from start_date/end_date rather than a stored status field (Plane computes cycle status from dates, it is not itself an enum column)."
+        "confidence": "high",
+        "notes": "Plane's Cycle and Leantime's Sprints are independent implementations of a fixed-duration iteration. The states list (upcoming/active/completed) is reasoned from Plane's start_date/end_date rather than a stored status column in any inspected source; the Scrum Guide (2020) is authoritative for the underlying Sprint concept (fixed timebox, starts immediately after the previous ends, cancellable) but does not use these exact state names."
       }
     },
     {
@@ -355,16 +362,17 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "taiga-back"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's Module model and ModuleStatus TextChoices; single source."
+        "confidence": "medium",
+        "notes": "The states list is verbatim from Plane's Module model / ModuleStatus TextChoices. Taiga's Epic model (its own EpicStatus, ordering, color) independently corroborates a larger, cross-iteration work grouping with its own status, though not these exact state names."
       }
     },
     {
       "id": "milestone",
       "name": "Milestone",
-      "description": "A target date marking a significant deliverable point in a project.",
+      "description": "A target date marking a significant deliverable point in a project, with an open/locked/closed lifecycle.",
       "relationships": [
         {
           "type": "belongs_to",
@@ -373,18 +381,25 @@
       ],
       "important_fields": [
         "name",
-        "target_date"
+        "target_date",
+        "status"
       ],
-      "states": [],
+      "states": [
+        "open",
+        "locked",
+        "closed"
+      ],
       "related_features": [
         "project-management.milestones"
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "leantime",
+          "redmine",
+          "openproject"
         ],
-        "confidence": "low",
-        "notes": "No dedicated 'Milestone' model was found in either cloned source; reasoned as a thin, commonly-requested layer over Plane's Module/target-date fields. Low confidence, reasoned, stated in notes per the research brief's rule."
+        "confidence": "medium",
+        "notes": "No dedicated 'Milestone' model exists in Plane. Leantime models a milestone as a Ticket with type='milestone' (own headline/tags/color, dedicated getAllMilestones() query). Redmine's Version (VERSION_STATUSES open/locked/closed, effective_date) and OpenProject's Version (same shape) are the source of the states list here; Redmine and OpenProject share code lineage (OpenProject forked from Redmine via ChiliProject) so they are not counted as two fully independent sources -- Leantime + Redmine/OpenProject is treated as two independently-converged implementations."
       }
     },
     {
@@ -469,10 +484,11 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "focalboard"
         ],
-        "confidence": "low",
-        "notes": "Plane's View model; single source."
+        "confidence": "medium",
+        "notes": "Plane's View model persists filters/sort/grouping. Focalboard's Sharing model corroborates the related public-link-sharing idea (a board exposed via an access token) as an independent implementation, though Focalboard does not have a directly equivalent saved-filter-combination model itself."
       }
     },
     {
@@ -488,18 +504,24 @@
       "important_fields": [
         "user",
         "started_at",
-        "duration"
+        "duration",
+        "billable",
+        "invoiced"
       ],
-      "states": [],
+      "states": [
+        "logged",
+        "invoiced"
+      ],
       "related_features": [
         "project-management.time_tracking"
       ],
       "provenance": {
         "sources": [
-          "kanboard"
+          "kanboard",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Kanboard's SubtaskTimeTrackingModel (start/stop timer, computed duration); single source, modeled per-subtask in Kanboard rather than per top-level task."
+        "confidence": "medium",
+        "notes": "Kanboard's SubtaskTimeTrackingModel (start/stop timer, computed duration) and Leantime's Timesheets (workDate/hours/description, billable 'kind', invoicedEmpl/invoicedComp) are independent implementations of a logged time entry, with genuinely different capture mechanisms (timer vs manual+billing entry)."
       }
     },
     {
@@ -527,10 +549,11 @@
       ],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Plane's Estimate model and Issue.estimate_point FK; single source."
+        "confidence": "medium",
+        "notes": "Plane's Estimate model / Issue.estimate_point FK and Leantime's Tickets.efforts (Fibonacci-like point scale) are independent implementations of a project-defined effort scale."
       }
     },
     {

@@ -8,22 +8,216 @@
       "name": "Barcode / QR scanner",
       "category": "shop_floor",
       "purpose": "Scan part, location, or work order barcodes on a mobile/tablet device to speed up shop-floor data entry.",
-      "examples": ["Handheld barcode scanners", "Tablet camera scanning"],
-      "protocols": ["USB HID", "camera"],
-      "related_features": ["manufacturing.shop_floor_data_collection", "manufacturing.stocktake_cycle_counting"],
+      "examples": [
+        "Handheld barcode scanners",
+        "Tablet camera scanning"
+      ],
+      "protocols": [
+        "USB HID",
+        "camera"
+      ],
+      "related_features": [
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.stocktake_cycle_counting"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "InvenTree's InvenTreeBarcodeMixin on Build/Part/StockItem models; single source."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "gs1-general-specifications"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's InvenTreeBarcodeMixin on Build/Part/StockItem models is a real implementation. GS1 General Specifications (Release 26) is the authoritative source for the GTIN/SSCC/GS1-128 Application Identifier barcode syntax most such scanners read."
+      }
     },
     {
       "id": "supplier_edi",
       "name": "Supplier EDI / catalog",
       "category": "procurement",
       "purpose": "Exchange purchase orders, order confirmations, and price/catalog data with suppliers.",
-      "examples": ["EDI 850/855/856", "Supplier punch-out catalogs"],
-      "protocols": ["EDI", "REST"],
-      "related_features": ["manufacturing.purchase_orders", "manufacturing.supplier_management", "manufacturing.subcontracting"],
+      "examples": [
+        "EDI 850/855/856",
+        "Supplier punch-out catalogs"
+      ],
+      "protocols": [
+        "EDI",
+        "REST"
+      ],
+      "related_features": [
+        "manufacturing.purchase_orders",
+        "manufacturing.supplier_management",
+        "manufacturing.subcontracting"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned from InvenTree's SupplierPart/ManufacturerPart models; no actual EDI connector inspected, single source."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "InvenTree's SupplierPart/ManufacturerPart models and ERPNext's Supplier/Purchase Order doctypes (verified via gh api) both model the supplier/part-mapping and ordering data an EDI or catalog integration would exchange; no actual EDI connector was inspected in either source."
+      }
+    },
+    {
+      "id": "machine_connectivity",
+      "name": "Shop-floor machine connectivity (OPC UA / MQTT)",
+      "category": "shop_floor",
+      "purpose": "Read/write process data, alarms, and production counts directly from PLCs, CNC machines, and other shop-floor equipment.",
+      "examples": [
+        "OPC UA servers on CNC/PLC controllers",
+        "MQTT brokers for lightweight telemetry"
+      ],
+      "protocols": [
+        "OPC UA (IEC 62541)",
+        "MQTT"
+      ],
+      "related_features": [
+        "manufacturing.work_centers",
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.workcenter_capacity_planning"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "opc-ua-iec-62541"
+        ],
+        "confidence": "medium",
+        "notes": "OPC UA (IEC 62541) is the authoritative, vendor-neutral standard for exactly this kind of machine connectivity. Neither cloned implementation (InvenTree, odoo-mrp) has a live OPC UA/MQTT connector, so this is standard-level corroboration only, not implementation-level; kept at medium rather than high to reflect that."
+      }
+    },
+    {
+      "id": "label_printing",
+      "name": "Barcode/label printing",
+      "category": "shop_floor",
+      "purpose": "Print GS1-compliant part, lot/serial, and shipping-container labels for shop-floor and warehouse use.",
+      "examples": [
+        "ZPL-driven thermal printers",
+        "GS1-128 shipping labels"
+      ],
+      "protocols": [
+        "ZPL",
+        "REST print servers"
+      ],
+      "related_features": [
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.stocktake_cycle_counting"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "gs1-general-specifications"
+        ],
+        "confidence": "medium",
+        "notes": "GS1 General Specifications defines the label content/encoding (GTIN, SSCC, GS1-128 Application Identifiers); the printer protocol (e.g. ZPL) itself is vendor-specific and not standardized, so this is reasoned from the identification standard plus common industry practice, not a specific implementation."
+      }
+    },
+    {
+      "id": "accounting_gl_integration",
+      "name": "Accounting / general ledger export",
+      "category": "finance",
+      "purpose": "Post inventory valuation, cost-of-goods-manufactured, and purchase accruals to an external accounting system.",
+      "examples": [
+        "QuickBooks",
+        "Xero",
+        "a dedicated GL/ERP finance module"
+      ],
+      "protocols": [
+        "REST",
+        "CSV/batch export"
+      ],
+      "related_features": [
+        "manufacturing.cost_tracking",
+        "manufacturing.purchase_orders"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "odoo-mrp"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from Odoo's mrp.workcenter.costs_hour and cost-rollup fields, which in the full Odoo product feed an accounting module; the accounting/GL module itself was not in the cloned addons/mrp scope, and no accounting integration was independently verified in InvenTree or ERPNext for this pass. Left at low confidence."
+      }
+    },
+    {
+      "id": "plm_cad_integration",
+      "name": "PLM / CAD integration",
+      "category": "engineering",
+      "purpose": "Import/sync the engineering bill of materials (eBOM) and part/drawing data from a PLM or CAD system into the manufacturing BOM.",
+      "examples": [
+        "Product lifecycle management (PLM) systems",
+        "CAD part libraries"
+      ],
+      "protocols": [
+        "REST",
+        "file import (STEP/CSV)"
+      ],
+      "related_features": [
+        "manufacturing.bill_of_materials",
+        "manufacturing.items_products"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "isa-95-iec-62264"
+        ],
+        "confidence": "low",
+        "notes": "Cited at LOW confidence and for the boundary only: ISA-95 / IEC 62264 defines product definition information as one of the categories exchanged across the business-manufacturing boundary, which is the eBOM-to-mBOM handoff this integration names. No PLM/CAD import feature was found in InvenTree, odoo-mrp, or the parts of ERPNext inspected, so the *integration as a product feature* is unevidenced - this is a named category, not an asserted expectation."
+      }
+    },
+    {
+      "id": "warehouse_shipping_integration",
+      "name": "Warehouse / shipping system integration",
+      "category": "logistics",
+      "purpose": "Hand off finished-goods stock to a warehouse management or shipping/carrier system for pick, pack, and ship.",
+      "examples": [
+        "WMS pick/pack systems",
+        "carrier shipping APIs"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks",
+        "EDI"
+      ],
+      "related_features": [
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.stock_locations"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "gs1-general-specifications"
+        ],
+        "confidence": "low",
+        "notes": "Cited at LOW confidence for the handoff artefact only: the GS1 General Specifications define the SSCC and the GS1 Logistic Label, which is what a finished-goods pallet carries into a warehouse or carrier system. Neither manufacturing implementation inspected ships a WMS/carrier integration, so the feature itself is unevidenced. The downstream side is modelled properly in `domains/logistics` - depend on that rather than duplicating it here."
+      }
+    },
+    {
+      "id": "public_api_webhooks",
+      "name": "Public API and webhooks",
+      "category": "platform",
+      "purpose": "Expose production-order, inventory, and quality events to external systems via a REST API and outbound webhooks.",
+      "examples": [
+        "REST API with API-key/OAuth auth",
+        "webhook subscriptions on order/status-change events"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "manufacturing.production_orders",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.quality_inspections"
+      ],
+      "classification": "platform",
+      "provenance": {
+        "sources": [
+          "inventree"
+        ],
+        "confidence": "low",
+        "notes": "InvenTree ships a documented REST API (not individually inspected this session beyond confirming it exists as the basis of its own frontend); webhook support was not independently verified in the cloned scope. Left at low confidence."
+      }
     }
   ]
 }

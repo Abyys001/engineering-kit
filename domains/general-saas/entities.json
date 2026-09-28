@@ -33,12 +33,16 @@
       ],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "twenty-crm"
         ],
         "confidence": "medium"
       },
       "states": [
+        "trialing",
+        "trial_expired",
         "active",
+        "past_due",
         "suspended",
         "pending_deletion",
         "deleted"
@@ -223,10 +227,18 @@
       ],
       "provenance": {
         "sources": [
-          "lago-api"
+          "lago-api",
+          "openmeter"
         ],
-        "confidence": "low"
-      }
+        "confidence": "medium",
+        "notes": "Lago's Entitlement/Wallet/UsageThreshold models and OpenMeter's featuremeter module both model limits enforced against metered usage; two independent sources = medium."
+      },
+      "states": [
+        "within_limit",
+        "warning",
+        "exceeded",
+        "throttled"
+      ]
     },
     {
       "id": "usage_event",
@@ -248,9 +260,11 @@
       ],
       "provenance": {
         "sources": [
-          "lago-api"
+          "lago-api",
+          "openmeter"
         ],
-        "confidence": "low"
+        "confidence": "medium",
+        "notes": "Lago's Event/DailyUsage models and OpenMeter's meter event ingestion (openmeter/ent/db/meter.go) are two independent usage-event implementations."
       }
     },
     {
@@ -381,7 +395,12 @@
       "id": "status_incident",
       "name": "Status incident",
       "description": "A public record of a service disruption shown on the status page.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "system_component"
+        }
+      ],
       "important_fields": [
         "title",
         "severity",
@@ -392,9 +411,10 @@
       ],
       "provenance": {
         "sources": [
-          "cachet"
+          "cachet",
+          "openstatus"
         ],
-        "confidence": "low"
+        "confidence": "medium"
       },
       "states": [
         "investigating",
@@ -407,7 +427,13 @@
       "id": "changelog_entry",
       "name": "Changelog entry",
       "description": "A single published release note or product update.",
-      "relationships": [],
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "system_component",
+          "note": "nullable; entries are optionally tagged by the product area they affect"
+        }
+      ],
       "important_fields": [
         "version",
         "category",
@@ -418,9 +444,43 @@
       ],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "chatwoot",
+          "twenty-crm"
         ],
-        "confidence": "low"
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "system_component",
+      "name": "System component",
+      "description": "A discrete part of the product (e.g. API, web app, billing) whose health is tracked and shown on the status page.",
+      "relationships": [
+        {
+          "type": "many_to_many",
+          "target": "status_incident"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "current_status",
+        "group"
+      ],
+      "states": [
+        "operational",
+        "degraded_performance",
+        "partial_outage",
+        "major_outage"
+      ],
+      "related_features": [
+        "general-saas.status_page"
+      ],
+      "provenance": {
+        "sources": [
+          "cachet",
+          "openstatus"
+        ],
+        "confidence": "medium",
+        "notes": "Both Cachet and OpenStatus (independent implementations) model status-page components separately from incidents; two independent sources = medium."
       }
     }
   ]

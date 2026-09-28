@@ -13,9 +13,40 @@
       "scope": "Where project/task data (including guest/client comments and attachments) is stored and processed, relevant once external guests or enterprise customers are involved.",
       "affected_features": ["project-management.guest_client_access", "project-management.attachments"],
       "requires_human_review": true,
-      "notes": "Not implemented or claimed by either cloned source; flagged because guest/client access and file attachments are the points where a PM tool most often triggers a customer's data-residency requirement.",
+      "notes": "Not implemented or claimed by any inspected source; flagged because guest/client access and file attachments are the points where a PM tool most often triggers a customer's data-residency requirement.",
       "url": null,
       "provenance": {"sources": ["plane"], "confidence": "low", "notes": "Reasoned from the presence of a guest/external-access feature (ProjectPublicMember); not a claim that Plane or any implementation addresses residency."}
+    },
+    {
+      "id": "gdpr_personal_data",
+      "name": "GDPR -- personal data in assignees, comments, and time records",
+      "kind": "regulation",
+      "version": "Regulation (EU) 2016/679",
+      "jurisdiction": "EU/EEA (and materially similar regimes elsewhere, e.g. UK GDPR)",
+      "scope": "Task assignee/reporter identities, @-mentioned users, comment text, and per-user time entries are personal data about identifiable people; a PM tool processing them for EU/EEA-resident users or staff is a controller/processor subject to GDPR's lawful-basis, data-minimisation, retention-limitation, and data-subject-rights (access/erasure/portability) obligations.",
+      "affected_features": [
+        "project-management.tasks_issues",
+        "project-management.comments_mentions",
+        "project-management.time_tracking",
+        "project-management.guest_client_access"
+      ],
+      "requires_human_review": true,
+      "notes": "Not a claim that any inspected implementation (Plane, Kanboard, Vikunja, Leantime, Redmine, OpenProject, Focalboard, Taiga) is GDPR-compliant; none of these sources was inspected for consent flows, retention policy, or data-subject-request tooling. Flagged because assignee/comment/time-entry data is squarely within GDPR's definition of personal data.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "provenance": {"sources": ["plane", "leantime"], "confidence": "low", "notes": "Reasoned from the presence of per-user assignee, comment, and time-entry data in the inspected data models; GDPR applicability itself is not something any of these open-source projects claims or was checked for."}
+    },
+    {
+      "id": "working_time_recording",
+      "name": "Working-time recording obligations where time tracking feeds payroll",
+      "kind": "regulation",
+      "version": "Directive 2003/88/EC (EU Working Time Directive), as interpreted by CJEU C-55/18 (2019) requiring employers to implement an objective, reliable working-time recording system",
+      "jurisdiction": "EU/EEA member states (national implementing laws vary); comparable but distinct rules exist in other jurisdictions and are out of scope here",
+      "scope": "When this domain's time-tracking feature is used to calculate hours worked, overtime, or rest periods for payroll or labour-law compliance (rather than purely for client billing/effort reporting), the employer -- not the software -- carries the recording obligation; the tool becomes a control relevant to that obligation.",
+      "affected_features": ["project-management.time_tracking"],
+      "requires_human_review": true,
+      "notes": "None of the inspected sources (Kanboard's timer model, Leantime's manual entry + invoiced flags) was built for, or claims, working-time-law compliance; Leantime's invoicedEmpl/invoicedComp fields are a billing concept, not a labour-law rest-period or maximum-hours check. Flagged as a boundary case: relevant only if a deployment repurposes time-tracking data for payroll/labour-law purposes.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=celex:32003L0088",
+      "provenance": {"sources": ["leantime"], "confidence": "low", "notes": "Reasoned from Leantime's time-entry + invoicing data shape; the regulation itself is authoritative, but its applicability to any given PM-tool deployment is not."}
     }
   ]
 }

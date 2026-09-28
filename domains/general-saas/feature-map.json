@@ -11,7 +11,7 @@
   "nace": [
     "J62.01"
   ],
-  "maturity": "partial",
+  "maturity": "curated",
   "last_reviewed": "2026-09-27",
   "sources": [
     {
@@ -45,7 +45,7 @@
       "retrieved": "2026-09-27",
       "version": "03aeb9b77428034f6311292fae7cbe558c13f847",
       "local_path": null,
-      "notes": "Verified license from repo LICENSE file (AGPL-3.0, not Apache as sometimes assumed) via `gh api`; reference-only, never copy code. Inspected src/lib/types/model.ts remotely: FeatureToggle, IFeatureStrategy (strategies+constraints), IEnvironment, IProject, IVariant — feature-flag data model."
+      "notes": "Verified license from repo LICENSE file (AGPL-3.0, not Apache as sometimes assumed) via `gh api`; reference-only, never copy code. Inspected src/lib/types/model.ts remotely: FeatureToggle, IFeatureStrategy (strategies+constraints), IEnvironment, IProject, IVariant \u2014 feature-flag data model."
     },
     {
       "id": "lago-api",
@@ -56,7 +56,7 @@
       "retrieved": "2026-09-27",
       "version": "46b1398eda4fd0eb72c90577930c4febb0264146",
       "local_path": null,
-      "notes": "Verified license from repo LICENSE file (AGPL-3.0) via `gh api`; reference-only, never copy code. Inspected app/models remotely: BillableMetric, Event, DailyUsage, Plan, Entitlement, Wallet, UsageThreshold — usage-metering and plan-entitlement data model."
+      "notes": "Verified license from repo LICENSE file (AGPL-3.0) via `gh api`; reference-only, never copy code. Inspected app/models remotely: BillableMetric, Event, DailyUsage, Plan, Entitlement, Wallet, UsageThreshold \u2014 usage-metering and plan-entitlement data model."
     },
     {
       "id": "cachet",
@@ -85,7 +85,7 @@
       "title": "California Consumer Privacy Act of 2018 (as amended by CPRA), Civil Code Title 1.81.5",
       "url": "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CIV&division=3.&title=1.81.5.&part=4.&chapter=&article=",
       "source_type": "authoritative",
-      "license": "Public — California state statutory text",
+      "license": "Public \u2014 California state statutory text",
       "retrieved": "2026-09-26",
       "version": "Civil Code 1798.100-1798.199.100, amended through 2025",
       "local_path": null,
@@ -93,10 +93,10 @@
     },
     {
       "id": "soc2-tsc",
-      "title": "2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (With Revised Points of Focus – 2022)",
+      "title": "2017 Trust Services Criteria for Security, Availability, Processing Integrity, Confidentiality, and Privacy (With Revised Points of Focus \u2013 2022)",
       "url": "https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022",
       "source_type": "authoritative",
-      "license": "© AICPA & CIMA; freely downloadable resource, redistribution of the document itself not authorized",
+      "license": "\u00a9 AICPA & CIMA; freely downloadable resource, redistribution of the document itself not authorized",
       "retrieved": "2026-09-27",
       "version": "2017 TSC with 2022 revised points of focus",
       "local_path": null,
@@ -104,10 +104,10 @@
     },
     {
       "id": "iso-27001-2022",
-      "title": "ISO/IEC 27001:2022 — Information security management systems",
+      "title": "ISO/IEC 27001:2022 \u2014 Information security management systems",
       "url": "https://www.iso.org/standard/27001",
       "source_type": "authoritative",
-      "license": "© ISO/IEC; standard text is paywalled, catalogue/summary page is public",
+      "license": "\u00a9 ISO/IEC; standard text is paywalled, catalogue/summary page is public",
       "retrieved": "2026-09-27",
       "version": "2022 edition (3rd edition), amended by Amd 1:2024",
       "local_path": null,
@@ -118,7 +118,7 @@
       "title": "System for Cross-domain Identity Management (SCIM): Core Schema (RFC 7643) and Protocol (RFC 7644)",
       "url": "https://datatracker.ietf.org/doc/html/rfc7644",
       "source_type": "authoritative",
-      "license": "IETF Trust Legal Provisions — freely publishable",
+      "license": "IETF Trust Legal Provisions \u2014 freely publishable",
       "retrieved": "2026-09-27",
       "version": "RFC 7643 / RFC 7644, September 2015",
       "local_path": null,
@@ -129,7 +129,7 @@
       "title": "OpenID Connect Core 1.0 incorporating errata set 2",
       "url": "https://openid.net/specs/openid-connect-core-1_0.html",
       "source_type": "authoritative",
-      "license": "OpenID Foundation IPR policy — freely publishable, attribution required",
+      "license": "OpenID Foundation IPR policy \u2014 freely publishable, attribution required",
       "retrieved": "2026-09-27",
       "version": "errata set 2, 2023-12-15",
       "local_path": null,
@@ -140,11 +140,66 @@
       "title": "Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0",
       "url": "https://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf",
       "source_type": "authoritative",
-      "license": "OASIS IPR Policy — freely publishable, attribution required",
+      "license": "OASIS IPR Policy \u2014 freely publishable, attribution required",
       "retrieved": "2026-09-27",
       "version": "OASIS Standard, 15 March 2005",
       "local_path": null,
       "notes": "URL confirmed reachable (WebFetch retrieved a genuine 615.6KB PDF); binary content could not be parsed to text by the fetch tool, title/date is from well-established public record of this OASIS Standard's identifier."
+    },
+    {
+      "id": "chatwoot",
+      "title": "Chatwoot",
+      "url": "https://github.com/chatwoot/chatwoot",
+      "source_type": "implementation",
+      "license": "MIT (core; content under enterprise/ is under a separate Chatwoot Enterprise commercial license per LICENSE)",
+      "retrieved": "2026-09-27",
+      "version": "b8eb7766f2735d6e3bf5ed3a69cf453b289a4411",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file via `gh api` (core MIT, enterprise/ carved out separately) and confirmed the specific files cited below are outside enterprise/, so are core MIT; reference-only, never copy code. Inspected file tree and file contents remotely (no clone): app/controllers/api/v1/accounts/onboardings_controller.rb + app/services/onboarding/web_widget_creation_service.rb (onboarding), app/models/webhook.rb (account-scoped webhook with url/secret/subscriptions, belongs_to :account), app/controllers/super_admin/* + app/models/super_admin.rb + app/javascript/dashboard/composables/useImpersonation.js + components/app/ImpersonationBanner.vue (internal cross-tenant admin console with a real user-impersonation path), app/javascript/dashboard/api/auditLogs.js + helper/auditlogHelper.js (workspace-facing audit log viewer UI), app/javascript/dashboard/api/customRole.js (custom roles UI), app/javascript/dashboard/api/changelog.js + components-next/changelog-card/* + SidebarChangelogButton.vue (in-app changelog feed with unread indicator), config/initializers/rack_attack.rb (per-account_id and per-API-token throttles on API endpoints, e.g. contacts/search and reports routes)."
+    },
+    {
+      "id": "twenty-crm",
+      "title": "Twenty CRM",
+      "url": "https://github.com/twentyhq/twenty",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 (core; twenty-shared, twenty-ui, twenty-sdk, twenty-client-sdk, create-twenty-app, and twenty-apps sub-packages are MIT; files marked `@license Enterprise` are commercial) \u2014 verified from repo LICENSE file",
+      "retrieved": "2026-09-27",
+      "version": "741d216a75af0939d7ee8edf91b3ff16f61abda5",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file via `gh api`; reference-only, never copy code. Spot-checked that the specific files cited below carry no `@license Enterprise` header. Inspected remotely: packages/twenty-front/src/modules/onboarding/** + upgrade-free-trial/** (onboarding wizard combined with trial upsell), packages/twenty-server/.../billing/dtos/billing-trial-period.dto.ts + billing-end-trial-period.dto.ts + twenty-emails/billing-trial-ending.email.tsx + billing-trial-converting.email.tsx (trial expiry/conversion flow), packages/twenty-front/src/modules/settings/roles/** (object-level, field-level and row-level custom role/permission authoring \u2014 AGPL core), packages/twenty-server/.../throttler/** + usage-limit/utils/build-rate-limit-response-headers.util.ts (per-request API throttling that emits rate-limit response headers), packages/twenty-website/src/platform/releases/ReleaseNotes.tsx (public changelog/release notes page), packages/twenty-shared/src/ai/constants/data-residency.const.ts (MIT sub-package: DATA_RESIDENCY_KEYS = us/eu/global/uk/ap/jp/au/ca/de/fr, a real per-workspace data-region-pinning config, albeit scoped to the product's AI feature rather than all tenant data)."
+    },
+    {
+      "id": "openstatus",
+      "title": "OpenStatus",
+      "url": "https://github.com/openstatusHQ/openstatus",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "ea4879ab94a0cf463306cc7354eb61f6b2dfc7ea",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file via `gh api`; reference-only, never copy code. Inspected file tree remotely: apps/dashboard/.../status-pages/** (status pages), .../status-pages/[id]/components/** (components), .../monitors/[id]/incidents/** (incidents) \u2014 a second, independent status-page/incident/component implementation alongside Cachet."
+    },
+    {
+      "id": "flagsmith",
+      "title": "Flagsmith",
+      "url": "https://github.com/Flagsmith/flagsmith",
+      "source_type": "implementation",
+      "license": "BSD-3-Clause",
+      "retrieved": "2026-09-27",
+      "version": "78e3fd06ce43637b02bc55a0e465dc77b16ccedd",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE.md via `gh api`; reference-only, never copy code. Inspected api/features/models.py remotely: Feature, FeatureSegment, FeatureState, FeatureStateValue \u2014 a second, independent feature-flag data model alongside Unleash."
+    },
+    {
+      "id": "openmeter",
+      "title": "OpenMeter",
+      "url": "https://github.com/openmeterio/openmeter",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-27",
+      "version": "f32c3d66411c234e2160113e110d7c72b5012afe",
+      "local_path": null,
+      "notes": "Verified license from repo LICENSE file via `gh api`; reference-only, never copy code. Repo description: 'Metering and Billing for AI, API and DevOps. Collect and aggregate millions of usage events in real-time and enable usage-based billing.' Inspected file tree remotely: openmeter/ent/db/meter.go, openmeter/billing/featuremeter/** \u2014 a second, independent usage-metering implementation alongside Lago."
     }
   ],
   "features": [
@@ -160,7 +215,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "signup_workspace_onboarding"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -181,10 +238,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "twenty-crm"
         ],
         "confidence": "medium",
-        "notes": "One clear implementation (boxyhq Team model + settings routes); the concept itself is near-universal in B2B SaaS but only one source was directly verified this pass."
+        "notes": "Two independent implementations: boxyhq's Team prisma model + settings routes, and Twenty CRM's packages/twenty-front/.../modules/settings/workspace/** workspace-settings module (its product's tenant concept is literally named 'Workspace'). Raised the single-source medium to a properly two-sourced medium."
       }
     },
     {
@@ -198,7 +256,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "signup_workspace_onboarding"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -218,10 +278,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "chatwoot",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "No dedicated onboarding-wizard code found in boxyhq-saas-starter (checked by grep); this is a reasoned inference from very common B2B SaaS practice (Slack/Notion/Linear-style first-run flows), anchored only to the workspace-creation step that boxyhq does implement. Stated explicitly as low confidence, not industry standard."
+        "confidence": "medium",
+        "notes": "Two independent implementations found this pass: Chatwoot's onboardings_controller.rb + onboarding/web_widget_creation_service.rb (MIT core), and Twenty CRM's packages/twenty-front/.../modules/onboarding/** (AGPL, reference-only). boxyhq-saas-starter was checked and confirmed NOT to have an onboarding wizard, so it is not cited as evidence. Raised low -> medium."
       }
     },
     {
@@ -261,10 +322,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "twenty-crm"
         ],
         "confidence": "medium",
-        "notes": "Verified implementation: boxyhq Invitation prisma model + pages/api/teams/[slug]/invitations.ts. Depends on shared.users (generic invite/activation) for the underlying account mechanics; this feature is the workspace-scoped, role-assigning specialization of it."
+        "notes": "Two independent implementations: boxyhq's Invitation prisma model + invite routes, and Twenty CRM's packages/twenty-front/.../modules/workspace-invitation/** (sendInvitations, resendWorkspaceInvitation, deleteWorkspaceInvitation). Raised the single-source medium to a properly two-sourced medium. Still depends on shared.users for the underlying account mechanics."
       }
     },
     {
@@ -281,7 +343,10 @@
         "entitlement",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "plan_change_with_proration",
+        "usage_quota_enforcement"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -324,7 +389,9 @@
         "usage_event",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "usage_quota_enforcement"
+      ],
       "platforms": {
         "web": false,
         "mobile": false,
@@ -345,10 +412,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "lago-api"
+          "lago-api",
+          "openmeter"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation (Lago's BillableMetric/Event/DailyUsage models, reference-only). Not found in boxyhq. Common pattern in metered-billing SaaS but only one source cross-referenced this pass."
+        "confidence": "medium",
+        "notes": "Two independent implementations: Lago's BillableMetric/Event/DailyUsage models and OpenMeter's Meter entity (openmeter/ent/db/meter.go) plus its billing/featuremeter module \u2014 OpenMeter's own description is literally 'usage-based billing' metering. Raised low -> medium."
       }
     },
     {
@@ -391,7 +459,7 @@
           "nextcrm"
         ],
         "confidence": "medium",
-        "notes": "boxyhq: ApiKey prisma model scoped to a Team, with routes under pages/api/teams/[slug]/. NextCRM: separate ApiKeys model (per-user, per-provider) — a different flavor (storing third-party keys vs issuing the product's own keys) but the same underlying entity/feature shape. Two independent implementations = medium."
+        "notes": "boxyhq: ApiKey prisma model scoped to a Team, with routes under pages/api/teams/[slug]/. NextCRM: separate ApiKeys model (per-user, per-provider) \u2014 a different flavor (storing third-party keys vs issuing the product's own keys) but the same underlying entity/feature shape. Two independent implementations = medium."
       }
     },
     {
@@ -433,24 +501,27 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "chatwoot"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: boxyhq's team-scoped webhook endpoints backed by Svix (lib/svix.ts, pages/api/teams/[slug]/webhooks/). Outbound webhooks are near-ubiquitous in API-first SaaS but only one source verified this pass."
+        "confidence": "medium",
+        "notes": "Two independent implementations: boxyhq's Svix-backed team webhook endpoints, and Chatwoot's app/models/webhook.rb (account-scoped, url/secret/subscriptions, MIT core). Raised low -> medium."
       }
     },
     {
       "id": "general-saas.admin_console",
       "name": "Internal admin console",
       "classification": "core",
-      "description": "An internal, staff-only console for searching tenants, viewing account health, and taking support actions across workspaces.",
+      "description": "An internal, staff-only console for searching tenants, viewing account health, impersonating a tenant user for support purposes, and taking other cross-tenant support actions.",
       "users": [
         "platform_support"
       ],
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "support_impersonation"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -472,10 +543,11 @@
       ],
       "provenance": {
         "sources": [
+          "chatwoot",
           "soc2-tsc"
         ],
-        "confidence": "low",
-        "notes": "No permissively-licensed OSS reference implementation of a platform-wide internal admin console was found in this research pass (boxyhq only has per-tenant admin, not a vendor-side console). Included as a reasoned inference: SOC 2 Trust Services Criteria (CC6/CC7 access-control and monitoring criteria) commonly motivate building one. Confidence intentionally low; do not treat as a directly-sourced feature."
+        "confidence": "medium",
+        "notes": "Chatwoot's app/controllers/super_admin/** + app/models/super_admin.rb + useImpersonation.js/ImpersonationBanner.vue (MIT core) is a real, verified internal cross-tenant console with a genuine support-impersonation path, corroborating what was previously only a reasoned SOC 2 inference. One implementation + one authoritative standard = medium. Description updated to name impersonation explicitly as the feature's defining SaaS-operator capability."
       }
     },
     {
@@ -511,10 +583,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "cachet"
+          "cachet",
+          "openstatus"
         ],
-        "confidence": "low",
-        "notes": "Single reference source (Cachet, custom non-OSI license, reference-only) informed the incident/component/subscriber shape. Not cross-referenced against a second implementation this pass."
+        "confidence": "medium",
+        "notes": "Two independent implementations: Cachet (custom non-OSI license) and OpenStatus (AGPL-3.0), both modeling status pages / components / incidents, both reference-only. Raised low -> medium."
       }
     },
     {
@@ -528,7 +601,9 @@
       "entities": [
         "changelog_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "changelog_publishing"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -548,17 +623,18 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "chatwoot",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "No changelog feature found in the sources inspected this pass; included purely as a reasoned inference from common SaaS practice. Anchored to boxyhq only as the domain's general implementation reference, not as direct evidence of this specific feature — confidence deliberately low."
+        "confidence": "medium",
+        "notes": "Two independent implementations found this pass: Chatwoot's in-app changelog feed (app/javascript/dashboard/api/changelog.js, changelog-card components, SidebarChangelogButton.vue with an unread indicator, MIT core) and Twenty CRM's public release-notes page (packages/twenty-website/.../platform/releases/ReleaseNotes.tsx, AGPL, reference-only). The previous boxyhq-saas-starter citation was removed: that repo was checked and confirmed to have no changelog feature, so it was never real evidence. Raised low -> medium."
       }
     },
     {
       "id": "general-saas.sso_saml",
-      "name": "SSO (SAML)",
+      "name": "Enterprise SSO (SAML / OIDC)",
       "classification": "common",
-      "description": "Enterprise single sign-on into a workspace via SAML 2.0 against the customer's identity provider.",
+      "description": "Enterprise single sign-on into a workspace via SAML 2.0 or OpenID Connect against the customer's identity provider.",
       "users": [
         "tenant_admin"
       ],
@@ -595,10 +671,11 @@
       "provenance": {
         "sources": [
           "boxyhq-saas-starter",
-          "saml-core-2.0"
+          "saml-core-2.0",
+          "oidc-core"
         ],
         "confidence": "high",
-        "notes": "Implementation (boxyhq's BoxyHQ Jackson SAML integration, lib/jackson) plus the authoritative SAML 2.0 Core spec together satisfy the brief's high-confidence rule (authoritative source present)."
+        "notes": "Implementation (boxyhq's BoxyHQ Jackson SAML integration, lib/jackson) plus both authoritative specs. Verified via `gh api` that Jackson's successor project, Ory Polis (same codebase lineage, Apache-2.0), documents itself as 'an Enterprise Single Sign-On (SSO) service for SAML and OIDC identity providers' that 'implements SSO as an OAuth 2.0 flow, abstracting away the complexities of the underlying SAML or OIDC protocol' -- confirming the same integration boxyhq-saas-starter uses genuinely supports OIDC IdPs, not only SAML. OIDC Core is cited here rather than left unused: enterprise SSO in this domain is the tenant-configurable-IdP-federation capability (distinct from shared.auth's basic 'sign in with SSO'/social login), and that capability is protocol-plural in practice. High confidence retained (authoritative source present)."
       }
     },
     {
@@ -613,7 +690,9 @@
         "scim_connection",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "scim_user_provisioning"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -683,10 +762,11 @@
       ],
       "provenance": {
         "sources": [
-          "gdpr-2016-679"
+          "gdpr-2016-679",
+          "twenty-crm"
         ],
         "confidence": "medium",
-        "notes": "No direct OSS implementation of self-serve export was found in the sources inspected; GDPR Article 20 (right to data portability) and CCPA's right-to-know/portability provisions are the authoritative motivation. Medium rather than high because the specific self-serve-export *feature shape* is our inference from the regulation, not a spec the regulation defines."
+        "notes": "Twenty CRM has a real, whole-tenant data export implementation: packages/twenty-server/src/database/commands/workspace-export/** (generate-workspace-schema-ddl, build-workspace-table-column-sets, workspace-export.command.ts) \u2014 a full-database export per workspace, matching this feature's shape far more closely than the previously-found per-entity CSV export tools. GDPR Article 20 (data portability) remains the authoritative motivation. Raised the single-source medium to a properly two-sourced medium."
       }
     },
     {
@@ -702,7 +782,9 @@
         "feature_flag",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "feature_flag_rollout"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -722,10 +804,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "unleash"
+          "unleash",
+          "flagsmith"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation (Unleash FeatureToggle/Strategy/Environment/Project model, reference-only, AGPL-3.0). Widely used pattern but only one source cross-referenced this pass."
+        "confidence": "medium",
+        "notes": "Two independent implementations: Unleash's FeatureToggle/IFeatureStrategy/IEnvironment model (AGPL-3.0) and Flagsmith's Feature/FeatureSegment/FeatureState/FeatureStateValue model (BSD-3-Clause), both reference-only. Raised low -> medium."
       }
     },
     {
@@ -740,7 +823,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "audit_log_review"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -763,10 +848,11 @@
       ],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "chatwoot"
         ],
-        "confidence": "low",
-        "notes": "Single verified implementation: boxyhq integrates Retraced (lib/retraced.ts) for team-scoped audit history. Depends on shared.audit_log for the underlying append-only record; this feature is the workspace-facing viewer on top of it."
+        "confidence": "medium",
+        "notes": "Two independent implementations: boxyhq's Retraced integration (lib/retraced.ts) and Chatwoot's dashboard audit-log viewer (app/javascript/dashboard/api/auditLogs.js, helper/auditlogHelper.js, MIT core). Raised low -> medium."
       }
     },
     {
@@ -781,7 +867,10 @@
         "plan",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "failed_payment_dunning",
+        "plan_change_with_proration"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -803,10 +892,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "twenty-crm"
         ],
         "confidence": "medium",
-        "notes": "Verified implementation: boxyhq's Stripe-backed Subscription/Price models and webhook handler (pages/api/webhooks/stripe.ts) including subscription status transitions (trialing/active/past_due/canceled). One direct implementation plus this being the de facto standard shape of Stripe Billing Portal integrations."
+        "notes": "Two independent implementations: boxyhq's Stripe-backed Subscription/Price models and webhook handler, and Twenty CRM's dedicated billing-portal module (billing-portal.workspace-service.ts, stripe-billing-portal.service.ts, useBillingPortalSession.ts) which is literally a Stripe Billing Portal integration. Raised the single-source medium to a properly two-sourced medium."
       }
     },
     {
@@ -822,7 +912,9 @@
         "workspace",
         "plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "seat_lifecycle"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -860,7 +952,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "custom_role_authoring"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -880,10 +974,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "chatwoot",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "boxyhq ships only fixed ADMIN/MEMBER roles (lib/permissions.ts) with no custom-role support; this feature is a reasoned inference from common enterprise-tier SaaS practice, anchored to boxyhq's fixed-role model as the contrasting baseline. Confidence deliberately low."
+        "confidence": "medium",
+        "notes": "Two independent implementations found this pass: Chatwoot's customRole.js (MIT core) and Twenty CRM's packages/twenty-front/.../settings/roles/** \u2014 a full object-level/field-level/row-level custom permission authoring system (AGPL, reference-only). The previous boxyhq-saas-starter citation was removed: that repo only has a fixed ADMIN/MEMBER enum and was cited as a contrasting baseline, not as evidence for this feature. Raised low -> medium."
       }
     },
     {
@@ -899,7 +994,9 @@
         "workspace",
         "plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "trial_conversion"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -920,10 +1017,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "boxyhq-saas-starter",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "boxyhq's Stripe webhook handler comments enumerate the 'trialing' subscription status, confirming trial support at the billing-provider level, but there is no dedicated trial-management UI/logic in the repo. Single, partial source — low confidence."
+        "confidence": "medium",
+        "notes": "boxyhq's Stripe webhook handler confirms the 'trialing' subscription status at the billing-provider level (partial evidence). Twenty CRM has a full trial flow: billing-trial-ending.email.tsx / billing-trial-converting.email.tsx, billing-trial-period.dto.ts / billing-end-trial-period.dto.ts, and an UpgradeFreeTrial onboarding page (AGPL, reference-only). Two independent sources = medium."
       }
     },
     {
@@ -981,7 +1079,9 @@
       "entities": [
         "api_key"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_limit_enforcement"
+      ],
       "platforms": {
         "web": false,
         "mobile": false,
@@ -1000,10 +1100,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "boxyhq-saas-starter"
+          "chatwoot",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "No rate-limiting middleware found in boxyhq-saas-starter (checked by grep); reasoned inference from standard public-API practice, anchored to the same API-key entity boxyhq does implement. Confidence deliberately low."
+        "confidence": "medium",
+        "notes": "Two independent implementations found this pass: Chatwoot's config/initializers/rack_attack.rb, which throttles specific API routes per account_id and per API access token (MIT core), and Twenty CRM's engine/core-modules/throttler/** plus usage-limit/utils/build-rate-limit-response-headers.util.ts, which explicitly emits rate-limit response headers (AGPL, reference-only). The previous boxyhq-saas-starter citation was removed: that repo was checked and confirmed to have no rate limiting, so it was never real evidence. Raised low -> medium."
       }
     },
     {
@@ -1017,7 +1118,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "sandbox_provisioning"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -1040,7 +1143,7 @@
           "boxyhq-saas-starter"
         ],
         "confidence": "low",
-        "notes": "Not found in any source inspected this pass; reasoned inference from common developer-tool SaaS practice (e.g. payment-provider test modes), anchored to boxyhq's API-key entity as the mechanism a sandbox key would use. Confidence deliberately low."
+        "notes": "Not found in any source inspected this pass; reasoned inference from common developer-tool SaaS practice (e.g. payment-provider test modes), anchored to boxyhq's API-key entity as the mechanism a sandbox key would use. Confidence deliberately low. This pass additionally checked Chatwoot and Twenty CRM (both searched by file tree for 'sandbox'/'test mode') and found no matching tenant sandbox-workspace feature in either. Left at low rather than inventing a second source."
       }
     },
     {
@@ -1054,7 +1157,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "data_residency_selection"
+      ],
       "platforms": {
         "web": true,
         "mobile": false,
@@ -1078,10 +1183,11 @@
       "provenance": {
         "sources": [
           "gdpr-2016-679",
-          "iso-27001-2022"
+          "iso-27001-2022",
+          "twenty-crm"
         ],
-        "confidence": "low",
-        "notes": "Not found as a concrete feature in any source inspected; reasoned inference motivated by GDPR cross-border transfer rules and ISO/IEC 27001 asset-location controls, which enterprise customers commonly ask about. No implementation evidence, so capped at low despite two authoritative anchors."
+        "confidence": "medium",
+        "notes": "Twenty CRM has a real, shipped data-residency control: packages/twenty-shared/src/ai/constants/data-residency.const.ts defines DATA_RESIDENCY_KEYS (us/eu/global/uk/ap/jp/au/ca/de/fr) with a settings UI to select it (MIT sub-package, twenty-shared is one of Twenty's explicitly MIT-licensed packages) \u2014 though scoped to the product's AI feature rather than all tenant data, it is direct evidence a per-workspace region-pinning control is a real, buildable pattern, not just a regulatory inference. Combined with the GDPR/ISO 27001 authoritative motivation, raised low -> medium."
       }
     }
   ]

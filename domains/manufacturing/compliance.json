@@ -11,24 +11,153 @@
       "version": "Varies by industry and jurisdiction (e.g. food safety, medical device, automotive)",
       "jurisdiction": "Industry- and jurisdiction-specific (e.g. FDA 21 CFR Part 820 for US medical devices, EU Regulation 2017/745 MDR)",
       "scope": "Requiring forward/backward genealogy of lots and serials from raw material to finished, shippable product, often with defined retention periods.",
-      "affected_features": ["manufacturing.traceability"],
+      "affected_features": [
+        "manufacturing.traceability"
+      ],
       "requires_human_review": true,
-      "notes": "Neither cloned source implements a regulation-specific retention or reporting requirement; both provide the underlying genealogy data (InvenTree StockItemTracking, Odoo stock.lot) that a compliant process would be built on top of. Applicability depends entirely on the product being manufactured.",
+      "notes": "General placeholder for industry/jurisdiction-specific traceability rules. Sector-specific instances are now broken out separately: fda_qmsr_21_cfr_part_820 and eu_mdr_2017_745 for medical devices, and fsma_204_food_traceability for food. Neither cloned source (InvenTree, odoo-mrp) implements a regulation-specific retention or reporting requirement; both provide the underlying genealogy data (StockItemTracking, stock.lot) a compliant process would be built on top of.",
       "url": null,
-      "provenance": {"sources": ["inventree", "odoo-mrp"], "confidence": "low", "notes": "Flagged from the domain brief's guidance on traceability; not verified against a specific regulation's text."}
+      "provenance": {
+        "sources": [
+          "inventree",
+          "odoo-mrp",
+          "std:gs1-epcis"
+        ],
+        "confidence": "low",
+        "notes": "Flagged from the domain brief's guidance on traceability; not verified against a specific regulation's text."
+      }
     },
     {
       "id": "iso_9001_quality_management",
       "name": "ISO 9001 quality management",
       "kind": "certification",
-      "version": "ISO 9001:2015",
+      "version": "ISO 9001:2026 (published 2026-09-16, supersedes ISO 9001:2015; certificates to the 2015 edition remain valid during a 3-year transition to 2029-09-30)",
       "jurisdiction": "Global (voluntary, contractually required by some customers)",
       "scope": "Documented quality management processes, including inspection records, non-conformance handling, and corrective action.",
-      "affected_features": ["manufacturing.quality_inspections", "manufacturing.non_conformance_management"],
+      "affected_features": [
+        "manufacturing.quality_inspections",
+        "manufacturing.non_conformance_management"
+      ],
       "requires_human_review": true,
-      "notes": "A voluntary certification, not a legal requirement; named here because inspection/non-conformance record-keeping is commonly built to support it, not because either cloned source implements or claims certification.",
-      "url": "https://www.iso.org/standard/62085.html",
-      "provenance": {"sources": ["inventree"], "confidence": "low", "notes": "Reasoned from InvenTree's test-template/test-result model, which is the kind of record ISO 9001 audits typically require; not a claim of certification support."}
+      "notes": "A voluntary certification, not a legal requirement; named here because inspection/non-conformance record-keeping (clauses on release of product, control of nonconforming outputs, and corrective action) is commonly built to support it, not because InvenTree, odoo-mrp, or ERPNext implement or claim certification. Version/date corroborated via multiple secondary sources (ANSI Blog, DNV, DQS, TUV); the primary iso.org page returned HTTP 403 to an automated fetch.",
+      "url": "https://www.iso.org/standard/88464.html",
+      "provenance": {
+        "sources": [
+          "iso-9001",
+          "erpnext-manufacturing"
+        ],
+        "confidence": "medium",
+        "notes": "ERPNext's Non Conformance/Quality Action doctypes are the kind of records ISO 9001 clause 8.7/10.2 audits typically require; not a claim of certification support."
+      }
+    },
+    {
+      "id": "iso_10012_measurement_management",
+      "name": "ISO 10012 measurement management systems",
+      "kind": "standard",
+      "version": "ISO 10012:2026 (supersedes ISO 10012:2003)",
+      "jurisdiction": "Global (voluntary; often required where calibrated measurement equipment underpins quality inspection records)",
+      "scope": "Requirements for measurement processes and measuring equipment used to demonstrate conformity, including calibration traceability.",
+      "affected_features": [
+        "manufacturing.quality_inspections"
+      ],
+      "requires_human_review": true,
+      "notes": "Relevant wherever quality_inspections relies on calibrated gauges/instruments; not implemented or asserted as supported by any source reviewed this session. Full text not accessed (paywalled, iso.org blocked automated fetch).",
+      "url": "https://www.iso.org/standard/85864.html",
+      "provenance": {
+        "sources": [
+          "iso-10012"
+        ],
+        "confidence": "medium",
+        "notes": "Version/date corroborated via secondary sources (ANSI Blog, Beamex); iso.org itself not fetched."
+      }
+    },
+    {
+      "id": "fda_21_cfr_part_11",
+      "name": "FDA 21 CFR Part 11 — Electronic Records; Electronic Signatures",
+      "kind": "regulation",
+      "version": "Current e-CFR text (in force since 1997; part unchanged in substance)",
+      "jurisdiction": "United States (FDA-regulated industries, e.g. medical device and pharmaceutical manufacturing)",
+      "scope": "Requirements for electronic records and electronic signatures to be considered trustworthy, reliable, and equivalent to paper records/handwritten signatures — relevant to electronic quality-inspection records, non-conformance records, and traceability audit trails when a manufactured product is FDA-regulated.",
+      "affected_features": [
+        "manufacturing.quality_inspections",
+        "manufacturing.non_conformance_management",
+        "manufacturing.traceability"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only when the manufactured product is FDA-regulated (e.g. medical devices, pharmaceuticals); not a general manufacturing requirement. Neither cloned source implements audit-trail/signature controls to this standard. Direct ecfr.gov fetch was blocked by the site's bot-protection this session.",
+      "url": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-11",
+      "provenance": {
+        "sources": [
+          "fda-21cfr-part11"
+        ],
+        "confidence": "medium",
+        "notes": "Scope described from well-established public knowledge of the rule; primary text not freshly fetched this session (ecfr.gov blocked automated access)."
+      }
+    },
+    {
+      "id": "fda_qmsr_21_cfr_part_820",
+      "name": "FDA Quality Management System Regulation (21 CFR Part 820)",
+      "kind": "regulation",
+      "version": "Effective 2026-02-02; incorporates ISO 13485:2016 by reference",
+      "jurisdiction": "United States (medical device manufacturers)",
+      "scope": "US device current good manufacturing practice (CGMP) requirements, now harmonized with ISO 13485:2016 for medical device quality management systems, superseding the former free-standing Quality System Regulation (QSR) text.",
+      "affected_features": [
+        "manufacturing.quality_inspections",
+        "manufacturing.non_conformance_management",
+        "manufacturing.traceability"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only to medical device manufacturers selling into the US. Fetched directly from fda.gov this session. Neither cloned source (InvenTree, odoo-mrp) nor ERPNext implements or claims QMSR/ISO 13485 conformance.",
+      "url": "https://www.fda.gov/medical-devices/postmarket-requirements-devices/quality-management-system-regulation-qmsr",
+      "provenance": {
+        "sources": [
+          "fda-qmsr-21cfr820"
+        ],
+        "confidence": "high",
+        "notes": "Fetched directly from the FDA's own page (fda.gov)."
+      }
+    },
+    {
+      "id": "eu_mdr_2017_745",
+      "name": "EU Medical Device Regulation (MDR) 2017/745",
+      "kind": "regulation",
+      "version": "2017/745, as amended",
+      "jurisdiction": "European Union (medical devices placed on the EU market)",
+      "scope": "Requires a Unique Device Identification (UDI) system and forward/backward traceability of devices through the supply chain (Article 27).",
+      "affected_features": [
+        "manufacturing.traceability"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only to manufacturers placing medical devices on the EU market. Not fetched directly this session (cited from well-established public knowledge of the regulation's UDI/traceability provisions); neither cloned source implements a UDI-specific traceability model.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2017/745/oj",
+      "provenance": {
+        "sources": [
+          "eu-mdr-2017-745"
+        ],
+        "confidence": "medium",
+        "notes": "Not independently re-fetched this session; scope description not verified against a freshly read primary text."
+      }
+    },
+    {
+      "id": "fsma_204_food_traceability",
+      "name": "FDA Food Traceability Rule (FSMA Section 204)",
+      "kind": "regulation",
+      "version": "21 CFR Part 1, Subpart S; compliance date extended to 2028-07-20 (originally 2026-01-20)",
+      "jurisdiction": "United States (manufacturers/processors/packers/holders of foods on the FDA Food Traceability List)",
+      "scope": "Requires capturing Key Data Elements (KDEs) at defined Critical Tracking Events (CTEs) across the supply chain and making traceability records available to FDA within 24 hours.",
+      "affected_features": [
+        "manufacturing.traceability"
+      ],
+      "requires_human_review": true,
+      "notes": "Applies only to food manufacturers handling foods on the FDA's Food Traceability List. Not implemented or asserted as supported by InvenTree, odoo-mrp, or ERPNext. Confirmed via WebSearch results linking to fda.gov and federalregister.gov; the FDA page itself was not fetched in full this session.",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "provenance": {
+        "sources": [
+          "fda-fsma-204"
+        ],
+        "confidence": "medium",
+        "notes": "Compliance-date extension corroborated via multiple independent secondary sources plus a direct link to fda.gov and federalregister.gov in search results; not independently re-fetched."
+      }
     }
   ]
 }

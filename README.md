@@ -6,7 +6,7 @@ Local source library for code reused across `~/Project`: starters, UI components
 - **What exists:** [`INDEX.md`](INDEX.md) to read, [`catalog.json`](catalog.json) to search. Promotion backlog: [`sources/CURATION.md`](sources/CURATION.md). Not-yet-downloaded candidates: [`sources/CANDIDATES.md`](sources/CANDIDATES.md).
 - **Workflow:** classify → select stack → search project → search kit → reuse → adapt → implement → test.
 - **Empty directories are intentional:** nothing has been promoted there yet. They hold a `.gitkeep` so the layout below survives a fresh checkout. Don't fill them with placeholders.
-- **Domain and product knowledge:** [`domains/INDEX.md`](domains/INDEX.md) (what a product in an industry usually needs) and [`product-builder/PRODUCT-BUILDER.md`](product-builder/PRODUCT-BUILDER.md) (how a request becomes a build plan). Tooling: `tools/kb.py`.
+- **Domain and product knowledge:** [`domains/INDEX.md`](domains/INDEX.md) (what a product in an industry usually needs), [`domains/GAPS.md`](domains/GAPS.md) (what is still missing, and what we already have something to start from), and [`product-builder/PRODUCT-BUILDER.md`](product-builder/PRODUCT-BUILDER.md) (how a request becomes a build plan). Tooling: `tools/kb.py`.
 
 ## Layout
 

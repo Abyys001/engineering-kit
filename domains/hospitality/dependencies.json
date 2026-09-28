@@ -194,6 +194,12 @@
       "to": "hospitality.rate_plans",
       "type": "requires",
       "reason": "Dynamic pricing adjusts an underlying rate plan."
+    },
+    {
+      "from": "hospitality.guest_reviews",
+      "to": "shared.reviews",
+      "type": "requires",
+      "reason": "The moderated rating/review/reply mechanics are generic; only tying a review to a completed stay and its room/rate is hospitality-specific."
     }
   ]
 }

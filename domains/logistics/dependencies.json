@@ -3,40 +3,233 @@
   "domain": "logistics",
   "last_reviewed": "2026-09-27",
   "edges": [
-    {"from": "logistics.customers_shippers", "to": "shared.auth", "type": "requires", "reason": "Shipper accounts need authenticated sign-in"},
-    {"from": "logistics.customers_shippers", "to": "shared.organizations", "type": "enhances", "reason": "Multi-tenant shippers benefit from org/workspace scoping"},
-    {"from": "logistics.address_validation", "to": "logistics.customers_shippers", "type": "enhances", "reason": "Validation applies to a customer's saved addresses"},
-    {"from": "logistics.shipments", "to": "logistics.customers_shippers", "type": "requires", "reason": "Every shipment is owned by a shipper account"},
-    {"from": "logistics.shipments", "to": "logistics.parcels", "type": "requires", "reason": "A shipment must contain at least one parcel"},
-    {"from": "logistics.rates_quotes", "to": "logistics.carriers", "type": "requires", "reason": "Rates are requested from connected carrier accounts"},
-    {"from": "logistics.labels", "to": "logistics.shipments", "type": "requires", "reason": "A label is generated for a specific shipment"},
-    {"from": "logistics.labels", "to": "logistics.rates_quotes", "type": "requires", "reason": "A label requires a selected rate/service"},
-    {"from": "logistics.contract_rates", "to": "logistics.rates_quotes", "type": "enhances", "reason": "Negotiated rates apply on top of standard rate shopping"},
-    {"from": "logistics.freight_invoicing", "to": "logistics.rates_quotes", "type": "requires", "reason": "Invoice audit reconciles actual charges against the quoted rate"},
-    {"from": "logistics.manifests", "to": "logistics.shipments", "type": "requires", "reason": "A manifest groups existing shipments or stops"},
-    {"from": "logistics.pickups", "to": "logistics.shipments", "type": "requires", "reason": "A pickup is scheduled for one or more shipments"},
-    {"from": "logistics.tracking_events", "to": "logistics.shipments", "type": "requires", "reason": "Tracking events are appended to a shipment's timeline"},
-    {"from": "logistics.tracking_events", "to": "shared.realtime", "type": "enhances", "reason": "Live tracking pages benefit from push updates"},
-    {"from": "logistics.tracking_events", "to": "shared.notifications", "type": "enhances", "reason": "Major status changes are pushed to the customer"},
-    {"from": "logistics.exceptions_returns", "to": "logistics.shipments", "type": "requires", "reason": "An exception or return is filed against an existing shipment"},
-    {"from": "logistics.exceptions_returns", "to": "shared.notifications", "type": "enhances", "reason": "Customers and staff are notified of exceptions"},
-    {"from": "logistics.claims", "to": "logistics.exceptions_returns", "type": "requires", "reason": "A claim is filed from a logged exception"},
-    {"from": "logistics.customs_documents", "to": "logistics.shipments", "type": "requires", "reason": "Customs data is attached to an international shipment"},
-    {"from": "logistics.dispatch", "to": "logistics.orders", "type": "requires", "reason": "Dispatch assigns a driver/vehicle to an order"},
-    {"from": "logistics.dispatch", "to": "logistics.drivers", "type": "requires", "reason": "Dispatch needs an available driver"},
-    {"from": "logistics.dispatch", "to": "logistics.vehicles", "type": "requires", "reason": "Dispatch needs an available vehicle"},
-    {"from": "logistics.dispatch", "to": "shared.realtime", "type": "enhances", "reason": "Live dispatch boards benefit from push updates"},
-    {"from": "logistics.routes", "to": "logistics.orders", "type": "requires", "reason": "A route sequences the stops of one or more orders"},
-    {"from": "logistics.geofencing_zones", "to": "logistics.routes", "type": "enhances", "reason": "Zones inform routing eligibility and geofence alerts"},
-    {"from": "logistics.eta_prediction", "to": "logistics.routes", "type": "enhances", "reason": "ETA is computed from route distance/time and live position"},
-    {"from": "logistics.driver_app", "to": "logistics.dispatch", "type": "requires", "reason": "The driver app surfaces dispatched work"},
-    {"from": "logistics.proof_of_delivery", "to": "logistics.dispatch", "type": "requires", "reason": "Proof of delivery is captured for a dispatched stop"},
-    {"from": "logistics.proof_of_delivery", "to": "shared.file_storage", "type": "requires", "reason": "Captured photos/signatures need durable file storage"},
-    {"from": "logistics.fleet_maintenance", "to": "logistics.vehicles", "type": "requires", "reason": "Maintenance is scheduled against a vehicle"},
-    {"from": "logistics.fuel_tracking", "to": "logistics.vehicles", "type": "requires", "reason": "Fuel transactions are recorded per vehicle"},
-    {"from": "logistics.driver_scoring", "to": "logistics.drivers", "type": "requires", "reason": "Scorecards are computed per driver"},
-    {"from": "logistics.load_planning", "to": "logistics.vehicles", "type": "requires", "reason": "Load plans respect vehicle capacity"},
-    {"from": "logistics.cod_collection", "to": "logistics.orders", "type": "requires", "reason": "COD is collected against a specific order"},
-    {"from": "logistics.driver_app", "to": "shared.file_storage", "type": "enhances", "reason": "Offline capture queues photos for later upload"}
+    {
+      "from": "logistics.customers_shippers",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Shipper accounts need authenticated sign-in"
+    },
+    {
+      "from": "logistics.customers_shippers",
+      "to": "shared.organizations",
+      "type": "enhances",
+      "reason": "Multi-tenant shippers benefit from org/workspace scoping"
+    },
+    {
+      "from": "logistics.address_validation",
+      "to": "logistics.customers_shippers",
+      "type": "enhances",
+      "reason": "Validation applies to a customer's saved addresses"
+    },
+    {
+      "from": "logistics.shipments",
+      "to": "logistics.customers_shippers",
+      "type": "requires",
+      "reason": "Every shipment is owned by a shipper account"
+    },
+    {
+      "from": "logistics.shipments",
+      "to": "logistics.parcels",
+      "type": "requires",
+      "reason": "A shipment must contain at least one parcel"
+    },
+    {
+      "from": "logistics.rates_quotes",
+      "to": "logistics.carriers",
+      "type": "requires",
+      "reason": "Rates are requested from connected carrier accounts"
+    },
+    {
+      "from": "logistics.labels",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "A label is generated for a specific shipment"
+    },
+    {
+      "from": "logistics.labels",
+      "to": "logistics.rates_quotes",
+      "type": "requires",
+      "reason": "A label requires a selected rate/service"
+    },
+    {
+      "from": "logistics.contract_rates",
+      "to": "logistics.rates_quotes",
+      "type": "enhances",
+      "reason": "Negotiated rates apply on top of standard rate shopping"
+    },
+    {
+      "from": "logistics.freight_invoicing",
+      "to": "logistics.rates_quotes",
+      "type": "requires",
+      "reason": "Invoice audit reconciles actual charges against the quoted rate"
+    },
+    {
+      "from": "logistics.manifests",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "A manifest groups existing shipments or stops"
+    },
+    {
+      "from": "logistics.pickups",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "A pickup is scheduled for one or more shipments"
+    },
+    {
+      "from": "logistics.tracking_events",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "Tracking events are appended to a shipment's timeline"
+    },
+    {
+      "from": "logistics.tracking_events",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Live tracking pages benefit from push updates"
+    },
+    {
+      "from": "logistics.tracking_events",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Major status changes are pushed to the customer"
+    },
+    {
+      "from": "logistics.exceptions_returns",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "An exception or return is filed against an existing shipment"
+    },
+    {
+      "from": "logistics.exceptions_returns",
+      "to": "shared.notifications",
+      "type": "enhances",
+      "reason": "Customers and staff are notified of exceptions"
+    },
+    {
+      "from": "logistics.claims",
+      "to": "logistics.exceptions_returns",
+      "type": "requires",
+      "reason": "A claim is filed from a logged exception"
+    },
+    {
+      "from": "logistics.customs_documents",
+      "to": "logistics.shipments",
+      "type": "requires",
+      "reason": "Customs data is attached to an international shipment"
+    },
+    {
+      "from": "logistics.dispatch",
+      "to": "logistics.orders",
+      "type": "requires",
+      "reason": "Dispatch assigns a driver/vehicle to an order"
+    },
+    {
+      "from": "logistics.dispatch",
+      "to": "logistics.drivers",
+      "type": "requires",
+      "reason": "Dispatch needs an available driver"
+    },
+    {
+      "from": "logistics.dispatch",
+      "to": "logistics.vehicles",
+      "type": "requires",
+      "reason": "Dispatch needs an available vehicle"
+    },
+    {
+      "from": "logistics.dispatch",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Live dispatch boards benefit from push updates"
+    },
+    {
+      "from": "logistics.routes",
+      "to": "logistics.orders",
+      "type": "requires",
+      "reason": "A route sequences the stops of one or more orders"
+    },
+    {
+      "from": "logistics.geofencing_zones",
+      "to": "logistics.routes",
+      "type": "enhances",
+      "reason": "Zones inform routing eligibility and geofence alerts"
+    },
+    {
+      "from": "logistics.eta_prediction",
+      "to": "logistics.routes",
+      "type": "enhances",
+      "reason": "ETA is computed from route distance/time and live position"
+    },
+    {
+      "from": "logistics.driver_app",
+      "to": "logistics.dispatch",
+      "type": "requires",
+      "reason": "The driver app surfaces dispatched work"
+    },
+    {
+      "from": "logistics.proof_of_delivery",
+      "to": "logistics.dispatch",
+      "type": "requires",
+      "reason": "Proof of delivery is captured for a dispatched stop"
+    },
+    {
+      "from": "logistics.proof_of_delivery",
+      "to": "shared.file_storage",
+      "type": "requires",
+      "reason": "Captured photos/signatures need durable file storage"
+    },
+    {
+      "from": "logistics.fleet_maintenance",
+      "to": "logistics.vehicles",
+      "type": "requires",
+      "reason": "Maintenance is scheduled against a vehicle"
+    },
+    {
+      "from": "logistics.fuel_tracking",
+      "to": "logistics.vehicles",
+      "type": "requires",
+      "reason": "Fuel transactions are recorded per vehicle"
+    },
+    {
+      "from": "logistics.driver_scoring",
+      "to": "logistics.drivers",
+      "type": "requires",
+      "reason": "Scorecards are computed per driver"
+    },
+    {
+      "from": "logistics.load_planning",
+      "to": "logistics.vehicles",
+      "type": "requires",
+      "reason": "Load plans respect vehicle capacity"
+    },
+    {
+      "from": "logistics.cod_collection",
+      "to": "logistics.orders",
+      "type": "requires",
+      "reason": "COD is collected against a specific order"
+    },
+    {
+      "from": "logistics.driver_app",
+      "to": "shared.file_storage",
+      "type": "enhances",
+      "reason": "Offline capture queues photos for later upload"
+    },
+    {
+      "from": "logistics.parcels",
+      "to": "logistics.warehouses",
+      "type": "enhances",
+      "reason": "Parcels are commonly received, staged, and picked at a warehouse before shipment"
+    },
+    {
+      "from": "logistics.warehouses",
+      "to": "logistics.customers_shippers",
+      "type": "enhances",
+      "reason": "Multi-facility operators typically scope warehouses to an operating account/organization"
+    },
+    {
+      "from": "logistics.customs_documents",
+      "to": "shared.file_storage",
+      "type": "requires",
+      "reason": "Customs declarations and commercial invoices need durable document storage"
+    }
   ]
 }

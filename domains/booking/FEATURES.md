@@ -19,22 +19,22 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `booking.availability_exceptions` Availability exceptions | One-off overrides to the normal schedule for a specific date: holidays, custom hours, or extra availability. | medium | web, mobile, admin, backend | none | none | missing | caldiy, easyappointments |
-| `booking.buffers` Buffers | Padding time before and/or after a booking during which the provider/resource is not bookable. | medium | web, mobile, admin, backend | none | none | missing | caldiy |
+| `booking.buffers` Buffers | Padding time before and/or after a booking during which the provider/resource is not bookable. | low | web, mobile, admin, backend | none | none | missing | caldiy |
 | `booking.calendar_sync` Calendar sync | Two-way sync of bookings with an external calendar (Google Calendar, Outlook, CalDAV). | high | web, mobile, admin, customer_portal, backend | medium | none | missing | caldiy, easyappointments, rfc5545 |
-| `booking.cancellation_policies` Cancellation and no-show policies | Rules for how and when a booking can be cancelled or rescheduled, and how a no-show is recorded. | medium | web, mobile, admin, customer_portal, backend | none | low | missing | caldiy |
+| `booking.cancellation_policies` Cancellation and no-show policies | Rules for how and when a booking can be cancelled or rescheduled, and how a no-show is recorded. | low | web, mobile, admin, customer_portal, backend | none | low | missing | caldiy |
 | `booking.minimum_notice` Minimum booking notice | A minimum lead time required between booking and the appointment start (blocks last-minute bookings). | low | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy |
 | `booking.out_of_office` Out-of-office / blocked time | Mark a provider unavailable for a date range (vacation, sick leave), blocking new bookings. | medium | web, mobile, admin, backend | none | none | missing | caldiy, easyappointments |
 | `booking.recurring_bookings` Recurring bookings | Book the same service/slot on a repeating schedule (weekly, monthly) as a linked series. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy, rfc5545 |
-| `booking.reminders` Reminders | Automated email/SMS reminders sent ahead of a booking. | medium | web, mobile, admin, backend | none | low | missing | caldiy |
+| `booking.reminders` Reminders | Automated email/SMS reminders sent ahead of a booking. | medium | web, mobile, admin, backend | none | low | missing | caldiy, librebooking |
 | `booking.timezone_handling` Timezone-aware scheduling | Display and book slots correctly across the customer's and provider's timezones. | high | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy, easyappointments, rfc5545 |
 
 ## Recommended (5)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `booking.booking_widget` Embeddable booking widget / public link | A public, shareable booking page or embeddable widget for a service or provider. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy |
+| `booking.booking_widget` Embeddable booking widget / public link | A public, shareable booking page or embeddable widget for a service or provider. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy, librebooking |
 | `booking.buffers_and_group_capacity` Group bookings / shared capacity | Allow multiple attendees to book the same time slot up to a capacity limit (e.g. a class or webinar). | medium | web, mobile, admin, customer_portal, backend | medium | none | missing | caldiy, easyappointments |
-| `booking.deposits` Deposits and paid bookings | Collect a payment or deposit at the time of booking. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy |
+| `booking.deposits` Deposits and paid bookings | Collect a payment or deposit at the time of booking. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy, librebooking |
 | `booking.resources` Bookable resources | A non-human bookable unit (room, equipment, vehicle) with its own availability, alongside or instead of a provider. | low | web, mobile, admin, backend | none | none | missing | wikipedia-resource-allocation |
 | `booking.webhooks` Booking webhooks | Fire outbound events (booking created/cancelled/rescheduled) to external systems. | medium | web, mobile, admin, backend | medium | none | missing | caldiy, easyappointments |
 
@@ -42,6 +42,6 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `booking.booking_confirmation_approval` Manual booking approval | Require a provider or manager to approve a requested booking before it is confirmed. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy |
-| `booking.multi_provider_teams` Teams and round-robin assignment | Assign a booking to one of several providers on a team, by availability, priority, or round robin. | medium | web, mobile, admin, backend | none | low | missing | caldiy |
+| `booking.booking_confirmation_approval` Manual booking approval | Require a provider or manager to approve a requested booking before it is confirmed. | medium | web, mobile, admin, customer_portal, backend | none | none | missing | caldiy, librebooking |
+| `booking.multi_provider_teams` Teams and round-robin assignment | Assign a booking to one of several providers on a team, by availability, priority, or round robin. | medium | web, mobile, admin, backend | none | low | missing | caldiy, easyappointments |
 | `booking.waitlist` Booking waitlist | Let a customer join a waitlist for a fully booked slot and be notified if it opens up. | low | web, mobile, admin, customer_portal, backend | low | low | missing | wikipedia-waiting-list |

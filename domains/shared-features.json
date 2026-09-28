@@ -821,6 +821,23 @@
       "real_time_relevance": "none",
       "ai_relevance": "low",
       "source_candidates": []
+    },
+    {
+      "id": "shared.reviews",
+      "name": "Reviews and ratings",
+      "classification": "platform",
+      "description": "Collect a rating and written review from a verified party, moderate it, publish it, and let the business reply. The generic half of what ecommerce, restaurant and hospitality each model separately; what stays domain-specific is *what* is reviewed and what proves the reviewer was really there (an order, a visit, a completed stay).",
+      "kit_paths": [],
+      "tags": [
+        "communication",
+        "web",
+        "customer",
+        "backend",
+        "search"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "medium",
+      "source_candidates": []
     }
   ]
 }

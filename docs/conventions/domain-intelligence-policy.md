@@ -40,7 +40,7 @@ Classes: **authoritative** (standards bodies, official specs, government, indust
 - Agents read `DOMAIN.md`, `FEATURES.md`, `feature-map.json`, and `dependencies.json` first, and raw standards/sources only for detail.
 
 ## 23–25, 48. Indexes
-`domains/INDEX.md`, `catalog.json`, `features.json`, and `search-index.json` are **generated** by `tools/kb.py build`. Counts are computed, never typed. Lookup by domain, feature, tag, platform, role, entity, workflow, implementation, standard, license, or maturity is machine-readable.
+`domains/INDEX.md`, `GAPS.md`, `catalog.json`, `features.json`, `search-index.json`, and every domain's `FEATURES.md` and `sources.md` are **generated** by `tools/kb.py build`. Counts are computed, never typed. Lookup by domain, feature, tag, platform, role, entity, workflow, implementation, standard, license, or maturity is machine-readable.
 
 ## 26. Shared vs domain capability
 Shared (auth, users, notifications, file upload, billing, search, permissions, audit log, …) → `domains/shared-features.json`, implemented in `features/` or `backend/`. Domain capabilities (reservation, encounter, claim, trade order, shipment, …) → `domains/`, referencing implementations without duplicating them.

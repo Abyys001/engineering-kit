@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-09-27",
+  "generated": "2026-09-28",
   "generator": "tools/kb.py build",
   "entries": [
     {
@@ -224,6 +224,7 @@
         "communication",
         "customer",
         "email_provider",
+        "librebooking",
         "missing",
         "mobile",
         "provider",
@@ -283,6 +284,7 @@
         "caldiy",
         "customer",
         "customer_portal",
+        "librebooking",
         "missing",
         "mobile",
         "payment",
@@ -349,6 +351,7 @@
         "caldiy",
         "customer",
         "customer_portal",
+        "librebooking",
         "missing",
         "mobile",
         "provider",
@@ -386,6 +389,7 @@
         "admin",
         "backend",
         "caldiy",
+        "easyappointments",
         "manager",
         "missing",
         "mobile",
@@ -408,6 +412,7 @@
         "booking_lifecycle",
         "caldiy",
         "customer_portal",
+        "librebooking",
         "manager",
         "missing",
         "mobile",
@@ -759,6 +764,15 @@
       "keys": [
         "secondary",
         "CC BY-SA 4.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "booking:librebooking",
+      "domain": "booking",
+      "keys": [
+        "implementation",
+        "GPL-3.0"
       ]
     },
     {
@@ -4079,6 +4093,8 @@
         "common",
         "customer",
         "customer_portal",
+        "eu-tfr-2023-1113",
+        "iso20022",
         "missing",
         "network_partner_lookup",
         "payment",
@@ -4097,6 +4113,7 @@
       "domain": "exchange",
       "keys": [
         "admin",
+        "apache-fineract",
         "backend",
         "branch",
         "branch_manager",
@@ -4120,6 +4137,7 @@
       "keys": [
         "admin",
         "administrator",
+        "apache-fineract",
         "backend",
         "branch",
         "branch_crud",
@@ -4141,6 +4159,7 @@
       "keys": [
         "admin",
         "administrator",
+        "apache-fineract",
         "backend",
         "bdc-api",
         "branch",
@@ -4239,8 +4258,10 @@
         "actor_attribution",
         "admin",
         "administrator",
+        "apache-fineract",
         "append_only_log",
         "backend",
+        "blnk",
         "chfx-odoo-modules",
         "compliance",
         "compliance_officer",
@@ -4260,6 +4281,7 @@
         "admin",
         "administrator",
         "analytics",
+        "apache-fineract",
         "backend",
         "branch",
         "branch_comparison",
@@ -4323,6 +4345,7 @@
       "keys": [
         "admin",
         "administrator",
+        "apache-fineract",
         "backend",
         "branch_manager",
         "chfx-odoo-modules",
@@ -5076,6 +5099,15 @@
       "keys": [
         "authoritative",
         "Wolfsberg Group public guidance"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "exchange:apache-fineract",
+      "domain": "exchange",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
       ]
     },
     {
@@ -6592,8 +6624,10 @@
         "boxyhq-saas-starter",
         "core",
         "reference",
+        "signup_workspace_onboarding",
         "tenant_admin",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6603,11 +6637,13 @@
       "id": "general-saas.onboarding_flow",
       "domain": "general-saas",
       "keys": [
-        "boxyhq-saas-starter",
+        "chatwoot",
         "common",
         "core",
         "missing",
+        "signup_workspace_onboarding",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6627,6 +6663,7 @@
         "team_invite_lifecycle",
         "tenant_admin",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6644,10 +6681,12 @@
         "lago-api",
         "payment",
         "plan",
+        "plan_change_with_proration",
         "platform_support",
         "reference",
         "stripe_billing",
         "tenant_owner",
+        "usage_quota_enforcement",
         "web",
         "workspace"
       ]
@@ -6663,10 +6702,12 @@
         "common",
         "lago-api",
         "missing",
+        "openmeter",
         "payment",
         "platform_support",
         "system",
         "usage_event",
+        "usage_quota_enforcement",
         "workspace"
       ]
     },
@@ -6697,6 +6738,7 @@
         "admin",
         "backend",
         "boxyhq-saas-starter",
+        "chatwoot",
         "common",
         "developer",
         "generic_webhook_receiver",
@@ -6718,11 +6760,13 @@
       "keys": [
         "admin",
         "backend",
+        "chatwoot",
         "core",
         "missing",
         "platform_support",
         "soc2-tsc",
         "soc2_type_ii",
+        "support_impersonation",
         "web",
         "workspace"
       ]
@@ -6738,6 +6782,7 @@
         "communication",
         "customer_portal",
         "missing",
+        "openstatus",
         "platform_support",
         "real_time",
         "recommended",
@@ -6752,13 +6797,15 @@
       "domain": "general-saas",
       "keys": [
         "admin",
-        "boxyhq-saas-starter",
         "changelog_entry",
+        "changelog_publishing",
+        "chatwoot",
         "communication",
         "customer_portal",
         "missing",
         "optional",
         "tenant_member",
+        "twenty-crm",
         "web"
       ]
     },
@@ -6773,6 +6820,7 @@
         "common",
         "gdpr",
         "identity",
+        "oidc-core",
         "reference",
         "saml-core-2.0",
         "saml_idp",
@@ -6799,6 +6847,7 @@
         "scim-rfc",
         "scim_connection",
         "scim_idp",
+        "scim_user_provisioning",
         "tenant_admin",
         "web",
         "workspace"
@@ -6821,6 +6870,7 @@
         "gdpr-2016-679",
         "missing",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6835,6 +6885,8 @@
         "common",
         "developer",
         "feature_flag",
+        "feature_flag_rollout",
+        "flagsmith",
         "missing",
         "platform_support",
         "unleash",
@@ -6848,8 +6900,10 @@
       "domain": "general-saas",
       "keys": [
         "admin",
+        "audit_log_review",
         "backend",
         "boxyhq-saas-starter",
+        "chatwoot",
         "common",
         "compliance",
         "platform_support",
@@ -6869,11 +6923,14 @@
         "backend",
         "boxyhq-saas-starter",
         "core",
+        "failed_payment_dunning",
         "payment",
         "plan",
+        "plan_change_with_proration",
         "reference",
         "stripe_billing",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6891,6 +6948,7 @@
         "missing",
         "payment",
         "plan",
+        "seat_lifecycle",
         "tenant_admin",
         "tenant_owner",
         "web",
@@ -6904,10 +6962,12 @@
       "keys": [
         "admin",
         "backend",
-        "boxyhq-saas-starter",
+        "chatwoot",
+        "custom_role_authoring",
         "missing",
         "recommended",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6927,6 +6987,8 @@
         "stripe_billing",
         "system",
         "tenant_owner",
+        "trial_conversion",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -6958,10 +7020,12 @@
       "keys": [
         "api_key",
         "backend",
-        "boxyhq-saas-starter",
+        "chatwoot",
         "developer",
         "infrastructure",
-        "missing"
+        "missing",
+        "rate_limit_enforcement",
+        "twenty-crm"
       ]
     },
     {
@@ -6975,6 +7039,7 @@
         "developer",
         "missing",
         "optional",
+        "sandbox_provisioning",
         "web",
         "workspace"
       ]
@@ -6987,6 +7052,7 @@
         "admin",
         "backend",
         "compliance",
+        "data_residency_selection",
         "gdpr",
         "gdpr-2016-679",
         "iso-27001-2022",
@@ -6994,6 +7060,7 @@
         "missing",
         "premium",
         "tenant_owner",
+        "twenty-crm",
         "web",
         "workspace"
       ]
@@ -7179,6 +7246,14 @@
       ]
     },
     {
+      "kind": "entity",
+      "id": "general-saas:system_component",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.status_page"
+      ]
+    },
+    {
       "kind": "workflow",
       "id": "general-saas:team_invite_lifecycle",
       "domain": "general-saas",
@@ -7248,6 +7323,156 @@
       ]
     },
     {
+      "kind": "workflow",
+      "id": "general-saas:signup_workspace_onboarding",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.workspace_management",
+        "general-saas.onboarding_flow",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:usage_quota_enforcement",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.usage_metering",
+        "general-saas.plans_entitlements",
+        "usage_event",
+        "entitlement",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:plan_change_with_proration",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.plans_entitlements",
+        "general-saas.billing_portal",
+        "general-saas.seat_management",
+        "plan",
+        "entitlement",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:failed_payment_dunning",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.billing_portal",
+        "general-saas.plans_entitlements",
+        "workspace",
+        "plan"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:trial_conversion",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.trial_management",
+        "workspace",
+        "plan"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:seat_lifecycle",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.seat_management",
+        "workspace",
+        "plan"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:scim_user_provisioning",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.scim_provisioning",
+        "scim_connection",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:feature_flag_rollout",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.feature_flags",
+        "feature_flag",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:audit_log_review",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.audit_log_viewer",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:support_impersonation",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.admin_console",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:changelog_publishing",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.changelog",
+        "changelog_entry"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:custom_role_authoring",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.custom_roles",
+        "workspace"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:rate_limit_enforcement",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.public_api_rate_limiting",
+        "api_key"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:sandbox_provisioning",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.sandbox_environment",
+        "workspace",
+        "api_key"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "general-saas:data_residency_selection",
+      "domain": "general-saas",
+      "keys": [
+        "general-saas.data_residency",
+        "workspace"
+      ]
+    },
+    {
       "kind": "integration",
       "id": "general-saas:stripe_billing",
       "domain": "general-saas",
@@ -7266,6 +7491,7 @@
       "id": "general-saas:saml_idp",
       "domain": "general-saas",
       "keys": [
+        "OpenID Connect",
         "SAML 2.0",
         "common",
         "general-saas.sso_saml",
@@ -7462,6 +7688,51 @@
       ]
     },
     {
+      "kind": "source",
+      "id": "general-saas:chatwoot",
+      "domain": "general-saas",
+      "keys": [
+        "implementation",
+        "MIT (core; content under enterprise/ is under a separate Chatwoot Enterprise commercial license per LICENSE)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "general-saas:twenty-crm",
+      "domain": "general-saas",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 (core; twenty-shared, twenty-ui, twenty-sdk, twenty-client-sdk, create-twenty-app, and twenty-apps sub-packages are MIT; files marked `@license Enterprise` are commercial) — verified from repo LICENSE file"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "general-saas:openstatus",
+      "domain": "general-saas",
+      "keys": [
+        "implementation",
+        "AGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "general-saas:flagsmith",
+      "domain": "general-saas",
+      "keys": [
+        "implementation",
+        "BSD-3-Clause"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "general-saas:openmeter",
+      "domain": "general-saas",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
       "kind": "feature",
       "id": "healthcare.patient_registration",
       "domain": "healthcare",
@@ -7603,6 +7874,7 @@
         "openemr",
         "patient",
         "sms_gateway",
+        "std:fhir-r4",
         "web"
       ]
     },
@@ -7911,6 +8183,7 @@
         "hipaa",
         "medplum",
         "reference",
+        "std:fhir-r4",
         "system_integration",
         "web"
       ]
@@ -7990,6 +8263,7 @@
         "patient",
         "patient_intake_workflow",
         "reference",
+        "std:fhir-r4",
         "web"
       ]
     },
@@ -9931,6 +10205,7 @@
         "billing_profile",
         "core",
         "customer",
+        "customer_onboarding_and_rates",
         "customer_portal",
         "fleetbase",
         "identity",
@@ -9967,6 +10242,7 @@
         "order_to_shipment",
         "reference",
         "shipper",
+        "uncefact-iftmin-ifcsum",
         "web"
       ]
     },
@@ -9982,6 +10258,7 @@
         "core",
         "customer",
         "customer_portal",
+        "gs1-general-specifications",
         "karrio",
         "multi_parcel",
         "ops_manager",
@@ -9993,6 +10270,7 @@
         "shipment_lifecycle",
         "shipper",
         "staff",
+        "std:gs1-epcis",
         "support_agent",
         "web"
       ]
@@ -10010,12 +10288,15 @@
         "core",
         "customer_portal",
         "dimensional_weight",
+        "gs1-general-specifications",
         "karrio",
         "mobile",
         "parcel",
         "reference",
         "shipper",
         "staff",
+        "std:gs1-epcis",
+        "warehouse_fulfillment",
         "warehouse_staff",
         "web"
       ]
@@ -10032,6 +10313,7 @@
         "core",
         "customer",
         "customer_portal",
+        "fleetbase",
         "karrio",
         "multi_carrier_comparison",
         "ops_manager",
@@ -10054,6 +10336,7 @@
         "carrier",
         "carrier_account_config",
         "carrier_api",
+        "carrier_manifest_closeout",
         "carrier_service",
         "core",
         "integration",
@@ -10074,6 +10357,7 @@
         "core",
         "customer_portal",
         "document",
+        "gs1-general-specifications",
         "invoice_generation",
         "karrio",
         "label",
@@ -10084,6 +10368,7 @@
         "shipment_lifecycle",
         "shipper",
         "staff",
+        "upu-s10",
         "warehouse_staff",
         "web"
       ]
@@ -10097,6 +10382,7 @@
         "backend",
         "carrier_api",
         "carrier_closeout",
+        "carrier_manifest_closeout",
         "common",
         "core",
         "dispatch_and_route_planning",
@@ -10105,6 +10391,7 @@
         "driver",
         "driver_stop_list",
         "fleetbase",
+        "gs1-general-specifications",
         "karrio",
         "manifest",
         "mobile",
@@ -10137,6 +10424,7 @@
         "scheduling",
         "shipper",
         "time_window",
+        "uncefact-iftmin-ifcsum",
         "web"
       ]
     },
@@ -10161,6 +10449,7 @@
         "reference",
         "shipment",
         "shipper",
+        "std:gs1-epcis",
         "support_agent",
         "system",
         "tracking_and_visibility",
@@ -10212,6 +10501,7 @@
         "reference",
         "scheduling",
         "staff",
+        "uncefact-iftmin-ifcsum",
         "vehicle",
         "web"
       ]
@@ -10238,6 +10528,7 @@
         "staff",
         "stop_sequencing",
         "time_windows",
+        "uncefact-mmt-rdm",
         "waypoint",
         "web"
       ]
@@ -10264,6 +10555,7 @@
         "reference",
         "skills_matching",
         "staff",
+        "traccar",
         "web"
       ]
     },
@@ -10285,6 +10577,8 @@
         "staff",
         "telematics",
         "telemetry",
+        "telemetry_geofencing_and_scoring",
+        "traccar",
         "vehicle",
         "web"
       ]
@@ -10298,6 +10592,7 @@
         "backend",
         "common",
         "core",
+        "gs1-general-specifications",
         "location",
         "location_hierarchy",
         "missing",
@@ -10306,6 +10601,7 @@
         "staff",
         "std:gs1-epcis",
         "warehouse",
+        "warehouse_fulfillment",
         "warehouse_staff",
         "web"
       ]
@@ -10333,6 +10629,7 @@
         "return",
         "return_label_generation",
         "staff",
+        "std:gs1-epcis",
         "support_agent",
         "web"
       ]
@@ -10348,15 +10645,18 @@
         "customer",
         "customer_portal",
         "customs_document",
+        "customs_export_declaration",
         "customs_regulations",
         "declared_value",
         "document",
         "hs_code_lookup",
+        "incoterms-2020",
         "karrio",
         "ops_manager",
         "recommended",
         "reference",
         "shipper",
+        "wco-data-model",
         "web"
       ]
     },
@@ -10404,6 +10704,8 @@
         "reference",
         "service_area_boundaries",
         "staff",
+        "telemetry_geofencing_and_scoring",
+        "traccar",
         "web",
         "zone"
       ]
@@ -10426,6 +10728,7 @@
         "reference",
         "scheduling",
         "staff",
+        "traccar",
         "vehicle",
         "web"
       ]
@@ -10439,6 +10742,7 @@
         "admin",
         "backend",
         "customer",
+        "customer_onboarding_and_rates",
         "customer_portal",
         "deliverability_check",
         "integration",
@@ -10460,6 +10764,7 @@
         "backend",
         "carrier_api",
         "carrier_service",
+        "customer_onboarding_and_rates",
         "fleetbase",
         "integration",
         "markup_rules",
@@ -10486,6 +10791,7 @@
         "customer_portal",
         "exception",
         "fleetbase",
+        "freight_settlement",
         "optional",
         "reference",
         "shipment",
@@ -10511,6 +10817,8 @@
         "reference",
         "reporting",
         "staff",
+        "telemetry_geofencing_and_scoring",
+        "traccar",
         "vehicle",
         "web"
       ]
@@ -10526,6 +10834,7 @@
         "cod_reconciliation",
         "driver",
         "fleetbase",
+        "freight_settlement",
         "mobile",
         "optional",
         "order",
@@ -10549,6 +10858,7 @@
         "dispatcher",
         "dynamic_eta",
         "fleetbase",
+        "load_planning_and_eta",
         "mapping_geocoding",
         "mobile",
         "optional",
@@ -10579,6 +10889,7 @@
         "reporting",
         "scorecard",
         "staff",
+        "telemetry_geofencing_and_scoring",
         "web"
       ]
     },
@@ -10593,6 +10904,7 @@
         "consolidation",
         "dispatcher",
         "fleetbase",
+        "load_planning_and_eta",
         "optional",
         "order",
         "parcel",
@@ -10613,6 +10925,7 @@
         "backend",
         "carrier_api",
         "discrepancy_flagging",
+        "freight_settlement",
         "invoice_reconciliation",
         "karrio",
         "ops_manager",
@@ -10622,7 +10935,8 @@
         "reference",
         "reporting",
         "shipment",
-        "web"
+        "web",
+        "x12-transportation"
       ]
     },
     {
@@ -10767,7 +11081,8 @@
       "domain": "logistics",
       "keys": [
         "logistics.parcels",
-        "logistics.load_planning"
+        "logistics.load_planning",
+        "CBV business steps: receiving, storing, picking, packing, staging_outbound, shipping"
       ]
     },
     {
@@ -10839,7 +11154,7 @@
       "domain": "logistics",
       "keys": [
         "logistics.tracking_events",
-        "EPCIS event (what/when/where/why)"
+        "EPCIS event (what/when/where/why), corroborated by CBV business steps shipping/receiving/transporting/holding"
       ]
     },
     {
@@ -10921,7 +11236,7 @@
       "domain": "logistics",
       "keys": [
         "logistics.warehouses",
-        "Global Location Number (GLN)"
+        "bizLocation / readPoint identified by a GLN (Global Location Number)"
       ]
     },
     {
@@ -11065,6 +11380,97 @@
       ]
     },
     {
+      "kind": "workflow",
+      "id": "logistics:warehouse_fulfillment",
+      "domain": "logistics",
+      "keys": [
+        "logistics.warehouses",
+        "logistics.parcels",
+        "warehouse",
+        "parcel",
+        "commodity"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:carrier_manifest_closeout",
+      "domain": "logistics",
+      "keys": [
+        "logistics.manifests",
+        "logistics.carriers",
+        "manifest",
+        "label",
+        "shipment",
+        "carrier"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:customer_onboarding_and_rates",
+      "domain": "logistics",
+      "keys": [
+        "logistics.customers_shippers",
+        "logistics.address_validation",
+        "logistics.contract_rates",
+        "customer",
+        "carrier_service",
+        "rate_quote"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:customs_export_declaration",
+      "domain": "logistics",
+      "keys": [
+        "logistics.customs_documents",
+        "customs_document",
+        "shipment",
+        "commodity"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:telemetry_geofencing_and_scoring",
+      "domain": "logistics",
+      "keys": [
+        "logistics.vehicles",
+        "logistics.geofencing_zones",
+        "logistics.fuel_tracking",
+        "logistics.driver_scoring",
+        "vehicle",
+        "zone",
+        "driver",
+        "maintenance_record"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:load_planning_and_eta",
+      "domain": "logistics",
+      "keys": [
+        "logistics.load_planning",
+        "logistics.eta_prediction",
+        "vehicle",
+        "parcel",
+        "order",
+        "route"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "logistics:freight_settlement",
+      "domain": "logistics",
+      "keys": [
+        "logistics.freight_invoicing",
+        "logistics.cod_collection",
+        "logistics.claims",
+        "rate_quote",
+        "shipment",
+        "order",
+        "exception"
+      ]
+    },
+    {
       "kind": "integration",
       "id": "logistics:carrier_api",
       "domain": "logistics",
@@ -11154,6 +11560,17 @@
       ]
     },
     {
+      "kind": "integration",
+      "id": "logistics:customs_broker_api",
+      "domain": "logistics",
+      "keys": [
+        "REST",
+        "compliance",
+        "integration",
+        "logistics.customs_documents"
+      ]
+    },
+    {
       "kind": "compliance",
       "id": "logistics:driver_hours_of_service",
       "domain": "logistics",
@@ -11170,7 +11587,7 @@
       "id": "logistics:dangerous_goods",
       "domain": "logistics",
       "keys": [
-        "ADR: Europe (road); IATA DGR: global (air, contractual via carriers)",
+        "ADR: Europe and UNECE contracting parties (road, 53 countries); IATA DGR: global (air, contractual via IATA member airlines); IMDG Code: global (sea, IMO member states via SOLAS/MARPOL)",
         "logistics.customs_documents",
         "logistics.parcels",
         "regulation"
@@ -11205,6 +11622,114 @@
       ]
     },
     {
+      "kind": "source",
+      "id": "logistics:gs1-general-specifications",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "GS1 IP Policy disclaimer (no OSI license; preserve GS1 copyright/disclaimer verbatim)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:upu-s10",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "UPU standard, publicly published; no OSI license"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:uncefact-iftmin-ifcsum",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "UN/EDIFACT (UNECE/UNTDID), publicly published; no OSI license"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:uncefact-mmt-rdm",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "UN/CEFACT (UNECE), publicly published; no OSI license"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:x12-transportation",
+      "domain": "logistics",
+      "keys": [
+        "secondary",
+        "ASC X12 standard; official transaction-set text is a paid X12.org publication and was not accessed directly"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:iata-eawb-cargoxml",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "IATA standard; publicly described on iata.org, full toolkit is a member publication"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:incoterms-2020",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "ICC copyrighted rules; publicly summarized, full text is a paid ICC publication"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:wco-data-model",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "World Customs Organization standard; publicly described, full data model publication has WCO usage terms"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:adr-2025",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "UNECE treaty text, publicly published; no OSI license"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:iata-dgr-67",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "IATA standard; publicly described, full manual is a paid IATA publication"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:imdg-2024",
+      "domain": "logistics",
+      "keys": [
+        "authoritative",
+        "IMO instrument, publicly described; full code is a paid IMO publication"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "logistics:traccar",
+      "domain": "logistics",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
       "kind": "feature",
       "id": "manufacturing.items_products",
       "domain": "manufacturing",
@@ -11216,6 +11741,7 @@
         "inventree",
         "item",
         "make_buy_flags",
+        "manufacturing_master_data_setup",
         "mobile",
         "odoo-mrp",
         "part_master",
@@ -11259,8 +11785,10 @@
         "admin",
         "backend",
         "bom_line",
+        "erpnext-manufacturing",
         "inventory",
         "inventree",
+        "manufacturing_master_data_setup",
         "optional",
         "production_planner",
         "reference",
@@ -11277,7 +11805,9 @@
         "admin",
         "backend",
         "core",
+        "erpnext-manufacturing",
         "expected_duration",
+        "isa-95-iec-62264",
         "odoo-mrp",
         "operation_sequencing",
         "production_planner",
@@ -11300,6 +11830,9 @@
         "capacity_tracking",
         "core",
         "cost_per_hour",
+        "erpnext-manufacturing",
+        "isa-95-iec-62264",
+        "manufacturing_master_data_setup",
         "mobile",
         "odoo-mrp",
         "production_planner",
@@ -11348,6 +11881,7 @@
         "ai",
         "backend",
         "capacity_check",
+        "erpnext-manufacturing",
         "odoo-mrp",
         "planned_date",
         "production_planner",
@@ -11371,7 +11905,9 @@
         "backend",
         "common",
         "core",
+        "erpnext-manufacturing",
         "inventory",
+        "inventree",
         "item",
         "material_requirements_planning",
         "odoo-mrp",
@@ -11397,6 +11933,7 @@
         "inventory",
         "inventree",
         "lot_tracking",
+        "manufacturing_master_data_setup",
         "mobile",
         "odoo-mrp",
         "production_planner",
@@ -11421,6 +11958,7 @@
         "inventree",
         "location_hierarchy",
         "location_types",
+        "manufacturing_master_data_setup",
         "mobile",
         "production_planner",
         "reference",
@@ -11438,9 +11976,11 @@
         "admin",
         "backend",
         "common",
+        "erpnext-manufacturing",
         "integration",
         "inventree",
         "purchase_order",
+        "purchase_to_receipt",
         "purchasing_agent",
         "receipt_tracking",
         "reference",
@@ -11458,8 +11998,10 @@
       "keys": [
         "admin",
         "backend",
+        "erpnext-manufacturing",
         "integration",
         "inventree",
+        "manufacturing_master_data_setup",
         "optional",
         "purchasing_agent",
         "reference",
@@ -11480,6 +12022,7 @@
         "common",
         "compliance",
         "core",
+        "erpnext-manufacturing",
         "inventree",
         "mobile",
         "pass_fail_recording",
@@ -11502,10 +12045,13 @@
         "backend",
         "compliance",
         "disposition_tracking",
+        "erpnext-manufacturing",
         "inventree",
+        "iso-9001",
         "mobile",
         "non_conformance",
         "plant_manager",
+        "quality_inspection_workflow",
         "quality_inspector",
         "recommended",
         "reference",
@@ -11522,6 +12068,8 @@
         "admin",
         "backend",
         "downtime_logging",
+        "equipment_maintenance_workflow",
+        "erpnext-manufacturing",
         "maintenance_technician",
         "mobile",
         "odoo-mrp",
@@ -11544,6 +12092,7 @@
         "barcode_scanner",
         "barcode_scanning",
         "core",
+        "gs1-general-specifications",
         "inventree",
         "mobile",
         "operator_login",
@@ -11589,6 +12138,7 @@
         "admin",
         "backend",
         "component_recovery",
+        "disassembly_unbuild_workflow",
         "inventory",
         "inventree",
         "mobile",
@@ -11609,6 +12159,7 @@
       "keys": [
         "admin",
         "backend",
+        "erpnext-manufacturing",
         "external_operation",
         "integration",
         "inventree",
@@ -11618,6 +12169,7 @@
         "recommended",
         "reference",
         "staff",
+        "subcontract_operation_execution",
         "supplier",
         "supplier_edi",
         "web"
@@ -11633,6 +12185,7 @@
         "inventory",
         "inventree",
         "item",
+        "manufacturing_master_data_setup",
         "odoo-mrp",
         "optional",
         "product_variant",
@@ -11652,6 +12205,7 @@
         "backend",
         "barcode_scanner",
         "count_scheduling",
+        "erpnext-manufacturing",
         "inventory",
         "inventree",
         "mobile",
@@ -11662,6 +12216,7 @@
         "shop_floor_operator",
         "staff",
         "stock_item",
+        "stocktake_cycle_counting_workflow",
         "variance_reporting",
         "web"
       ]
@@ -11680,6 +12235,7 @@
         "odoo-mrp",
         "optional",
         "plant_manager",
+        "production_cost_and_capacity_reporting",
         "production_order",
         "production_planner",
         "reference",
@@ -11696,12 +12252,14 @@
         "admin",
         "ai",
         "backend",
+        "isa-95-iec-62264",
         "late_order_flagging",
         "load_visualization",
         "management",
         "odoo-mrp",
         "optional",
         "plant_manager",
+        "production_cost_and_capacity_reporting",
         "production_planner",
         "real_time",
         "reference",
@@ -11723,6 +12281,7 @@
         "inventree",
         "mobile",
         "non_conformance",
+        "odoo-mrp",
         "optional",
         "production_order",
         "quality_inspector",
@@ -11731,7 +12290,8 @@
         "scrap_reason_codes",
         "shop_floor_operator",
         "staff",
-        "web"
+        "web",
+        "work_order_execution"
       ]
     },
     {
@@ -11744,7 +12304,9 @@
         "bom_byproduct",
         "byproduct_yield",
         "common",
+        "erpnext-manufacturing",
         "inventory",
+        "manufacturing_master_data_setup",
         "odoo-mrp",
         "production_planner",
         "reference",
@@ -11980,6 +12542,22 @@
       ]
     },
     {
+      "kind": "entity",
+      "id": "manufacturing:production_plan",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.material_requirements_planning"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "manufacturing:subcontract_order",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.subcontracting"
+      ]
+    },
+    {
       "kind": "workflow",
       "id": "manufacturing:bom_management",
       "domain": "manufacturing",
@@ -12012,6 +12590,7 @@
         "manufacturing.work_order_scheduling",
         "manufacturing.shop_floor_data_collection",
         "manufacturing.routings_operations",
+        "manufacturing.production_scrap_tracking",
         "work_order",
         "work_center",
         "production_order"
@@ -12023,6 +12602,7 @@
       "domain": "manufacturing",
       "keys": [
         "manufacturing.material_requirements_planning",
+        "production_plan",
         "item",
         "stock_item",
         "purchase_order",
@@ -12049,6 +12629,93 @@
         "manufacturing.traceability",
         "traceability_record",
         "stock_item",
+        "production_order"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:manufacturing_master_data_setup",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.items_products",
+        "manufacturing.product_variants",
+        "manufacturing.work_centers",
+        "manufacturing.stock_locations",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.supplier_management",
+        "manufacturing.bom_substitutes",
+        "manufacturing.bom_byproducts",
+        "item",
+        "product_variant",
+        "work_center",
+        "stock_location",
+        "stock_item",
+        "supplier",
+        "bom_line",
+        "bom_byproduct"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:purchase_to_receipt",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.purchase_orders",
+        "purchase_order",
+        "supplier",
+        "stock_item",
+        "quality_inspection"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:subcontract_operation_execution",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.subcontracting",
+        "subcontract_order",
+        "production_order",
+        "supplier",
+        "stock_item"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:equipment_maintenance_workflow",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.equipment_maintenance",
+        "work_center"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:disassembly_unbuild_workflow",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.disassembly_unbuild",
+        "production_order",
+        "stock_item"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:stocktake_cycle_counting_workflow",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.stocktake_cycle_counting",
+        "stock_item",
+        "stock_location"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "manufacturing:production_cost_and_capacity_reporting",
+      "domain": "manufacturing",
+      "keys": [
+        "manufacturing.cost_tracking",
+        "manufacturing.workcenter_capacity_planning",
+        "work_center",
         "production_order"
       ]
     },
@@ -12080,6 +12747,87 @@
       ]
     },
     {
+      "kind": "integration",
+      "id": "manufacturing:machine_connectivity",
+      "domain": "manufacturing",
+      "keys": [
+        "MQTT",
+        "OPC UA (IEC 62541)",
+        "integration",
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.work_centers",
+        "manufacturing.workcenter_capacity_planning",
+        "shop_floor"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "manufacturing:label_printing",
+      "domain": "manufacturing",
+      "keys": [
+        "REST print servers",
+        "ZPL",
+        "integration",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.shop_floor_data_collection",
+        "manufacturing.stocktake_cycle_counting",
+        "shop_floor"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "manufacturing:accounting_gl_integration",
+      "domain": "manufacturing",
+      "keys": [
+        "CSV/batch export",
+        "REST",
+        "finance",
+        "integration",
+        "manufacturing.cost_tracking",
+        "manufacturing.purchase_orders"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "manufacturing:plm_cad_integration",
+      "domain": "manufacturing",
+      "keys": [
+        "REST",
+        "engineering",
+        "file import (STEP/CSV)",
+        "integration",
+        "manufacturing.bill_of_materials",
+        "manufacturing.items_products"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "manufacturing:warehouse_shipping_integration",
+      "domain": "manufacturing",
+      "keys": [
+        "EDI",
+        "REST",
+        "integration",
+        "logistics",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.stock_locations",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "manufacturing:public_api_webhooks",
+      "domain": "manufacturing",
+      "keys": [
+        "REST",
+        "manufacturing.inventory_lots_serials",
+        "manufacturing.production_orders",
+        "manufacturing.quality_inspections",
+        "platform",
+        "webhooks"
+      ]
+    },
+    {
       "kind": "compliance",
       "id": "manufacturing:product_traceability_regulations",
       "domain": "manufacturing",
@@ -12101,6 +12849,60 @@
       ]
     },
     {
+      "kind": "compliance",
+      "id": "manufacturing:iso_10012_measurement_management",
+      "domain": "manufacturing",
+      "keys": [
+        "Global (voluntary; often required where calibrated measurement equipment underpins quality inspection records)",
+        "manufacturing.quality_inspections",
+        "standard"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "manufacturing:fda_21_cfr_part_11",
+      "domain": "manufacturing",
+      "keys": [
+        "United States (FDA-regulated industries, e.g. medical device and pharmaceutical manufacturing)",
+        "manufacturing.non_conformance_management",
+        "manufacturing.quality_inspections",
+        "manufacturing.traceability",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "manufacturing:fda_qmsr_21_cfr_part_820",
+      "domain": "manufacturing",
+      "keys": [
+        "United States (medical device manufacturers)",
+        "manufacturing.non_conformance_management",
+        "manufacturing.quality_inspections",
+        "manufacturing.traceability",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "manufacturing:eu_mdr_2017_745",
+      "domain": "manufacturing",
+      "keys": [
+        "European Union (medical devices placed on the EU market)",
+        "manufacturing.traceability",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "manufacturing:fsma_204_food_traceability",
+      "domain": "manufacturing",
+      "keys": [
+        "United States (manufacturers/processors/packers/holders of foods on the FDA Food Traceability List)",
+        "manufacturing.traceability",
+        "regulation"
+      ]
+    },
+    {
       "kind": "source",
       "id": "manufacturing:inventree",
       "domain": "manufacturing",
@@ -12116,6 +12918,105 @@
       "keys": [
         "implementation",
         "LGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:erpnext-manufacturing",
+      "domain": "manufacturing",
+      "keys": [
+        "implementation",
+        "GPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:isa-95-iec-62264",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "Proprietary (ISA/IEC standard; full text requires purchase)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:b2mml",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "MESA International custom license — royalty-free use/redistribution with attribution, not an OSI-approved license (verified from the repository's own LICENSE file text, not a README badge)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:gs1-general-specifications",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "GS1 IP Policy (freely accessible reference document; GS1 copyright)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:opc-ua-iec-62541",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "Proprietary (IEC-adopted standard; OPC Foundation specifications are free to read, redistribution restricted)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:iso-9001",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "Proprietary (ISO copyright; full text requires purchase)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:iso-10012",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "Proprietary (ISO copyright; full text requires purchase)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:fda-qmsr-21cfr820",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "US Government work (public domain)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:fda-21cfr-part11",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "US Government work (public domain)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:eu-mdr-2017-745",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "EU public-domain legal text"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "manufacturing:fda-fsma-204",
+      "domain": "manufacturing",
+      "keys": [
+        "authoritative",
+        "US Government work (public domain)"
       ]
     },
     {
@@ -12149,6 +13050,7 @@
         "core",
         "customer_portal",
         "identity",
+        "importer_migration",
         "kanboard",
         "member_roles",
         "mobile",
@@ -12170,15 +13072,20 @@
         "admin",
         "assignees",
         "backend",
+        "backlog_refinement",
+        "calendar_sync",
         "contributor",
         "core",
         "customer_portal",
         "due_dates",
+        "importer_migration",
+        "issue_intake_and_triage",
         "kanboard",
         "mobile",
         "plane",
         "priority",
         "project_manager",
+        "public_api_webhooks",
         "real_time",
         "reference",
         "rich_description",
@@ -12223,6 +13130,7 @@
         "core",
         "custom_states",
         "default_state",
+        "leantime",
         "plane",
         "project_manager",
         "reference",
@@ -12241,6 +13149,7 @@
       "keys": [
         "admin",
         "backend",
+        "board_column_wip_and_automation",
         "contributor",
         "core",
         "customer_portal",
@@ -12275,10 +13184,12 @@
         "git_provider",
         "plane",
         "project_manager",
+        "redmine",
         "reference",
         "staff",
         "task_relation",
         "typed_relations",
+        "vikunja",
         "web",
         "workflow"
       ]
@@ -12298,14 +13209,17 @@
         "core",
         "customer_portal",
         "guest_client",
+        "kanboard",
         "mentions",
         "mobile",
         "plane",
+        "public_api_webhooks",
         "reactions",
         "real_time",
         "reference",
         "staff",
         "threaded_comments",
+        "vikunja",
         "web"
       ]
     },
@@ -12316,6 +13230,7 @@
       "keys": [
         "admin",
         "backend",
+        "backlog_refinement",
         "burndown_ready",
         "common",
         "contributor",
@@ -12323,10 +13238,12 @@
         "cycle",
         "cycle_planning",
         "date_bounded",
+        "leantime",
         "plane",
         "project_manager",
         "reference",
         "scheduling",
+        "scrum-guide-2020",
         "staff",
         "web"
       ]
@@ -12338,6 +13255,7 @@
       "keys": [
         "admin",
         "backend",
+        "backlog_refinement",
         "cross_cycle_grouping",
         "module",
         "module_status",
@@ -12346,6 +13264,7 @@
         "recommended",
         "reference",
         "staff",
+        "taiga-back",
         "web",
         "workflow"
       ]
@@ -12357,12 +13276,16 @@
       "keys": [
         "admin",
         "backend",
+        "calendar_sync",
         "common",
         "customer_portal",
+        "leantime",
         "milestone",
-        "plane",
+        "openproject",
         "project_manager",
+        "redmine",
         "reference",
+        "release_version_cut",
         "reporting",
         "scheduling",
         "staff",
@@ -12379,11 +13302,13 @@
         "backend",
         "date_based_layout",
         "dependency_lines",
+        "openproject",
         "plane",
         "project_manager",
         "recommended",
         "reference",
         "reporting",
+        "reporting_and_dashboards",
         "scheduling",
         "staff",
         "task",
@@ -12401,6 +13326,7 @@
         "common",
         "contributor",
         "kanboard",
+        "leantime",
         "manual_entry",
         "mobile",
         "per_task_totals",
@@ -12477,6 +13403,7 @@
         "shared_views",
         "staff",
         "view",
+        "vikunja",
         "web"
       ]
     },
@@ -12517,6 +13444,7 @@
         "per_project_feed",
         "plane",
         "project_manager",
+        "public_api_webhooks",
         "real_time",
         "recommended",
         "reference",
@@ -12533,8 +13461,10 @@
       "keys": [
         "admin",
         "backend",
+        "backlog_refinement",
         "contributor",
         "estimate",
+        "leantime",
         "per_project_scale",
         "plane",
         "point_scale",
@@ -12558,10 +13488,12 @@
         "kanboard",
         "optional",
         "recurrence_rules",
+        "recurring_task_regeneration",
         "reference",
         "scheduling",
         "staff",
         "task",
+        "vikunja",
         "web"
       ]
     },
@@ -12574,12 +13506,14 @@
         "ai",
         "backend",
         "management",
+        "openproject",
         "optional",
         "per_assignee_load",
         "plane",
         "project_manager",
         "reference",
         "reporting",
+        "reporting_and_dashboards",
         "task",
         "web"
       ]
@@ -12601,6 +13535,8 @@
         "project_manager",
         "reference",
         "reporting",
+        "reporting_and_dashboards",
+        "taiga-back",
         "velocity_trend",
         "web"
       ]
@@ -12615,6 +13551,7 @@
         "backend",
         "customer",
         "customer_portal",
+        "focalboard",
         "optional",
         "plane",
         "project_manager",
@@ -12635,6 +13572,7 @@
         "customer",
         "customer_portal",
         "guest_client",
+        "issue_intake_and_triage",
         "optional",
         "plane",
         "project_manager",
@@ -12660,6 +13598,7 @@
         "reference",
         "staff",
         "task",
+        "vikunja",
         "web"
       ]
     },
@@ -12675,6 +13614,7 @@
         "plane",
         "project",
         "project_manager",
+        "redmine",
         "reference",
         "visibility_control",
         "web",
@@ -12942,6 +13882,73 @@
       ]
     },
     {
+      "kind": "workflow",
+      "id": "project-management:issue_intake_and_triage",
+      "domain": "project-management",
+      "keys": [
+        "project-management.intake_triage",
+        "project-management.tasks_issues",
+        "task"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "project-management:backlog_refinement",
+      "domain": "project-management",
+      "keys": [
+        "project-management.tasks_issues",
+        "project-management.modules_epics",
+        "project-management.estimates_story_points",
+        "project-management.cycles_sprints",
+        "task",
+        "module",
+        "estimate"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "project-management:release_version_cut",
+      "domain": "project-management",
+      "keys": [
+        "project-management.milestones",
+        "milestone",
+        "task"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "project-management:board_column_wip_and_automation",
+      "domain": "project-management",
+      "keys": [
+        "project-management.boards_kanban",
+        "task",
+        "state",
+        "swimlane"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "project-management:reporting_and_dashboards",
+      "domain": "project-management",
+      "keys": [
+        "project-management.workload_capacity",
+        "project-management.burndown_velocity_reports",
+        "project-management.gantt_timeline",
+        "task",
+        "cycle",
+        "estimate"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "project-management:recurring_task_regeneration",
+      "domain": "project-management",
+      "keys": [
+        "project-management.recurring_tasks",
+        "task"
+      ]
+    },
+    {
       "kind": "integration",
       "id": "project-management:git_provider",
       "domain": "project-management",
@@ -12968,6 +13975,49 @@
       ]
     },
     {
+      "kind": "integration",
+      "id": "project-management:public_api_webhooks",
+      "domain": "project-management",
+      "keys": [
+        "HMAC request signing",
+        "OAuth 2.0",
+        "REST",
+        "development",
+        "integration",
+        "project-management.activity_feed",
+        "project-management.comments_mentions",
+        "project-management.tasks_issues",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "project-management:calendar_sync",
+      "domain": "project-management",
+      "keys": [
+        "CalDAV",
+        "iCalendar (ICS)",
+        "integration",
+        "project-management.milestones",
+        "project-management.tasks_issues",
+        "scheduling"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "project-management:importer_migration",
+      "domain": "project-management",
+      "keys": [
+        "OAuth 2.0",
+        "REST",
+        "data",
+        "file upload",
+        "integration",
+        "project-management.projects",
+        "project-management.tasks_issues"
+      ]
+    },
+    {
       "kind": "compliance",
       "id": "project-management:data_residency",
       "domain": "project-management",
@@ -12975,6 +14025,29 @@
         "Customer- and jurisdiction-specific (e.g. EU customers requiring EU data residency)",
         "project-management.attachments",
         "project-management.guest_client_access",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "project-management:gdpr_personal_data",
+      "domain": "project-management",
+      "keys": [
+        "EU/EEA (and materially similar regimes elsewhere, e.g. UK GDPR)",
+        "project-management.comments_mentions",
+        "project-management.guest_client_access",
+        "project-management.tasks_issues",
+        "project-management.time_tracking",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "project-management:working_time_recording",
+      "domain": "project-management",
+      "keys": [
+        "EU/EEA member states (national implementing laws vary); comparable but distinct rules exist in other jurisdictions and are out of scope here",
+        "project-management.time_tracking",
         "regulation"
       ]
     },
@@ -12994,6 +14067,114 @@
       "keys": [
         "implementation",
         "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:redmine",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "GPL-2.0 or later (LICENSE.txt, \"either version 2 of the License, or any later version\")"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:openproject",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "GPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:vikunja",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "AGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:focalboard",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 (source) or commercial; MIT applies ONLY to compiled binaries produced by Mattermost, and Apache-2.0 only to webapp/html-templates/, app-config.json, config.json, webapp/i18n/, server/model/ and plugin/"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:leantime",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "AGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:taiga-back",
+      "domain": "project-management",
+      "keys": [
+        "implementation",
+        "MPL-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:scrum-guide-2020",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "Publicly published by scrumguides.org (brand-neutral, maintained by Ken Schwaber and Jeff Sutherland)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:iso-21502",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "ISO copyright; scope/abstract freely accessible, full text is a paid standard"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:pmbok-guide-7",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "PMI copyright; FAQs/summary freely accessible, full text requires PMI membership or purchase"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:kanban-method-guide",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "Publicly published by Kanban University"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:rfc6749-oauth2",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "IETF public standard"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "project-management:rfc4791-caldav",
+      "domain": "project-management",
+      "keys": [
+        "authoritative",
+        "IETF public standard"
       ]
     },
     {

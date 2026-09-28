@@ -24,12 +24,12 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `healthcare.appointment_reminders` Appointment reminders | Automated SMS/email/push reminders and confirmations ahead of a visit. | medium | web, mobile, admin, backend | low | low | missing | openemr |
+| `healthcare.appointment_reminders` Appointment reminders | Automated SMS/email/push reminders and confirmations ahead of a visit. | medium | web, mobile, admin, backend | low | low | missing | openemr, std:fhir-r4 |
 | `healthcare.document_management` Clinical document management | Store and retrieve scanned documents, referral letters, and imported records. | medium | web, admin, backend | none | low | reference | medplum, openemr |
 | `healthcare.insurance_eligibility` Insurance eligibility verification | Check a patient's coverage and benefits before or at time of service. | high | web, admin, backend | low | none | reference | medplum, openemr, std:fhir-r4 |
 | `healthcare.lab_orders` Lab and diagnostic orders | Place orders for laboratory or diagnostic services against a patient. | high | web, admin, backend | medium | none | reference | medplum, openemr, std:fhir-r4 |
 | `healthcare.lab_results` Lab and diagnostic results | Receive, display, and flag lab/diagnostic results against the ordering request. | high | web, admin, customer_portal, backend | medium | medium | reference | medplum, openemr, std:fhir-r4 |
-| `healthcare.patient_intake_forms` Digital intake forms | Structured questionnaires (history, consent, screening) completed before or at a visit. | medium | web, mobile, admin, customer_portal, backend | none | low | reference | medplum |
+| `healthcare.patient_intake_forms` Digital intake forms | Structured questionnaires (history, consent, screening) completed before or at a visit. | high | web, mobile, admin, customer_portal, backend | none | low | reference | medplum, std:fhir-r4 |
 | `healthcare.patient_portal` Patient portal | Patient-facing web/mobile access to appointments, records, messages, and forms. | medium | web, mobile, admin, customer_portal, backend | low | low | reference | medplum, openemr |
 | `healthcare.telehealth` Telehealth visits | Video/audio visits linked to an appointment and encounter, with a waiting room. | low | web, mobile, admin, customer_portal, backend, real_time | high | low | missing | openemr |
 
@@ -59,5 +59,5 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `healthcare.access_policies` Fine-grained access policies | Restrict which users/roles can see which resources or data, beyond coarse RBAC. | medium | web, admin, backend | none | none | reference | medplum |
+| `healthcare.access_policies` Fine-grained access policies | Restrict which users/roles can see which resources or data, beyond coarse RBAC. | medium | web, admin, backend | none | none | reference | medplum, std:fhir-r4 |
 | `healthcare.patient_consent` Consent management | Record and enforce patient consent for treatment, data sharing, and communications. | high | web, admin, customer_portal, backend | none | none | reference | medplum, std:fhir-r4 |

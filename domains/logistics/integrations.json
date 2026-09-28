@@ -8,77 +8,212 @@
       "name": "Carrier API",
       "category": "shipping",
       "purpose": "Request rates, purchase labels, schedule pickups, and receive tracking updates from a shipping carrier.",
-      "examples": ["USPS", "UPS", "FedEx", "DHL", "Canada Post"],
-      "protocols": ["REST", "SOAP", "webhooks"],
-      "related_features": ["logistics.carriers", "logistics.rates_quotes", "logistics.labels", "logistics.pickups", "logistics.tracking_events"],
+      "examples": [
+        "USPS",
+        "UPS",
+        "FedEx",
+        "DHL",
+        "Canada Post"
+      ],
+      "protocols": [
+        "REST",
+        "SOAP",
+        "webhooks"
+      ],
+      "related_features": [
+        "logistics.carriers",
+        "logistics.rates_quotes",
+        "logistics.labels",
+        "logistics.pickups",
+        "logistics.tracking_events"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's entire architecture is a carrier-abstraction layer over these APIs; single source inspected for models, the connector implementations themselves were not cloned."}
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's entire architecture is a carrier-abstraction layer over these APIs; single source inspected for models, the connector implementations themselves were not cloned."
+      }
     },
     {
       "id": "webhook_receiver",
       "name": "Inbound webhook receiver",
       "category": "events",
       "purpose": "Receive asynchronous tracking/status push events from carriers or telematics providers.",
-      "examples": ["Carrier tracking webhooks", "Telematics device webhooks"],
-      "protocols": ["webhooks"],
-      "related_features": ["logistics.tracking_events"],
+      "examples": [
+        "Carrier tracking webhooks",
+        "Telematics device webhooks"
+      ],
+      "protocols": [
+        "webhooks"
+      ],
+      "related_features": [
+        "logistics.tracking_events"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's tracker update flow and fleetbase's fleetbase_device_events/fleetbase_api_events tables both imply an inbound event-ingestion surface."}
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's tracker update flow and fleetbase's fleetbase_device_events/fleetbase_api_events tables both imply an inbound event-ingestion surface."
+      }
     },
     {
       "id": "ecommerce_platform",
       "name": "E-commerce platform",
       "category": "commerce",
       "purpose": "Import orders that need to be shipped from a storefront or marketplace.",
-      "examples": ["Shopify", "WooCommerce", "Magento"],
-      "protocols": ["REST", "webhooks"],
-      "related_features": ["logistics.orders"],
+      "examples": [
+        "Shopify",
+        "WooCommerce",
+        "Magento"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "logistics.orders"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "Reasoned from karrio's orders module (Order.source field); single source, no specific e-commerce connector inspected."}
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from karrio's orders module (Order.source field); single source, no specific e-commerce connector inspected."
+      }
     },
     {
       "id": "mapping_geocoding",
       "name": "Mapping and geocoding",
       "category": "location",
       "purpose": "Geocode addresses, compute distance/time between stops, and optimize or render routes.",
-      "examples": ["Google Maps", "Mapbox", "OpenStreetMap / OSRM"],
-      "protocols": ["REST"],
-      "related_features": ["logistics.routes", "logistics.driver_app", "logistics.geofencing_zones", "logistics.eta_prediction"],
+      "examples": [
+        "Google Maps",
+        "Mapbox",
+        "OpenStreetMap / OSRM"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "logistics.routes",
+        "logistics.driver_app",
+        "logistics.geofencing_zones",
+        "logistics.eta_prediction"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_routes/fleetbase_waypoints store distance/time totals and GEOMETRY location columns consistent with a mapping provider; single source, no specific provider connector inspected."}
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_routes/fleetbase_waypoints store distance/time totals and GEOMETRY location columns consistent with a mapping provider; single source, no specific provider connector inspected."
+      }
     },
     {
       "id": "telematics",
       "name": "Vehicle telematics",
       "category": "fleet",
       "purpose": "Ingest live vehicle location, speed, and diagnostic data from onboard hardware or OEM APIs.",
-      "examples": ["Samsara", "Geotab", "OEM telematics APIs"],
-      "protocols": ["REST", "webhooks", "MQTT"],
-      "related_features": ["logistics.vehicles"],
+      "examples": [
+        "Samsara",
+        "Geotab",
+        "OEM telematics APIs"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks",
+        "MQTT"
+      ],
+      "related_features": [
+        "logistics.vehicles"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_telematics/fleetbase_telematic_deliveries/fleetbase_telematic_sync_runs tables; single source."}
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_telematics/fleetbase_telematic_deliveries/fleetbase_telematic_sync_runs tables; single source."
+      }
     },
     {
       "id": "fuel_card_provider",
       "name": "Fuel card provider",
       "category": "fleet",
       "purpose": "Sync fuel purchase transactions per vehicle/driver from a fuel card network.",
-      "examples": ["WEX", "Fuelman"],
-      "protocols": ["REST"],
-      "related_features": ["logistics.fuel_tracking"],
+      "examples": [
+        "WEX",
+        "Fuelman"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "logistics.fuel_tracking"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_fuel_provider_connections/sync_runs/transactions tables; single source."}
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_fuel_provider_connections/sync_runs/transactions tables; single source."
+      }
     },
     {
       "id": "payment_gateway",
       "name": "Payment gateway",
       "category": "payment",
       "purpose": "Process cash-on-delivery reconciliation or freight payment collection.",
-      "examples": ["Stripe", "PayPal"],
-      "protocols": ["REST"],
-      "related_features": ["logistics.cod_collection"],
+      "examples": [
+        "Stripe",
+        "PayPal"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "logistics.cod_collection"
+      ],
       "classification": "integration",
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_payloads.cod_payment_method column; single source, no specific gateway connector inspected."}
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_payloads.cod_payment_method column; single source, no specific gateway connector inspected."
+      }
+    },
+    {
+      "id": "customs_broker_api",
+      "name": "Customs broker / clearance API",
+      "category": "compliance",
+      "purpose": "Submit customs declaration data for an international shipment and receive back a clearance, hold, or rejection status.",
+      "examples": [
+        "Descartes",
+        "Livingston International",
+        "carrier-native customs services"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "logistics.customs_documents"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "wco-data-model"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from the WCO Data Model's goods-declaration data elements and the customs_export_declaration workflow's submitted/cleared/held states; no specific broker integration or implementation was inspected in either cloned source."
+      }
     }
   ]
 }

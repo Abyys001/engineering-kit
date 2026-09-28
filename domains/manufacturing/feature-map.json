@@ -14,7 +14,7 @@
     "C28.29",
     "C33.12"
   ],
-  "maturity": "partial",
+  "maturity": "curated",
   "last_reviewed": "2026-09-27",
   "sources": [
     {
@@ -38,6 +38,116 @@
       "version": "9b1a92e38dbae2bb83ad80700ccec0535f8ac68f",
       "local_path": "sources/domains/odoo-mrp/source",
       "notes": "reference-only (LGPL). Sparse-checkout limited to addons/mrp (the manufacturing module) from the odoo/odoo monorepo (branch 20.0), plus root LICENSE/COPYRIGHT. Covers mrp.production (production order), mrp.workorder (operation execution), mrp.workcenter, mrp.bom/mrp.bom.line/mrp.bom.byproduct, mrp.routing.workcenter, mrp.unbuild, and the stock_orderpoint/stock_lot/stock_move files bundled in that addon."
+    },
+    {
+      "id": "erpnext-manufacturing",
+      "title": "ERPNext (manufacturing, quality_management, subcontracting, maintenance, buying, stock modules)",
+      "url": "https://github.com/frappe/erpnext",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "f49000067abdca88bdfcd9923834f55b71650677",
+      "notes": "Not cloned (no-new-downloads rule); read via `gh api repos/frappe/erpnext/contents/...` at HEAD, license verified from the actual LICENSE file (GPL-3.0), not a README badge. Reference-only, GPL-3.0 code never enters the kit. Doctypes inspected: Work Order, Job Card, BOM/BOM Item (allow_alternative_item, routing, is_phantom_bom), Workstation, Production Plan, Quality Inspection, Non Conformance, Quality Action, Subcontracting Order, Maintenance Schedule/Asset Maintenance, Stock Reconciliation, Purchase Order, Supplier — and their status Select-field options."
+    },
+    {
+      "id": "isa-95-iec-62264",
+      "title": "ANSI/ISA-95 (IEC 62264 Mod), Enterprise-Control System Integration",
+      "url": "https://www.isa.org/standards-and-publications/isa-standards/isa-95-standard",
+      "source_type": "authoritative",
+      "license": "Proprietary (ISA/IEC standard; full text requires purchase)",
+      "retrieved": "2026-09-27",
+      "version": "Part 1: ANSI/ISA-95.00.01-2025 (IEC 62264-1 Mod, confirmed by WebFetch of the ISA product page); Part 2: ANSI/ISA-95.00.02-2018 (IEC 62264-2 Mod); Part 3: ANSI/ISA-95.00.03-2013 (IEC 62264-3 Mod) (Parts 2-3 titles/years read from isa.org search-result listings, not individually fetched)",
+      "notes": "Cited for the Equipment Hierarchy Model (Enterprise>Site>Area>Process Cell/Work Center/Work Unit) and the Production/Maintenance/Quality/Inventory Operations categories and Production Schedule/Capability models. Full normative text not accessed (paywalled) — cited for terminology and model structure only, never for a verbatim field list."
+    },
+    {
+      "id": "b2mml",
+      "title": "B2MML (Business To Manufacturing Markup Language), MESA International",
+      "url": "https://github.com/MESAInternational/B2MML-BatchML",
+      "source_type": "authoritative",
+      "license": "MESA International custom license — royalty-free use/redistribution with attribution, not an OSI-approved license (verified from the repository's own LICENSE file text, not a README badge)",
+      "retrieved": "2026-09-27",
+      "version": "V0700 (\"Version 7\", per LICENSE file); repository HEAD 65cc66534343c86a1ce953561e121f906a0a0cbe (2023-07-11)",
+      "notes": "XML implementation of the ISA-95/IEC 62264 object models (ProductionSchedule, ProductionPerformance, Personnel/Equipment/Material/Process-Segment schemas). Cited alongside isa-95-iec-62264 for production-schedule and work-center object models; individual .xsd files were not fetched/inspected."
+    },
+    {
+      "id": "gs1-general-specifications",
+      "title": "GS1 General Specifications (Release 26)",
+      "url": "https://ref.gs1.org/standards/genspecs/",
+      "source_type": "authoritative",
+      "license": "GS1 IP Policy (freely accessible reference document; GS1 copyright)",
+      "retrieved": "2026-09-27",
+      "version": "Release 26 (ratified January 2026)",
+      "notes": "Defines GTIN (AI 01), SSCC (AI 00), and the GS1-128/Application-Identifier barcode syntax used for part/lot/container identification and labeling. Version/date corroborated via GS1 UK and GS1 Denmark member-organization announcements; the ref.gs1.org document itself exceeded the fetch tool's size limit and was not read in full. Distinct from the already-registered std:gs1-epcis (event vocabulary) — this is the identification/barcode layer."
+    },
+    {
+      "id": "opc-ua-iec-62541",
+      "title": "OPC UA (IEC 62541), OPC Foundation / IEC",
+      "url": "https://opcfoundation.org/developer-tools/specifications-unified-architecture",
+      "source_type": "authoritative",
+      "license": "Proprietary (IEC-adopted standard; OPC Foundation specifications are free to read, redistribution restricted)",
+      "retrieved": "2026-09-27",
+      "version": "Multi-part; editions per part range 2020-2026 (e.g. IEC 62541-1:2026 Overview and Concepts, IEC 62541-14:2026 PubSub, IEC 62541-10 4th edition Programs, per webstore.iec.ch listings)",
+      "notes": "Cited only for the existence and scope of the machine/shop-floor connectivity protocol (relevant to a machine_connectivity integration), not for a specific data-model detail. Individual parts were not fetched."
+    },
+    {
+      "id": "iso-9001",
+      "title": "ISO 9001, Quality management systems — Requirements",
+      "url": "https://www.iso.org/standard/88464.html",
+      "source_type": "authoritative",
+      "license": "Proprietary (ISO copyright; full text requires purchase)",
+      "retrieved": "2026-09-27",
+      "version": "ISO 9001:2026 (published 2026-09-16, supersedes ISO 9001:2015; 3-year transition period to 2029-09-30)",
+      "notes": "Direct iso.org fetch returned HTTP 403; version/publication date corroborated via multiple independent secondary sources (ANSI Blog, DNV, DQS, TUV, Punyam) rather than the primary page itself. Cited for the general existence of inspection/nonconformity/corrective-action requirements (clauses on release of product, nonconforming outputs, and corrective action), not for a specific data model."
+    },
+    {
+      "id": "iso-10012",
+      "title": "ISO 10012, Quality management — Requirements for measurement management systems",
+      "url": "https://www.iso.org/standard/85864.html",
+      "source_type": "authoritative",
+      "license": "Proprietary (ISO copyright; full text requires purchase)",
+      "retrieved": "2026-09-27",
+      "version": "ISO 10012:2026 (supersedes ISO 10012:2003)",
+      "notes": "Not fetched directly (iso.org blocked automated fetches); version corroborated via WebSearch of ANSI Blog and Beamex coverage. Cited for calibration/measurement-equipment traceability relevant to quality_inspections; full text not accessed."
+    },
+    {
+      "id": "fda-qmsr-21cfr820",
+      "title": "FDA Quality Management System Regulation (amending 21 CFR Part 820)",
+      "url": "https://www.fda.gov/medical-devices/postmarket-requirements-devices/quality-management-system-regulation-qmsr",
+      "source_type": "authoritative",
+      "license": "US Government work (public domain)",
+      "retrieved": "2026-09-27",
+      "version": "Effective 2026-02-02; incorporates ISO 13485:2016 by reference",
+      "notes": "Fetched directly from fda.gov. Supersedes the former free-standing 21 CFR Part 820 Quality System Regulation text for devices sold in the US as of the effective date."
+    },
+    {
+      "id": "fda-21cfr-part11",
+      "title": "21 CFR Part 11, Electronic Records; Electronic Signatures",
+      "url": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-A/part-11",
+      "source_type": "authoritative",
+      "license": "US Government work (public domain)",
+      "retrieved": "2026-09-27",
+      "version": "Current e-CFR text (part unchanged in substance since 1997; site accessed 2026-09-27)",
+      "notes": "Direct ecfr.gov fetch was blocked by the site's bot-protection redirect (302 to an interstitial page); scope (electronic records/signatures equivalence to paper/handwritten signatures for FDA-regulated records) not independently re-fetched this session beyond well-established public knowledge of the rule's text and applicability."
+    },
+    {
+      "id": "eu-mdr-2017-745",
+      "title": "Regulation (EU) 2017/745 on medical devices (MDR)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2017/745/oj",
+      "source_type": "authoritative",
+      "license": "EU public-domain legal text",
+      "retrieved": "2026-09-27",
+      "version": "2017/745, as amended",
+      "notes": "Not fetched directly this session; cited for the UDI/traceability requirements (Article 27, UDI system) relevant to manufacturing.traceability in the medical-device sub-sector, based on well-established public knowledge of the regulation rather than a fresh primary-text read."
+    },
+    {
+      "id": "fda-fsma-204",
+      "title": "FDA Food Traceability Rule (FSMA Section 204, 21 CFR Part 1 Subpart S)",
+      "url": "https://www.fda.gov/food/food-safety-modernization-act-fsma/fsma-final-rule-requirements-additional-traceability-records-certain-foods",
+      "source_type": "authoritative",
+      "license": "US Government work (public domain)",
+      "retrieved": "2026-09-27",
+      "version": "Compliance date extended to 2028-07-20 (originally 2026-01-20), per FDA and Federal Register notices",
+      "notes": "Confirmed via WebSearch results linking directly to fda.gov and federalregister.gov; the FDA page itself was not fetched in full this session. Defines Key Data Elements (KDEs) and Critical Tracking Events (CTEs) for foods on the Food Traceability List — the sector-specific analogue of manufacturing.traceability's genealogy concept."
     }
   ],
   "features": [
@@ -53,7 +163,9 @@
       "entities": [
         "item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "part_master",
         "make_buy_flags",
@@ -147,7 +259,9 @@
       "entities": [
         "bom_line"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "substitute_selection"
       ],
@@ -171,10 +285,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's BomItemSubstitute model; single source, not found in the cloned odoo-mrp scope."
+        "confidence": "medium",
+        "notes": "InvenTree's BomItemSubstitute model and ERPNext's BomItem.allow_alternative_item/original_item fields (bom_item.json, verified via gh api at HEAD) independently implement alternate-component selection. Not found in the cloned odoo-mrp scope."
       }
     },
     {
@@ -217,10 +332,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "erpnext-manufacturing",
+          "isa-95-iec-62264"
         ],
-        "confidence": "low",
-        "notes": "Odoo's mrp.routing.workcenter model (linked from mrp.bom.operation_ids); not found in the cloned InvenTree scope, which does not model a distinct routing/operations layer. Single source."
+        "confidence": "high",
+        "notes": "Odoo's mrp.routing.workcenter, ERPNext's BOM.routing field plus dedicated Operation/BOM Operation doctypes, and ISA-95/IEC 62264's Operations Segment / Process Segment model (ordered activities performed at equipment) all independently model an ordered operation sequence at a work center. Not modeled as a distinct layer in the cloned InvenTree scope."
       }
     },
     {
@@ -235,7 +352,9 @@
       "entities": [
         "work_center"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "capacity_tracking",
         "cost_per_hour",
@@ -261,10 +380,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "erpnext-manufacturing",
+          "isa-95-iec-62264"
         ],
-        "confidence": "low",
-        "notes": "Odoo's mrp.workcenter model (costs_hour, time_start/time_stop, working_state: normal/blocked/done); not modeled as a distinct entity in the cloned InvenTree scope. Single source."
+        "confidence": "high",
+        "notes": "Odoo's mrp.workcenter (working_state: normal/blocked/done), ERPNext's Workstation doctype (status: Production/Off/Idle/Problem/Maintenance/Setup, verified via gh api), and ISA-95/IEC 62264's Equipment Hierarchy Model (which names Work Center/Work Unit as model elements) independently corroborate this as a distinct resource entity. Not modeled distinctly in the cloned InvenTree scope."
       }
     },
     {
@@ -360,10 +481,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "Odoo's mrp.workorder.date_start (Planned Date) and leave_id (workcenter calendar slot); not found in the cloned InvenTree scope. Single source."
+        "confidence": "medium",
+        "notes": "Odoo's mrp.workorder.date_start/leave_id (workcenter calendar slot) and ERPNext's Job Card doctype (status: Open/Work In Progress/Partially Transferred/Material Transferred/On Hold/Submitted/To Manufacture/Cancelled/Completed, verified via gh api) both implement per-operation scheduling and execution against a work center. Not found in the cloned InvenTree scope."
       }
     },
     {
@@ -409,10 +531,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "Odoo's stock.warehouse.orderpoint model (bundled in addons/mrp/models/stock_orderpoint.py: bom_id, effective_bom_id); reorder-point-based MRP, not a full multi-level MRP II run. Not found in the cloned InvenTree scope. Single source."
+        "confidence": "high",
+        "notes": "Three independent implementations: Odoo's stock.warehouse.orderpoint (bundled in addons/mrp) is reorder-point-triggered replenishment; InvenTree's Part.minimum_stock + is_low_stock()/notify_low_stock_if_required (verified in part/models.py, not previously credited) is an independent minimum-stock check; ERPNext's dedicated Production Plan doctype (status: Draft/Submitted/Not Started/In Process/Completed/Closed/Cancelled/Material Requested, verified via gh api) is a full MRP-run entity with its own lifecycle. Coverage remains reorder-point/plan-level, not a full multi-level MRP II netting algorithm in any of the three."
       }
     },
     {
@@ -427,7 +551,9 @@
       "entities": [
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "lot_tracking",
         "serial_tracking",
@@ -473,7 +599,9 @@
       "entities": [
         "stock_location"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "location_hierarchy",
         "location_types"
@@ -502,7 +630,7 @@
           "inventree"
         ],
         "confidence": "low",
-        "notes": "InvenTree's StockLocation (InvenTreeTree hierarchy) and StockLocationType models; Odoo's stock.warehouse referenced (location_src_id/location_dest_id on mrp.production) but the warehouse module itself was not cloned, so this is scored on InvenTree alone."
+        "notes": "InvenTree's StockLocation (InvenTreeTree hierarchy) and StockLocationType models remain the only source with a genuine hierarchical storage-location model; Odoo's stock.warehouse module was not in the cloned addons/mrp scope. ISA-95's Equipment Hierarchy Model was considered but concerns production-equipment grouping (Enterprise/Site/Area/Cell), not warehouse bin/location structure, so it was deliberately not cited here rather than stretched to fit. Left at low confidence; a second independent storage-location implementation is still needed."
       }
     },
     {
@@ -517,7 +645,9 @@
         "purchase_order",
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "purchase_to_receipt"
+      ],
       "capabilities": [
         "supplier_part_mapping",
         "receipt_tracking"
@@ -545,10 +675,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's order app: PurchaseOrderStatus enum (pending/placed/on_hold/complete/cancelled/lost/returned) and StockItem.purchase_order linkage; single source."
+        "confidence": "medium",
+        "notes": "InvenTree's order app (PurchaseOrderStatus: pending/placed/on_hold/complete/cancelled/lost/returned) and ERPNext's Purchase Order doctype (status: Draft/On Hold/To Receive and Bill/To Bill/To Receive/Completed/Cancelled/Closed/Delivered, verified via gh api) both implement this independently."
       }
     },
     {
@@ -562,7 +693,9 @@
       "entities": [
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "supplier_part_catalog"
       ],
@@ -588,10 +721,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's company app (Company, SupplierPart, ManufacturerPart models cloned under src/backend/InvenTree/company); single source."
+        "confidence": "medium",
+        "notes": "InvenTree's company app (Company/SupplierPart/ManufacturerPart models) and ERPNext's dedicated Supplier doctype (supplier_group, supplier_type, tax_id, etc., verified via gh api) both implement supplier records independently."
       }
     },
     {
@@ -636,10 +770,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's PartTestTemplate and StockItemTestResult models (result, value, notes, test_station); not found in the cloned odoo-mrp scope (Odoo's quality module is separate and was not cloned). Single source."
+        "confidence": "medium",
+        "notes": "InvenTree's PartTestTemplate/StockItemTestResult (boolean pass/fail) and ERPNext's Quality Inspection doctype (status: Accepted/Rejected/Cancelled; inspection_type: Incoming/Outgoing/In Process; reference_type linking Job Card/Purchase Receipt/Subcontracting Receipt/Stock Entry — all verified via gh api) independently implement pass/fail test recording against a template. ISO 9001 (clause on release of products and services) establishes that such verification records are a common requirement but does not define a data schema, so it is named in compliance.json rather than used to push this to high confidence."
       }
     },
     {
@@ -654,7 +789,9 @@
       "entities": [
         "non_conformance"
       ],
-      "workflows": [],
+      "workflows": [
+        "quality_inspection_workflow"
+      ],
       "capabilities": [
         "disposition_tracking",
         "root_cause_notes"
@@ -679,10 +816,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
+          "iso-9001",
+          "erpnext-manufacturing",
           "inventree"
         ],
-        "confidence": "low",
-        "notes": "Reasoned extension of InvenTree's StockStatus enum (ATTENTION/DAMAGED/REJECTED/QUARANTINED) and StockItemTestResult failures; no dedicated non-conformance/CAPA table found in either cloned source."
+        "confidence": "high",
+        "notes": "ERPNext has a dedicated CAPA pair not found when this was first scored: Non Conformance (status: Open/Resolved/Cancelled) and Quality Action (status: Open/Completed, root-cause/corrective-action fields), both verified via gh api. InvenTree's StockStatus (ATTENTION/DAMAGED/REJECTED/QUARANTINED) provides the triggering signal. ISO 9001 clauses on control of nonconforming outputs and corrective action (compliance.json: iso_9001_quality_management) establish this as a standard QMS requirement. Disposition outcome codes (rework/scrap/use-as-is) are still not verbatim in either implementation and remain a reasoned addition — see non_conformance entity notes."
       }
     },
     {
@@ -697,7 +836,9 @@
       "entities": [
         "work_center"
       ],
-      "workflows": [],
+      "workflows": [
+        "equipment_maintenance_workflow"
+      ],
       "capabilities": [
         "preventive_scheduling",
         "downtime_logging"
@@ -724,10 +865,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from mrp.workcenter's working_state (blocked) and blocked_time/productive_time computed fields, which a maintenance module would drive; no dedicated maintenance-schedule table found in the cloned addons/mrp scope. Single source, reasoned."
+        "confidence": "medium",
+        "notes": "Odoo's mrp.workcenter.working_state/blocked_time/productive_time and ERPNext's Maintenance Schedule (status: Draft/Submitted/Cancelled) plus Asset Maintenance/Asset Maintenance Log/Asset Maintenance Team doctypes (verified via gh api) independently corroborate scheduled/logged maintenance against equipment."
       }
     },
     {
@@ -773,10 +915,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "gs1-general-specifications"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's InvenTreeBarcodeMixin (on the Build model) and its dedicated `web` app for a shop-floor UI; not found in the cloned odoo-mrp scope (Odoo has a separate 'Shop Floor' app not cloned here). Single source."
+        "confidence": "medium",
+        "notes": "InvenTree's InvenTreeBarcodeMixin and dedicated shop-floor `web` app remain the only implementation-level source for the operator-login/quantity-reporting parts of this feature. GS1 General Specifications (GTIN/SSCC/GS1-128 Application Identifiers) is an authoritative corroboration of the barcode-scanning sub-capability specifically, not the mobile-UI/operator-login aspects as a whole — noted honestly rather than overstated. Odoo's separate 'Shop Floor' app was not in the cloned addons/mrp scope."
       }
     },
     {
@@ -841,7 +984,9 @@
         "production_order",
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "disassembly_unbuild_workflow"
+      ],
       "capabilities": [
         "component_recovery"
       ],
@@ -885,7 +1030,9 @@
         "production_order",
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "subcontract_operation_execution"
+      ],
       "capabilities": [
         "external_operation"
       ],
@@ -911,10 +1058,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's Build.external boolean field ('This build order is fulfilled by an external supplier'); not found in the cloned odoo-mrp scope. Single source."
+        "confidence": "medium",
+        "notes": "InvenTree's Build.external boolean and ERPNext's dedicated Subcontracting Order doctype (status: Draft/Open/Partially Received/Completed/Material Transferred/Partial Material Transferred/Cancelled/Closed, plus Subcontracting BOM, verified via gh api) independently implement sending operations to an external vendor. Odoo's addons/mrp scope only references subcontracting in help text/comments (produce_delay field, stock_picking.py); the dedicated mrp_subcontracting addon was not cloned, so Odoo is not counted as a second source here."
       }
     },
     {
@@ -929,7 +1077,9 @@
         "product_variant",
         "item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "template_variant_linking"
       ],
@@ -972,7 +1122,9 @@
       "entities": [
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "stocktake_cycle_counting_workflow"
+      ],
       "capabilities": [
         "count_scheduling",
         "variance_reporting"
@@ -1000,10 +1152,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "InvenTree's PartStocktake model and StockItem.stocktake_date/stocktake_user fields; single source."
+        "confidence": "medium",
+        "notes": "InvenTree's PartStocktake model and ERPNext's Stock Reconciliation doctype (verified to exist via gh api; a dedicated physical-count/variance-reconciliation entity) independently implement this. Not found in the cloned odoo-mrp scope (core stock module not cloned)."
       }
     },
     {
@@ -1019,7 +1172,9 @@
         "work_center",
         "production_order"
       ],
-      "workflows": [],
+      "workflows": [
+        "production_cost_and_capacity_reporting"
+      ],
       "capabilities": [
         "labor_costing",
         "cost_rollup"
@@ -1064,7 +1219,9 @@
         "work_center",
         "work_order"
       ],
-      "workflows": [],
+      "workflows": [
+        "production_cost_and_capacity_reporting"
+      ],
       "capabilities": [
         "load_visualization",
         "late_order_flagging"
@@ -1092,10 +1249,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "isa-95-iec-62264"
         ],
-        "confidence": "low",
-        "notes": "Odoo's mrp.workcenter computed fields (workorder_count, workorder_ready_count, workorder_progress_count, workorder_blocked_count, workorder_late_count); single source."
+        "confidence": "medium",
+        "notes": "Odoo's mrp.workcenter computed fields (workorder_count/workorder_ready_count/workorder_progress_count/workorder_blocked_count/workorder_late_count) and ISA-95/IEC 62264's Production Capability model (which explicitly includes equipment capacity as a model element) corroborate work-center load/capacity as a standard concept, though the standard does not itself supply a load-visualization implementation."
       }
     },
     {
@@ -1111,7 +1269,9 @@
         "production_order",
         "non_conformance"
       ],
-      "workflows": [],
+      "workflows": [
+        "work_order_execution"
+      ],
       "capabilities": [
         "scrap_reason_codes"
       ],
@@ -1136,10 +1296,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "inventree"
+          "inventree",
+          "odoo-mrp"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from InvenTree's StockHistoryCode.BUILD_OUTPUT_REJECTED history code; no dedicated scrap-reason model found in either cloned source."
+        "confidence": "medium",
+        "notes": "InvenTree's StockHistoryCode.BUILD_OUTPUT_REJECTED and Odoo's stock.move.is_scrap flag plus mrp.production.action_scrap()/scrap_count (verified in mrp_production.py/stock_move.py, not previously credited) are two independent implementations of recording scrapped production output, separate from planned by-products."
       }
     },
     {
@@ -1153,7 +1314,9 @@
       "entities": [
         "bom_byproduct"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "capabilities": [
         "byproduct_yield"
       ],
@@ -1177,10 +1340,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "odoo-mrp"
+          "odoo-mrp",
+          "erpnext-manufacturing"
         ],
-        "confidence": "low",
-        "notes": "Odoo's mrp.bom.byproduct model; not found in the cloned InvenTree scope. Single source."
+        "confidence": "medium",
+        "notes": "Odoo's mrp.bom.byproduct model is verbatim. ERPNext models co-products/by-products (confirmed via the existence of a `co_by_product_patch.py` migration and a Process Loss Report in its manufacturing module, verified via gh api tree listing); the exact ERPNext field name was not individually inspected, so this is credited as implementation-level corroboration rather than a verbatim field match. Not found in the cloned InvenTree scope."
       }
     }
   ]

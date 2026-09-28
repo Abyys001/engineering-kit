@@ -9,10 +9,10 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `project-management.boards_kanban` Kanban boards | A visual board of columns (statuses) and swimlanes, with drag-and-drop task cards. | medium | web, mobile, admin, customer_portal, backend, real_time | high | none | reference | kanboard, plane |
-| `project-management.comments_mentions` Comments and mentions | Threaded discussion on a task, with @-mentions and emoji reactions. | low | web, mobile, admin, customer_portal, backend, real_time | high | low | reference | plane |
+| `project-management.comments_mentions` Comments and mentions | Threaded discussion on a task, with @-mentions and emoji reactions. | high | web, mobile, admin, customer_portal, backend, real_time | high | low | reference | plane, kanboard, vikunja |
 | `project-management.projects` Projects | A container for a related set of tasks, with its own members, states, and settings, inside a workspace. | medium | web, mobile, admin, customer_portal, backend | none | none | reference | plane, kanboard |
-| `project-management.statuses_workflows` Statuses and workflows | Configurable per-project statuses (grouped into backlog/unstarted/started/completed/cancelled) that define a task's workflow. | low | web, admin, backend | none | none | reference | plane |
-| `project-management.task_dependencies` Task dependencies | Linking tasks with typed relations (blocks, relates to, duplicates, must-start/finish-before) to sequence work. | low | web, admin, backend | low | none | reference | plane |
+| `project-management.statuses_workflows` Statuses and workflows | Configurable per-project statuses (grouped into backlog/unstarted/started/completed/cancelled) that define a task's workflow. | medium | web, admin, backend | none | none | reference | plane, leantime |
+| `project-management.task_dependencies` Task dependencies | Linking tasks with typed relations (blocks, relates to, duplicates, must-start/finish-before) to sequence work. | high | web, admin, backend | low | none | reference | plane, vikunja, redmine |
 | `project-management.tasks_issues` Tasks / issues | The core unit of work: a title, description, assignees, priority, dates, and status, belonging to a project. | medium | web, mobile, admin, customer_portal, backend, real_time | high | medium | reference | plane, kanboard |
 | `project-management.workspaces` Workspaces | A top-level container for an organization's projects, members, and settings. | low | web, mobile, admin, backend | none | none | reference | plane |
 
@@ -21,31 +21,31 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `project-management.attachments` Attachments | Uploading files to a task for reference (screenshots, documents, designs). | medium | web, mobile, admin, customer_portal, backend | none | none | reference | plane, kanboard |
-| `project-management.cycles_sprints` Cycles / sprints | A fixed-duration iteration (sprint) that a set of tasks is planned into and executed within. | low | web, admin, backend | none | low | reference | plane |
+| `project-management.cycles_sprints` Cycles / sprints | A fixed-duration iteration (sprint) that a set of tasks is planned into and executed within. | high | web, admin, backend | none | low | reference | plane, leantime, scrum-guide-2020 |
 | `project-management.labels` Labels | Free-form or predefined tags applied to tasks for categorization and filtering. | medium | web, mobile, admin, customer_portal, backend | none | low | reference | plane, kanboard |
-| `project-management.milestones` Milestones | A target date marking a significant point in a project, used to group and track progress toward a deliverable. | low | web, admin, customer_portal, backend | none | none | reference | plane |
+| `project-management.milestones` Milestones | A target date marking a significant point in a project, used to group and track progress toward a deliverable. | high | web, admin, customer_portal, backend | none | none | reference | leantime, redmine, openproject |
 | `project-management.subtasks` Subtasks | Breaking a task down into smaller child tasks tracked toward the parent's completion. | medium | web, mobile, admin, customer_portal, backend | low | none | reference | plane, kanboard |
-| `project-management.time_tracking` Time tracking | Logging time spent on a task, by whom and when, for effort reporting. | low | web, mobile, admin, backend | none | none | reference | kanboard |
-| `project-management.views_filters` Saved views and filters | Saving a combination of filters, sort order, and grouping as a reusable view. | low | web, mobile, admin, backend | none | none | reference | plane |
+| `project-management.time_tracking` Time tracking | Logging time spent on a task, by whom and when, for effort reporting. | medium | web, mobile, admin, backend | none | none | reference | kanboard, leantime |
+| `project-management.views_filters` Saved views and filters | Saving a combination of filters, sort order, and grouping as a reusable view. | medium | web, mobile, admin, backend | none | none | reference | plane, vikunja |
 
 ## Recommended (5)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `project-management.activity_feed` Activity feed | A chronological, per-task or per-project audit trail of field changes, status moves, and comments. | medium | web, mobile, admin, customer_portal, backend, real_time | medium | none | reference | plane, kanboard |
-| `project-management.estimates_story_points` Estimates / story points | Sizing a task's effort, either as a raw point value or against a project-defined estimate scale. | low | web, admin, backend | none | low | reference | plane |
-| `project-management.gantt_timeline` Gantt / timeline view | A horizontal timeline view of tasks by start/target date, showing dependencies and overlaps. | low | web, admin, backend | none | none | reference | plane |
+| `project-management.estimates_story_points` Estimates / story points | Sizing a task's effort, either as a raw point value or against a project-defined estimate scale. | medium | web, admin, backend | none | low | reference | plane, leantime |
+| `project-management.gantt_timeline` Gantt / timeline view | A horizontal timeline view of tasks by start/target date, showing dependencies and overlaps. | medium | web, admin, backend | none | none | reference | plane, openproject |
 | `project-management.guest_client_access` Guest / client access | A restricted external member role for clients or stakeholders to view or comment on specific projects without full workspace access. | low | web, admin, customer_portal, backend | none | none | reference | plane |
-| `project-management.modules_epics` Modules / epics | A larger unit of work (feature or epic) that groups related tasks, independent of the sprint/cycle timeline. | low | web, admin, backend | none | none | reference | plane |
+| `project-management.modules_epics` Modules / epics | A larger unit of work (feature or epic) that groups related tasks, independent of the sprint/cycle timeline. | medium | web, admin, backend | none | none | reference | plane, taiga-back |
 
 ## Optional (7)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `project-management.burndown_velocity_reports` Burndown and velocity reports | Charting remaining work over a cycle (burndown) and completed points per cycle over time (velocity). | low | web, admin, backend | none | none | reference | plane |
-| `project-management.favorites` Favorites / pinning | Letting a user pin frequently-used projects, views, or tasks for quick access. | low | web, mobile, backend | none | none | reference | plane |
+| `project-management.burndown_velocity_reports` Burndown and velocity reports | Charting remaining work over a cycle (burndown) and completed points per cycle over time (velocity). | medium | web, admin, backend | none | none | reference | plane, taiga-back |
+| `project-management.favorites` Favorites / pinning | Letting a user pin frequently-used projects, views, or tasks for quick access. | medium | web, mobile, backend | none | none | reference | plane, vikunja |
 | `project-management.intake_triage` Intake / triage | A lightweight submission form (often for non-members) that creates a triage-state task for a maintainer to accept or reject. | low | web, admin, customer_portal, backend | none | low | reference | plane |
-| `project-management.private_projects` Private projects | Restricting a project's visibility to explicitly invited members within the workspace. | low | web, admin, backend | none | none | reference | plane |
-| `project-management.recurring_tasks` Recurring tasks | Automatically regenerating a task on a schedule once the previous occurrence is completed. | low | web, admin, backend | none | none | reference | kanboard |
-| `project-management.saved_views_sharing` View sharing | Sharing a saved view publicly or with specific teammates. | low | web, admin, customer_portal, backend | none | none | reference | plane |
-| `project-management.workload_capacity` Workload / capacity view | Visualizing how much work is assigned to each person to spot over/under-allocation. | low | web, admin, backend, ai | none | low | reference | plane |
+| `project-management.private_projects` Private projects | Restricting a project's visibility to explicitly invited members within the workspace. | medium | web, admin, backend | none | none | reference | plane, redmine |
+| `project-management.recurring_tasks` Recurring tasks | Automatically regenerating a task on a schedule once the previous occurrence is completed. | medium | web, admin, backend | none | none | reference | kanboard, vikunja |
+| `project-management.saved_views_sharing` View sharing | Sharing a saved view publicly or with specific teammates. | medium | web, admin, customer_portal, backend | none | none | reference | plane, focalboard |
+| `project-management.workload_capacity` Workload / capacity view | Visualizing how much work is assigned to each person to spot over/under-allocation. | medium | web, admin, backend, ai | none | low | reference | plane, openproject |

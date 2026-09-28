@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-09-27",
+  "generated": "2026-09-28",
   "generator": "tools/kb.py build",
   "shared": [
     {
@@ -981,7 +981,32 @@
       "source_candidates": [],
       "domain": "shared",
       "domains": [
-        "crm"
+        "crm",
+        "general-saas"
+      ],
+      "implementation_status": "missing"
+    },
+    {
+      "id": "shared.reviews",
+      "name": "Reviews and ratings",
+      "classification": "platform",
+      "description": "Collect a rating and written review from a verified party, moderate it, publish it, and let the business reply. The generic half of what ecommerce, restaurant and hospitality each model separately; what stays domain-specific is *what* is reviewed and what proves the reviewer was really there (an order, a visit, a completed stay).",
+      "kit_paths": [],
+      "tags": [
+        "communication",
+        "web",
+        "customer",
+        "backend",
+        "search"
+      ],
+      "real_time_relevance": "none",
+      "ai_relevance": "medium",
+      "source_candidates": [],
+      "domain": "shared",
+      "domains": [
+        "ecommerce",
+        "hospitality",
+        "restaurant"
       ],
       "implementation_status": "missing"
     }
@@ -1256,7 +1281,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "medium",
+      "confidence": "low",
       "path": "domains/booking/feature-map.json"
     },
     {
@@ -1467,7 +1492,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "medium",
+      "confidence": "low",
       "path": "domains/booking/feature-map.json"
     },
     {
@@ -3374,7 +3399,9 @@
       "compliance": [],
       "ai_relevance": "medium",
       "real_time_relevance": "none",
-      "depends_on": [],
+      "depends_on": [
+        "shared.reviews"
+      ],
       "enhanced_by": [
         "ecommerce.order_management"
       ],
@@ -5197,7 +5224,7 @@
         "exchange.rate_management"
       ],
       "implementation_status": "missing",
-      "confidence": "medium",
+      "confidence": "low",
       "path": "domains/exchange/feature-map.json"
     },
     {
@@ -5465,7 +5492,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/exchange/feature-map.json"
     },
     {
@@ -7423,7 +7450,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "signup_workspace_onboarding"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -7461,7 +7490,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "signup_workspace_onboarding"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -7471,7 +7502,7 @@
         "general-saas.workspace_management"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -7549,7 +7580,10 @@
         "entitlement",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "plan_change_with_proration",
+        "usage_quota_enforcement"
+      ],
       "integrations": [
         "stripe_billing"
       ],
@@ -7592,7 +7626,9 @@
         "usage_event",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "usage_quota_enforcement"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -7602,7 +7638,7 @@
         "general-saas.plans_entitlements"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -7691,7 +7727,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -7699,7 +7735,7 @@
       "name": "Internal admin console",
       "domain": "general-saas",
       "classification": "core",
-      "description": "An internal, staff-only console for searching tenants, viewing account health, and taking support actions across workspaces.",
+      "description": "An internal, staff-only console for searching tenants, viewing account health, impersonating a tenant user for support purposes, and taking other cross-tenant support actions.",
       "tags": [
         "admin",
         "backend"
@@ -7719,7 +7755,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "support_impersonation"
+      ],
       "integrations": [],
       "compliance": [
         "soc2_type_ii"
@@ -7733,7 +7771,7 @@
         "shared.audit_log"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -7770,10 +7808,11 @@
       "real_time_relevance": "medium",
       "depends_on": [],
       "enhanced_by": [
-        "shared.notifications"
+        "shared.notifications",
+        "shared.jobs"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -7801,7 +7840,9 @@
       "entities": [
         "changelog_entry"
       ],
-      "workflows": [],
+      "workflows": [
+        "changelog_publishing"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -7811,15 +7852,15 @@
         "shared.notifications"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
       "id": "general-saas.sso_saml",
-      "name": "SSO (SAML)",
+      "name": "Enterprise SSO (SAML / OIDC)",
       "domain": "general-saas",
       "classification": "common",
-      "description": "Enterprise single sign-on into a workspace via SAML 2.0 against the customer's identity provider.",
+      "description": "Enterprise single sign-on into a workspace via SAML 2.0 or OpenID Connect against the customer's identity provider.",
       "tags": [
         "identity",
         "admin",
@@ -7888,7 +7929,9 @@
         "scim_connection",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "scim_user_provisioning"
+      ],
       "integrations": [
         "scim_idp"
       ],
@@ -7946,7 +7989,9 @@
       "depends_on": [
         "shared.file_storage"
       ],
-      "enhanced_by": [],
+      "enhanced_by": [
+        "shared.import_export"
+      ],
       "implementation_status": "missing",
       "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
@@ -7978,7 +8023,9 @@
         "feature_flag",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "feature_flag_rollout"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -7988,7 +8035,7 @@
         "general-saas.plans_entitlements"
       ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -8018,7 +8065,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "audit_log_review"
+      ],
       "integrations": [],
       "compliance": [
         "soc2_type_ii"
@@ -8030,7 +8079,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -8059,14 +8108,19 @@
         "plan",
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "failed_payment_dunning",
+        "plan_change_with_proration"
+      ],
       "integrations": [
         "stripe_billing"
       ],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
-      "depends_on": [],
+      "depends_on": [
+        "shared.billing"
+      ],
       "enhanced_by": [],
       "implementation_status": "reference",
       "confidence": "medium",
@@ -8099,7 +8153,9 @@
         "workspace",
         "plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "seat_lifecycle"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -8138,7 +8194,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "custom_role_authoring"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -8148,7 +8206,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -8177,7 +8235,9 @@
         "workspace",
         "plan"
       ],
-      "workflows": [],
+      "workflows": [
+        "trial_conversion"
+      ],
       "integrations": [
         "stripe_billing"
       ],
@@ -8191,7 +8251,7 @@
         "shared.billing"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -8263,7 +8323,9 @@
       "entities": [
         "api_key"
       ],
-      "workflows": [],
+      "workflows": [
+        "rate_limit_enforcement"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -8273,7 +8335,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -8301,7 +8363,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "sandbox_provisioning"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -8339,7 +8403,9 @@
       "entities": [
         "workspace"
       ],
-      "workflows": [],
+      "workflows": [
+        "data_residency_selection"
+      ],
       "integrations": [],
       "compliance": [
         "gdpr",
@@ -8352,7 +8418,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/general-saas/feature-map.json"
     },
     {
@@ -9368,7 +9434,7 @@
         "healthcare.patient_registration"
       ],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/healthcare/feature-map.json"
     },
     {
@@ -10533,7 +10599,9 @@
       "compliance": [],
       "ai_relevance": "medium",
       "real_time_relevance": "none",
-      "depends_on": [],
+      "depends_on": [
+        "shared.reviews"
+      ],
       "enhanced_by": [
         "hospitality.front_desk_checkin_checkout"
       ],
@@ -10610,7 +10678,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -10666,7 +10736,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10713,7 +10783,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10743,15 +10813,19 @@
         "parcel",
         "commodity"
       ],
-      "workflows": [],
+      "workflows": [
+        "warehouse_fulfillment"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [],
-      "enhanced_by": [],
+      "enhanced_by": [
+        "logistics.warehouses"
+      ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10796,7 +10870,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10826,7 +10900,9 @@
         "carrier",
         "carrier_service"
       ],
-      "workflows": [],
+      "workflows": [
+        "carrier_manifest_closeout"
+      ],
       "integrations": [
         "carrier_api"
       ],
@@ -10882,7 +10958,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10914,7 +10990,8 @@
         "manifest"
       ],
       "workflows": [
-        "dispatch_and_route_planning"
+        "dispatch_and_route_planning",
+        "carrier_manifest_closeout"
       ],
       "integrations": [
         "carrier_api"
@@ -10927,7 +11004,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -10972,7 +11049,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11022,7 +11099,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11114,7 +11191,7 @@
         "shared.realtime"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11158,7 +11235,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11201,7 +11278,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11231,7 +11308,9 @@
         "vehicle",
         "fleet"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "integrations": [
         "telematics"
       ],
@@ -11241,7 +11320,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11271,15 +11350,19 @@
       "entities": [
         "warehouse"
       ],
-      "workflows": [],
+      "workflows": [
+        "warehouse_fulfillment"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
       "depends_on": [],
-      "enhanced_by": [],
+      "enhanced_by": [
+        "logistics.customers_shippers"
+      ],
       "implementation_status": "missing",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11325,7 +11408,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "medium",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11355,7 +11438,9 @@
       "entities": [
         "customs_document"
       ],
-      "workflows": [],
+      "workflows": [
+        "customs_export_declaration"
+      ],
       "integrations": [],
       "compliance": [
         "customs_regulations"
@@ -11363,11 +11448,12 @@
       "ai_relevance": "low",
       "real_time_relevance": "none",
       "depends_on": [
-        "logistics.shipments"
+        "logistics.shipments",
+        "shared.file_storage"
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11446,7 +11532,9 @@
       "entities": [
         "zone"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "integrations": [
         "mapping_geocoding"
       ],
@@ -11458,7 +11546,7 @@
         "logistics.routes"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11499,7 +11587,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11528,7 +11616,9 @@
       "entities": [
         "customer"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "integrations": [
         "mapping_geocoding"
       ],
@@ -11569,7 +11659,9 @@
         "carrier_service",
         "rate_quote"
       ],
-      "workflows": [],
+      "workflows": [
+        "customer_onboarding_and_rates"
+      ],
       "integrations": [
         "carrier_api"
       ],
@@ -11611,7 +11703,9 @@
         "exception",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "integrations": [
         "carrier_api"
       ],
@@ -11652,7 +11746,9 @@
       "entities": [
         "vehicle"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "integrations": [
         "fuel_card_provider"
       ],
@@ -11664,7 +11760,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11693,7 +11789,9 @@
       "entities": [
         "order"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "integrations": [
         "payment_gateway"
       ],
@@ -11736,7 +11834,9 @@
         "route",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "load_planning_and_eta"
+      ],
       "integrations": [
         "mapping_geocoding"
       ],
@@ -11777,7 +11877,9 @@
       "entities": [
         "driver"
       ],
-      "workflows": [],
+      "workflows": [
+        "telemetry_geofencing_and_scoring"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "medium",
@@ -11818,7 +11920,9 @@
         "parcel",
         "order"
       ],
-      "workflows": [],
+      "workflows": [
+        "load_planning_and_eta"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -11858,7 +11962,9 @@
         "rate_quote",
         "shipment"
       ],
-      "workflows": [],
+      "workflows": [
+        "freight_settlement"
+      ],
       "integrations": [
         "carrier_api"
       ],
@@ -11870,7 +11976,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/logistics/feature-map.json"
     },
     {
@@ -11900,7 +12006,9 @@
       "entities": [
         "item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -11979,7 +12087,9 @@
       "entities": [
         "bom_line"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -11989,7 +12099,7 @@
         "manufacturing.bill_of_materials"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12032,7 +12142,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12061,7 +12171,9 @@
       "entities": [
         "work_center"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12069,7 +12181,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12156,7 +12268,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12202,7 +12314,7 @@
         "shared.jobs"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12232,7 +12344,9 @@
       "entities": [
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12273,7 +12387,9 @@
       "entities": [
         "stock_location"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12311,7 +12427,9 @@
         "purchase_order",
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "purchase_to_receipt"
+      ],
       "integrations": [
         "supplier_edi"
       ],
@@ -12323,7 +12441,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12351,7 +12469,9 @@
       "entities": [
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [
         "supplier_edi"
       ],
@@ -12361,7 +12481,7 @@
       "depends_on": [],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12402,7 +12522,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12431,7 +12551,9 @@
       "entities": [
         "non_conformance"
       ],
-      "workflows": [],
+      "workflows": [
+        "quality_inspection_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -12443,7 +12565,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12472,7 +12594,9 @@
       "entities": [
         "work_center"
       ],
-      "workflows": [],
+      "workflows": [
+        "equipment_maintenance_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -12482,7 +12606,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12528,7 +12652,7 @@
         "shared.realtime"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12603,7 +12727,9 @@
         "production_order",
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "disassembly_unbuild_workflow"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12643,7 +12769,9 @@
         "production_order",
         "supplier"
       ],
-      "workflows": [],
+      "workflows": [
+        "subcontract_operation_execution"
+      ],
       "integrations": [
         "supplier_edi"
       ],
@@ -12656,7 +12784,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12685,7 +12813,9 @@
         "product_variant",
         "item"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12725,7 +12855,9 @@
       "entities": [
         "stock_item"
       ],
-      "workflows": [],
+      "workflows": [
+        "stocktake_cycle_counting_workflow"
+      ],
       "integrations": [
         "barcode_scanner"
       ],
@@ -12737,7 +12869,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12767,7 +12899,9 @@
         "work_center",
         "production_order"
       ],
-      "workflows": [],
+      "workflows": [
+        "production_cost_and_capacity_reporting"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12809,7 +12943,9 @@
         "work_center",
         "work_order"
       ],
-      "workflows": [],
+      "workflows": [
+        "production_cost_and_capacity_reporting"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -12819,7 +12955,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12850,7 +12986,9 @@
         "production_order",
         "non_conformance"
       ],
-      "workflows": [],
+      "workflows": [
+        "work_order_execution"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12860,7 +12998,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12888,7 +13026,9 @@
       "entities": [
         "bom_byproduct"
       ],
-      "workflows": [],
+      "workflows": [
+        "manufacturing_master_data_setup"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -12898,7 +13038,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/manufacturing/feature-map.json"
     },
     {
@@ -12970,7 +13110,9 @@
         "project"
       ],
       "workflows": [],
-      "integrations": [],
+      "integrations": [
+        "importer_migration"
+      ],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
@@ -13013,9 +13155,15 @@
         "task"
       ],
       "workflows": [
-        "task_lifecycle"
+        "task_lifecycle",
+        "issue_intake_and_triage",
+        "backlog_refinement"
       ],
-      "integrations": [],
+      "integrations": [
+        "public_api_webhooks",
+        "calendar_sync",
+        "importer_migration"
+      ],
       "compliance": [],
       "ai_relevance": "medium",
       "real_time_relevance": "high",
@@ -13106,7 +13254,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13138,7 +13286,8 @@
         "swimlane"
       ],
       "workflows": [
-        "task_lifecycle"
+        "task_lifecycle",
+        "board_column_wip_and_automation"
       ],
       "integrations": [],
       "compliance": [],
@@ -13195,7 +13344,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13229,7 +13378,8 @@
         "commenting_and_mentions"
       ],
       "integrations": [
-        "chat_notifications"
+        "chat_notifications",
+        "public_api_webhooks"
       ],
       "compliance": [],
       "ai_relevance": "low",
@@ -13241,7 +13391,7 @@
         "shared.notifications"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13272,7 +13422,8 @@
         "cycle"
       ],
       "workflows": [
-        "cycle_planning"
+        "cycle_planning",
+        "backlog_refinement"
       ],
       "integrations": [],
       "compliance": [],
@@ -13283,7 +13434,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13311,7 +13462,9 @@
       "entities": [
         "module"
       ],
-      "workflows": [],
+      "workflows": [
+        "backlog_refinement"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -13321,7 +13474,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13350,8 +13503,12 @@
       "entities": [
         "milestone"
       ],
-      "workflows": [],
-      "integrations": [],
+      "workflows": [
+        "release_version_cut"
+      ],
+      "integrations": [
+        "calendar_sync"
+      ],
       "compliance": [],
       "ai_relevance": "none",
       "real_time_relevance": "none",
@@ -13360,7 +13517,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "high",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13390,7 +13547,9 @@
         "task",
         "view"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -13402,7 +13561,7 @@
         "project-management.task_dependencies"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13442,7 +13601,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13563,7 +13722,7 @@
         "shared.data_tables"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13635,7 +13794,8 @@
       "workflows": [],
       "integrations": [
         "git_provider",
-        "chat_notifications"
+        "chat_notifications",
+        "public_api_webhooks"
       ],
       "compliance": [],
       "ai_relevance": "none",
@@ -13677,7 +13837,9 @@
         "estimate",
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "backlog_refinement"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -13687,7 +13849,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13715,7 +13877,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "recurring_task_regeneration"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -13725,7 +13889,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13753,7 +13917,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -13763,7 +13929,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13793,7 +13959,9 @@
         "cycle",
         "estimate"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "none",
@@ -13805,7 +13973,7 @@
         "project-management.estimates_story_points"
       ],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13843,7 +14011,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13872,7 +14040,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "issue_intake_and_triage"
+      ],
       "integrations": [],
       "compliance": [],
       "ai_relevance": "low",
@@ -13919,7 +14089,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -13958,7 +14128,7 @@
       ],
       "enhanced_by": [],
       "implementation_status": "reference",
-      "confidence": "low",
+      "confidence": "medium",
       "path": "domains/project-management/feature-map.json"
     },
     {
@@ -15993,7 +16163,9 @@
       "compliance": [],
       "ai_relevance": "medium",
       "real_time_relevance": "none",
-      "depends_on": [],
+      "depends_on": [
+        "shared.reviews"
+      ],
       "enhanced_by": [
         "shared.notifications"
       ],

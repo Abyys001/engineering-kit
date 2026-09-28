@@ -37,6 +37,126 @@
       "version": "cf53b54597b67b60140586c09c2fe6132ead013c",
       "local_path": "sources/domains/kanboard/source",
       "notes": "Permissive (MIT). A focused, mature kanban board tool (PHP). Full repository cloned (76 MB, under the 200,000 KB threshold). TaskModel/SubtaskModel/ColumnModel/SwimlaneModel/BoardModel/ProjectModel/ProjectRoleModel are the primary references. This is the domain's permissively-licensed source, per the research brief's request to find one where possible."
+    },
+    {
+      "id": "redmine",
+      "title": "Redmine",
+      "url": "https://github.com/redmine/redmine",
+      "source_type": "implementation",
+      "license": "GPL-2.0 or later (LICENSE.txt, \"either version 2 of the License, or any later version\")",
+      "retrieved": "2026-09-27",
+      "version": "c5d84c656662cbe70726c70d699b8f027f60341e",
+      "notes": "Inspected via `gh api` (not cloned; GPL-2.0, reference-only). Long-established Ruby on Rails issue tracker. IssueStatus (is_closed flag, default_done_ratio) with per-tracker/per-role WorkflowTransition rules; IssueRelation with TYPE_RELATES/DUPLICATES/DUPLICATED/BLOCKS/BLOCKED/PRECEDES/FOLLOWS/COPIED_TO/COPIED_FROM and explicit reverse-type pairs; Version with VERSION_STATUSES (open/locked/closed) and VERSION_SHARINGS; Project.is_public boolean visibility. OpenProject is a fork of Redmine (via ChiliProject), so the two are NOT treated as fully independent lineages for corroboration counting; noted per-feature where this matters."
+    },
+    {
+      "id": "openproject",
+      "title": "OpenProject",
+      "url": "https://github.com/opf/openproject",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "77404f6a1b58bacc3ecab1f015da613cd6fd5a9e",
+      "notes": "Inspected via `gh api` (not cloned; GPL-3.0, reference-only). Full project/portfolio management suite (Ruby on Rails, forked from Redmine via ChiliProject). Status model with workflow transitions; Version (VERSION_STATUSES open/locked/closed, effective_date, sharing); a dedicated `resource_management` module (allocation_step, assignment_candidate, schedule_violation components) for workload/capacity planning; a relation-driven auto-scheduling engine (WorkPackages::ScheduleDependency, DependencyGraph, SetScheduleService) for Gantt date propagation; a dedicated `webhooks` module with outgoing delivery logs; OAuth applications/clients for API access; documented GitHub/GitLab integrations with webhook secrets."
+    },
+    {
+      "id": "vikunja",
+      "title": "Vikunja",
+      "url": "https://github.com/go-vikunja/vikunja",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "70b61c19e45f56ed5c1b564e8a3baae9dd7f4e1e",
+      "notes": "Inspected via `gh api` (not cloned; AGPL-3.0, reference-only). Go/Vue task manager. Kanban Bucket with a numeric Limit field (WIP limit) and a DoneBucketID; TaskRelation RelationKind (subtask/parenttask/related/duplicateof/duplicates/blocking/blocked/precedes/follows/copiedfrom/copiedto); TaskRepeatMode (default/monthly/from-current-date) with RepeatAfter seconds, applied to the SAME task (reopens it and bumps dates) rather than spawning a new task; IsFavorite per user; SavedFilters; a dedicated Webhook model (target URL, configurable event list, HMAC signing, Basic Auth); a `pkg/caldav` CalDAV server; a `pkg/modules/migration` package with real importers for Trello, Todoist, TickTick, Wekan, Planka, Microsoft To Do, and CSV."
+    },
+    {
+      "id": "focalboard",
+      "title": "Focalboard",
+      "url": "https://github.com/mattermost-community/focalboard",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 (source) or commercial; MIT applies ONLY to compiled binaries produced by Mattermost, and Apache-2.0 only to webapp/html-templates/, app-config.json, config.json, webapp/i18n/, server/model/ and plugin/",
+      "retrieved": "2026-09-27",
+      "version": "a84bbb65e32edf972856b329417096ac413518e9",
+      "notes": "**Reference-only. The license was recorded as plain MIT in an earlier pass and that was wrong.** Read directly from LICENSE.txt at the pinned ref: the *source code* is licensed under AGPL-3.0 (with a narrow non-enforcement promise) or a commercial license from Mattermost; the MIT grant covers only compiled versions that Mattermost itself produces, and Apache-2.0 covers only the listed admin/config directories. GitHub's API reports NOASSERTION for exactly this reason. Never copy code from it into the kit. Go/TS kanban-board tool (a Trello-like product originally by Mattermost). Board with BoardType (Open/Private) and a block-based content model (BlockType: board/card/view/text/checkbox/comment/image/attachment/divider); a Sharing model exposing a board via an access-token public link, distinct from workspace membership."
+    },
+    {
+      "id": "leantime",
+      "title": "Leantime",
+      "url": "https://github.com/Leantime/leantime",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "d147c3a3ce3037c35fa9cfc4e43069e3c55ed31c",
+      "notes": "Inspected via `gh api` (not cloned; AGPL-3.0, reference-only). PHP project/goal-management tool aimed at non-technical teams. Tickets.statusListSeed defines configurable per-status labels grouped by a `statusType` of NEW/INPROGRESS/DONE (a second, independently-built grouped-status model alongside Plane's StateGroup); Tickets.efforts is a Fibonacci-like point scale (0.5/1/2/3/5/8/13 -> XS..XXL); Tickets.type includes a literal 'milestone' type (a milestone is a Ticket row, with its own getAllMilestones() timeline query, headline, and color) rather than a separate Milestone model; Sprints model (name/startDate/endDate/projectId); Timesheets records hours/description plus independent invoicedEmpl/invoicedComp boolean+date pairs (employee-side vs company-side invoicing), a manual-entry-plus-billing model distinct from Kanboard's timer-based one."
+    },
+    {
+      "id": "taiga-back",
+      "title": "Taiga (backend)",
+      "url": "https://github.com/taigaio/taiga-back",
+      "source_type": "implementation",
+      "license": "MPL-2.0",
+      "retrieved": "2026-09-27",
+      "version": "4d11baef9027f5598f6341d6eb4261de2840688e",
+      "notes": "Inspected via `gh api` (not cloned; MPL-2.0 per its own LICENSE file -- weak/file-level copyleft, more permissive than AGPL/GPL but not promoted into the kit as permissive). Django/Python agile project-management backend. Epic model (own EpicStatus FK, epics_order, color) distinct from and above user stories; Milestone (Sprint) model with estimated_start/estimated_finish and closed_points/total_closed_points_by_date -- a real burndown-data computation, not just date fields."
+    },
+    {
+      "id": "scrum-guide-2020",
+      "title": "The Scrum Guide (2020 edition)",
+      "url": "https://scrumguides.org/scrum-guide.html",
+      "source_type": "authoritative",
+      "license": "Publicly published by scrumguides.org (brand-neutral, maintained by Ken Schwaber and Jeff Sutherland)",
+      "retrieved": "2026-09-27",
+      "version": "2020 edition (released 2020-11-18, 25th anniversary update)",
+      "notes": "The authoritative definition of Scrum. Used only for what it actually specifies: the Sprint as a fixed-length timebox that starts immediately after the previous Sprint ends, Sprint Planning/Daily Scrum/Sprint Review/Sprint Retrospective, Product Backlog refinement (breaking down and adding detail/order/size to backlog items), Sprint cancellation authority, Sprint Backlog/Product Backlog/Increment/Definition of Done. The 2020 edition deliberately dropped prescriptive artifacts like burndown charts, so it is NOT cited as authority for burndown/velocity reporting."
+    },
+    {
+      "id": "iso-21502",
+      "title": "ISO 21502:2020 -- Project, programme and portfolio management -- Guidance on project management",
+      "url": "https://www.iso.org/standard/74947.html",
+      "source_type": "authoritative",
+      "license": "ISO copyright; scope/abstract freely accessible, full text is a paid standard",
+      "retrieved": "2026-09-27",
+      "version": "ISO 21502:2020 (first edition); supersedes the project-management guidance content of ISO 21500:2012",
+      "notes": "General, tool-agnostic project-management terminology (project governance, milestones, schedule, deliverables) used only for the domain's broad framing, not for any tool-specific feature shape -- ISO 21502 does not define kanban, sprints, or any of this domain's software-specific concepts."
+    },
+    {
+      "id": "pmbok-guide-7",
+      "title": "A Guide to the Project Management Body of Knowledge (PMBOK Guide) -- Seventh Edition",
+      "url": "https://www.pmi.org/standards/pmbok",
+      "source_type": "authoritative",
+      "license": "PMI copyright; FAQs/summary freely accessible, full text requires PMI membership or purchase",
+      "retrieved": "2026-09-27",
+      "version": "7th Edition (PMI, published 2021-08-01)",
+      "notes": "General project-management terminology (milestone, schedule, deliverable, stakeholder) used only for domain framing. The 7th Edition is principles-and-performance-domain based, not process-based, and does not define any software-tracker-specific feature."
+    },
+    {
+      "id": "kanban-method-guide",
+      "title": "The Official Guide to The Kanban Method",
+      "url": "https://kanban.university/kanban-guide/",
+      "source_type": "authoritative",
+      "license": "Publicly published by Kanban University",
+      "retrieved": "2026-09-27",
+      "version": "current edition (Kanban University, kanban.university/kanban-guide)",
+      "notes": "The published definition of the Kanban Method (David J. Anderson): Visualize the workflow, Limit WIP, Manage flow, Make policies explicit, Implement feedback loops, Improve collaboratively/evolve experimentally. Directly grounds this domain's kanban board + WIP-limit capability as an authoritative, not just tool-convention, concept."
+    },
+    {
+      "id": "rfc6749-oauth2",
+      "title": "RFC 6749 -- The OAuth 2.0 Authorization Framework",
+      "url": "https://www.rfc-editor.org/rfc/rfc6749.html",
+      "source_type": "authoritative",
+      "license": "IETF public standard",
+      "retrieved": "2026-09-27",
+      "version": "RFC 6749 (October 2012)",
+      "notes": "The standard authorization framework third-party integrations (public API access, OAuth apps) commonly use; OpenProject implements OAuth applications/clients for its API, cited alongside this RFC rather than as a substitute for it."
+    },
+    {
+      "id": "rfc4791-caldav",
+      "title": "RFC 4791 -- Calendaring Extensions to WebDAV (CalDAV)",
+      "url": "https://www.rfc-editor.org/rfc/rfc4791.html",
+      "source_type": "authoritative",
+      "license": "IETF public standard",
+      "retrieved": "2026-09-27",
+      "version": "RFC 4791 (March 2007)",
+      "notes": "The standard protocol for calendar sync; Vikunja implements a CalDAV server (pkg/caldav) that this domain's calendar_sync integration is modeled on."
     }
   ],
   "features": [
@@ -81,7 +201,7 @@
           "plane"
         ],
         "confidence": "low",
-        "notes": "Plane's Workspace/WorkspaceMember/WorkspaceTheme models; single source (Kanboard has no workspace layer above project)."
+        "notes": "Plane's Workspace/WorkspaceMember/WorkspaceTheme models remain the only source found for a tenant-level container ABOVE projects. Checked and ruled out as corroboration: Kanboard (no layer above project), OpenProject/Redmine (projects can nest under a parent project but there is no separate workspace/tenant entity), Vikunja (removed its Namespace model in favor of self-nesting Projects via ParentProjectID), Leantime (a 'Program' grouping exists but only via its optional PgmPro plugin, not core). Left at low confidence honestly rather than treating a plugin or a project-nesting mechanism as equivalent."
       }
     },
     {
@@ -119,7 +239,9 @@
         "staff",
         "identity"
       ],
-      "integrations": [],
+      "integrations": [
+        "importer_migration"
+      ],
       "compliance": [],
       "provenance": {
         "sources": [
@@ -143,7 +265,9 @@
         "task"
       ],
       "workflows": [
-        "task_lifecycle"
+        "task_lifecycle",
+        "issue_intake_and_triage",
+        "backlog_refinement"
       ],
       "capabilities": [
         "rich_description",
@@ -171,7 +295,11 @@
         "staff",
         "workflow"
       ],
-      "integrations": [],
+      "integrations": [
+        "public_api_webhooks",
+        "calendar_sync",
+        "importer_migration"
+      ],
       "compliance": [],
       "provenance": {
         "sources": [
@@ -268,10 +396,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's State model and StateGroup (backlog/unstarted/started/completed/cancelled/triage); Kanboard has only a binary open/closed status plus columns, not a configurable grouped-state model, so not counted as a second independent source for this specific shape."
+        "confidence": "medium",
+        "notes": "Plane's State/StateGroup (backlog/unstarted/started/completed/cancelled/triage) and Leantime's statusListSeed (configurable per-status labels grouped by a statusType of NEW/INPROGRESS/DONE) are independently-built implementations of the same idea: per-project configurable statuses grouped into a small set of lifecycle buckets. Redmine's IssueStatus/WorkflowTransition and OpenProject's Status model add per-tracker/role transition RULES on top of a similar configurable-status base, but OpenProject is a fork of Redmine (via ChiliProject) so the two are not counted as a third independent source here -- noted as consistent, not tallied."
       }
     },
     {
@@ -288,7 +417,8 @@
         "swimlane"
       ],
       "workflows": [
-        "task_lifecycle"
+        "task_lifecycle",
+        "board_column_wip_and_automation"
       ],
       "capabilities": [
         "drag_drop",
@@ -365,10 +495,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "vikunja",
+          "redmine"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's IssueRelationChoices (duplicate, relates_to, blocked_by, start_before, finish_before, implemented_by) with defined bidirectional reverse pairs (e.g. blocked_by <-> blocking); Kanboard has a simpler TaskLinkModel/TaskLinkValidator not inspected in comparable depth. Single source scored."
+        "confidence": "high",
+        "notes": "Three independently-built implementations converge on the same typed, bidirectional relation taxonomy: Plane's IssueRelationChoices (blocked_by/blocking, relates_to, duplicate, start_before/finish_before, implemented_by), Vikunja's RelationKind (blocking/blocked, related, duplicateof/duplicates, precedes/follows, subtask/parenttask, copiedfrom/copiedto), and Redmine's IssueRelation TYPE_* constants (blocks/blocked, relates, duplicates/duplicated, precedes/follows, copied_to/copied_from) with explicit reverse-type pairs. All three independently chose the same blocks/relates/duplicates/precedes+reverse-pair shape."
       }
     },
     {
@@ -411,15 +543,18 @@
         "staff"
       ],
       "integrations": [
-        "chat_notifications"
+        "chat_notifications",
+        "public_api_webhooks"
       ],
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "kanboard",
+          "vikunja"
         ],
-        "confidence": "low",
-        "notes": "Plane's IssueComment, IssueMention, CommentReaction, IssueReaction models; single source (Kanboard has plain task comments without a dedicated mention/reaction model in the areas inspected)."
+        "confidence": "high",
+        "notes": "Three independent implementations: Plane's IssueComment/IssueMention/CommentReaction, Kanboard's CommentModel (with a dedicated comment.user.mention event), and Vikunja's task_comments.go plus mentions.go (FindMentionedUsersInText). Emoji/comment reactions specifically are only confirmed in Plane; the core comment+@mention pattern is confirmed in all three."
       }
     },
     {
@@ -435,7 +570,8 @@
         "cycle"
       ],
       "workflows": [
-        "cycle_planning"
+        "cycle_planning",
+        "backlog_refinement"
       ],
       "capabilities": [
         "date_bounded",
@@ -464,10 +600,12 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime",
+          "scrum-guide-2020"
         ],
-        "confidence": "low",
-        "notes": "Plane's Cycle model (start_date/end_date, owned_by, CycleIssue join, CycleUserProperties); not found in the cloned Kanboard scope (Kanboard has no sprint/cycle concept). Single source."
+        "confidence": "high",
+        "notes": "Plane's Cycle model (start_date/end_date, owned_by, CycleIssue join) and Leantime's Sprints model (name/startDate/endDate/projectId) are two independent implementations of a fixed-duration iteration. The Scrum Guide (2020) is authoritative for the underlying concept it calls a Sprint: a fixed-length timebox that starts immediately after the previous one ends and can be cancelled (only by the Product Owner) if its goal becomes obsolete -- note the state NAMES used in this domain's cycle entity (upcoming/active/completed/cancelled) are Plane's, not verbatim Scrum Guide terminology."
       }
     },
     {
@@ -481,7 +619,9 @@
       "entities": [
         "module"
       ],
-      "workflows": [],
+      "workflows": [
+        "backlog_refinement"
+      ],
       "capabilities": [
         "cross_cycle_grouping",
         "module_status"
@@ -506,10 +646,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "taiga-back"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's Module model and ModuleStatus enum (backlog/planned/in-progress/paused/completed/cancelled); single source."
+        "confidence": "medium",
+        "notes": "Plane's Module model (ModuleStatus: backlog/planned/in-progress/paused/completed/cancelled) and Taiga's Epic model (its own EpicStatus foreign key, ordering, color) are independent implementations of a larger, cross-iteration grouping of work above individual tasks/stories."
       }
     },
     {
@@ -523,7 +664,9 @@
       "entities": [
         "milestone"
       ],
-      "workflows": [],
+      "workflows": [
+        "release_version_cut"
+      ],
       "capabilities": [
         "target_date_tracking"
       ],
@@ -544,14 +687,18 @@
         "scheduling",
         "reporting"
       ],
-      "integrations": [],
+      "integrations": [
+        "calendar_sync"
+      ],
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "leantime",
+          "redmine",
+          "openproject"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Plane's Module (which carries target_date-like planning fields) since no dedicated 'Milestone' model was found in either cloned source; commonly a thin layer over modules/labels in practice. Low confidence, reasoned."
+        "confidence": "high",
+        "notes": "No dedicated 'Milestone' model exists in Plane (the earlier single-source, reasoned mapping onto Module has been dropped from provenance). Three independent implementations of a real milestone concept: Leantime models a milestone as a Ticket with type='milestone' (its own headline, tags/color, and a dedicated getAllMilestones() timeline query); Redmine's Version (effective_date, VERSION_STATUSES open/locked/closed, VERSION_SHARINGS); OpenProject's Version (same VERSION_STATUSES/effective_date shape, inherited from the Redmine lineage but re-verified independently in OpenProject's own model file). Because Redmine and OpenProject share code lineage, this is treated as two-plus-one rather than three fully unrelated codebases, but the Leantime + Redmine/OpenProject combination is still a genuine, independently converged 'milestone/version has an open/locked/closed-like lifecycle and a target date' shape."
       }
     },
     {
@@ -566,7 +713,9 @@
         "task",
         "view"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "capabilities": [
         "date_based_layout",
         "dependency_lines"
@@ -592,10 +741,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "openproject"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Plane's Issue.start_date/target_date and IssueRelationChoices (start_before/finish_before); no dedicated Gantt-rendering model exists server-side (it is a client-side view), single source, reasoned."
+        "confidence": "medium",
+        "notes": "Plane's Issue.start_date/target_date plus IssueRelationChoices (start_before/finish_before) is a reasoned basis for a client-side Gantt view. OpenProject's WorkPackages::ScheduleDependency / DependencyGraph / SetScheduleService is a concrete, dedicated relation-driven automatic-rescheduling engine -- a second, independently-built and considerably more developed implementation of dependency-aware date computation for a Gantt/timeline view."
       }
     },
     {
@@ -636,10 +786,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "kanboard"
+          "kanboard",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Kanboard's dedicated SubtaskTimeTrackingModel (start/stop timer per subtask); not found as a first-class model in the cloned Plane scope. Single source."
+        "confidence": "medium",
+        "notes": "Two independent implementations with genuinely different capture models: Kanboard's SubtaskTimeTrackingModel (start/stop timer per subtask, computed duration) and Leantime's Timesheets (manual workDate/hours/description entry, a billable/not-billable 'kind', and independent invoicedEmpl/invoicedComp boolean+date pairs for employee-side vs company-side invoicing)."
       }
     },
     {
@@ -770,10 +921,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "vikunja"
         ],
-        "confidence": "low",
-        "notes": "Plane's View model (view.py); not found in the cloned Kanboard scope beyond ad hoc TaskFilter classes (client-request-time filters, not a saved/persisted view). Single source."
+        "confidence": "medium",
+        "notes": "Plane's View model and Vikunja's SavedFilters (saved_filters.go, a first-class, persisted, reusable filter/sort/grouping definition distinct from a one-off request-time filter) are independent implementations."
       }
     },
     {
@@ -815,7 +967,7 @@
           "plane"
         ],
         "confidence": "low",
-        "notes": "Plane's ProjectPublicMember model and ProjectDeployBoard (public project board deployment); not found as a comparable guest concept in the cloned Kanboard scope. Single source."
+        "notes": "Plane's ProjectPublicMember/ProjectDeployBoard remains the only source found for a restricted, role-based external member. Checked and ruled out: Focalboard's Sharing model is a public access-TOKEN link for a board (no distinct guest role or membership), which is a closer match to this domain's view-sharing feature than to a guest role, so it was applied there instead rather than double-counted here."
       }
     },
     {
@@ -853,7 +1005,8 @@
       ],
       "integrations": [
         "git_provider",
-        "chat_notifications"
+        "chat_notifications",
+        "public_api_webhooks"
       ],
       "compliance": [],
       "provenance": {
@@ -862,7 +1015,7 @@
           "kanboard"
         ],
         "confidence": "medium",
-        "notes": "Plane's IssueActivity model and Kanboard's project/task Activity analytics (ProjectActivityModel, TaskEventBuilder) are independent implementations."
+        "notes": "Plane's IssueActivity model and Kanboard's project/task activity analytics (ProjectActivityModel, TaskEventBuilder) are independent implementations."
       }
     },
     {
@@ -878,7 +1031,9 @@
         "estimate",
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "backlog_refinement"
+      ],
       "capabilities": [
         "point_scale",
         "per_project_scale"
@@ -905,10 +1060,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "leantime"
         ],
-        "confidence": "low",
-        "notes": "Plane's Issue.point (0-12 raw) and Issue.estimate_point (FK to a project-defined Estimate scale); single source, not found in the cloned Kanboard scope."
+        "confidence": "medium",
+        "notes": "Plane's Issue.point (raw 0-12) / Issue.estimate_point (FK to a project-defined Estimate scale) and Leantime's Tickets.efforts (a Fibonacci-like point scale, 0.5/1/2/3/5/8/13 mapped to XS..XXL labels) are independent implementations of a project-configurable effort-sizing scale."
       }
     },
     {
@@ -922,7 +1078,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "recurring_task_regeneration"
+      ],
       "capabilities": [
         "recurrence_rules"
       ],
@@ -946,10 +1104,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "kanboard"
+          "kanboard",
+          "vikunja"
         ],
-        "confidence": "low",
-        "notes": "Kanboard's TaskRecurrenceModel/RecurringTaskSubscriber; not found in the cloned Plane scope. Single source."
+        "confidence": "medium",
+        "notes": "Two independent implementations that use genuinely different mechanisms: Kanboard's TaskRecurrenceModel / RecurringTaskSubscriber spawns a NEW task instance when the original is completed, while Vikunja's RepeatAfter/RepeatMode (default interval / monthly / from-current-date) instead reopens and bumps the dates on the SAME task. Both are cited, and the difference is treated as two valid implementation strategies rather than collapsed into one."
       }
     },
     {
@@ -963,7 +1122,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "capabilities": [
         "per_assignee_load"
       ],
@@ -989,10 +1150,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "openproject"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Plane's Issue.assignees plus per-user cycle/module properties (CycleUserProperties, ModuleUserProperties); no dedicated workload/capacity model found. Single source, reasoned."
+        "confidence": "medium",
+        "notes": "Plane's Issue.assignees plus per-user CycleUserProperties/ModuleUserProperties is a reasoned basis for a per-assignee load view. OpenProject ships a dedicated `resource_management` module (allocation-step components, assignment-candidate matching, schedule-violation warnings, working-hours awareness) -- a second, independently-built and considerably more developed implementation of workload/capacity planning."
       }
     },
     {
@@ -1007,7 +1169,9 @@
         "cycle",
         "estimate"
       ],
-      "workflows": [],
+      "workflows": [
+        "reporting_and_dashboards"
+      ],
       "capabilities": [
         "burndown_chart",
         "velocity_trend"
@@ -1033,10 +1197,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "taiga-back"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Plane's Cycle + CycleIssue + Issue.estimate_point/point data model, which is what a burndown/velocity report would be computed from; no dedicated report-generation model inspected. Single source, reasoned."
+        "confidence": "medium",
+        "notes": "Plane's Cycle + CycleIssue + Issue.estimate_point/point is a reasoned basis for computing burndown/velocity. Taiga's Milestone model concretely computes this: estimated_start/estimated_finish plus closed_points/total_closed_points_by_date is a real burndown-data method, a second independent implementation. Note the Scrum Guide (2020) is NOT cited here -- it deliberately dropped prescriptive burndown-chart language in its 2020 revision, so it is not authority for this feature."
       }
     },
     {
@@ -1075,10 +1240,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "focalboard"
         ],
-        "confidence": "low",
-        "notes": "Reasoned from Plane's View model combined with its ProjectDeployBoard public-sharing pattern; single source, reasoned."
+        "confidence": "medium",
+        "notes": "Plane's View model combined with its ProjectDeployBoard public-sharing pattern, and Focalboard's Sharing model (a board exposed via an access-token public link, toggled on/off, independent of workspace membership) are independent implementations of the same public-link-sharing idea."
       }
     },
     {
@@ -1093,7 +1259,9 @@
       "entities": [
         "task"
       ],
-      "workflows": [],
+      "workflows": [
+        "issue_intake_and_triage"
+      ],
       "capabilities": [
         "public_submission_form",
         "triage_queue"
@@ -1123,7 +1291,7 @@
           "plane"
         ],
         "confidence": "low",
-        "notes": "Plane's Intake model and the dedicated StateGroup.TRIAGE value; single source, not found in the cloned Kanboard scope."
+        "notes": "Plane's Intake model and dedicated StateGroup.TRIAGE value remain the only source found for a lightweight, often-external submission-to-triage-queue flow. Not found in Kanboard, Redmine, OpenProject, Vikunja, Focalboard, Leantime, or Taiga in the areas inspected -- left at low confidence rather than treating ordinary issue creation as equivalent to a dedicated intake/triage flow."
       }
     },
     {
@@ -1160,10 +1328,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "vikunja"
         ],
-        "confidence": "low",
-        "notes": "Plane's Favorite model (favorite.py); not found in the cloned Kanboard scope. Single source."
+        "confidence": "medium",
+        "notes": "Plane's Favorite model and Vikunja's per-user IsFavorite field (with dedicated favorites-access-scoped search handling) are independent implementations."
       }
     },
     {
@@ -1202,10 +1371,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "plane"
+          "plane",
+          "redmine"
         ],
-        "confidence": "low",
-        "notes": "Verbatim from Plane's ProjectNetwork enum (private/public visibility); single source."
+        "confidence": "medium",
+        "notes": "Plane's ProjectNetwork enum (private/public) and Redmine's Project.is_public boolean (with matching visibility-scoping query logic for anonymous/authenticated users) are independent implementations of project-level visibility control."
       }
     }
   ]

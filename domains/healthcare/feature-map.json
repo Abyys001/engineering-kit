@@ -344,10 +344,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "openemr"
+          "openemr",
+          "std:fhir-r4"
         ],
         "confidence": "medium",
-        "notes": "Depends on shared.notifications for delivery."
+        "notes": "One implementation plus a partial authoritative mapping: OpenEMR implements appointment reminders directly; FHIR has no reminder resource, but Communication and CommunicationRequest are the resources a reminder would be represented as, and Appointment carries the participant status that a reminder chases. The reminder *channel and cadence* are product decisions no standard fixes, which is why this is medium and not high."
       }
     },
     {
@@ -995,10 +996,11 @@
       ],
       "provenance": {
         "sources": [
-          "medplum"
+          "medplum",
+          "std:fhir-r4"
         ],
         "confidence": "medium",
-        "notes": "Medplum's AccessPolicy resource is a distinctive pattern for resource/compartment-level authorization in health data platforms; single-source, so medium confidence. Complements shared.permissions rather than duplicating it."
+        "notes": "Deliberately kept at medium rather than raised: resource- and compartment-level access policy is Medplum-specific and has NO FHIR standard mapping, as DOMAIN.md already states. FHIR Consent is cited only because consent-directed access is the standard-shaped part of the same problem; it is not the same thing as Medplum's AccessPolicy. Treat the policy engine as one vendor's design, not an industry pattern."
       }
     },
     {
@@ -1162,10 +1164,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "medplum"
+          "medplum",
+          "std:fhir-r4"
         ],
-        "confidence": "medium",
-        "notes": "Confirmed by Medplum's medplum-patient-intake-demo example and QuestionnaireForm/Builder react components. Downgraded high→medium on 2026-09-27: fewer than 3 implementations and no authoritative source."
+        "confidence": "high",
+        "notes": "Authoritative: FHIR defines Questionnaire (the form definition) and QuestionnaireResponse (the completed answers) as standard resources, which is exactly this feature's data model rather than an approximation of it. Medplum implements both, including a questionnaire builder and a patient-intake demo. Authoritative source plus an implementation, so high."
       }
     },
     {

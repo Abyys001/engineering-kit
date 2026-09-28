@@ -438,6 +438,615 @@
           }
         ]
       }
+    },
+    {
+      "id": "signup_workspace_onboarding",
+      "name": "Sign-up to onboarded workspace",
+      "actor": "tenant_owner",
+      "trigger": "A new user signs up and creates their first workspace.",
+      "steps": [
+        "User creates an account and a new workspace",
+        "Workspace starts on a trial or free plan",
+        "Owner is guided through a first-run onboarding checklist (branding, first invite, key integration)",
+        "Checklist completion is tracked; owner can skip and resume later"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "features": [
+        "general-saas.workspace_management",
+        "general-saas.onboarding_flow"
+      ],
+      "notifications": [
+        "welcome_email"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "twenty-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Both Chatwoot's onboarding controller/service and Twenty CRM's onboarding modules implement signup-to-first-workspace guided setup."
+      }
+    },
+    {
+      "id": "usage_quota_enforcement",
+      "name": "Usage metering to quota enforcement",
+      "actor": "system",
+      "trigger": "A usage event is recorded against a workspace's metered entitlement.",
+      "steps": [
+        "System records a usage event (API call, seat-day, storage, etc.)",
+        "Usage is aggregated and compared against the workspace's plan entitlement limit",
+        "A quota-warning notification is sent as usage approaches the limit",
+        "At the limit, the system applies overage billing or throttles further usage per plan policy"
+      ],
+      "entities": [
+        "usage_event",
+        "entitlement",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.usage_metering",
+        "general-saas.plans_entitlements"
+      ],
+      "notifications": [
+        "quota_warning",
+        "quota_exceeded"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "lago-api",
+          "openmeter"
+        ],
+        "confidence": "medium",
+        "notes": "Lago's UsageThreshold model and OpenMeter's featuremeter module both implement usage-vs-limit evaluation driving warnings/overage."
+      },
+      "state_machine": {
+        "entity": "entitlement",
+        "initial": "within_limit",
+        "terminal": [],
+        "states": [
+          "within_limit",
+          "warning",
+          "exceeded",
+          "throttled"
+        ],
+        "transitions": [
+          {
+            "from": "within_limit",
+            "to": "warning",
+            "event": "usage_approaches_limit"
+          },
+          {
+            "from": "warning",
+            "to": "exceeded",
+            "event": "usage_hits_limit"
+          },
+          {
+            "from": "exceeded",
+            "to": "throttled",
+            "event": "throttle_enforced"
+          },
+          {
+            "from": "exceeded",
+            "to": "within_limit",
+            "event": "period_resets"
+          },
+          {
+            "from": "throttled",
+            "to": "within_limit",
+            "event": "period_resets"
+          }
+        ]
+      }
+    },
+    {
+      "id": "plan_change_with_proration",
+      "name": "Plan upgrade or downgrade with proration",
+      "actor": "tenant_owner",
+      "trigger": "A workspace owner changes their subscription's plan tier from the billing portal.",
+      "steps": [
+        "Owner selects a new plan tier",
+        "System computes a prorated charge or credit for the remainder of the billing period",
+        "Owner confirms the change and, on upgrade, the payment method is charged",
+        "New entitlements and seat limits apply immediately; downgrades that exceed the new limits are flagged for resolution"
+      ],
+      "entities": [
+        "plan",
+        "entitlement",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.plans_entitlements",
+        "general-saas.billing_portal",
+        "general-saas.seat_management"
+      ],
+      "notifications": [
+        "plan_changed",
+        "invoice_issued"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq's Stripe-backed Subscription/Price models and Lago's Plan/Wallet models both support changing a subscription's plan; proration is standard behavior of the Stripe Billing/Lago APIs they integrate."
+      }
+    },
+    {
+      "id": "failed_payment_dunning",
+      "name": "Failed payment to dunning to suspension",
+      "actor": "system",
+      "trigger": "A recurring subscription charge fails.",
+      "steps": [
+        "Payment provider reports a failed charge; workspace subscription moves to past_due",
+        "System retries the charge on a backoff schedule and sends dunning emails to the owner",
+        "If payment is recovered, the workspace returns to active",
+        "If retries are exhausted, the workspace is suspended pending payment"
+      ],
+      "entities": [
+        "workspace",
+        "plan"
+      ],
+      "features": [
+        "general-saas.billing_portal",
+        "general-saas.plans_entitlements"
+      ],
+      "notifications": [
+        "payment_failed",
+        "dunning_reminder",
+        "workspace_suspended"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "boxyhq's Stripe webhook handler enumerates past_due/canceled subscription statuses, confirming the billing-provider-level states, but no dedicated dunning-email sequence or suspension logic was found in the repo; the retry/dunning/suspension sequence itself is a reasoned inference from standard Stripe Billing/Lago dunning behavior, stated explicitly as low confidence."
+      },
+      "state_machine": {
+        "entity": "workspace",
+        "initial": "active",
+        "terminal": [],
+        "states": [
+          "active",
+          "past_due",
+          "suspended"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "past_due",
+            "event": "payment_failed"
+          },
+          {
+            "from": "past_due",
+            "to": "active",
+            "event": "payment_recovered"
+          },
+          {
+            "from": "past_due",
+            "to": "suspended",
+            "event": "dunning_exhausted"
+          },
+          {
+            "from": "suspended",
+            "to": "active",
+            "event": "reactivate_after_payment"
+          }
+        ]
+      }
+    },
+    {
+      "id": "trial_conversion",
+      "name": "Trial start to conversion or expiry",
+      "actor": "system",
+      "trigger": "A workspace starts a time-boxed trial of a paid plan.",
+      "steps": [
+        "Workspace enters trial with the trial plan's full entitlements for a fixed number of days",
+        "System sends a reminder before the trial ends",
+        "Owner adds a payment method and converts to a paid plan, or takes no action",
+        "On expiry without conversion, the workspace downgrades to a restricted/free tier; late conversion remains possible"
+      ],
+      "entities": [
+        "workspace",
+        "plan"
+      ],
+      "features": [
+        "general-saas.trial_management"
+      ],
+      "notifications": [
+        "trial_ending_soon",
+        "trial_expired",
+        "trial_converted"
+      ],
+      "integrations": [
+        "stripe_billing"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "twenty-crm"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq's Stripe integration exposes the 'trialing' status; Twenty CRM implements the full flow (billing-trial-ending/-converting emails, billing-trial-period/-end-trial-period DTOs, UpgradeFreeTrial page)."
+      },
+      "state_machine": {
+        "entity": "workspace",
+        "initial": "trialing",
+        "terminal": [],
+        "states": [
+          "trialing",
+          "trial_expired",
+          "active"
+        ],
+        "transitions": [
+          {
+            "from": "trialing",
+            "to": "active",
+            "event": "convert_to_paid"
+          },
+          {
+            "from": "trialing",
+            "to": "trial_expired",
+            "event": "trial_expires_unconverted"
+          },
+          {
+            "from": "trial_expired",
+            "to": "active",
+            "event": "late_conversion"
+          }
+        ]
+      }
+    },
+    {
+      "id": "seat_lifecycle",
+      "name": "Seat reservation to reclaim",
+      "actor": "tenant_admin",
+      "trigger": "A workspace admin invites or removes a member, changing seat usage against the plan.",
+      "steps": [
+        "Admin invites a member; a seat is reserved (pending) against the plan's seat entitlement",
+        "Invite is accepted; the seat becomes active",
+        "Inviting past the seat limit is blocked or prompts a plan/seat upgrade",
+        "Admin removes a member; their seat is reclaimed and available for reuse"
+      ],
+      "entities": [
+        "workspace",
+        "plan"
+      ],
+      "features": [
+        "general-saas.seat_management"
+      ],
+      "notifications": [
+        "seat_limit_reached"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "lago-api"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq ties TeamMember to a per-team Subscription; Lago models subscription quantity/wallet balances that map to seat-style consumption and reclaim."
+      }
+    },
+    {
+      "id": "scim_user_provisioning",
+      "name": "SCIM provisioning to deprovisioning",
+      "actor": "system",
+      "trigger": "The customer's identity provider pushes a SCIM user or group event.",
+      "steps": [
+        "Admin enables SCIM and generates a bearer token for the workspace",
+        "The token and SCIM base URL are configured in the customer's IdP",
+        "IdP pushes user create/update/deactivate events via SCIM",
+        "System provisions, updates, or deactivates the corresponding workspace member"
+      ],
+      "entities": [
+        "scim_connection",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.scim_provisioning"
+      ],
+      "notifications": [],
+      "integrations": [
+        "scim_idp"
+      ],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "scim-rfc"
+        ],
+        "confidence": "high",
+        "notes": "Implementation (boxyhq's Jackson dsync + SCIM v2.0 routes) plus the authoritative SCIM RFCs."
+      },
+      "state_machine": {
+        "entity": "scim_connection",
+        "initial": "active",
+        "terminal": [],
+        "states": [
+          "active",
+          "disabled"
+        ],
+        "transitions": [
+          {
+            "from": "active",
+            "to": "disabled",
+            "event": "disable"
+          },
+          {
+            "from": "disabled",
+            "to": "active",
+            "event": "enable"
+          }
+        ]
+      }
+    },
+    {
+      "id": "feature_flag_rollout",
+      "name": "Feature flag gradual rollout",
+      "actor": "platform_support",
+      "trigger": "A new feature is gated behind a flag for gradual release.",
+      "steps": [
+        "Flag is created disabled by default",
+        "Flag is targeted at specific workspaces or segments for early access",
+        "Rollout percentage is gradually increased",
+        "Flag is fully enabled for all workspaces, or rolled back on issues"
+      ],
+      "entities": [
+        "feature_flag",
+        "workspace"
+      ],
+      "features": [
+        "general-saas.feature_flags"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "unleash",
+          "flagsmith"
+        ],
+        "confidence": "medium",
+        "notes": "Both Unleash (strategies/constraints) and Flagsmith (FeatureState/FeatureSegment) implement staged/segmented rollout."
+      },
+      "state_machine": {
+        "entity": "feature_flag",
+        "initial": "disabled",
+        "terminal": [],
+        "states": [
+          "disabled",
+          "partial_rollout",
+          "enabled"
+        ],
+        "transitions": [
+          {
+            "from": "disabled",
+            "to": "partial_rollout",
+            "event": "start_rollout"
+          },
+          {
+            "from": "partial_rollout",
+            "to": "enabled",
+            "event": "complete_rollout"
+          },
+          {
+            "from": "partial_rollout",
+            "to": "disabled",
+            "event": "rollback"
+          },
+          {
+            "from": "enabled",
+            "to": "disabled",
+            "event": "kill_switch"
+          }
+        ]
+      }
+    },
+    {
+      "id": "audit_log_review",
+      "name": "Audit log review",
+      "actor": "tenant_admin",
+      "trigger": "An admin needs to review who changed what in the workspace.",
+      "steps": [
+        "Admin opens the audit log viewer and filters by date range, actor, or action type",
+        "Admin inspects an entry's detail (actor, target, before/after, timestamp)",
+        "Admin exports the filtered results for compliance or investigation purposes"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "features": [
+        "general-saas.audit_log_viewer"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter",
+          "chatwoot"
+        ],
+        "confidence": "medium",
+        "notes": "boxyhq's Retraced integration and Chatwoot's dashboard audit-log viewer both implement filter/inspect/export over a tenant-scoped audit log."
+      }
+    },
+    {
+      "id": "support_impersonation",
+      "name": "Support impersonation session",
+      "actor": "platform_support",
+      "trigger": "Support staff need to reproduce or resolve an issue from inside a tenant's workspace.",
+      "steps": [
+        "Support searches for and opens the tenant's workspace in the admin console",
+        "Support starts an impersonation session, shown to any observer via a visible impersonation banner",
+        "Support takes the necessary action as if signed in as the tenant user; the session is written to the audit log",
+        "Support ends the impersonation session, returning to their own staff account"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "features": [
+        "general-saas.admin_console"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "soc2-tsc"
+        ],
+        "confidence": "medium",
+        "notes": "Chatwoot's ImpersonationBanner.vue + useImpersonation.js implement a real, visible impersonation session; SOC 2's CC6/CC7 access-control criteria motivate auditing such sessions."
+      }
+    },
+    {
+      "id": "changelog_publishing",
+      "name": "Changelog entry publishing",
+      "actor": "platform_support",
+      "trigger": "A change ships and is announced to workspace members.",
+      "steps": [
+        "Entry is drafted and categorized (feature, fix, improvement)",
+        "Entry is published to the public/in-app changelog feed",
+        "Members see an unread-updates indicator until they view the feed"
+      ],
+      "entities": [
+        "changelog_entry"
+      ],
+      "features": [
+        "general-saas.changelog"
+      ],
+      "notifications": [
+        "changelog_published"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "twenty-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Chatwoot's changelog feed with an unread-indicator sidebar button, and Twenty CRM's structured release-notes page, both implement draft-then-publish changelog entries."
+      }
+    },
+    {
+      "id": "custom_role_authoring",
+      "name": "Custom role authoring",
+      "actor": "tenant_owner",
+      "trigger": "A workspace owner needs finer-grained permissions than the built-in owner/admin/member roles.",
+      "steps": [
+        "Owner creates a new role with a name",
+        "Owner selects permission grants from the available scopes (per-object, per-field, or row-level where supported)",
+        "Owner assigns the role to one or more members",
+        "Permission changes apply immediately to all members holding the role"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "features": [
+        "general-saas.custom_roles"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "twenty-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Chatwoot's customRole.js and Twenty CRM's object/field/row-level role-permission authoring UI both implement this create-role-then-assign flow."
+      }
+    },
+    {
+      "id": "rate_limit_enforcement",
+      "name": "Per-key API rate limit enforcement",
+      "actor": "system",
+      "trigger": "A request against the public API arrives authenticated by an API key.",
+      "steps": [
+        "System looks up the rate limit for the key's workspace/plan",
+        "Current usage in the window is checked against the limit",
+        "Within limit: request proceeds and rate-limit headers are returned",
+        "Over limit: request is rejected with a 429 response"
+      ],
+      "entities": [
+        "api_key"
+      ],
+      "features": [
+        "general-saas.public_api_rate_limiting"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "chatwoot",
+          "twenty-crm"
+        ],
+        "confidence": "medium",
+        "notes": "Chatwoot's rack_attack throttles by account_id/API token; Twenty CRM's throttler module explicitly builds standard rate-limit response headers (build-rate-limit-response-headers.util.ts)."
+      }
+    },
+    {
+      "id": "sandbox_provisioning",
+      "name": "Sandbox environment provisioning",
+      "actor": "developer",
+      "trigger": "A developer needs to integration-test without touching production tenant data.",
+      "steps": [
+        "Developer enables sandbox mode for the workspace, or a separate sandbox workspace is created",
+        "System provisions an isolated environment seeded with synthetic data",
+        "Developer tests against the sandbox using a sandbox-scoped API key",
+        "Sandbox data is periodically reset or expires"
+      ],
+      "entities": [
+        "workspace",
+        "api_key"
+      ],
+      "features": [
+        "general-saas.sandbox_environment"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "boxyhq-saas-starter"
+        ],
+        "confidence": "low",
+        "notes": "No sandbox-workspace implementation was found in any source checked this pass (boxyhq, Chatwoot, Twenty CRM); this workflow describes the standard test/live-mode pattern common to API-first SaaS (as in payment-provider test modes), anchored only to the API-key entity boxyhq does implement. Confidence deliberately low, matching the feature's own low confidence."
+      }
+    },
+    {
+      "id": "data_residency_selection",
+      "name": "Data residency region selection",
+      "actor": "tenant_owner",
+      "trigger": "An enterprise workspace must pin where its data is stored and processed.",
+      "steps": [
+        "Owner selects a data region during workspace creation or later in settings",
+        "System validates the region is supported and available",
+        "Data storage/processing is confirmed pinned to that region",
+        "Changing region later requires a data migration process"
+      ],
+      "entities": [
+        "workspace"
+      ],
+      "features": [
+        "general-saas.data_residency"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "twenty-crm",
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium",
+        "notes": "Twenty CRM's DATA_RESIDENCY_KEYS config and settings UI implement region selection (for its AI feature); GDPR cross-border transfer rules are the authoritative motivation for offering the control at all."
+      }
     }
   ]
 }

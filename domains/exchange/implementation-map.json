@@ -97,7 +97,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Apache Fineract's `organisation/teller/domain/` (Teller, Cashier, CashierTransaction, TellerJournal, TellerStatus) is the closest model reference and is Apache-2.0, but it is Java and NOT on disk. Per the no-download rule, adapt the model into a NestJS/Drizzle module rather than fetching the repo."
     },
     {
       "feature": "exchange.branch_management",
@@ -109,7 +109,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Apache Fineract's hierarchical `organisation/office/domain/Office.java` + OfficeTransaction is the model reference (Apache-2.0, Java, not on disk). A single-branch product needs none of the hierarchy."
     },
     {
       "feature": "exchange.staff_management",
@@ -121,7 +121,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Overlaps `shared.users` and `shared.permissions`; the domain-specific part is binding a staff member to a branch and a till. Fineract's Staff + StaffOrganisationalRoleType is the model reference."
     },
     {
       "feature": "exchange.receipts_payments",
@@ -169,7 +169,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Two patterns worth copying, neither on disk as reusable code: Fineract's before/after/error command hooks (`fineract-command-audit/`) and blnk's immutable ledger (on disk, Go). The NestJS equivalent is a mutation interceptor writing to an append-only table - listed as a gap in sources/CURATION.md, where no source has an audit log."
     },
     {
       "feature": "exchange.reports_analytics",
@@ -181,7 +181,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Overlaps `shared.reporting`, whose own candidates (tremor, shadcn chart primitives) are recorded in domains/shared-features.json. Fineract's Report + ReportType + reportmailingjob is the reference for scheduled delivery."
     },
     {
       "feature": "exchange.notifications",
@@ -217,7 +217,7 @@
       },
       "references": [],
       "status": "missing",
-      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty."
+      "notes": "No reusable implementation in the kit and no local source under `sources/` mapped to it as of 2026-09-27; features/, backend/, components/, patterns/, ai/, mobile/ and starters/ are all still empty. Fineract's `ChargeCalculationType` (FLAT / PERCENT_OF_AMOUNT) is the model reference for the fee-configuration shape (Apache-2.0, Java, not on disk)."
     },
     {
       "feature": "exchange.settlement_reconciliation",

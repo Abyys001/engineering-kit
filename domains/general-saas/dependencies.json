@@ -170,6 +170,24 @@
       "to": "general-saas.api_keys",
       "type": "requires",
       "reason": "Rate limits are enforced per API key."
+    },
+    {
+      "from": "general-saas.billing_portal",
+      "to": "shared.billing",
+      "type": "requires",
+      "reason": "The portal is the self-serve UI over the tenant's plans, subscription, and invoices managed by shared billing."
+    },
+    {
+      "from": "general-saas.data_export",
+      "to": "shared.import_export",
+      "type": "enhances",
+      "reason": "A tenant-wide export can reuse the same bulk-export job/format machinery used for per-entity CSV/XLSX export."
+    },
+    {
+      "from": "general-saas.status_page",
+      "to": "shared.jobs",
+      "type": "enhances",
+      "reason": "Incident and component status changes are broadcast to subscribers asynchronously."
     }
   ]
 }

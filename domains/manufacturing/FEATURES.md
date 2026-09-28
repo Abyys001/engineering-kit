@@ -12,19 +12,19 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | `manufacturing.inventory_lots_serials` Inventory, lots, and serials | Tracking on-hand quantity by location, with optional lot/batch or unique serial number identity per stock item. | medium | web, mobile, admin, backend | medium | none | reference | inventree, odoo-mrp |
 | `manufacturing.items_products` Items and products | The master catalog of parts, raw materials, sub-assemblies, and finished products, with identifiers, units of measure, and manufacturing/purchasing/sales flags. | medium | web, mobile, admin, backend | none | none | reference | inventree, odoo-mrp |
 | `manufacturing.production_orders` Production / work orders | An order to manufacture a quantity of an item by a target date, tracked through a state machine from draft to completion. | medium | web, mobile, admin, backend, real_time | high | low | reference | inventree, odoo-mrp |
-| `manufacturing.routings_operations` Routings and operations | The ordered sequence of operations (at specific work centers) required to manufacture an item, with expected duration. | low | web, admin, backend | none | none | reference | odoo-mrp |
-| `manufacturing.shop_floor_data_collection` Shop-floor data collection | A mobile/tablet interface for operators to scan barcodes, report progress, and record quantities directly at the work center. | low | mobile, backend, real_time | high | none | reference | inventree |
+| `manufacturing.routings_operations` Routings and operations | The ordered sequence of operations (at specific work centers) required to manufacture an item, with expected duration. | high | web, admin, backend | none | none | reference | odoo-mrp, erpnext-manufacturing, isa-95-iec-62264 |
+| `manufacturing.shop_floor_data_collection` Shop-floor data collection | A mobile/tablet interface for operators to scan barcodes, report progress, and record quantities directly at the work center. | medium | mobile, backend, real_time | high | none | reference | inventree, gs1-general-specifications |
 | `manufacturing.traceability` Traceability | Tracing which input lots/serials went into which output lot/serial, forward (where did this batch ship) and backward (what components are in this unit). | medium | web, admin, backend | none | none | reference | inventree, odoo-mrp |
-| `manufacturing.work_centers` Work centers | A physical or logical production resource (machine, line, or team) where operations are performed, with capacity and cost. | low | web, mobile, admin, backend, real_time | medium | none | reference | odoo-mrp |
+| `manufacturing.work_centers` Work centers | A physical or logical production resource (machine, line, or team) where operations are performed, with capacity and cost. | high | web, mobile, admin, backend, real_time | medium | none | reference | odoo-mrp, erpnext-manufacturing, isa-95-iec-62264 |
 
 ## Common (5)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `manufacturing.bom_byproducts` By-products and co-products | Secondary items produced alongside the primary output of a production order, as defined on the BOM. | low | web, admin, backend | none | none | reference | odoo-mrp |
-| `manufacturing.material_requirements_planning` Material requirements planning (MRP) | Computing net material shortages from demand (sales/production orders) against on-hand and incoming stock, and suggesting or triggering replenishment. | low | web, admin, backend, ai | low | medium | reference | odoo-mrp |
-| `manufacturing.purchase_orders` Purchase orders | Ordering raw materials or components from a supplier to fulfil production needs. | low | web, admin, backend | none | none | reference | inventree |
-| `manufacturing.quality_inspections` Quality inspections | Recording pass/fail test results against defined test templates for a part or a specific stock item/serial. | low | web, mobile, admin, backend | none | low | reference | inventree |
+| `manufacturing.bom_byproducts` By-products and co-products | Secondary items produced alongside the primary output of a production order, as defined on the BOM. | medium | web, admin, backend | none | none | reference | odoo-mrp, erpnext-manufacturing |
+| `manufacturing.material_requirements_planning` Material requirements planning (MRP) | Computing net material shortages from demand (sales/production orders) against on-hand and incoming stock, and suggesting or triggering replenishment. | high | web, admin, backend, ai | low | medium | reference | odoo-mrp, inventree, erpnext-manufacturing |
+| `manufacturing.purchase_orders` Purchase orders | Ordering raw materials or components from a supplier to fulfil production needs. | medium | web, admin, backend | none | none | reference | inventree, erpnext-manufacturing |
+| `manufacturing.quality_inspections` Quality inspections | Recording pass/fail test results against defined test templates for a part or a specific stock item/serial. | medium | web, mobile, admin, backend | none | low | reference | inventree, erpnext-manufacturing |
 | `manufacturing.stock_locations` Stock locations | A hierarchical structure of physical storage locations (warehouse, area, bin) that stock items belong to. | low | web, mobile, admin, backend | none | none | reference | inventree |
 
 ## Recommended (5)
@@ -32,19 +32,19 @@ A feature here is domain knowledge, not project scope. `Impl` is the kit's reuse
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
 | `manufacturing.disassembly_unbuild` Disassembly / unbuild | Reversing a production order: breaking a built item back down into its component stock, e.g. for rework. | medium | web, mobile, admin, backend | none | none | reference | inventree, odoo-mrp |
-| `manufacturing.equipment_maintenance` Equipment maintenance | Scheduling and recording preventive or corrective maintenance for a work center or piece of equipment. | low | web, mobile, admin, backend | low | low | reference | odoo-mrp |
-| `manufacturing.non_conformance_management` Non-conformance management | Logging and dispositioning a failed inspection or production defect: quarantine, rework, scrap, or use-as-is. | low | web, mobile, admin, backend | none | low | reference | inventree |
-| `manufacturing.subcontracting` Subcontracting | Sending components to an external vendor to perform an operation, receiving back a finished or semi-finished item. | low | web, admin, backend | none | none | reference | inventree |
-| `manufacturing.work_order_scheduling` Work order scheduling | Planning individual operations of a production order against work center capacity and calendars. | low | web, admin, backend, ai | low | medium | reference | odoo-mrp |
+| `manufacturing.equipment_maintenance` Equipment maintenance | Scheduling and recording preventive or corrective maintenance for a work center or piece of equipment. | medium | web, mobile, admin, backend | low | low | reference | odoo-mrp, erpnext-manufacturing |
+| `manufacturing.non_conformance_management` Non-conformance management | Logging and dispositioning a failed inspection or production defect: quarantine, rework, scrap, or use-as-is. | high | web, mobile, admin, backend | none | low | reference | iso-9001, erpnext-manufacturing, inventree |
+| `manufacturing.subcontracting` Subcontracting | Sending components to an external vendor to perform an operation, receiving back a finished or semi-finished item. | medium | web, admin, backend | none | none | reference | inventree, erpnext-manufacturing |
+| `manufacturing.work_order_scheduling` Work order scheduling | Planning individual operations of a production order against work center capacity and calendars. | medium | web, admin, backend, ai | low | medium | reference | odoo-mrp, erpnext-manufacturing |
 
 ## Optional (7)
 
 | Feature | Description | Confidence | Platforms | RT | AI | Impl | Sources |
 |---|---|---|---|---|---|---|---|
-| `manufacturing.bom_substitutes` BOM substitutes | Alternative components that can be used in place of a BOM line's primary component. | low | web, admin, backend | none | none | reference | inventree |
+| `manufacturing.bom_substitutes` BOM substitutes | Alternative components that can be used in place of a BOM line's primary component. | medium | web, admin, backend | none | none | reference | inventree, erpnext-manufacturing |
 | `manufacturing.cost_tracking` Manufacturing cost tracking | Rolling up material, labor (work center hours), and overhead cost into a produced item's cost. | medium | web, admin, backend | none | none | reference | odoo-mrp, inventree |
 | `manufacturing.product_variants` Product variants | Multiple sellable/buildable variants of a base template item (e.g. by size or color) sharing a common BOM structure. | medium | web, admin, backend | none | none | reference | inventree, odoo-mrp |
-| `manufacturing.production_scrap_tracking` Production scrap tracking | Recording material lost or discarded during production, separate from planned by-products. | low | web, mobile, admin, backend | none | none | reference | inventree |
-| `manufacturing.stocktake_cycle_counting` Stocktake / cycle counting | Periodically counting physical inventory and reconciling it against system quantity. | low | web, mobile, admin, backend | none | none | reference | inventree |
-| `manufacturing.supplier_management` Supplier management | Supplier records and the mapping of which supplier part fulfils which internal item. | low | web, admin, backend | none | none | reference | inventree |
-| `manufacturing.workcenter_capacity_planning` Work center capacity planning | Visualizing and planning work center load (queued, in-progress, blocked, late work orders) to balance capacity. | low | web, admin, backend, ai, real_time | medium | low | reference | odoo-mrp |
+| `manufacturing.production_scrap_tracking` Production scrap tracking | Recording material lost or discarded during production, separate from planned by-products. | medium | web, mobile, admin, backend | none | none | reference | inventree, odoo-mrp |
+| `manufacturing.stocktake_cycle_counting` Stocktake / cycle counting | Periodically counting physical inventory and reconciling it against system quantity. | medium | web, mobile, admin, backend | none | none | reference | inventree, erpnext-manufacturing |
+| `manufacturing.supplier_management` Supplier management | Supplier records and the mapping of which supplier part fulfils which internal item. | medium | web, admin, backend | none | none | reference | inventree, erpnext-manufacturing |
+| `manufacturing.workcenter_capacity_planning` Work center capacity planning | Visualizing and planning work center load (queued, in-progress, blocked, late work orders) to balance capacity. | medium | web, admin, backend, ai, real_time | medium | low | reference | odoo-mrp, isa-95-iec-62264 |

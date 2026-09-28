@@ -12,7 +12,7 @@
     "N82.99"
   ],
   "maturity": "curated",
-  "last_reviewed": "2026-09-26",
+  "last_reviewed": "2026-09-27",
   "sources": [
     {
       "id": "caldiy",
@@ -90,6 +90,16 @@
       "version": "2026-09-26 snapshot",
       "local_path": null,
       "notes": "General background for booking waitlists; not present in either inspected implementation."
+    },
+    {
+      "id": "librebooking",
+      "title": "LibreBooking (formerly Booked Scheduler)",
+      "url": "https://github.com/LibreBooking/librebooking",
+      "source_type": "implementation",
+      "license": "GPL-3.0",
+      "retrieved": "2026-09-27",
+      "version": "HEAD @ a8baaa1f9cb06a2b00cdd6229cb2e1bfac6a2f86",
+      "notes": "GPL-3.0, reference-only: read for its data model over the GitHub API, never copied. A resource-and-schedule booking system independent of the appointment-style tools already cited, which is what makes it a genuine second source. Verified present in the tree: `Domain/Reminder.php`, `Domain/ReminderNotice.php`, `Domain/Access/ReminderRepository.php` and `Jobs/sendreminders.php` (scheduled reminders as a first-class model plus a cron job); `Pages/Ajax/ReservationApprovalPage.php` (an approval step before a booking is confirmed); `Domain/CreditCost.php` (count/cost/currency) with `Domain/Access/CreditRepository.php` and `Pages/Admin/CreditLogPage.php` (money attached to a booking); `Pages/Export/EmbeddedCalendarPage.php` and `Web/export/embedded.php` (an embeddable booking surface); `Domain/Access/ReservationWaitlistRepository.php` with `Jobs/sendwaitlist.php`. It has NO buffer-time concept - `Domain/Blackout.php` is blocked-out time, which is a different thing - and no cancellation-policy model, which is why neither of those features cites it."
     }
   ],
   "features": [
@@ -391,8 +401,8 @@
         "sources": [
           "caldiy"
         ],
-        "confidence": "medium",
-        "notes": "Cal.diy's EventType.beforeEventBuffer/afterEventBuffer are explicit; Easy!Appointments' openapi.yml has no equivalent field in the inspected schema, though its README mentions 'breaks' at the provider working-plan level, which is a related but distinct concept."
+        "confidence": "low",
+        "notes": "Deliberately LOWERED from medium to low: only Cal.diy models buffer time before/after a booking. Easy!Appointments has no buffer concept, and LibreBooking's Blackout is blocked-out time, which is a different thing. Padding around appointments is plainly useful, but 'booking products commonly have it' is a single-source claim and is now recorded as one."
       }
     },
     {
@@ -577,10 +587,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "caldiy"
+          "caldiy",
+          "librebooking"
         ],
         "confidence": "medium",
-        "notes": "Cal.diy's Booking.smsReminderNumber field and ReminderMail model confirm this. Easy!Appointments' README lists an 'email notification system' for confirmations but its README flags reminders/SMS as potentially premium-tier; not confirmed present in the open-source core."
+        "notes": "Two independent implementations: Cal.diy sends scheduled reminders; LibreBooking models Reminder and ReminderNotice with a ReminderRepository and a dedicated `Jobs/sendreminders.php` cron. Both treat a reminder as a scheduled record rather than a side effect of confirmation, which is the claim here. RFC 5545 VALARM is the calendar-side analogue but does not govern SMS/email reminders."
       }
     },
     {
@@ -625,8 +636,8 @@
         "sources": [
           "caldiy"
         ],
-        "confidence": "medium",
-        "notes": "Cal.diy's Booking.cancellationReason/rejectionReason and BookingStatus enum (cancelled/rejected/accepted/pending) confirm cancellation and rejection tracking; no explicit no-show status was found in either implementation's inspected schema (Easy!Appointments' AppointmentRecord.status was not enumerated in this pass)."
+        "confidence": "low",
+        "notes": "Deliberately LOWERED from medium to low: only Cal.diy models a cancellation window/policy. Neither Easy!Appointments nor LibreBooking has a policy model - LibreBooking simply permits or forbids cancellation. Note hospitality models cancellation policies far more richly; if a product needs them, read `hospitality.cancellation_policies` rather than treating this as a solved booking concept."
       }
     },
     {
@@ -711,10 +722,11 @@
       ],
       "provenance": {
         "sources": [
-          "caldiy"
+          "caldiy",
+          "librebooking"
         ],
         "confidence": "medium",
-        "notes": "Cal.diy's Booking.paid flag and Payment model confirm this. Easy!Appointments' README flags deposits/payments as likely premium-tier; not confirmed present in its open-source core."
+        "notes": "Two independent implementations attach money to a booking: Cal.diy takes payment on booking; LibreBooking has CreditCost (count, cost, currency) with a CreditRepository and an admin credit log. The corroboration is for 'money is attached to a booking before it happens', NOT specifically for a refundable deposit held against a no-show - LibreBooking's model is a prepaid credit system, which is a different commercial shape. Treat the no-show-deposit reading as the weaker half."
       }
     },
     {
@@ -845,10 +857,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "caldiy"
+          "caldiy",
+          "librebooking"
         ],
         "confidence": "medium",
-        "notes": "Cal.diy's HashedLink model (private booking links) and its core public-booking-page product concept confirm this; not found in Easy!Appointments' inspected API surface, though it is a self-hosted booking form by design."
+        "notes": "Two independent implementations ship an embeddable booking surface for a third-party site: Cal.diy's embed, and LibreBooking's `Pages/Export/EmbeddedCalendarPage.php` / `Web/export/embedded.php`. Both expose booking outside the product's own UI, which is the claim."
       }
     },
     {
@@ -933,10 +946,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "caldiy"
+          "caldiy",
+          "easyappointments"
         ],
         "confidence": "medium",
-        "notes": "Cal.diy's Host model (isFixed, priority, weight per event type) and Easy!Appointments' Secretary-manages-Providers model both show provider-team assignment concepts, though the specific mechanisms differ (round-robin/weighted vs. delegated scheduling)."
+        "notes": "Two independent implementations: Cal.diy has teams and round-robin/collective event types; Easy!Appointments links each provider to a set of services (`Providers_model.php` validates and stores a `services` array per provider), so a service can be delivered by any of several providers. The many-to-many provider-service shape is corroborated; Cal.diy's round-robin and collective assignment strategies are from one source only."
       }
     },
     {
@@ -976,10 +990,11 @@
       "compliance": [],
       "provenance": {
         "sources": [
-          "caldiy"
+          "caldiy",
+          "librebooking"
         ],
         "confidence": "medium",
-        "notes": "Cal.diy's BookingStatus includes PENDING and AWAITING_HOST alongside ACCEPTED/REJECTED, confirming an approval step exists; not found in Easy!Appointments' inspected schema."
+        "notes": "Two independent implementations: Cal.diy supports booking requests needing confirmation; LibreBooking has an explicit `Pages/Ajax/ReservationApprovalPage.php` approval step. Both put a pending state between request and confirmed. Who may approve differs between them and is not claimed."
       }
     },
     {

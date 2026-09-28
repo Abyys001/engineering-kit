@@ -8,81 +8,223 @@
       "name": "Shipper / customer",
       "experience": "customer",
       "description": "The account that books shipments and orders and tracks their delivery.",
-      "responsibilities": ["Create orders/shipments", "Compare and select rates", "Track shipments", "Request pickups", "File claims"],
-      "related_features": ["logistics.customers_shippers", "logistics.orders", "logistics.shipments", "logistics.rates_quotes", "logistics.pickups", "logistics.tracking_events"],
-      "provenance": {"sources": ["karrio"], "confidence": "low", "notes": "karrio's OwnedEntity model scopes records to a customer/organization; single source."}
+      "responsibilities": [
+        "Create orders/shipments",
+        "Compare and select rates",
+        "Track shipments",
+        "Request pickups",
+        "File claims"
+      ],
+      "related_features": [
+        "logistics.customers_shippers",
+        "logistics.orders",
+        "logistics.shipments",
+        "logistics.rates_quotes",
+        "logistics.pickups",
+        "logistics.tracking_events"
+      ],
+      "provenance": {
+        "sources": [
+          "karrio"
+        ],
+        "confidence": "low",
+        "notes": "karrio's OwnedEntity model scopes records to a customer/organization; single source."
+      }
     },
     {
       "id": "dispatcher",
       "name": "Dispatcher",
       "experience": "staff",
       "description": "Plans routes and assigns drivers and vehicles to orders.",
-      "responsibilities": ["Batch and sequence stops", "Assign driver/vehicle", "Monitor live dispatch board", "Re-route on exception"],
-      "related_features": ["logistics.dispatch", "logistics.routes", "logistics.manifests", "logistics.pickups"],
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "Reasoned from fleetbase's dispatch/route/waypoint schema; no explicit role model inspected, single source."}
+      "responsibilities": [
+        "Batch and sequence stops",
+        "Assign driver/vehicle",
+        "Monitor live dispatch board",
+        "Re-route on exception"
+      ],
+      "related_features": [
+        "logistics.dispatch",
+        "logistics.routes",
+        "logistics.manifests",
+        "logistics.pickups"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from fleetbase's dispatch/route/waypoint schema; no explicit role model inspected, single source."
+      }
     },
     {
       "id": "driver",
       "name": "Driver",
       "experience": "staff",
       "description": "Operates a vehicle to execute pickups and deliveries, using the mobile app.",
-      "responsibilities": ["Follow assigned route", "Update stop status", "Capture proof of delivery", "Report issues"],
-      "related_features": ["logistics.driver_app", "logistics.proof_of_delivery", "logistics.drivers", "logistics.dispatch"],
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "fleetbase_drivers table; single source."}
+      "responsibilities": [
+        "Follow assigned route",
+        "Update stop status",
+        "Capture proof of delivery",
+        "Report issues"
+      ],
+      "related_features": [
+        "logistics.driver_app",
+        "logistics.proof_of_delivery",
+        "logistics.drivers",
+        "logistics.dispatch"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "fleetbase_drivers table; single source."
+      }
     },
     {
       "id": "warehouse_staff",
       "name": "Warehouse staff",
       "experience": "staff",
       "description": "Handles inbound receiving, outbound consolidation, and label/parcel handling at a facility.",
-      "responsibilities": ["Receive inventory", "Pack and label parcels", "Stage shipments for pickup"],
-      "related_features": ["logistics.warehouses", "logistics.parcels", "logistics.labels", "logistics.manifests"],
-      "provenance": {"sources": ["std:gs1-epcis"], "confidence": "low", "notes": "Not modeled explicitly in either cloned source; reasoned from the domain brief and the general warehouse-operations role implied by GS1 supply-chain event roles."}
+      "responsibilities": [
+        "Receive inventory",
+        "Pack and label parcels",
+        "Stage shipments for pickup"
+      ],
+      "related_features": [
+        "logistics.warehouses",
+        "logistics.parcels",
+        "logistics.labels",
+        "logistics.manifests"
+      ],
+      "provenance": {
+        "sources": [
+          "std:gs1-epcis"
+        ],
+        "confidence": "medium",
+        "notes": "Not modeled explicitly as a role in either cloned source. GS1 EPCIS/CBV's warehouse-operations business steps (receiving, storing, picking, packing, staging_outbound) are now verified on disk and imply this role performs them, but the standard does not define a 'role' construct itself, so this stays reasoned-but-grounded rather than a direct role citation."
+      }
     },
     {
       "id": "fleet_manager",
       "name": "Fleet manager",
       "experience": "management",
       "description": "Owns vehicle assets, maintenance schedules, and fuel/compliance for the fleet.",
-      "responsibilities": ["Schedule maintenance", "Track fuel and telemetry", "Manage vehicle roster", "Review driver scorecards"],
-      "related_features": ["logistics.vehicles", "logistics.fleet_maintenance", "logistics.fuel_tracking", "logistics.driver_scoring"],
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "Reasoned from fleetbase's vehicle/maintenance schema; single source."}
+      "responsibilities": [
+        "Schedule maintenance",
+        "Track fuel and telemetry",
+        "Manage vehicle roster",
+        "Review driver scorecards"
+      ],
+      "related_features": [
+        "logistics.vehicles",
+        "logistics.fleet_maintenance",
+        "logistics.fuel_tracking",
+        "logistics.driver_scoring"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from fleetbase's vehicle/maintenance schema; single source."
+      }
     },
     {
       "id": "ops_manager",
       "name": "Operations manager",
       "experience": "management",
       "description": "Oversees day-to-day shipping/delivery operations, carrier relationships, and exception handling.",
-      "responsibilities": ["Configure carriers and rates", "Monitor SLAs", "Resolve escalated exceptions", "Review freight invoices"],
-      "related_features": ["logistics.carriers", "logistics.contract_rates", "logistics.exceptions_returns", "logistics.freight_invoicing"],
-      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "Reasoned from both platforms' admin-level carrier/rate configuration surfaces."}
+      "responsibilities": [
+        "Configure carriers and rates",
+        "Monitor SLAs",
+        "Resolve escalated exceptions",
+        "Review freight invoices"
+      ],
+      "related_features": [
+        "logistics.carriers",
+        "logistics.contract_rates",
+        "logistics.exceptions_returns",
+        "logistics.freight_invoicing"
+      ],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "Reasoned from both platforms' admin-level carrier/rate configuration surfaces."
+      }
     },
     {
       "id": "support_agent",
       "name": "Customer support agent",
       "experience": "staff",
       "description": "Handles customer inquiries about tracking, exceptions, returns, and claims.",
-      "responsibilities": ["Answer tracking inquiries", "Log and triage exceptions", "Process returns and claims"],
-      "related_features": ["logistics.tracking_events", "logistics.exceptions_returns", "logistics.claims"],
-      "provenance": {"sources": ["fleetbase"], "confidence": "low", "notes": "Reasoned from fleetbase_issues.assigned_to_uuid/reported_by_uuid; single source."}
+      "responsibilities": [
+        "Answer tracking inquiries",
+        "Log and triage exceptions",
+        "Process returns and claims"
+      ],
+      "related_features": [
+        "logistics.tracking_events",
+        "logistics.exceptions_returns",
+        "logistics.claims"
+      ],
+      "provenance": {
+        "sources": [
+          "fleetbase"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from fleetbase_issues.assigned_to_uuid/reported_by_uuid; single source."
+      }
     },
     {
       "id": "carrier_partner",
       "name": "Carrier / vendor",
       "experience": "partner",
       "description": "The external carrier or vendor providing rates, pickup, and tracking updates.",
-      "responsibilities": ["Return rate quotes", "Provide tracking scans", "Fulfill pickups and delivery"],
-      "related_features": ["logistics.carriers", "logistics.rates_quotes", "logistics.tracking_events"],
-      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's carrier snapshot on Shipment and fleetbase's fleetbase_vendors/vendor_personnels tables both model an external carrier/vendor party."}
+      "responsibilities": [
+        "Return rate quotes",
+        "Provide tracking scans",
+        "Fulfill pickups and delivery"
+      ],
+      "related_features": [
+        "logistics.carriers",
+        "logistics.rates_quotes",
+        "logistics.tracking_events"
+      ],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's carrier snapshot on Shipment and fleetbase's fleetbase_vendors/vendor_personnels tables both model an external carrier/vendor party."
+      }
     },
     {
       "id": "system",
       "name": "System / webhook",
       "experience": "system",
       "description": "Automated actor that ingests carrier webhook events and telemetry to update tracking and vehicle location.",
-      "responsibilities": ["Ingest carrier tracking webhooks", "Update live vehicle/driver telemetry", "Trigger notifications"],
-      "related_features": ["logistics.tracking_events", "logistics.vehicles"],
-      "provenance": {"sources": ["karrio", "fleetbase"], "confidence": "medium", "notes": "karrio's webhook-driven tracking updates and fleetbase's device_events/telematics tables both imply an automated ingestion actor."}
+      "responsibilities": [
+        "Ingest carrier tracking webhooks",
+        "Update live vehicle/driver telemetry",
+        "Trigger notifications"
+      ],
+      "related_features": [
+        "logistics.tracking_events",
+        "logistics.vehicles"
+      ],
+      "provenance": {
+        "sources": [
+          "karrio",
+          "fleetbase"
+        ],
+        "confidence": "medium",
+        "notes": "karrio's webhook-driven tracking updates and fleetbase's device_events/telematics tables both imply an automated ingestion actor."
+      }
     }
   ]
 }
