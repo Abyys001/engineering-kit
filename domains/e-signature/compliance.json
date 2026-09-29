@@ -1,0 +1,222 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "items": [
+    {
+      "id": "eidas",
+      "name": "eIDAS Regulation",
+      "kind": "regulation",
+      "version": "910/2014 as amended by 2024/1183",
+      "jurisdiction": "EU",
+      "scope": "Levels of electronic signature (simple, advanced, qualified) and trust services.",
+      "affected_features": [
+        "e-signature.consent",
+        "e-signature.identity_verification",
+        "e-signature.advanced_signatures"
+      ],
+      "requires_human_review": true,
+      "notes": "Technical considerations only, not legal advice. Engineering implications: identity assurance level, signature evidence, timestamps, integrity. AdES/QES need a qualified provider. Statute not fetched this session.",
+      "url": "https://eur-lex.europa.eu/eli/reg/2014/910/oj",
+      "provenance": {
+        "sources": [
+          "eidas-910-2014"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "uk_eidas",
+      "name": "UK eIDAS regulations and Electronic Communications Act 2000",
+      "kind": "regulation",
+      "version": "SI 2016/696 (as amended)",
+      "jurisdiction": "United Kingdom",
+      "scope": "UK trust services and evidential treatment of electronic signatures.",
+      "affected_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "requires_human_review": true,
+      "notes": "Technical considerations only. Text not fetched; counsel to confirm current position.",
+      "url": "https://www.legislation.gov.uk/uksi/2016/696/contents",
+      "provenance": {
+        "sources": [
+          "uk-eidas-2016"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "esign_act",
+      "name": "US ESIGN Act",
+      "kind": "regulation",
+      "version": "15 U.S.C. ch. 96",
+      "jurisdiction": "United States (federal)",
+      "scope": "Consent to electronic records, intent to sign, record retention and reproduction.",
+      "affected_features": [
+        "e-signature.consent",
+        "e-signature.gdpr_retention"
+      ],
+      "requires_human_review": true,
+      "notes": "Technical considerations only. Engineering implications: consent capture with text version, copy available to signer, retained reproducible record. Not fetched this session.",
+      "url": "https://www.law.cornell.edu/uscode/text/15/chapter-96",
+      "provenance": {
+        "sources": [
+          "esign-act"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ueta",
+      "name": "Uniform Electronic Transactions Act",
+      "kind": "regulation",
+      "version": "1999 model act",
+      "jurisdiction": "United States (state-level)",
+      "scope": "State counterpart to ESIGN: attribution and retention of electronic records.",
+      "affected_features": [
+        "e-signature.consent"
+      ],
+      "requires_human_review": true,
+      "notes": "Enacted per state with variation; technical considerations only. Not fetched this session.",
+      "url": "https://www.uniformlaws.org/committees/community-home?CommunityKey=2c04b76c-2b7d-4399-977e-d5876ba7e034",
+      "provenance": {
+        "sources": [
+          "ueta"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "uae_46_2021",
+      "name": "UAE Federal Decree-Law 46/2021",
+      "kind": "regulation",
+      "version": "2021",
+      "jurisdiction": "United Arab Emirates",
+      "scope": "Electronic transactions, signatures, seals and trust services.",
+      "affected_features": [
+        "e-signature.advanced_signatures",
+        "e-signature.consent"
+      ],
+      "requires_human_review": true,
+      "notes": "Technical considerations only; text not fetched and recalled details are unverified. Counsel to confirm.",
+      "url": "https://uaelegislation.gov.ae/en/legislations/1526",
+      "provenance": {
+        "sources": [
+          "uae-46-2021"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR",
+      "kind": "regulation",
+      "version": "2016/679",
+      "jurisdiction": "EU (UK GDPR is a separate text)",
+      "scope": "Lawful basis, retention limits, erasure, residency for signer personal data.",
+      "affected_features": [
+        "e-signature.gdpr_retention",
+        "e-signature.legal_hold",
+        "e-signature.data_residency",
+        "e-signature.consent",
+        "e-signature.kyc_id_verification"
+      ],
+      "requires_human_review": true,
+      "notes": "Technical considerations only. Reconcile erasure requests with audit and evidence retention; per-tenant retention policy.",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "pades",
+      "name": "PAdES (ETSI EN 319 142)",
+      "kind": "standard",
+      "version": "EN 319 142-1",
+      "jurisdiction": "EU / international",
+      "scope": "Baseline profiles B-B, B-T, B-LT, B-LTA for PDF signatures.",
+      "affected_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "requires_human_review": true,
+      "notes": "Profile choice depends on legal level; signpdf covers B-B only. Not fetched this session.",
+      "url": "https://www.etsi.org/deliver/etsi_en/319100_319199/31914201/",
+      "provenance": {
+        "sources": [
+          "etsi-pades"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "rfc_3161",
+      "name": "RFC 3161 timestamping",
+      "kind": "standard",
+      "version": "RFC 3161",
+      "jurisdiction": "IETF",
+      "scope": "Trusted timestamp tokens.",
+      "affected_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "requires_human_review": true,
+      "notes": "Optional for simple e-signatures; recommended when long-term validity matters.",
+      "url": "https://datatracker.ietf.org/doc/html/rfc3161",
+      "provenance": {
+        "sources": [
+          "rfc-3161"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "iso_32000",
+      "name": "ISO 32000 PDF",
+      "kind": "standard",
+      "version": "ISO 32000-2",
+      "jurisdiction": "International",
+      "scope": "PDF coordinate space, CropBox and rotation used for field placement.",
+      "affected_features": [
+        "e-signature.field_placement",
+        "e-signature.final_pdf_generation"
+      ],
+      "requires_human_review": true,
+      "notes": "Basis for storing relative field coordinates; PDF/A archival is a separate decision.",
+      "url": "https://www.iso.org/standard/75839.html",
+      "provenance": {
+        "sources": [
+          "iso-32000"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "owasp_asvs",
+      "name": "OWASP ASVS",
+      "kind": "guideline",
+      "version": "5.0",
+      "jurisdiction": "international",
+      "scope": "Verification requirements for auth, session, access control, upload and API security.",
+      "affected_features": [
+        "e-signature.multi_tenancy",
+        "e-signature.upload_security",
+        "e-signature.download_security",
+        "e-signature.rate_limiting_anti_abuse",
+        "e-signature.secure_tokens",
+        "e-signature.otp_verification"
+      ],
+      "requires_human_review": true,
+      "notes": "Checklist, not a compliance claim.",
+      "url": "https://owasp.org/www-project-application-security-verification-standard/",
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    }
+  ],
+  "disclaimer": "Domain knowledge, technical considerations only, not legal advice. Confirm applicability per jurisdiction with a qualified reviewer."
+}

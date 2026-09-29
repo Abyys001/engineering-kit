@@ -132,3 +132,7 @@ Build `@siavash/*` once roughly 20 items are promoted. Format: shadcn's MIT sche
 - AI (Python): LLM provider abstraction, structured output, embeddings, RAG, evaluation, AI workers.
 - Backend: audit log, file storage (S3-compatible), notification delivery, search backend.
 - Web: error-state component, settings feature. Mobile: forms layer. Registry: private access.
+
+## Contract / e-signature (2026-09-29)
+
+No new upstream source was cloned for this pass (the useful projects are AGPL or unverified — see [`CANDIDATES.md`](CANDIDATES.md)). Promoted from original code instead: `backend/{signing-tokens,otp,webhooks,audit-log,contracts,tenancy,pdf}`, `components/web/{signing,contract,typography}`. Library picks: `pdfjs-dist` + `react-pdf` (browser), `@cantoo/pdf-lib` + `pdfkit` + `@signpdf/signpdf` + `pkijs` (server), `signature_pad`, `input-otp`, `dnd-kit`. Domain: [`domains/e-signature/`](../domains/e-signature/DOMAIN.md).

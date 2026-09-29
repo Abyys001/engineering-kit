@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-09-28",
+  "generated": "2026-09-29",
   "generator": "tools/kb.py build",
   "domains": [
     {
@@ -99,6 +99,84 @@
       "implementation_coverage": {
         "web": 0,
         "backend": 0,
+        "mobile": 0,
+        "ai": 0
+      }
+    },
+    {
+      "id": "e-signature",
+      "name": "Digital contracts and e-signature",
+      "aliases": [
+        "e-signature",
+        "electronic signature",
+        "contract management",
+        "document signing"
+      ],
+      "description": "Preparing documents, routing them to signers, capturing signatures with evidence, sealing the final PDF, and keeping a verifiable audit trail; with light contract lifecycle management around it.",
+      "nace": [
+        "J62.10",
+        "M69.10"
+      ],
+      "maturity": "partial",
+      "last_reviewed": "2026-09-29",
+      "feature_count": 69,
+      "features_by_classification": {
+        "core": 27,
+        "common": 22,
+        "compliance": 2,
+        "premium": 4,
+        "platform": 1,
+        "infrastructure": 2,
+        "optional": 11
+      },
+      "features_by_confidence": {
+        "high": 12,
+        "medium": 22,
+        "low": 35
+      },
+      "entity_count": 30,
+      "role_count": 11,
+      "workflow_count": 17,
+      "state_machine_count": 4,
+      "compliance_count": 10,
+      "integration_count": 13,
+      "standards": [
+        "standard-webhooks",
+        "owasp-forgot-password",
+        "iso-32000",
+        "rfc-3161",
+        "etsi-pades",
+        "eidas-910-2014",
+        "esign-act",
+        "ueta",
+        "uk-eidas-2016",
+        "uae-46-2021",
+        "gdpr-2016-679",
+        "owasp-asvs"
+      ],
+      "implementation_references": [
+        "documenso",
+        "docuseal",
+        "opensign",
+        "libresign",
+        "papermark",
+        "svix-webhooks",
+        "pdfjs",
+        "react-pdf",
+        "cantoo-pdf-lib",
+        "signpdf",
+        "pkijs",
+        "pdfkit",
+        "signature-pad",
+        "pdfme",
+        "embedpdf",
+        "docusign-esign-node",
+        "mupdf-js"
+      ],
+      "source_count": 30,
+      "implementation_coverage": {
+        "web": 4,
+        "backend": 11,
         "mobile": 0,
         "ai": 0
       }

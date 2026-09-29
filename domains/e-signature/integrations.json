@@ -1,0 +1,331 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "integrations": [
+    {
+      "id": "transactional_email",
+      "name": "Transactional email provider",
+      "category": "communication",
+      "purpose": "Send email and receive delivery, bounce and complaint events.",
+      "examples": [
+        "Amazon SES",
+        "Postmark",
+        "Resend",
+        "SendGrid",
+        "Mailgun"
+      ],
+      "protocols": [
+        "REST",
+        "SMTP",
+        "webhooks"
+      ],
+      "related_features": [
+        "e-signature.email_delivery",
+        "e-signature.email_notifications",
+        "e-signature.otp_verification"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "smtp_provider",
+      "name": "SMTP relay",
+      "category": "communication",
+      "purpose": "Fallback or self-hosted mail transport.",
+      "examples": [
+        "any SMTP server"
+      ],
+      "protocols": [
+        "SMTP"
+      ],
+      "related_features": [
+        "e-signature.email_delivery"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "sms_gateway",
+      "name": "SMS gateway",
+      "category": "communication",
+      "purpose": "OTP and invitation texts with delivery receipts.",
+      "examples": [
+        "Twilio",
+        "Vonage",
+        "MessageBird",
+        "AWS SNS"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "e-signature.sms_notifications",
+        "e-signature.otp_verification"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "object_storage",
+      "name": "S3-compatible object storage",
+      "category": "storage",
+      "purpose": "Documents, sealed PDFs and certificates.",
+      "examples": [
+        "AWS S3",
+        "Cloudflare R2",
+        "MinIO"
+      ],
+      "protocols": [
+        "S3 API"
+      ],
+      "related_features": [
+        "e-signature.storage_abstraction",
+        "e-signature.document_management",
+        "e-signature.immutable_signed_documents",
+        "e-signature.download_security"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "virus_scanner",
+      "name": "Antivirus scanner",
+      "category": "security",
+      "purpose": "Scan uploads before use.",
+      "examples": [
+        "ClamAV (clamd)"
+      ],
+      "protocols": [
+        "clamd socket/TCP"
+      ],
+      "related_features": [
+        "e-signature.upload_security"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "tsa",
+      "name": "Timestamp authority",
+      "category": "trust",
+      "purpose": "RFC 3161 timestamps for signed documents.",
+      "examples": [
+        "any RFC 3161 TSA"
+      ],
+      "protocols": [
+        "RFC 3161"
+      ],
+      "related_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "rfc-3161",
+          "pkijs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "kms_hsm",
+      "name": "Key management or HSM",
+      "category": "trust",
+      "purpose": "Custody of signing keys; keys never in app config.",
+      "examples": [
+        "cloud KMS",
+        "HSM"
+      ],
+      "protocols": [
+        "PKCS#11",
+        "cloud APIs"
+      ],
+      "related_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "signpdf",
+          "pkijs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "trust_service_provider",
+      "name": "Qualified trust service provider",
+      "category": "trust",
+      "purpose": "Qualified certificates and remote signing for QES.",
+      "examples": [
+        "eIDAS-listed QTSP"
+      ],
+      "protocols": [
+        "CSC API",
+        "REST"
+      ],
+      "related_features": [
+        "e-signature.advanced_signatures"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "eidas-910-2014"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "idv_provider",
+      "name": "Identity verification provider",
+      "category": "identity",
+      "purpose": "ID document and liveness checks.",
+      "examples": [
+        "KYC vendors"
+      ],
+      "protocols": [
+        "REST",
+        "webhooks"
+      ],
+      "related_features": [
+        "e-signature.kyc_id_verification",
+        "e-signature.identity_verification"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "docusign-esign-node"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "sso_idp",
+      "name": "Enterprise identity provider",
+      "category": "identity",
+      "purpose": "SAML/OIDC login and SCIM provisioning.",
+      "examples": [
+        "Okta",
+        "Entra ID",
+        "Google Workspace"
+      ],
+      "protocols": [
+        "SAML 2.0",
+        "OIDC",
+        "SCIM"
+      ],
+      "related_features": [
+        "e-signature.sso_scim"
+      ],
+      "classification": "integration",
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "webhook_consumers",
+      "name": "Customer webhook consumers",
+      "category": "integration",
+      "purpose": "Customer systems receiving signed events.",
+      "examples": [
+        "any HTTPS endpoint"
+      ],
+      "protocols": [
+        "HTTPS",
+        "Standard Webhooks"
+      ],
+      "related_features": [
+        "e-signature.webhooks",
+        "e-signature.webhook_retry"
+      ],
+      "classification": "core",
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "otel_observability",
+      "name": "OpenTelemetry backend",
+      "category": "operations",
+      "purpose": "Traces, metrics and logs.",
+      "examples": [
+        "OTLP collectors"
+      ],
+      "protocols": [
+        "OTLP"
+      ],
+      "related_features": [
+        "e-signature.observability"
+      ],
+      "classification": "common",
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ocr_llm",
+      "name": "OCR and LLM services",
+      "category": "ai",
+      "purpose": "Text extraction and analysis for optional AI features.",
+      "examples": [
+        "OCR engines",
+        "LLM APIs"
+      ],
+      "protocols": [
+        "REST"
+      ],
+      "related_features": [
+        "e-signature.ai_contract_intelligence"
+      ],
+      "classification": "optional",
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

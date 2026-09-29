@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "updated": "2026-09-27",
+  "updated": "2026-09-29",
   "item_fields": [
     "name",
     "category",
@@ -14,7 +14,265 @@
     "avoid_when",
     "related"
   ],
-  "items": [],
+  "items": [
+    {
+      "name": "signing-tokens",
+      "category": "backend",
+      "path": "backend/signing-tokens",
+      "platform": "backend",
+      "tags": [
+        "e-signature",
+        "token",
+        "security"
+      ],
+      "source": "original (OWASP guidance)",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "single-use hashed signing links",
+        "token rotation/revocation"
+      ],
+      "avoid_when": [
+        "you need long-lived sessions (use auth)"
+      ],
+      "related": [
+        "otp",
+        "backend/contracts"
+      ]
+    },
+    {
+      "name": "otp",
+      "category": "backend",
+      "path": "backend/otp",
+      "platform": "backend",
+      "tags": [
+        "e-signature",
+        "otp",
+        "security"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "email/SMS verification codes with attempt limits and replay protection"
+      ],
+      "avoid_when": [
+        "TOTP authenticator apps (use otplib)"
+      ],
+      "related": [
+        "signing-tokens"
+      ]
+    },
+    {
+      "name": "webhooks",
+      "category": "backend",
+      "path": "backend/webhooks",
+      "platform": "backend",
+      "tags": [
+        "webhooks",
+        "hmac",
+        "ssrf",
+        "standard-webhooks"
+      ],
+      "source": "original; Standard Webhooks spec (Apache-2.0)",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "outbound webhook signing/verification, secret rotation, SSRF guard, retry backoff"
+      ],
+      "avoid_when": [
+        "you host Svix instead"
+      ],
+      "related": [
+        "audit-log"
+      ]
+    },
+    {
+      "name": "audit-log",
+      "category": "backend",
+      "path": "backend/audit-log",
+      "platform": "backend",
+      "tags": [
+        "audit",
+        "hash-chain",
+        "immutable"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "per-contract tamper-evident append-only audit chain + Postgres hardening SQL"
+      ],
+      "avoid_when": [
+        "a global chain across tenants"
+      ],
+      "related": [
+        "contracts"
+      ]
+    },
+    {
+      "name": "contracts",
+      "category": "backend",
+      "path": "backend/contracts",
+      "platform": "backend",
+      "tags": [
+        "state-machine",
+        "contract",
+        "lifecycle"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "contract lifecycle state machine with CAS persistence guidance"
+      ],
+      "avoid_when": [
+        "per-recipient state (separate machine)"
+      ],
+      "related": [
+        "audit-log"
+      ]
+    },
+    {
+      "name": "tenancy",
+      "category": "backend",
+      "path": "backend/tenancy",
+      "platform": "backend",
+      "tags": [
+        "multi-tenant",
+        "rls",
+        "als"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "tenant context, job payload contract, tenant-local transaction wrapper"
+      ],
+      "avoid_when": [
+        "schema-per-tenant designs"
+      ],
+      "related": [
+        "authorization"
+      ]
+    },
+    {
+      "name": "pdf-field-coordinates",
+      "category": "backend",
+      "path": "backend/pdf",
+      "platform": "backend",
+      "tags": [
+        "pdf",
+        "coordinates",
+        "fields"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "relative field geometry <-> PDF points across /Rotate and CropBox"
+      ],
+      "avoid_when": [
+        "rendering or signing PDFs (see README library split)"
+      ],
+      "related": [
+        "components/web/signing"
+      ]
+    },
+    {
+      "name": "signature-capture",
+      "category": "web",
+      "path": "components/web/signing/signature-capture.tsx",
+      "platform": "web",
+      "tags": [
+        "e-signature",
+        "signature-pad",
+        "react"
+      ],
+      "source": "signature_pad (MIT) + original",
+      "license": "MIT (dependency)",
+      "dependencies": [
+        "signature_pad"
+      ],
+      "use_cases": [
+        "draw/type signature capture"
+      ],
+      "avoid_when": [
+        "cryptographic signing (server only)"
+      ],
+      "related": [
+        "field-overlay"
+      ]
+    },
+    {
+      "name": "field-overlay",
+      "category": "web",
+      "path": "components/web/signing/field-overlay.tsx",
+      "platform": "web",
+      "tags": [
+        "pdf",
+        "fields",
+        "overlay",
+        "react"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "percent-positioned field layer over a PDF page; next-required-field navigation"
+      ],
+      "avoid_when": [
+        "field editing with drag/resize (compose dnd-kit)"
+      ],
+      "related": [
+        "signature-capture",
+        "pdf-field-coordinates"
+      ]
+    },
+    {
+      "name": "contract-status-badge",
+      "category": "web",
+      "path": "components/web/contract/contract-status-badge.tsx",
+      "platform": "web",
+      "tags": [
+        "contract",
+        "badge",
+        "react"
+      ],
+      "source": "original",
+      "license": "n/a (kit original)",
+      "dependencies": [],
+      "use_cases": [
+        "contract status chip"
+      ],
+      "avoid_when": [],
+      "related": [
+        "contracts"
+      ]
+    },
+    {
+      "name": "typography-fonts",
+      "category": "web",
+      "path": "components/web/typography",
+      "platform": "web",
+      "tags": [
+        "fonts",
+        "design-system",
+        "rtl",
+        "ofl"
+      ],
+      "source": "google/fonts (OFL-1.1)",
+      "license": "OFL-1.1",
+      "dependencies": [],
+      "use_cases": [
+        "Google Sans Flex / Google Sans / Vazirmatn self-hosted assets"
+      ],
+      "avoid_when": [
+        "using Google trademarks as product names"
+      ],
+      "related": []
+    }
+  ],
   "sources": [
     {
       "name": "agent-elements",
@@ -1095,7 +1353,7 @@
         "screen-reader announcements"
       ],
       "caveats": [
-        "stale (2024-05): React 18, Tailwind v3 — port the logic, not the versions"
+        "stale (2024-05): React 18, Tailwind v3 \u2014 port the logic, not the versions"
       ]
     },
     {
@@ -1162,7 +1420,7 @@
         "file tree"
       ],
       "caveats": [
-        "decorative glow/particle/gradient effects conflict with ui-design-policy §7: use only when the product calls for them",
+        "decorative glow/particle/gradient effects conflict with ui-design-policy \u00a77: use only when the product calls for them",
         "skills/magic-ui/ is upstream agent config: never install"
       ]
     },

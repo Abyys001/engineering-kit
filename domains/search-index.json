@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generated": "2026-09-28",
+  "generated": "2026-09-29",
   "generator": "tools/kb.py build",
   "entries": [
     {
@@ -1832,6 +1832,2832 @@
       "keys": [
         "authoritative",
         "Public — US federal government publication"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.contracts",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "archival",
+        "assignment",
+        "backend",
+        "contract",
+        "contract_lifecycle",
+        "contract_numbering",
+        "contract_version",
+        "core",
+        "customer_portal",
+        "documenso",
+        "document",
+        "docuseal",
+        "duplication",
+        "libresign",
+        "locking",
+        "metadata",
+        "mobile",
+        "opensign",
+        "org_admin",
+        "ownership",
+        "partial",
+        "recipient",
+        "sender",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.contract_state_machine",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "contract",
+        "contract_lifecycle",
+        "core",
+        "documenso",
+        "docuseal",
+        "guarded_transitions",
+        "opensign",
+        "partial",
+        "sender",
+        "system",
+        "terminal_states",
+        "transition_events",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.document_management",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "core",
+        "documenso",
+        "document",
+        "document_file",
+        "document_processing",
+        "docuseal",
+        "file_abstraction",
+        "file_metadata",
+        "immutable_versions",
+        "libresign",
+        "missing",
+        "mobile",
+        "object_storage",
+        "opensign",
+        "sender",
+        "storage_object",
+        "upload_validation",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.upload_security",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "core",
+        "decompression_limits",
+        "document_file",
+        "document_processing",
+        "identity",
+        "mime_sniffing",
+        "missing",
+        "owasp-asvs",
+        "pdf_preflight",
+        "pdfjs",
+        "quarantine",
+        "sender",
+        "storage_object",
+        "system",
+        "virus_scan",
+        "virus_scanner"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.document_processing_pipeline",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cantoo-pdf-lib",
+        "completion_sealing",
+        "contract",
+        "core",
+        "dead_letter",
+        "document",
+        "document_file",
+        "document_processing",
+        "job_stages",
+        "mupdf-js",
+        "pdfjs",
+        "pdfkit",
+        "reference",
+        "retries",
+        "system",
+        "text_extraction",
+        "thumbnails"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.pdf_viewer",
+      "domain": "e-signature",
+      "keys": [
+        "cc_recipient",
+        "core",
+        "customer_portal",
+        "documenso",
+        "document",
+        "document_preparation",
+        "docuseal",
+        "embedpdf",
+        "lazy_page_render",
+        "missing",
+        "mobile",
+        "page_navigation",
+        "pdfjs",
+        "react-pdf",
+        "rotation",
+        "sender",
+        "signer",
+        "signing_flow",
+        "thumbnails",
+        "web",
+        "witness",
+        "zoom"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.document_preparation",
+      "domain": "e-signature",
+      "keys": [
+        "autosave",
+        "contract",
+        "core",
+        "customer_portal",
+        "documenso",
+        "document",
+        "document_preparation",
+        "docuseal",
+        "field",
+        "libresign",
+        "missing",
+        "mobile",
+        "opensign",
+        "prep_sidebar",
+        "preview_as_recipient",
+        "properties_panel",
+        "recipient",
+        "sender",
+        "template_manager",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.field_placement",
+      "domain": "e-signature",
+      "keys": [
+        "core",
+        "documenso",
+        "document",
+        "document_preparation",
+        "docuseal",
+        "drag_drop",
+        "duplicate",
+        "field",
+        "iso-32000",
+        "mobile",
+        "multi_page",
+        "partial",
+        "pdfme",
+        "relative_coordinates",
+        "resize",
+        "sender",
+        "snap_to_grid",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.field_types",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "core",
+        "documenso",
+        "document",
+        "document_preparation",
+        "docuseal",
+        "docusign-esign-node",
+        "field",
+        "field_schema",
+        "field_versioning",
+        "mobile",
+        "opensign",
+        "partial",
+        "recipient_binding",
+        "sender",
+        "signer",
+        "signing_flow",
+        "validation_rules",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.recipient_management",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cc_recipient",
+        "core",
+        "customer",
+        "customer_portal",
+        "documenso",
+        "docuseal",
+        "internal_external",
+        "libresign",
+        "missing",
+        "mobile",
+        "opensign",
+        "recipient",
+        "recipient_activity",
+        "recipient_status",
+        "resend",
+        "roles",
+        "sender",
+        "signature_request",
+        "signer",
+        "signing_flow",
+        "status_tracking",
+        "web",
+        "witness",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.signing_order",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "core",
+        "documenso",
+        "docusign-esign-node",
+        "missing",
+        "opensign",
+        "optional_recipients",
+        "parallel",
+        "recipient",
+        "routing_groups",
+        "sender",
+        "sequential",
+        "signature_request",
+        "signing_flow",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.signature_capture",
+      "domain": "e-signature",
+      "keys": [
+        "adopt_once_reuse",
+        "core",
+        "documenso",
+        "docuseal",
+        "drawn",
+        "identity",
+        "mobile",
+        "opensign",
+        "partial",
+        "signature",
+        "signature-pad",
+        "signature_appearance",
+        "signer",
+        "signing_flow",
+        "typed",
+        "uploaded",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.initials_capture",
+      "domain": "e-signature",
+      "keys": [
+        "common",
+        "documenso",
+        "docuseal",
+        "field",
+        "important",
+        "initials",
+        "missing",
+        "mobile",
+        "per_page_initials",
+        "signature",
+        "signer",
+        "signing_flow",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.consent",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "compliance",
+        "consent",
+        "consent_record",
+        "consent_text_versioning",
+        "core",
+        "documenso",
+        "eidas",
+        "eidas-910-2014",
+        "esign-act",
+        "esign_act",
+        "gdpr",
+        "identity",
+        "missing",
+        "mobile",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "ueta",
+        "web",
+        "withdraw_consent"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.signing_session",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "completion_screen",
+        "core",
+        "customer_portal",
+        "device_ip_signals",
+        "documenso",
+        "docuseal",
+        "identity",
+        "missing",
+        "mobile",
+        "owasp-forgot-password",
+        "progress",
+        "recipient",
+        "required_field_navigation",
+        "session_binding",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.secure_tokens",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "core",
+        "expiry",
+        "hashed_storage",
+        "identity",
+        "owasp-asvs",
+        "owasp-forgot-password",
+        "partial",
+        "recipient",
+        "replay_protection",
+        "revocation",
+        "rotation",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "system",
+        "token_lifecycle"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.otp_verification",
+      "domain": "e-signature",
+      "keys": [
+        "attempt_limits",
+        "audit_events",
+        "backend",
+        "challenge_hash",
+        "common",
+        "identity",
+        "important",
+        "mobile",
+        "otp_challenge",
+        "otp_flow",
+        "owasp-asvs",
+        "owasp-forgot-password",
+        "partial",
+        "rate_limits",
+        "recipient",
+        "resend_cooldown",
+        "signer",
+        "sms_gateway",
+        "system",
+        "transactional_email",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.identity_verification",
+      "domain": "e-signature",
+      "keys": [
+        "access_code",
+        "assurance_levels",
+        "backend",
+        "common",
+        "compliance",
+        "documenso",
+        "docusign-esign-node",
+        "eidas",
+        "identity",
+        "idv_provider",
+        "important",
+        "level_evidence",
+        "missing",
+        "mobile",
+        "opensign",
+        "otp_challenge",
+        "otp_flow",
+        "recipient",
+        "sender",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.email_delivery",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "bounce_complaint_handling",
+        "communication",
+        "core",
+        "delivery_events",
+        "documenso",
+        "docuseal",
+        "email_event",
+        "email_message",
+        "idempotency",
+        "message_delivery",
+        "open_click_tracking",
+        "opensign",
+        "org_admin",
+        "provider_interface",
+        "reference",
+        "smtp_provider",
+        "system",
+        "template_rendering",
+        "transactional_email"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.email_notifications",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "branding",
+        "cc_recipient",
+        "communication",
+        "completion_email",
+        "core",
+        "documenso",
+        "docuseal",
+        "email_message",
+        "invitation",
+        "libresign",
+        "message_delivery",
+        "missing",
+        "opensign",
+        "preview",
+        "recipient",
+        "sender",
+        "signer",
+        "signing_flow",
+        "template_variables",
+        "transactional_email",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.sms_notifications",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "common",
+        "communication",
+        "country_controls",
+        "delivery_receipts",
+        "documenso",
+        "important",
+        "message_delivery",
+        "missing",
+        "opensign",
+        "otp_flow",
+        "provider_interface",
+        "rate_limits",
+        "sender",
+        "signer",
+        "sms_gateway",
+        "sms_message",
+        "system"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.notification_centre",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "common",
+        "communication",
+        "deep_links",
+        "documenso",
+        "important",
+        "inbox",
+        "message_delivery",
+        "notification",
+        "opensign",
+        "org_admin",
+        "preferences",
+        "read_state",
+        "real_time",
+        "reference",
+        "sender",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.reminders_expiry",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cadence",
+        "common",
+        "contract",
+        "dedupe_keys",
+        "documenso",
+        "docuseal",
+        "expiry",
+        "important",
+        "opensign",
+        "reference",
+        "reminder",
+        "reminder_expiry",
+        "resend",
+        "sender",
+        "stop_on_complete",
+        "system",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.versioning",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "common",
+        "contract_lifecycle",
+        "contract_version",
+        "corrected_copy",
+        "documenso",
+        "document",
+        "document_file",
+        "docuseal",
+        "immutable_versions",
+        "important",
+        "missing",
+        "sender",
+        "version_list",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.document_hashing",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cantoo-pdf-lib",
+        "completion_sealing",
+        "core",
+        "documenso",
+        "document",
+        "document_file",
+        "hash_in_evidence",
+        "hash_on_download",
+        "missing",
+        "public_verification",
+        "sha256_streaming",
+        "signpdf",
+        "system",
+        "verification_record"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.final_pdf_generation",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cantoo-pdf-lib",
+        "completion_sealing",
+        "contract",
+        "coordinate_conversion",
+        "core",
+        "documenso",
+        "document",
+        "document_file",
+        "docuseal",
+        "flatten",
+        "iso-32000",
+        "merge",
+        "opensign",
+        "partial",
+        "signature",
+        "single_flight",
+        "stamp",
+        "system"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.immutable_signed_documents",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "completion_sealing",
+        "compliance",
+        "compliance_officer",
+        "core",
+        "documenso",
+        "document_file",
+        "hash_pinning",
+        "libresign",
+        "missing",
+        "object_lock",
+        "object_storage",
+        "retention_deletion",
+        "storage_object",
+        "system",
+        "write_once"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.completion_certificate",
+      "domain": "e-signature",
+      "keys": [
+        "audit_event",
+        "backend",
+        "certificate_layout",
+        "completion_certificate",
+        "completion_sealing",
+        "compliance",
+        "compliance_officer",
+        "core",
+        "documenso",
+        "document",
+        "docuseal",
+        "event_list",
+        "hash_summary",
+        "missing",
+        "opensign",
+        "pdfkit",
+        "sender",
+        "signer",
+        "signer_evidence"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.audit_trail",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "append_only",
+        "audit_event",
+        "backend",
+        "compliance",
+        "compliance_officer",
+        "contract",
+        "contract_lifecycle",
+        "core",
+        "correlation_ids",
+        "documenso",
+        "docuseal",
+        "export",
+        "libresign",
+        "opensign",
+        "partial",
+        "per_contract_hash_chain",
+        "retention",
+        "sender",
+        "signing_flow",
+        "system",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.public_verification",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "common",
+        "completion_certificate",
+        "compliance",
+        "customer_portal",
+        "documenso",
+        "hash_lookup",
+        "important",
+        "libresign",
+        "missing",
+        "no_enumeration",
+        "public_verification",
+        "public_verifier",
+        "qr_code",
+        "signature_validation",
+        "signer",
+        "verification_record",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.download_security",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "cc_recipient",
+        "core",
+        "documenso",
+        "download",
+        "download_audit",
+        "identity",
+        "missing",
+        "object_authorisation",
+        "object_storage",
+        "owasp-asvs",
+        "sender",
+        "signed_urls",
+        "signer",
+        "signing_flow",
+        "storage_object",
+        "streaming",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.storage_abstraction",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "core",
+        "documenso",
+        "document_processing",
+        "docuseal",
+        "encryption",
+        "infrastructure",
+        "lifecycle",
+        "missing",
+        "multipart",
+        "object_storage",
+        "provider_interface",
+        "storage_object",
+        "system",
+        "tenant_prefix"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.webhooks",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "api_integrator",
+        "backend",
+        "common",
+        "documenso",
+        "endpoint_verification",
+        "event_catalog",
+        "important",
+        "integration",
+        "org_admin",
+        "partial",
+        "secret_rotation",
+        "ssrf_guard",
+        "standard-webhooks",
+        "standard_webhooks_signing",
+        "svix-webhooks",
+        "web",
+        "webhook_consumers",
+        "webhook_delivery",
+        "webhook_delivery_flow",
+        "webhook_endpoint"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.webhook_retry",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "api_integrator",
+        "backend",
+        "backoff_jitter",
+        "common",
+        "dead_letter",
+        "delivery_log",
+        "important",
+        "integration",
+        "partial",
+        "redrive",
+        "replay_window",
+        "standard-webhooks",
+        "svix-webhooks",
+        "system",
+        "web",
+        "webhook_delivery",
+        "webhook_delivery_flow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.search_filtering",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "common",
+        "contract",
+        "contract_lifecycle",
+        "documenso",
+        "docuseal",
+        "fulltext",
+        "gin_index",
+        "important",
+        "org_admin",
+        "recipient",
+        "reference",
+        "saved_filters",
+        "search",
+        "sender",
+        "tenant_scoped_search",
+        "trigram",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.exports",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "async_export",
+        "audit_event",
+        "audit_export",
+        "backend",
+        "common",
+        "compliance_officer",
+        "contract",
+        "csv_export",
+        "documenso",
+        "download",
+        "important",
+        "missing",
+        "org_admin",
+        "reporting",
+        "retention_deletion",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.templates",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "common",
+        "core",
+        "documenso",
+        "document",
+        "docuseal",
+        "field",
+        "important",
+        "libresign",
+        "missing",
+        "opensign",
+        "preview",
+        "publish_archive",
+        "sender",
+        "template",
+        "template_manager",
+        "template_publish",
+        "template_roles",
+        "template_version",
+        "template_versions",
+        "variables",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.org_branding",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "brand_colours",
+        "common",
+        "documenso",
+        "docuseal",
+        "email_from",
+        "important",
+        "logo",
+        "missing",
+        "org_admin",
+        "organisation",
+        "signing_page_theme",
+        "template_publish",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.rbac_permission_overrides",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "common",
+        "contract",
+        "contract_lifecycle",
+        "documenso",
+        "docuseal",
+        "identity",
+        "important",
+        "object_level_authorisation",
+        "opensign",
+        "org_admin",
+        "overrides",
+        "policy_tests",
+        "reference",
+        "role_permission",
+        "roles",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.multi_tenancy",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "contract_lifecycle",
+        "core",
+        "drizzle-rls",
+        "identity",
+        "org_admin",
+        "organisation",
+        "owasp-asvs",
+        "partial",
+        "rls",
+        "system",
+        "tenant_context",
+        "tenant_scoped_cache",
+        "tenant_scoped_jobs",
+        "tenant_scoped_storage"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.concurrency_idempotency",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "completion_sealing",
+        "contract",
+        "core",
+        "documenso",
+        "idempotency_keys",
+        "missing",
+        "optimistic_version",
+        "owasp-asvs",
+        "recipient",
+        "row_locking",
+        "signature",
+        "signing_flow",
+        "single_flight_jobs",
+        "system",
+        "unique_constraints"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.rate_limiting_anti_abuse",
+      "domain": "e-signature",
+      "keys": [
+        "audit_event",
+        "backend",
+        "bot_challenge",
+        "core",
+        "identity",
+        "org_admin",
+        "otp_challenge",
+        "otp_flow",
+        "owasp-asvs",
+        "owasp-forgot-password",
+        "per_token_limits",
+        "quota",
+        "reference",
+        "sliding_window",
+        "system"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.security_events",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "alerts",
+        "audit_event",
+        "backend",
+        "common",
+        "compliance",
+        "compliance_officer",
+        "important",
+        "missing",
+        "org_admin",
+        "otp_flow",
+        "owasp-asvs",
+        "security_event_catalog",
+        "siem_export"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.admin_security",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "api_keys",
+        "common",
+        "documenso",
+        "docuseal",
+        "identity",
+        "important",
+        "ip_allowlist",
+        "mfa_enforcement",
+        "org_admin",
+        "organisation",
+        "reference",
+        "retention_deletion",
+        "role_permission",
+        "security_policy",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.observability",
+      "domain": "e-signature",
+      "keys": [
+        "audit_event",
+        "backend",
+        "common",
+        "completion_sealing",
+        "important",
+        "infrastructure",
+        "metrics",
+        "otel_observability",
+        "owasp-asvs",
+        "reference",
+        "structured_logging",
+        "stuck_job_alerts",
+        "system",
+        "tracing"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.i18n_rtl",
+      "domain": "e-signature",
+      "keys": [
+        "calendar_systems",
+        "common",
+        "documenso",
+        "docuseal",
+        "important",
+        "locale_per_recipient",
+        "mobile",
+        "partial",
+        "recipient",
+        "rtl_layout",
+        "sender",
+        "signer",
+        "signing_flow",
+        "template",
+        "translated_messages",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.gdpr_retention",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "audit_event",
+        "backend",
+        "completion_certificate",
+        "compliance",
+        "compliance_officer",
+        "data_export",
+        "erasure_requests",
+        "gdpr",
+        "gdpr-2016-679",
+        "important",
+        "missing",
+        "org_admin",
+        "organisation",
+        "retention_deletion",
+        "retention_policy",
+        "scheduled_deletion"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.legal_hold",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "audit",
+        "audit_event",
+        "backend",
+        "compliance",
+        "compliance_officer",
+        "contract",
+        "gdpr",
+        "gdpr-2016-679",
+        "hold_flag",
+        "missing",
+        "optional",
+        "release",
+        "retention_deletion"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.data_residency",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "compliance",
+        "future",
+        "gdpr",
+        "gdpr-2016-679",
+        "infrastructure",
+        "missing",
+        "org_admin",
+        "organisation",
+        "premium",
+        "region_routing",
+        "region_selection",
+        "retention_deletion",
+        "storage_object"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.billing_readiness",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "billing",
+        "common",
+        "contract_lifecycle",
+        "documenso",
+        "docuseal",
+        "entitlements",
+        "important",
+        "missing",
+        "org_admin",
+        "organisation",
+        "quota_checks",
+        "usage_events"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.api_documentation",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "api_integrator",
+        "api_key",
+        "api_key_lifecycle",
+        "backend",
+        "cursor_pagination",
+        "documenso",
+        "docuseal",
+        "docusign-esign-node",
+        "idempotency",
+        "idempotency_key",
+        "important",
+        "integration",
+        "openapi",
+        "opensign",
+        "platform",
+        "reference",
+        "sandbox",
+        "scoped_keys",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.testing_strategy",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "contract",
+        "important",
+        "infrastructure",
+        "isolation_tests",
+        "missing",
+        "owasp-asvs",
+        "pdf_fixtures",
+        "pdfjs",
+        "race_tests",
+        "replay_tests",
+        "signature",
+        "signing_flow",
+        "system"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.backup_recovery",
+      "domain": "e-signature",
+      "keys": [
+        "audit_event",
+        "backend",
+        "cross_region_copy",
+        "gdpr-2016-679",
+        "hash_reverify",
+        "important",
+        "infrastructure",
+        "missing",
+        "pitr",
+        "restore_drill",
+        "retention_deletion",
+        "storage_object",
+        "system"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.mobile_signing",
+      "domain": "e-signature",
+      "keys": [
+        "biometric_unlock",
+        "common",
+        "customer_portal",
+        "documenso",
+        "field_navigation",
+        "important",
+        "mobile",
+        "pdfjs",
+        "reference",
+        "secure_storage",
+        "signature",
+        "signature-pad",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "sticky_actions",
+        "touch_signature",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.decline_void_correct",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "common",
+        "contract",
+        "contract_lifecycle",
+        "corrected_copy",
+        "decline_reason",
+        "decline_void",
+        "documenso",
+        "docuseal",
+        "docusign-esign-node",
+        "important",
+        "missing",
+        "opensign",
+        "recipient",
+        "sender",
+        "signer",
+        "void",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.delegation_reassign",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "decline_void",
+        "delegate",
+        "docusign-esign-node",
+        "identity",
+        "missing",
+        "opensign",
+        "optional",
+        "reassign",
+        "recipient",
+        "sender",
+        "signer",
+        "token_rotation",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.witness_signing",
+      "domain": "e-signature",
+      "keys": [
+        "documenso",
+        "docusign-esign-node",
+        "host_session",
+        "identity",
+        "in_person",
+        "missing",
+        "mobile",
+        "optional",
+        "recipient",
+        "sender",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "web",
+        "witness",
+        "witness_role",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.bulk_send",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "batch_report",
+        "bulk_send",
+        "contract",
+        "csv_import",
+        "docuseal",
+        "missing",
+        "opensign",
+        "optional",
+        "reporting",
+        "sender",
+        "template",
+        "throttling",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.public_signing_links",
+      "domain": "e-signature",
+      "keys": [
+        "contract",
+        "customer_portal",
+        "docuseal",
+        "docusign-esign-node",
+        "missing",
+        "opensign",
+        "optional",
+        "papermark",
+        "public_link",
+        "qr_code",
+        "sender",
+        "signer",
+        "signing_flow",
+        "submission_quota",
+        "template",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.conditional_calculated_fields",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "conditions",
+        "document",
+        "docuseal",
+        "docusign-esign-node",
+        "field",
+        "formulas",
+        "missing",
+        "optional",
+        "safe_evaluator",
+        "sender",
+        "signer",
+        "signing_flow",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.attachment_requests",
+      "domain": "e-signature",
+      "keys": [
+        "attachment_field",
+        "backend",
+        "document",
+        "document_file",
+        "docuseal",
+        "docusign-esign-node",
+        "field",
+        "missing",
+        "optional",
+        "signer",
+        "signing_flow",
+        "upload_security",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.embedded_signing",
+      "domain": "e-signature",
+      "keys": [
+        "api_integrator",
+        "backend",
+        "documenso",
+        "docuseal",
+        "docusign-esign-node",
+        "embed_url",
+        "frame_ancestors",
+        "integration",
+        "missing",
+        "optional",
+        "postmessage",
+        "signer",
+        "signing_flow",
+        "signing_session",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.sso_scim",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "api_key_lifecycle",
+        "backend",
+        "documenso",
+        "identity",
+        "oidc",
+        "optional",
+        "org_admin",
+        "organisation",
+        "reference",
+        "role_permission",
+        "saml",
+        "scim",
+        "sso_idp"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.approval_workflow",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "approval_step",
+        "approver",
+        "backend",
+        "contract",
+        "contract_lifecycle",
+        "docusign-esign-node",
+        "missing",
+        "opensign",
+        "optional",
+        "recipient",
+        "reject_with_comment",
+        "sender",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.comments_collaboration",
+      "domain": "e-signature",
+      "keys": [
+        "approver",
+        "comments",
+        "contract",
+        "contract_lifecycle",
+        "mentions",
+        "missing",
+        "notification",
+        "opensign",
+        "optional",
+        "real_time",
+        "sender",
+        "visibility_scope",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.contract_repository",
+      "domain": "e-signature",
+      "keys": [
+        "admin",
+        "backend",
+        "contract",
+        "folders",
+        "metadata_schema",
+        "missing",
+        "opensign",
+        "optional",
+        "org_admin",
+        "reminder_expiry",
+        "renewal_reminders",
+        "search",
+        "sender",
+        "web",
+        "workflow"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.advanced_signatures",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "completion_certificate",
+        "completion_sealing",
+        "compliance",
+        "compliance_officer",
+        "eidas",
+        "eidas-910-2014",
+        "etsi-pades",
+        "future",
+        "identity",
+        "kms_hsm",
+        "libresign",
+        "missing",
+        "pades",
+        "pades_levels",
+        "pkijs",
+        "premium",
+        "rfc-3161",
+        "rfc_3161",
+        "sender",
+        "signature",
+        "signature_provider_interface",
+        "signpdf",
+        "trust_service_provider",
+        "tsa",
+        "uae_46_2021",
+        "uk_eidas"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.kyc_id_verification",
+      "domain": "e-signature",
+      "keys": [
+        "backend",
+        "compliance",
+        "compliance_officer",
+        "docusign-esign-node",
+        "evidence_reference",
+        "future",
+        "gdpr",
+        "gdpr-2016-679",
+        "identity",
+        "idv_adapter",
+        "idv_provider",
+        "missing",
+        "otp_challenge",
+        "premium",
+        "recipient",
+        "retention_limits",
+        "signer",
+        "signing_flow",
+        "web"
+      ]
+    },
+    {
+      "kind": "feature",
+      "id": "e-signature.ai_contract_intelligence",
+      "domain": "e-signature",
+      "keys": [
+        "ai",
+        "backend",
+        "clause_extraction",
+        "comparison",
+        "contract",
+        "documenso",
+        "document",
+        "document_processing",
+        "future",
+        "missing",
+        "ocr",
+        "ocr_llm",
+        "org_admin",
+        "premium",
+        "semantic_search",
+        "sender",
+        "summarisation",
+        "web"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:sender",
+      "domain": "e-signature",
+      "keys": [
+        "staff",
+        "e-signature.contracts",
+        "e-signature.document_preparation",
+        "e-signature.recipient_management"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:signer",
+      "domain": "e-signature",
+      "keys": [
+        "customer",
+        "e-signature.signature_capture",
+        "e-signature.signing_session",
+        "e-signature.mobile_signing"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:cc_recipient",
+      "domain": "e-signature",
+      "keys": [
+        "customer",
+        "e-signature.recipient_management",
+        "e-signature.email_notifications"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:witness",
+      "domain": "e-signature",
+      "keys": [
+        "customer",
+        "e-signature.witness_signing"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:approver",
+      "domain": "e-signature",
+      "keys": [
+        "staff",
+        "e-signature.approval_workflow"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:org_admin",
+      "domain": "e-signature",
+      "keys": [
+        "administration",
+        "e-signature.admin_security",
+        "e-signature.org_branding",
+        "e-signature.rbac_permission_overrides"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:template_manager",
+      "domain": "e-signature",
+      "keys": [
+        "management",
+        "e-signature.templates"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:compliance_officer",
+      "domain": "e-signature",
+      "keys": [
+        "management",
+        "e-signature.audit_trail",
+        "e-signature.gdpr_retention",
+        "e-signature.legal_hold"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:public_verifier",
+      "domain": "e-signature",
+      "keys": [
+        "customer",
+        "e-signature.public_verification"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:api_integrator",
+      "domain": "e-signature",
+      "keys": [
+        "partner",
+        "e-signature.api_documentation",
+        "e-signature.webhooks"
+      ]
+    },
+    {
+      "kind": "role",
+      "id": "e-signature:system",
+      "domain": "e-signature",
+      "keys": [
+        "system",
+        "e-signature.document_processing_pipeline",
+        "e-signature.reminders_expiry"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:organisation",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.multi_tenancy",
+        "e-signature.org_branding"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:user",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.rbac_permission_overrides"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:role_permission",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.rbac_permission_overrides"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:contract",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.contracts",
+        "e-signature.contract_state_machine"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:contract_version",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.versioning"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:document",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.document_management"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:document_file",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.document_management",
+        "e-signature.document_hashing",
+        "e-signature.immutable_signed_documents"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:storage_object",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.storage_abstraction"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:template",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.templates"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:template_version",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.templates"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:recipient",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.recipient_management",
+        "e-signature.signing_order"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:signature_request",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.recipient_management",
+        "e-signature.reminders_expiry"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:field",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.field_types",
+        "e-signature.field_placement"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:signature",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.signature_capture",
+        "e-signature.initials_capture"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:signing_session",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.signing_session",
+        "e-signature.secure_tokens"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:otp_challenge",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.otp_verification"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:consent",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.consent"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:audit_event",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.audit_trail",
+        "e-signature.security_events"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:email_message",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.email_delivery",
+        "e-signature.email_notifications"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:email_event",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.email_delivery"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:sms_message",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.sms_notifications"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:reminder",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.reminders_expiry"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:notification",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.notification_centre"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:webhook_endpoint",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.webhooks"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:webhook_delivery",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.webhook_retry"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:download",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.download_security"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:completion_certificate",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.completion_certificate"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:verification_record",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.public_verification"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:api_key",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.api_documentation"
+      ]
+    },
+    {
+      "kind": "entity",
+      "id": "e-signature:idempotency_key",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.concurrency_idempotency",
+        "e-signature.api_documentation"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:contract_lifecycle",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.contracts",
+        "e-signature.contract_state_machine",
+        "e-signature.versioning",
+        "e-signature.search_filtering",
+        "contract",
+        "recipient",
+        "audit_event"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:recipient_status",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.recipient_management",
+        "e-signature.signing_order",
+        "recipient"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:document_preparation",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.document_preparation",
+        "e-signature.field_placement",
+        "e-signature.field_types",
+        "e-signature.pdf_viewer",
+        "e-signature.conditional_calculated_fields",
+        "document",
+        "field",
+        "recipient"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:signing_flow",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.signing_session",
+        "e-signature.signature_capture",
+        "e-signature.initials_capture",
+        "e-signature.consent",
+        "e-signature.signing_order",
+        "e-signature.mobile_signing",
+        "e-signature.embedded_signing",
+        "e-signature.public_signing_links",
+        "e-signature.i18n_rtl",
+        "signing_session",
+        "recipient",
+        "signature",
+        "consent",
+        "field"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:token_lifecycle",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.secure_tokens",
+        "e-signature.delegation_reassign",
+        "recipient",
+        "signing_session"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:otp_flow",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.otp_verification",
+        "e-signature.identity_verification",
+        "e-signature.rate_limiting_anti_abuse",
+        "e-signature.security_events",
+        "e-signature.kyc_id_verification",
+        "otp_challenge",
+        "recipient"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:completion_sealing",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.final_pdf_generation",
+        "e-signature.completion_certificate",
+        "e-signature.document_hashing",
+        "e-signature.immutable_signed_documents",
+        "e-signature.advanced_signatures",
+        "e-signature.concurrency_idempotency",
+        "contract",
+        "document_file",
+        "completion_certificate",
+        "verification_record"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:document_processing",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.upload_security",
+        "e-signature.document_processing_pipeline",
+        "e-signature.document_management",
+        "e-signature.ai_contract_intelligence",
+        "e-signature.attachment_requests",
+        "document_file",
+        "storage_object"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:message_delivery",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.email_delivery",
+        "e-signature.email_notifications",
+        "e-signature.sms_notifications",
+        "e-signature.notification_centre",
+        "email_message",
+        "email_event",
+        "sms_message",
+        "notification"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:webhook_delivery_flow",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.webhooks",
+        "e-signature.webhook_retry",
+        "webhook_endpoint",
+        "webhook_delivery"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:reminder_expiry",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.reminders_expiry",
+        "e-signature.contract_repository",
+        "e-signature.approval_workflow",
+        "reminder",
+        "contract"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:template_publish",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.templates",
+        "e-signature.org_branding",
+        "template",
+        "template_version"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:decline_void",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.decline_void_correct",
+        "e-signature.delegation_reassign",
+        "e-signature.witness_signing",
+        "contract",
+        "recipient"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:public_verification",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.public_verification",
+        "verification_record"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:retention_deletion",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.gdpr_retention",
+        "e-signature.legal_hold",
+        "e-signature.data_residency",
+        "e-signature.exports",
+        "e-signature.backup_recovery",
+        "e-signature.admin_security",
+        "organisation",
+        "storage_object",
+        "audit_event"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:bulk_send",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.bulk_send",
+        "template",
+        "contract"
+      ]
+    },
+    {
+      "kind": "workflow",
+      "id": "e-signature:api_key_lifecycle",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.api_documentation",
+        "e-signature.sso_scim",
+        "api_key"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:transactional_email",
+      "domain": "e-signature",
+      "keys": [
+        "REST",
+        "SMTP",
+        "communication",
+        "core",
+        "e-signature.email_delivery",
+        "e-signature.email_notifications",
+        "e-signature.otp_verification",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:smtp_provider",
+      "domain": "e-signature",
+      "keys": [
+        "SMTP",
+        "common",
+        "communication",
+        "e-signature.email_delivery"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:sms_gateway",
+      "domain": "e-signature",
+      "keys": [
+        "REST",
+        "common",
+        "communication",
+        "e-signature.otp_verification",
+        "e-signature.sms_notifications",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:object_storage",
+      "domain": "e-signature",
+      "keys": [
+        "S3 API",
+        "core",
+        "e-signature.document_management",
+        "e-signature.download_security",
+        "e-signature.immutable_signed_documents",
+        "e-signature.storage_abstraction",
+        "storage"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:virus_scanner",
+      "domain": "e-signature",
+      "keys": [
+        "clamd socket/TCP",
+        "common",
+        "e-signature.upload_security",
+        "security"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:tsa",
+      "domain": "e-signature",
+      "keys": [
+        "RFC 3161",
+        "e-signature.advanced_signatures",
+        "integration",
+        "trust"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:kms_hsm",
+      "domain": "e-signature",
+      "keys": [
+        "PKCS#11",
+        "cloud APIs",
+        "e-signature.advanced_signatures",
+        "integration",
+        "trust"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:trust_service_provider",
+      "domain": "e-signature",
+      "keys": [
+        "CSC API",
+        "REST",
+        "e-signature.advanced_signatures",
+        "integration",
+        "trust"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:idv_provider",
+      "domain": "e-signature",
+      "keys": [
+        "REST",
+        "e-signature.identity_verification",
+        "e-signature.kyc_id_verification",
+        "identity",
+        "integration",
+        "webhooks"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:sso_idp",
+      "domain": "e-signature",
+      "keys": [
+        "OIDC",
+        "SAML 2.0",
+        "SCIM",
+        "e-signature.sso_scim",
+        "identity",
+        "integration"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:webhook_consumers",
+      "domain": "e-signature",
+      "keys": [
+        "HTTPS",
+        "Standard Webhooks",
+        "core",
+        "e-signature.webhook_retry",
+        "e-signature.webhooks",
+        "integration"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:otel_observability",
+      "domain": "e-signature",
+      "keys": [
+        "OTLP",
+        "common",
+        "e-signature.observability",
+        "operations"
+      ]
+    },
+    {
+      "kind": "integration",
+      "id": "e-signature:ocr_llm",
+      "domain": "e-signature",
+      "keys": [
+        "REST",
+        "ai",
+        "e-signature.ai_contract_intelligence",
+        "optional"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:eidas",
+      "domain": "e-signature",
+      "keys": [
+        "EU",
+        "e-signature.advanced_signatures",
+        "e-signature.consent",
+        "e-signature.identity_verification",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:uk_eidas",
+      "domain": "e-signature",
+      "keys": [
+        "United Kingdom",
+        "e-signature.advanced_signatures",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:esign_act",
+      "domain": "e-signature",
+      "keys": [
+        "United States (federal)",
+        "e-signature.consent",
+        "e-signature.gdpr_retention",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:ueta",
+      "domain": "e-signature",
+      "keys": [
+        "United States (state-level)",
+        "e-signature.consent",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:uae_46_2021",
+      "domain": "e-signature",
+      "keys": [
+        "United Arab Emirates",
+        "e-signature.advanced_signatures",
+        "e-signature.consent",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:gdpr",
+      "domain": "e-signature",
+      "keys": [
+        "EU (UK GDPR is a separate text)",
+        "e-signature.consent",
+        "e-signature.data_residency",
+        "e-signature.gdpr_retention",
+        "e-signature.kyc_id_verification",
+        "e-signature.legal_hold",
+        "regulation"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:pades",
+      "domain": "e-signature",
+      "keys": [
+        "EU / international",
+        "e-signature.advanced_signatures",
+        "standard"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:rfc_3161",
+      "domain": "e-signature",
+      "keys": [
+        "IETF",
+        "e-signature.advanced_signatures",
+        "standard"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:iso_32000",
+      "domain": "e-signature",
+      "keys": [
+        "International",
+        "e-signature.field_placement",
+        "e-signature.final_pdf_generation",
+        "standard"
+      ]
+    },
+    {
+      "kind": "compliance",
+      "id": "e-signature:owasp_asvs",
+      "domain": "e-signature",
+      "keys": [
+        "e-signature.download_security",
+        "e-signature.multi_tenancy",
+        "e-signature.otp_verification",
+        "e-signature.rate_limiting_anti_abuse",
+        "e-signature.secure_tokens",
+        "e-signature.upload_security",
+        "guideline",
+        "international"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:documenso",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 (root LICENSE); packages/ee under a separate Commercial License"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:docuseal",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 + LICENSE_ADDITIONAL_TERMS (DocuSeal attribution must remain in the UI)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:opensign",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 with carve-out for apps/OpenSignServer/cloud/customRoute (GitHub reports NOASSERTION)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:libresign",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:papermark",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0 outside ee/ and app/(ee); ee content is Commercial"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:svix-webhooks",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:standard-webhooks",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:owasp-forgot-password",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "CC BY-SA 4.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:drizzle-rls",
+      "domain": "e-signature",
+      "keys": [
+        "secondary",
+        "MIT (documentation of MIT-licensed Drizzle ORM)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:pdfjs",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "Apache-2.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:react-pdf",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:cantoo-pdf-lib",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:signpdf",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:pkijs",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "BSD-3-Clause"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:pdfkit",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:signature-pad",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:pdfme",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:embedpdf",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "Apache-2.0 for most packages; cloudpdf/server is FCL-1.0-ALv2 (LICENSING.md decides per package)"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:docusign-esign-node",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "MIT"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:mupdf-js",
+      "domain": "e-signature",
+      "keys": [
+        "implementation",
+        "AGPL-3.0-or-later"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:iso-32000",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "© ISO; paywalled, public summary page"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:rfc-3161",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "IETF Trust Legal Provisions"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:etsi-pades",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "© ETSI; free download"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:eidas-910-2014",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "EU official legislation; EUR-Lex reuse policy"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:esign-act",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "Public — US federal statute"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:ueta",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "© Uniform Law Commission; model act text freely available"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:uk-eidas-2016",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "Open Government Licence v3.0"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:uae-46-2021",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "UAE official legislation portal"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:gdpr-2016-679",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "EU official legislation; EUR-Lex reuse policy"
+      ]
+    },
+    {
+      "kind": "source",
+      "id": "e-signature:owasp-asvs",
+      "domain": "e-signature",
+      "keys": [
+        "authoritative",
+        "CC BY-SA 4.0"
       ]
     },
     {

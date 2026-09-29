@@ -1,0 +1,631 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "edges": [
+    {
+      "from": "e-signature.contracts",
+      "to": "e-signature.document_management",
+      "type": "requires",
+      "reason": "A contract holds documents"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "A contract is routed to recipients"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "e-signature.contract_state_machine",
+      "type": "requires",
+      "reason": "Lifecycle governs every action"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Every row belongs to an organisation"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "shared.organizations",
+      "type": "requires",
+      "reason": "Tenant owner"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Object-level authorisation"
+    },
+    {
+      "from": "e-signature.contract_state_machine",
+      "to": "e-signature.audit_trail",
+      "type": "requires",
+      "reason": "Each transition is an audit event"
+    },
+    {
+      "from": "e-signature.document_management",
+      "to": "e-signature.storage_abstraction",
+      "type": "requires",
+      "reason": "Bytes live in object storage"
+    },
+    {
+      "from": "e-signature.document_management",
+      "to": "e-signature.upload_security",
+      "type": "requires",
+      "reason": "Files are validated before use"
+    },
+    {
+      "from": "e-signature.document_management",
+      "to": "e-signature.document_hashing",
+      "type": "requires",
+      "reason": "Every file is hashed"
+    },
+    {
+      "from": "e-signature.document_management",
+      "to": "shared.file_storage",
+      "type": "requires",
+      "reason": "Generic storage base"
+    },
+    {
+      "from": "e-signature.upload_security",
+      "to": "e-signature.document_processing_pipeline",
+      "type": "requires",
+      "reason": "Scans run as queue jobs"
+    },
+    {
+      "from": "e-signature.document_processing_pipeline",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Queue infrastructure"
+    },
+    {
+      "from": "e-signature.pdf_viewer",
+      "to": "e-signature.document_management",
+      "type": "requires",
+      "reason": "Renders stored documents"
+    },
+    {
+      "from": "e-signature.document_preparation",
+      "to": "e-signature.pdf_viewer",
+      "type": "requires",
+      "reason": "Preparation happens over rendered pages"
+    },
+    {
+      "from": "e-signature.document_preparation",
+      "to": "e-signature.field_placement",
+      "type": "requires",
+      "reason": "Placing fields is the core action"
+    },
+    {
+      "from": "e-signature.field_placement",
+      "to": "e-signature.field_types",
+      "type": "requires",
+      "reason": "Placed things are typed fields"
+    },
+    {
+      "from": "e-signature.field_placement",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "Fields bind to recipients"
+    },
+    {
+      "from": "e-signature.signing_order",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "Routing orders recipients"
+    },
+    {
+      "from": "e-signature.signature_capture",
+      "to": "e-signature.signing_session",
+      "type": "requires",
+      "reason": "Capture happens inside a session"
+    },
+    {
+      "from": "e-signature.signing_session",
+      "to": "e-signature.secure_tokens",
+      "type": "requires",
+      "reason": "Sessions start from a token exchange"
+    },
+    {
+      "from": "e-signature.signing_session",
+      "to": "e-signature.consent",
+      "type": "requires",
+      "reason": "Consent precedes signing"
+    },
+    {
+      "from": "e-signature.signing_session",
+      "to": "e-signature.field_types",
+      "type": "requires",
+      "reason": "Fields are what the signer completes"
+    },
+    {
+      "from": "e-signature.signing_session",
+      "to": "e-signature.concurrency_idempotency",
+      "type": "requires",
+      "reason": "Signing must be race-safe"
+    },
+    {
+      "from": "e-signature.secure_tokens",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "Tokens are per recipient"
+    },
+    {
+      "from": "e-signature.otp_verification",
+      "to": "e-signature.secure_tokens",
+      "type": "requires",
+      "reason": "OTP follows link exchange"
+    },
+    {
+      "from": "e-signature.otp_verification",
+      "to": "e-signature.rate_limiting_anti_abuse",
+      "type": "requires",
+      "reason": "OTP abuse controls"
+    },
+    {
+      "from": "e-signature.otp_verification",
+      "to": "e-signature.email_delivery",
+      "type": "requires",
+      "reason": "Delivery by email"
+    },
+    {
+      "from": "e-signature.identity_verification",
+      "to": "e-signature.otp_verification",
+      "type": "requires",
+      "reason": "Base assurance levels"
+    },
+    {
+      "from": "e-signature.initials_capture",
+      "to": "e-signature.signature_capture",
+      "type": "requires",
+      "reason": "Same capture mechanics"
+    },
+    {
+      "from": "e-signature.final_pdf_generation",
+      "to": "e-signature.signing_session",
+      "type": "requires",
+      "reason": "Triggered by last signature"
+    },
+    {
+      "from": "e-signature.final_pdf_generation",
+      "to": "e-signature.document_hashing",
+      "type": "requires",
+      "reason": "Sealed PDF is hashed"
+    },
+    {
+      "from": "e-signature.final_pdf_generation",
+      "to": "e-signature.document_processing_pipeline",
+      "type": "requires",
+      "reason": "Runs as a job"
+    },
+    {
+      "from": "e-signature.final_pdf_generation",
+      "to": "e-signature.concurrency_idempotency",
+      "type": "requires",
+      "reason": "Exactly one sealing"
+    },
+    {
+      "from": "e-signature.completion_certificate",
+      "to": "e-signature.audit_trail",
+      "type": "requires",
+      "reason": "Certificate lists audit events"
+    },
+    {
+      "from": "e-signature.completion_certificate",
+      "to": "e-signature.final_pdf_generation",
+      "type": "requires",
+      "reason": "Appended during sealing"
+    },
+    {
+      "from": "e-signature.immutable_signed_documents",
+      "to": "e-signature.final_pdf_generation",
+      "type": "requires",
+      "reason": "Seals the output"
+    },
+    {
+      "from": "e-signature.immutable_signed_documents",
+      "to": "e-signature.storage_abstraction",
+      "type": "requires",
+      "reason": "Write-once policy on storage"
+    },
+    {
+      "from": "e-signature.audit_trail",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Events are tenant scoped"
+    },
+    {
+      "from": "e-signature.audit_trail",
+      "to": "shared.audit_log",
+      "type": "requires",
+      "reason": "Generic audit base"
+    },
+    {
+      "from": "e-signature.public_verification",
+      "to": "e-signature.document_hashing",
+      "type": "requires",
+      "reason": "Matches hashes"
+    },
+    {
+      "from": "e-signature.public_verification",
+      "to": "e-signature.completion_certificate",
+      "type": "requires",
+      "reason": "Verification record from certificate"
+    },
+    {
+      "from": "e-signature.public_verification",
+      "to": "e-signature.rate_limiting_anti_abuse",
+      "type": "requires",
+      "reason": "Public endpoint"
+    },
+    {
+      "from": "e-signature.download_security",
+      "to": "e-signature.storage_abstraction",
+      "type": "requires",
+      "reason": "Signed URLs"
+    },
+    {
+      "from": "e-signature.download_security",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Object authorisation"
+    },
+    {
+      "from": "e-signature.email_notifications",
+      "to": "e-signature.email_delivery",
+      "type": "requires",
+      "reason": "Sending mechanism"
+    },
+    {
+      "from": "e-signature.email_notifications",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Notification base"
+    },
+    {
+      "from": "e-signature.sms_notifications",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Notification base"
+    },
+    {
+      "from": "e-signature.notification_centre",
+      "to": "shared.realtime",
+      "type": "enhances",
+      "reason": "Live inbox updates"
+    },
+    {
+      "from": "e-signature.notification_centre",
+      "to": "shared.notifications",
+      "type": "requires",
+      "reason": "Notification base"
+    },
+    {
+      "from": "e-signature.reminders_expiry",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Scheduler"
+    },
+    {
+      "from": "e-signature.reminders_expiry",
+      "to": "e-signature.email_notifications",
+      "type": "requires",
+      "reason": "Reminder messages"
+    },
+    {
+      "from": "e-signature.versioning",
+      "to": "e-signature.document_management",
+      "type": "requires",
+      "reason": "Versions of files"
+    },
+    {
+      "from": "e-signature.webhooks",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Endpoints are tenant scoped"
+    },
+    {
+      "from": "e-signature.webhook_retry",
+      "to": "e-signature.webhooks",
+      "type": "requires",
+      "reason": "Delivers webhook events"
+    },
+    {
+      "from": "e-signature.webhook_retry",
+      "to": "shared.jobs",
+      "type": "requires",
+      "reason": "Retry queue"
+    },
+    {
+      "from": "e-signature.search_filtering",
+      "to": "shared.search",
+      "type": "requires",
+      "reason": "Search base"
+    },
+    {
+      "from": "e-signature.search_filtering",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Tenant-scoped search"
+    },
+    {
+      "from": "e-signature.exports",
+      "to": "shared.import_export",
+      "type": "requires",
+      "reason": "Export base"
+    },
+    {
+      "from": "e-signature.templates",
+      "to": "e-signature.field_types",
+      "type": "requires",
+      "reason": "Templates carry fields"
+    },
+    {
+      "from": "e-signature.templates",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "Template roles"
+    },
+    {
+      "from": "e-signature.org_branding",
+      "to": "shared.settings",
+      "type": "requires",
+      "reason": "Settings base"
+    },
+    {
+      "from": "e-signature.rbac_permission_overrides",
+      "to": "shared.permissions",
+      "type": "requires",
+      "reason": "Permission base"
+    },
+    {
+      "from": "e-signature.multi_tenancy",
+      "to": "shared.organizations",
+      "type": "requires",
+      "reason": "Tenant model"
+    },
+    {
+      "from": "e-signature.rate_limiting_anti_abuse",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Session and identity base"
+    },
+    {
+      "from": "e-signature.gdpr_retention",
+      "to": "e-signature.audit_trail",
+      "type": "requires",
+      "reason": "Retention applies to evidence"
+    },
+    {
+      "from": "e-signature.legal_hold",
+      "to": "e-signature.gdpr_retention",
+      "type": "requires",
+      "reason": "Overrides retention"
+    },
+    {
+      "from": "e-signature.data_residency",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Region is a tenant attribute"
+    },
+    {
+      "from": "e-signature.billing_readiness",
+      "to": "shared.billing",
+      "type": "requires",
+      "reason": "Billing base"
+    },
+    {
+      "from": "e-signature.api_documentation",
+      "to": "e-signature.multi_tenancy",
+      "type": "requires",
+      "reason": "Keys are tenant scoped"
+    },
+    {
+      "from": "e-signature.i18n_rtl",
+      "to": "shared.i18n",
+      "type": "requires",
+      "reason": "i18n base"
+    },
+    {
+      "from": "e-signature.observability",
+      "to": "shared.logging",
+      "type": "requires",
+      "reason": "Logging base"
+    },
+    {
+      "from": "e-signature.admin_security",
+      "to": "e-signature.rbac_permission_overrides",
+      "type": "requires",
+      "reason": "Security policy uses roles"
+    },
+    {
+      "from": "e-signature.mobile_signing",
+      "to": "e-signature.signing_session",
+      "type": "requires",
+      "reason": "Same session API"
+    },
+    {
+      "from": "e-signature.decline_void_correct",
+      "to": "e-signature.contract_state_machine",
+      "type": "requires",
+      "reason": "Terminal transitions"
+    },
+    {
+      "from": "e-signature.delegation_reassign",
+      "to": "e-signature.secure_tokens",
+      "type": "requires",
+      "reason": "Token rotation"
+    },
+    {
+      "from": "e-signature.witness_signing",
+      "to": "e-signature.recipient_management",
+      "type": "requires",
+      "reason": "Witness is a recipient role"
+    },
+    {
+      "from": "e-signature.bulk_send",
+      "to": "e-signature.templates",
+      "type": "requires",
+      "reason": "Sends a template many times"
+    },
+    {
+      "from": "e-signature.public_signing_links",
+      "to": "e-signature.templates",
+      "type": "requires",
+      "reason": "Links are template based"
+    },
+    {
+      "from": "e-signature.public_signing_links",
+      "to": "e-signature.rate_limiting_anti_abuse",
+      "type": "requires",
+      "reason": "Public endpoint"
+    },
+    {
+      "from": "e-signature.conditional_calculated_fields",
+      "to": "e-signature.field_types",
+      "type": "requires",
+      "reason": "Extends fields"
+    },
+    {
+      "from": "e-signature.attachment_requests",
+      "to": "e-signature.upload_security",
+      "type": "requires",
+      "reason": "Uploads validated"
+    },
+    {
+      "from": "e-signature.embedded_signing",
+      "to": "e-signature.signing_session",
+      "type": "requires",
+      "reason": "Embeds the session UI"
+    },
+    {
+      "from": "e-signature.sso_scim",
+      "to": "shared.auth",
+      "type": "requires",
+      "reason": "Auth base"
+    },
+    {
+      "from": "e-signature.approval_workflow",
+      "to": "e-signature.signing_order",
+      "type": "requires",
+      "reason": "Approval is a routing step"
+    },
+    {
+      "from": "e-signature.comments_collaboration",
+      "to": "e-signature.contracts",
+      "type": "requires",
+      "reason": "Comments attach to contracts"
+    },
+    {
+      "from": "e-signature.contract_repository",
+      "to": "e-signature.search_filtering",
+      "type": "requires",
+      "reason": "Repository browsing"
+    },
+    {
+      "from": "e-signature.advanced_signatures",
+      "to": "e-signature.final_pdf_generation",
+      "type": "requires",
+      "reason": "Seals a PDF"
+    },
+    {
+      "from": "e-signature.advanced_signatures",
+      "to": "e-signature.document_hashing",
+      "type": "requires",
+      "reason": "Signs the hash"
+    },
+    {
+      "from": "e-signature.kyc_id_verification",
+      "to": "e-signature.identity_verification",
+      "type": "requires",
+      "reason": "Highest assurance level"
+    },
+    {
+      "from": "e-signature.kyc_id_verification",
+      "to": "shared.identity_verification",
+      "type": "requires",
+      "reason": "Verification base"
+    },
+    {
+      "from": "e-signature.ai_contract_intelligence",
+      "to": "e-signature.document_processing_pipeline",
+      "type": "requires",
+      "reason": "Runs on processed files"
+    },
+    {
+      "from": "e-signature.ai_contract_intelligence",
+      "to": "shared.ai_assistant",
+      "type": "enhances",
+      "reason": "AI layer"
+    },
+    {
+      "from": "e-signature.contracts",
+      "to": "shared.e_signature",
+      "type": "enhances",
+      "reason": "Domain deepens the shared capability"
+    },
+    {
+      "from": "e-signature.email_delivery",
+      "to": "shared.jobs",
+      "type": "enhances",
+      "reason": "Retry queue"
+    },
+    {
+      "from": "e-signature.signing_session",
+      "to": "shared.i18n",
+      "type": "enhances",
+      "reason": "Recipient language"
+    },
+    {
+      "from": "e-signature.completion_certificate",
+      "to": "e-signature.advanced_signatures",
+      "type": "enhances",
+      "reason": "Timestamp and seal"
+    },
+    {
+      "from": "e-signature.security_events",
+      "to": "e-signature.audit_trail",
+      "type": "enhances",
+      "reason": "Shared event store"
+    },
+    {
+      "from": "e-signature.testing_strategy",
+      "to": "e-signature.contracts",
+      "type": "enhances",
+      "reason": "Tests exercise the domain"
+    },
+    {
+      "from": "e-signature.backup_recovery",
+      "to": "e-signature.immutable_signed_documents",
+      "type": "enhances",
+      "reason": "Restore preserves hashes"
+    },
+    {
+      "from": "e-signature.observability",
+      "to": "e-signature.document_processing_pipeline",
+      "type": "enhances",
+      "reason": "Queue metrics"
+    },
+    {
+      "from": "e-signature.mobile_signing",
+      "to": "shared.auth",
+      "type": "enhances",
+      "reason": "Biometric unlock"
+    },
+    {
+      "from": "e-signature.otp_verification",
+      "to": "e-signature.sms_notifications",
+      "type": "enhances",
+      "reason": "SMS channel"
+    },
+    {
+      "from": "e-signature.decline_void_correct",
+      "to": "e-signature.versioning",
+      "type": "enhances",
+      "reason": "Corrected copies"
+    }
+  ]
+}

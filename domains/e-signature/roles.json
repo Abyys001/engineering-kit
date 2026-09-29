@@ -1,0 +1,280 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "roles": [
+    {
+      "id": "sender",
+      "name": "Sender",
+      "experience": "staff",
+      "description": "Internal user who prepares, sends and tracks contracts.",
+      "responsibilities": [
+        "upload",
+        "place fields",
+        "add recipients",
+        "send",
+        "void",
+        "remind"
+      ],
+      "related_features": [
+        "e-signature.contracts",
+        "e-signature.document_preparation",
+        "e-signature.recipient_management"
+      ],
+      "common_permissions": [
+        "contract:create",
+        "contract:send",
+        "contract:void"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "signer",
+      "name": "Signer",
+      "experience": "customer",
+      "description": "External or internal recipient who reviews and signs.",
+      "responsibilities": [
+        "verify identity",
+        "consent",
+        "fill fields",
+        "sign",
+        "decline"
+      ],
+      "related_features": [
+        "e-signature.signature_capture",
+        "e-signature.signing_session",
+        "e-signature.mobile_signing"
+      ],
+      "common_permissions": [
+        "session:sign"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "cc_recipient",
+      "name": "CC recipient",
+      "experience": "customer",
+      "description": "Receives copies without acting.",
+      "responsibilities": [
+        "receive completed copy"
+      ],
+      "related_features": [
+        "e-signature.recipient_management",
+        "e-signature.email_notifications"
+      ],
+      "common_permissions": [
+        "contract:view_completed"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "witness",
+      "name": "Witness",
+      "experience": "customer",
+      "description": "Countersigns or attests to another signer.",
+      "responsibilities": [
+        "countersign"
+      ],
+      "related_features": [
+        "e-signature.witness_signing"
+      ],
+      "common_permissions": [
+        "session:witness"
+      ],
+      "provenance": {
+        "sources": [
+          "docusign-esign-node"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "approver",
+      "name": "Approver",
+      "experience": "staff",
+      "description": "Internal reviewer who approves before sending.",
+      "responsibilities": [
+        "approve",
+        "reject with comment"
+      ],
+      "related_features": [
+        "e-signature.approval_workflow"
+      ],
+      "common_permissions": [
+        "contract:approve"
+      ],
+      "provenance": {
+        "sources": [
+          "docusign-esign-node",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "org_admin",
+      "name": "Organisation administrator",
+      "experience": "administration",
+      "description": "Manages members, security settings, branding, retention and integrations.",
+      "responsibilities": [
+        "manage roles",
+        "set policies",
+        "manage keys"
+      ],
+      "related_features": [
+        "e-signature.admin_security",
+        "e-signature.org_branding",
+        "e-signature.rbac_permission_overrides"
+      ],
+      "common_permissions": [
+        "org:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "template_manager",
+      "name": "Template manager",
+      "experience": "management",
+      "description": "Maintains reusable templates and their publishing.",
+      "responsibilities": [
+        "author",
+        "publish",
+        "archive"
+      ],
+      "related_features": [
+        "e-signature.templates"
+      ],
+      "common_permissions": [
+        "template:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "compliance_officer",
+      "name": "Compliance officer",
+      "experience": "management",
+      "description": "Reviews audit trails, retention and legal holds.",
+      "responsibilities": [
+        "export audit",
+        "place legal hold",
+        "review retention"
+      ],
+      "related_features": [
+        "e-signature.audit_trail",
+        "e-signature.gdpr_retention",
+        "e-signature.legal_hold"
+      ],
+      "common_permissions": [
+        "audit:read",
+        "hold:manage"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "public_verifier",
+      "name": "Public verifier",
+      "experience": "customer",
+      "description": "Anyone checking a sealed PDF against the verification page.",
+      "responsibilities": [
+        "look up hash"
+      ],
+      "related_features": [
+        "e-signature.public_verification"
+      ],
+      "common_permissions": [
+        "verify:read"
+      ],
+      "provenance": {
+        "sources": [
+          "libresign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "api_integrator",
+      "name": "API integrator",
+      "experience": "partner",
+      "description": "External system using API keys and webhooks.",
+      "responsibilities": [
+        "call API",
+        "consume webhooks"
+      ],
+      "related_features": [
+        "e-signature.api_documentation",
+        "e-signature.webhooks"
+      ],
+      "common_permissions": [
+        "api:scoped"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "standard-webhooks"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "system",
+      "name": "System",
+      "experience": "system",
+      "description": "Workers and schedulers: sealing, reminders, expiry, retention.",
+      "responsibilities": [
+        "run jobs"
+      ],
+      "related_features": [
+        "e-signature.document_processing_pipeline",
+        "e-signature.reminders_expiry"
+      ],
+      "common_permissions": [],
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

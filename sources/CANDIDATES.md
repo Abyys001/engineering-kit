@@ -61,3 +61,23 @@ Build in-kit when a product first needs them (policy §18):
 1. **P1:** org/team management UI (switcher, invites, roles) · RBAC permission editor · notification center (read/unread/archive/preferences) · workflow builder on BullMQ · settings system (profile, org, billing, notifications, integrations, API keys, team)
 2. **P2:** file manager (progress, previews, versioning) · billing UI (invoices, plans, payment methods, usage meters) · document + AI analysis view · Flutter admin UI · view-agnostic filter builder
 3. **P3:** onboarding checklist · standalone audit-log viewer · master/detail layout on shadcn · empty/loading/error state set · Linear/Raycast-style command palette
+
+## E-signature / contract platform review (2026-09-29)
+
+License and last-push facts from the GitHub API on that date; **none of these are cloned**. Details: [`docs/research/contract-platform/README.md`](../docs/research/contract-platform/README.md).
+
+| Repo | License (verified) | Verdict | Why |
+|---|---|---|---|
+| documenso/documenso | AGPL-3.0; `packages/ee` proprietary | reference-only | Best field/recipient/audit model; copyleft + commercial dir |
+| docusealco/docuseal | AGPL-3.0 + additional terms (UI attribution) | reference-only | Form builder ideas; attribution clause blocks reuse |
+| OpenSignLabs/OpenSign | AGPL-3.0 with carve-out | reference-only | Parse/Mongo stack, poor fit |
+| LibreSign/libresign | AGPL-3.0 | reference-only | PKCS#12/PAdES flow concepts |
+| papermark/papermark | AGPL-3.0; `ee/` commercial | reference-only | Data-room/link analytics, not e-sign |
+| pdfme/pdfme | MIT | candidate (unverified embed) | Only permissive drag-and-drop template designer; check Next.js/React 19 fit and UI-package license before cloning |
+| embedpdf/embed-pdf-viewer | Apache-2.0 per `LICENSING.md` (one package FCL) | candidate | Headless viewer/annotation; heavier than react-pdf |
+| svix/svix-webhooks | MIT | reference | Signing/retry design; server is an extra service |
+| react-pdf-viewer/react-pdf-viewer | custom, archived | reject | |
+| mupdf | AGPL-3.0 | reject | Closed-source SaaS needs commercial licence |
+| pdf-lib (Hopding) | MIT, last publish 2022 | reject | Use `@cantoo/pdf-lib` fork (MIT, active) |
+| node-forge | BSD-3 **or GPL-2** | reject | CVE history; `pkijs` (BSD-3) instead |
+| otplib | MIT | reject for SMS/email OTP | TOTP library; kit `backend/otp` uses `node:crypto` |

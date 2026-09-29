@@ -1,0 +1,897 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "mappings": [
+    {
+      "feature": "e-signature.contracts",
+      "implementations": {
+        "web": [
+          "components/web/contract"
+        ],
+        "backend": [
+          "backend/contracts"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "State machine and status badge only; aggregate and UI not built."
+    },
+    {
+      "feature": "e-signature.contract_state_machine",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/contracts"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.document_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.upload_security",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.document_processing_pipeline",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/backend/nestjs-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.pdf_viewer",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.document_preparation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.field_placement",
+      "implementations": {
+        "web": [
+          "components/web/signing"
+        ],
+        "backend": [
+          "backend/pdf"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Coordinate conversion and overlay component only; editor not built."
+    },
+    {
+      "feature": "e-signature.field_types",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/pdf"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Coordinate helpers only; field schema not built."
+    },
+    {
+      "feature": "e-signature.recipient_management",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.signing_order",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.signature_capture",
+      "implementations": {
+        "web": [
+          "components/web/signing"
+        ],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Signature capture component only."
+    },
+    {
+      "feature": "e-signature.initials_capture",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.consent",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.signing_session",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.secure_tokens",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/signing-tokens"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Real module; see backend/signing-tokens/README.md. Tests exist, not production-hardened."
+    },
+    {
+      "feature": "e-signature.otp_verification",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/otp"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.identity_verification",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.email_delivery",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/backend/nestjs-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.email_notifications",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.sms_notifications",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.notification_centre",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/kiranism-dashboard-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.reminders_expiry",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/backend/nestjs-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.versioning",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.document_hashing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.final_pdf_generation",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/pdf"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Coordinate helpers only; stamping/flatten/seal not built."
+    },
+    {
+      "feature": "e-signature.immutable_signed_documents",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.completion_certificate",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.audit_trail",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/audit-log"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/refine",
+        "sources/dashboards/nextcrm"
+      ],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.public_verification",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.download_security",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.storage_abstraction",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.webhooks",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/webhooks"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter"
+      ],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.webhook_retry",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/webhooks"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.search_filtering",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/kiranism-dashboard-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.exports",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.templates",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.org_branding",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.rbac_permission_overrides",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter",
+        "sources/dashboards/refine"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.multi_tenancy",
+      "implementations": {
+        "web": [],
+        "backend": [
+          "backend/tenancy"
+        ],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter"
+      ],
+      "status": "partial",
+      "notes": "Partial reusable module; see path README."
+    },
+    {
+      "feature": "e-signature.concurrency_idempotency",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.rate_limiting_anti_abuse",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/domains/chatwoot"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.security_events",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.admin_security",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.observability",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/backend/nestjs-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.i18n_rtl",
+      "implementations": {
+        "web": [
+          "components/web/typography"
+        ],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "partial",
+      "notes": "Fonts and typography docs only; no i18n framework wiring."
+    },
+    {
+      "feature": "e-signature.gdpr_retention",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.legal_hold",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.data_residency",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.billing_readiness",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.api_documentation",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/backend/nestjs-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.testing_strategy",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.backup_recovery",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.mobile_signing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/mobile/flutter-structure"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.decline_void_correct",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.delegation_reassign",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.witness_signing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.bulk_send",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.public_signing_links",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.conditional_calculated_fields",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.attachment_requests",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.embedded_signing",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.sso_scim",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [
+        "sources/dashboards/boxyhq-saas-starter"
+      ],
+      "status": "reference",
+      "notes": "Local source informs the pattern only; the e-signature specifics are not covered."
+    },
+    {
+      "feature": "e-signature.approval_workflow",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.comments_collaboration",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.contract_repository",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.advanced_signatures",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.kyc_id_verification",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    },
+    {
+      "feature": "e-signature.ai_contract_intelligence",
+      "implementations": {
+        "web": [],
+        "backend": [],
+        "mobile": [],
+        "ai": []
+      },
+      "references": [],
+      "status": "missing",
+      "notes": "Assessed: no kit code or on-disk source covers it. Open-source e-signature repositories are reference-only (AGPL) and not cloned."
+    }
+  ]
+}

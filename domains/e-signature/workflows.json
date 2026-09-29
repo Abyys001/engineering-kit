@@ -1,0 +1,810 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "workflows": [
+    {
+      "id": "contract_lifecycle",
+      "name": "Contract lifecycle",
+      "actor": "sender",
+      "trigger": "Sender creates a contract",
+      "steps": [
+        "Create draft",
+        "Upload documents",
+        "Prepare fields and recipients",
+        "Send",
+        "Recipients act",
+        "Complete or terminate",
+        "Archive"
+      ],
+      "entities": [
+        "contract",
+        "recipient",
+        "audit_event"
+      ],
+      "features": [
+        "e-signature.contracts",
+        "e-signature.contract_state_machine",
+        "e-signature.versioning",
+        "e-signature.search_filtering"
+      ],
+      "notifications": [
+        "invitation",
+        "completed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      },
+      "state_machine": {
+        "entity": "contract",
+        "initial": "draft",
+        "terminal": [
+          "declined",
+          "voided",
+          "expired",
+          "archived"
+        ],
+        "states": [
+          "draft",
+          "sent",
+          "in_progress",
+          "completed",
+          "declined",
+          "voided",
+          "expired",
+          "archived"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "sent",
+            "event": "send"
+          },
+          {
+            "from": "sent",
+            "to": "in_progress",
+            "event": "first_signature"
+          },
+          {
+            "from": "sent",
+            "to": "completed",
+            "event": "complete_single_signer"
+          },
+          {
+            "from": "in_progress",
+            "to": "completed",
+            "event": "last_signature"
+          },
+          {
+            "from": "sent",
+            "to": "declined",
+            "event": "decline"
+          },
+          {
+            "from": "in_progress",
+            "to": "declined",
+            "event": "decline"
+          },
+          {
+            "from": "draft",
+            "to": "voided",
+            "event": "void"
+          },
+          {
+            "from": "sent",
+            "to": "voided",
+            "event": "void"
+          },
+          {
+            "from": "in_progress",
+            "to": "voided",
+            "event": "void"
+          },
+          {
+            "from": "sent",
+            "to": "expired",
+            "event": "expire"
+          },
+          {
+            "from": "in_progress",
+            "to": "expired",
+            "event": "expire"
+          },
+          {
+            "from": "completed",
+            "to": "archived",
+            "event": "archive"
+          }
+        ]
+      }
+    },
+    {
+      "id": "recipient_status",
+      "name": "Recipient status",
+      "actor": "system",
+      "trigger": "Events arrive for a recipient",
+      "steps": [
+        "Notify when routing reaches recipient",
+        "Track opened",
+        "Verify",
+        "Sign or decline",
+        "Mark bounced on hard bounce"
+      ],
+      "entities": [
+        "recipient"
+      ],
+      "features": [
+        "e-signature.recipient_management",
+        "e-signature.signing_order"
+      ],
+      "notifications": [
+        "invitation"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "recipient",
+        "initial": "pending",
+        "terminal": [
+          "signed",
+          "declined"
+        ],
+        "states": [
+          "pending",
+          "sent",
+          "opened",
+          "signed",
+          "declined",
+          "bounced"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "sent",
+            "event": "notify"
+          },
+          {
+            "from": "sent",
+            "to": "opened",
+            "event": "open_link"
+          },
+          {
+            "from": "opened",
+            "to": "signed",
+            "event": "sign"
+          },
+          {
+            "from": "opened",
+            "to": "declined",
+            "event": "decline"
+          },
+          {
+            "from": "sent",
+            "to": "bounced",
+            "event": "hard_bounce"
+          },
+          {
+            "from": "bounced",
+            "to": "sent",
+            "event": "resend"
+          }
+        ]
+      }
+    },
+    {
+      "id": "document_preparation",
+      "name": "Document preparation",
+      "actor": "sender",
+      "trigger": "Sender opens a draft",
+      "steps": [
+        "Upload and preflight",
+        "Render pages and thumbnails",
+        "Add recipients",
+        "Drag fields from palette",
+        "Assign fields to recipients",
+        "Set required rules",
+        "Preview as recipient",
+        "Send"
+      ],
+      "entities": [
+        "document",
+        "field",
+        "recipient"
+      ],
+      "features": [
+        "e-signature.document_preparation",
+        "e-signature.field_placement",
+        "e-signature.field_types",
+        "e-signature.pdf_viewer",
+        "e-signature.conditional_calculated_fields"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "pdfme"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "signing_flow",
+      "name": "Signing flow",
+      "actor": "signer",
+      "trigger": "Signer opens the link",
+      "steps": [
+        "Exchange token for session",
+        "Verify identity to required level",
+        "Accept consent",
+        "Review document",
+        "Adopt signature and initials",
+        "Fill fields with next-required navigation",
+        "Finish",
+        "See completion screen"
+      ],
+      "entities": [
+        "signing_session",
+        "recipient",
+        "signature",
+        "consent",
+        "field"
+      ],
+      "features": [
+        "e-signature.signing_session",
+        "e-signature.signature_capture",
+        "e-signature.initials_capture",
+        "e-signature.consent",
+        "e-signature.signing_order",
+        "e-signature.mobile_signing",
+        "e-signature.embedded_signing",
+        "e-signature.public_signing_links",
+        "e-signature.i18n_rtl"
+      ],
+      "notifications": [
+        "signed",
+        "completed"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "token_lifecycle",
+      "name": "Signing token lifecycle",
+      "actor": "system",
+      "trigger": "A recipient is notified",
+      "steps": [
+        "Generate 32-byte token",
+        "Store SHA-256 only",
+        "Send link",
+        "Exchange once for session",
+        "Revoke or rotate on resend/reassign",
+        "Expire"
+      ],
+      "entities": [
+        "recipient",
+        "signing_session"
+      ],
+      "features": [
+        "e-signature.secure_tokens",
+        "e-signature.delegation_reassign"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "owasp-asvs"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "otp_flow",
+      "name": "One-time-code verification",
+      "actor": "signer",
+      "trigger": "Recipient requires OTP",
+      "steps": [
+        "Check rate limits",
+        "Issue challenge",
+        "Deliver by email or SMS",
+        "Verify with attempt count",
+        "Lock challenge on limit",
+        "Record audit and security event"
+      ],
+      "entities": [
+        "otp_challenge",
+        "recipient"
+      ],
+      "features": [
+        "e-signature.otp_verification",
+        "e-signature.identity_verification",
+        "e-signature.rate_limiting_anti_abuse",
+        "e-signature.security_events",
+        "e-signature.kyc_id_verification"
+      ],
+      "notifications": [],
+      "integrations": [
+        "sms_gateway",
+        "transactional_email"
+      ],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "owasp-asvs"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "completion_sealing",
+      "name": "Completion and sealing",
+      "actor": "system",
+      "trigger": "Last required signature is recorded",
+      "steps": [
+        "Claim completion under row lock",
+        "Enqueue single sealing job",
+        "Flatten and stamp fields",
+        "Generate certificate",
+        "Append certificate",
+        "Hash sealed PDF",
+        "Optionally sign and timestamp",
+        "Store write-once",
+        "Mark completed and notify",
+        "Emit webhook"
+      ],
+      "entities": [
+        "contract",
+        "document_file",
+        "completion_certificate",
+        "verification_record"
+      ],
+      "features": [
+        "e-signature.final_pdf_generation",
+        "e-signature.completion_certificate",
+        "e-signature.document_hashing",
+        "e-signature.immutable_signed_documents",
+        "e-signature.advanced_signatures",
+        "e-signature.concurrency_idempotency"
+      ],
+      "notifications": [
+        "completed"
+      ],
+      "integrations": [
+        "object_storage",
+        "tsa"
+      ],
+      "provenance": {
+        "sources": [
+          "cantoo-pdf-lib",
+          "signpdf",
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "document_processing",
+      "name": "Document processing",
+      "actor": "system",
+      "trigger": "A file is uploaded",
+      "steps": [
+        "Validate type and size",
+        "Quarantine",
+        "Scan",
+        "Preflight PDF",
+        "Render thumbnails",
+        "Extract text",
+        "Mark ready"
+      ],
+      "entities": [
+        "document_file",
+        "storage_object"
+      ],
+      "features": [
+        "e-signature.upload_security",
+        "e-signature.document_processing_pipeline",
+        "e-signature.document_management",
+        "e-signature.ai_contract_intelligence",
+        "e-signature.attachment_requests"
+      ],
+      "notifications": [],
+      "integrations": [
+        "virus_scanner",
+        "object_storage"
+      ],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "pdfjs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "message_delivery",
+      "name": "Message delivery",
+      "actor": "system",
+      "trigger": "A notification is queued",
+      "steps": [
+        "Render template",
+        "Enqueue with idempotency key",
+        "Send via provider",
+        "Receive provider events",
+        "Normalise and record",
+        "Retry or mark failed"
+      ],
+      "entities": [
+        "email_message",
+        "email_event",
+        "sms_message",
+        "notification"
+      ],
+      "features": [
+        "e-signature.email_delivery",
+        "e-signature.email_notifications",
+        "e-signature.sms_notifications",
+        "e-signature.notification_centre"
+      ],
+      "notifications": [],
+      "integrations": [
+        "transactional_email",
+        "sms_gateway"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "webhook_delivery_flow",
+      "name": "Webhook delivery",
+      "actor": "system",
+      "trigger": "A subscribed event occurs",
+      "steps": [
+        "Create delivery with event id",
+        "Sign id.timestamp.payload",
+        "POST with timeout",
+        "Retry with backoff and jitter",
+        "Mark failed after final attempt",
+        "Manual redrive"
+      ],
+      "entities": [
+        "webhook_endpoint",
+        "webhook_delivery"
+      ],
+      "features": [
+        "e-signature.webhooks",
+        "e-signature.webhook_retry"
+      ],
+      "notifications": [],
+      "integrations": [
+        "webhook_consumers"
+      ],
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks",
+          "documenso"
+        ],
+        "confidence": "high"
+      },
+      "state_machine": {
+        "entity": "webhook_delivery",
+        "initial": "pending",
+        "terminal": [
+          "delivered",
+          "failed"
+        ],
+        "states": [
+          "pending",
+          "retrying",
+          "delivered",
+          "failed"
+        ],
+        "transitions": [
+          {
+            "from": "pending",
+            "to": "delivered",
+            "event": "2xx"
+          },
+          {
+            "from": "pending",
+            "to": "retrying",
+            "event": "error"
+          },
+          {
+            "from": "retrying",
+            "to": "delivered",
+            "event": "2xx"
+          },
+          {
+            "from": "retrying",
+            "to": "failed",
+            "event": "attempts_exhausted"
+          },
+          {
+            "from": "failed",
+            "to": "pending",
+            "event": "redrive"
+          }
+        ]
+      }
+    },
+    {
+      "id": "reminder_expiry",
+      "name": "Reminders and expiry",
+      "actor": "system",
+      "trigger": "Scheduler tick",
+      "steps": [
+        "Find due slots",
+        "Create unique reminder job",
+        "Send",
+        "Warn before expiry",
+        "Expire contract",
+        "Cancel on completion"
+      ],
+      "entities": [
+        "reminder",
+        "contract"
+      ],
+      "features": [
+        "e-signature.reminders_expiry",
+        "e-signature.contract_repository",
+        "e-signature.approval_workflow"
+      ],
+      "notifications": [
+        "reminder",
+        "expiring"
+      ],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "template_publish",
+      "name": "Template publishing",
+      "actor": "template_manager",
+      "trigger": "Manager edits a template",
+      "steps": [
+        "Edit roles and fields",
+        "Save draft",
+        "Preview",
+        "Publish version",
+        "Archive"
+      ],
+      "entities": [
+        "template",
+        "template_version"
+      ],
+      "features": [
+        "e-signature.templates",
+        "e-signature.org_branding"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      },
+      "state_machine": {
+        "entity": "template",
+        "initial": "draft",
+        "terminal": [
+          "archived"
+        ],
+        "states": [
+          "draft",
+          "published",
+          "archived"
+        ],
+        "transitions": [
+          {
+            "from": "draft",
+            "to": "published",
+            "event": "publish"
+          },
+          {
+            "from": "published",
+            "to": "draft",
+            "event": "edit"
+          },
+          {
+            "from": "published",
+            "to": "archived",
+            "event": "archive"
+          }
+        ]
+      }
+    },
+    {
+      "id": "decline_void",
+      "name": "Decline, void and reassign",
+      "actor": "sender",
+      "trigger": "Signer declines or sender voids",
+      "steps": [
+        "Capture reason",
+        "Revoke tokens",
+        "Transition contract",
+        "Notify",
+        "Emit webhook",
+        "Offer corrected copy"
+      ],
+      "entities": [
+        "contract",
+        "recipient"
+      ],
+      "features": [
+        "e-signature.decline_void_correct",
+        "e-signature.delegation_reassign",
+        "e-signature.witness_signing"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "public_verification",
+      "name": "Public verification",
+      "actor": "public_verifier",
+      "trigger": "Someone submits a document or scans a QR",
+      "steps": [
+        "Rate-limit",
+        "Hash upload or look up id",
+        "Match verification record",
+        "Show non-sensitive result"
+      ],
+      "entities": [
+        "verification_record"
+      ],
+      "features": [
+        "e-signature.public_verification"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "libresign",
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "retention_deletion",
+      "name": "Retention and deletion",
+      "actor": "system",
+      "trigger": "Retention timer or erasure request",
+      "steps": [
+        "Evaluate policy and legal hold",
+        "Export if requested",
+        "Delete files and evidence",
+        "Record deletion",
+        "Restore checks after backup"
+      ],
+      "entities": [
+        "organisation",
+        "storage_object",
+        "audit_event"
+      ],
+      "features": [
+        "e-signature.gdpr_retention",
+        "e-signature.legal_hold",
+        "e-signature.data_residency",
+        "e-signature.exports",
+        "e-signature.backup_recovery",
+        "e-signature.admin_security"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "bulk_send",
+      "name": "Bulk send",
+      "actor": "sender",
+      "trigger": "Sender uploads CSV",
+      "steps": [
+        "Validate rows",
+        "Create contracts from template",
+        "Throttle sends",
+        "Report failures"
+      ],
+      "entities": [
+        "template",
+        "contract"
+      ],
+      "features": [
+        "e-signature.bulk_send"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "opensign",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "api_key_lifecycle",
+      "name": "API key lifecycle",
+      "actor": "org_admin",
+      "trigger": "Admin creates a key",
+      "steps": [
+        "Create scoped key",
+        "Show once, store hash",
+        "Use",
+        "Rotate",
+        "Revoke"
+      ],
+      "entities": [
+        "api_key"
+      ],
+      "features": [
+        "e-signature.api_documentation",
+        "e-signature.sso_scim"
+      ],
+      "notifications": [],
+      "integrations": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

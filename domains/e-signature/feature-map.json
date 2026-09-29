@@ -1,0 +1,3854 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "name": "Digital contracts and e-signature",
+  "aliases": [
+    "e-signature",
+    "electronic signature",
+    "contract management",
+    "document signing"
+  ],
+  "description": "Preparing documents, routing them to signers, capturing signatures with evidence, sealing the final PDF, and keeping a verifiable audit trail; with light contract lifecycle management around it.",
+  "nace": [
+    "J62.10",
+    "M69.10"
+  ],
+  "maturity": "partial",
+  "last_reviewed": "2026-09-29",
+  "sources": [
+    {
+      "id": "documenso",
+      "title": "Documenso",
+      "url": "https://github.com/documenso/documenso",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 (root LICENSE); packages/ee under a separate Commercial License",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Reference only, never copy: AGPL plus proprietary ee directory. Not cloned. Read for field-placement, recipient and audit model: packages/{signing,lib,trpc,ui,api}, packages/prisma."
+    },
+    {
+      "id": "docuseal",
+      "title": "DocuSeal",
+      "url": "https://github.com/docusealco/docuseal",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 + LICENSE_ADDITIONAL_TERMS (DocuSeal attribution must remain in the UI)",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Reference only: the additional terms block reuse. Not cloned. Informs form/field-schema builder and template model."
+    },
+    {
+      "id": "opensign",
+      "title": "OpenSign",
+      "url": "https://github.com/OpenSignLabs/OpenSign",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 with carve-out for apps/OpenSignServer/cloud/customRoute (GitHub reports NOASSERTION)",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Reference only. Parse/MongoDB backend is a poor fit for Postgres; useful for recipient roles, bulk send and template flows. Not cloned."
+    },
+    {
+      "id": "libresign",
+      "title": "LibreSign",
+      "url": "https://github.com/LibreSign/libresign",
+      "source_type": "implementation",
+      "license": "AGPL-3.0",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Reference only. Nextcloud/PHP; useful for PKCS#12 certificate-based PDF signing and verification-page concepts. Not cloned."
+    },
+    {
+      "id": "papermark",
+      "title": "Papermark",
+      "url": "https://github.com/mfts/papermark",
+      "source_type": "implementation",
+      "license": "AGPL-3.0 outside ee/ and app/(ee); ee content is Commercial",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Reference only. Not an e-signature tool; informs link sharing, data rooms and view analytics. Not cloned."
+    },
+    {
+      "id": "svix-webhooks",
+      "title": "Svix webhooks",
+      "url": "https://github.com/svix/svix-webhooks",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "unpinned; license/last-push read via GitHub API 2026-09-29",
+      "notes": "Signing/retry design informs webhook delivery. Self-hosting the server is not justified; implement the Standard Webhooks format in NestJS."
+    },
+    {
+      "id": "standard-webhooks",
+      "title": "Standard Webhooks specification",
+      "url": "https://github.com/standard-webhooks/standard-webhooks/blob/main/spec/standard-webhooks.md",
+      "source_type": "authoritative",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-29",
+      "version": "spec on main, read 2026-09-29",
+      "notes": "Verified: headers webhook-id, webhook-timestamp (unix seconds), webhook-signature (space-delimited); signed content is id.timestamp.payload; HMAC-SHA256 secrets whsec_+base64; dual-signing for rotation; the spec sets no timestamp tolerance."
+    },
+    {
+      "id": "owasp-forgot-password",
+      "title": "OWASP Forgot Password Cheat Sheet",
+      "url": "https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html",
+      "source_type": "authoritative",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-29",
+      "version": "read 2026-09-29",
+      "notes": "Verified: CSPRNG tokens, sufficient length, secure storage, single use, expiry, rate limits; warns account lockout enables DoS, so lock the token or OTP challenge instead."
+    },
+    {
+      "id": "drizzle-rls",
+      "title": "Drizzle ORM row-level security docs",
+      "url": "https://orm.drizzle.team/docs/rls",
+      "source_type": "secondary",
+      "license": "MIT (documentation of MIT-licensed Drizzle ORM)",
+      "retrieved": "2026-09-29",
+      "version": "read 2026-09-29",
+      "notes": "Verified: pgPolicy, pgRole, .withRLS(); default deny with no policy; the app must set the session variable/role inside a transaction."
+    },
+    {
+      "id": "pdfjs",
+      "title": "PDF.js (pdfjs-dist)",
+      "url": "https://github.com/mozilla/pdf.js",
+      "source_type": "implementation",
+      "license": "Apache-2.0",
+      "retrieved": "2026-09-29",
+      "version": "pdfjs-dist 6.3.289 (npm, 2026-09-29)",
+      "notes": "Browser renderer; also runs on Node with a worker. viewport.convertToPdfPoint handles CropBox and rotation. Set isEvalSupported:false."
+    },
+    {
+      "id": "react-pdf",
+      "title": "react-pdf",
+      "url": "https://github.com/wojtekmaj/react-pdf",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "react-pdf 11.0.0 (npm, 2026-09-29)",
+      "notes": "Thin React wrapper over pdfjs; viewer plus overlay layer for field editing."
+    },
+    {
+      "id": "cantoo-pdf-lib",
+      "title": "@cantoo/pdf-lib",
+      "url": "https://www.npmjs.com/package/@cantoo/pdf-lib",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "2.11.1 (npm, 2026-09-29)",
+      "notes": "Maintained fork of pdf-lib (upstream 1.17.1 last published 2022-05-12). Stamping, merging, AcroForm flattening; loads whole file in memory."
+    },
+    {
+      "id": "signpdf",
+      "title": "@signpdf/signpdf",
+      "url": "https://github.com/vbuch/node-signpdf",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "3.3.0 (npm, 2025-12-29)",
+      "notes": "Placeholder plus detached CMS signing; PAdES-B-B level only. No DSS/VRI (B-LT/LTA is custom work)."
+    },
+    {
+      "id": "pkijs",
+      "title": "PKI.js",
+      "url": "https://github.com/PeculiarVentures/PKI.js",
+      "source_type": "implementation",
+      "license": "BSD-3-Clause",
+      "retrieved": "2026-09-29",
+      "version": "3.4.1 (npm, 2026-09-29)",
+      "notes": "CMS, TSP (RFC 3161) and OCSP/CRL on WebCrypto. Replaces node-forge (BSD-3-Clause OR GPL-2.0, ASN.1 CVE history)."
+    },
+    {
+      "id": "pdfkit",
+      "title": "PDFKit",
+      "url": "https://github.com/foliojs/pdfkit",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "0.20.2 (npm, 2026-09-29)",
+      "notes": "Server-side generation of the completion certificate."
+    },
+    {
+      "id": "signature-pad",
+      "title": "signature_pad",
+      "url": "https://github.com/szimek/signature_pad",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "last push 2026-09-29 (GitHub API)",
+      "notes": "Canvas signature capture; use directly rather than react-signature-canvas."
+    },
+    {
+      "id": "pdfme",
+      "title": "pdfme",
+      "url": "https://github.com/pdfme/pdfme",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "last push 2026-09-29 (GitHub API)",
+      "notes": "Only permissive drag-and-drop template/field designer; embeddability in Next.js and per-package licence unchecked."
+    },
+    {
+      "id": "embedpdf",
+      "title": "EmbedPDF",
+      "url": "https://github.com/embedpdf/embed-pdf-viewer",
+      "source_type": "implementation",
+      "license": "Apache-2.0 for most packages; cloudpdf/server is FCL-1.0-ALv2 (LICENSING.md decides per package)",
+      "retrieved": "2026-09-29",
+      "version": "core 2.15.1 (npm, 2026-09-29)",
+      "notes": "Headless plugin viewer on PDFium/WASM. Reference; duplicates react-pdf."
+    },
+    {
+      "id": "docusign-esign-node",
+      "title": "docusign-esign Node client",
+      "url": "https://github.com/docusign/docusign-esign-node-client",
+      "source_type": "implementation",
+      "license": "MIT",
+      "retrieved": "2026-09-29",
+      "version": "last push 2026-07-16 (GitHub API)",
+      "notes": "Envelope, recipient and tab vocabulary; use only for a DocuSign integration or migration import."
+    },
+    {
+      "id": "mupdf-js",
+      "title": "mupdf (npm)",
+      "url": "https://www.npmjs.com/package/mupdf",
+      "source_type": "implementation",
+      "license": "AGPL-3.0-or-later",
+      "retrieved": "2026-09-29",
+      "version": "1.28.1 (npm, 2026-09-29)",
+      "notes": "Rejected: needs a commercial licence for closed-source SaaS."
+    },
+    {
+      "id": "iso-32000",
+      "title": "ISO 32000-2 (PDF 2.0) coordinate model",
+      "url": "https://www.iso.org/standard/75839.html",
+      "source_type": "authoritative",
+      "license": "© ISO; paywalled, public summary page",
+      "retrieved": "2026-09-29",
+      "version": "PDF 2.0",
+      "notes": "User space is bottom-left origin in points; visible area is CropBox (defaults to MediaBox); /Rotate applies on top. Basis for storing fields as page-relative fractions. Summary page only; prior knowledge for details."
+    },
+    {
+      "id": "rfc-3161",
+      "title": "RFC 3161 Time-Stamp Protocol",
+      "url": "https://datatracker.ietf.org/doc/html/rfc3161",
+      "source_type": "authoritative",
+      "license": "IETF Trust Legal Provisions",
+      "retrieved": "2026-09-29",
+      "version": "RFC 3161 (2001)",
+      "notes": "Trusted timestamp tokens for signed-document evidence. Cited from prior knowledge; not fetched this session."
+    },
+    {
+      "id": "etsi-pades",
+      "title": "ETSI EN 319 142 (PAdES)",
+      "url": "https://www.etsi.org/deliver/etsi_en/319100_319199/31914201/",
+      "source_type": "authoritative",
+      "license": "© ETSI; free download",
+      "retrieved": "2026-09-29",
+      "version": "EN 319 142-1",
+      "notes": "Baseline PAdES levels B-B, B-T, B-LT, B-LTA. Cited from prior knowledge; not fetched this session."
+    },
+    {
+      "id": "eidas-910-2014",
+      "title": "Regulation (EU) No 910/2014 (eIDAS)",
+      "url": "https://eur-lex.europa.eu/eli/reg/2014/910/oj",
+      "source_type": "authoritative",
+      "license": "EU official legislation; EUR-Lex reuse policy",
+      "retrieved": "2026-09-29",
+      "version": "OJ L 257, 28.8.2014 (as amended by Regulation (EU) 2024/1183)",
+      "notes": "Distinguishes simple, advanced and qualified electronic signatures and qualified trust services. Not fetched this session; engineering implications only, counsel must confirm."
+    },
+    {
+      "id": "esign-act",
+      "title": "ESIGN Act (15 U.S.C. §7001 et seq.)",
+      "url": "https://www.law.cornell.edu/uscode/text/15/chapter-96",
+      "source_type": "authoritative",
+      "license": "Public — US federal statute",
+      "retrieved": "2026-09-29",
+      "version": "15 U.S.C. ch. 96",
+      "notes": "Consent to electronic records, intent to sign, record retention and reproducibility. Not fetched this session."
+    },
+    {
+      "id": "ueta",
+      "title": "Uniform Electronic Transactions Act (UETA)",
+      "url": "https://www.uniformlaws.org/committees/community-home?CommunityKey=2c04b76c-2b7d-4399-977e-d5876ba7e034",
+      "source_type": "authoritative",
+      "license": "© Uniform Law Commission; model act text freely available",
+      "retrieved": "2026-09-29",
+      "version": "1999 model act",
+      "notes": "State-level counterpart to ESIGN; attribution, record retention. Not fetched this session."
+    },
+    {
+      "id": "uk-eidas-2016",
+      "title": "UK: Electronic Identification and Trust Services for Electronic Transactions Regulations 2016; Electronic Communications Act 2000",
+      "url": "https://www.legislation.gov.uk/uksi/2016/696/contents",
+      "source_type": "authoritative",
+      "license": "Open Government Licence v3.0",
+      "retrieved": "2026-09-29",
+      "version": "SI 2016/696 (as amended post-Brexit)",
+      "notes": "UK trust-service regime and evidentiary treatment of electronic signatures. Not fetched this session; confidence low, counsel must confirm current text."
+    },
+    {
+      "id": "uae-46-2021",
+      "title": "UAE Federal Decree-Law No. 46 of 2021 on Electronic Transactions and Trust Services",
+      "url": "https://uaelegislation.gov.ae/en/legislations/1526",
+      "source_type": "authoritative",
+      "license": "UAE official legislation portal",
+      "retrieved": "2026-09-29",
+      "version": "Decree-Law 46/2021",
+      "notes": "Recognises electronic signatures, seals and trust services in the UAE. Not fetched this session; confidence low, counsel must confirm."
+    },
+    {
+      "id": "gdpr-2016-679",
+      "title": "Regulation (EU) 2016/679 (GDPR)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX%3A32016R0679",
+      "source_type": "authoritative",
+      "license": "EU official legislation; EUR-Lex reuse policy",
+      "retrieved": "2026-09-29",
+      "version": "OJ L 119, 4.5.2016",
+      "notes": "Lawful basis, retention limits, erasure vs audit retention, data residency. Same source as other domains; engineering implications only."
+    },
+    {
+      "id": "owasp-asvs",
+      "title": "OWASP Application Security Verification Standard",
+      "url": "https://owasp.org/www-project-application-security-verification-standard/",
+      "source_type": "authoritative",
+      "license": "CC BY-SA 4.0",
+      "retrieved": "2026-09-29",
+      "version": "ASVS 5.0",
+      "notes": "Verification checklist for auth, session, access control (IDOR/BOLA), file upload and API security. Cited from prior knowledge; not fetched this session."
+    }
+  ],
+  "features": [
+    {
+      "id": "e-signature.contracts",
+      "name": "Contract (envelope) management",
+      "classification": "core",
+      "description": "[CORE] Create, own, assign, duplicate, cancel, archive and lock contracts; a contract groups documents, recipients, fields and an audit trail. Backend aggregate with optimistic version column for draft edits; list/detail UI with status and owner.",
+      "users": [
+        "sender",
+        "org_admin"
+      ],
+      "entities": [
+        "contract",
+        "document",
+        "recipient",
+        "contract_version"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "contract_numbering",
+        "ownership",
+        "assignment",
+        "duplication",
+        "archival",
+        "locking",
+        "metadata"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "workflow",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high",
+        "notes": "Envelope/contract aggregate present in Documenso, DocuSeal, OpenSign, LibreSign."
+      }
+    },
+    {
+      "id": "e-signature.contract_state_machine",
+      "name": "Contract state machine",
+      "classification": "core",
+      "description": "[CORE] Explicit lifecycle draft→sent→in_progress→completed|declined|voided|expired→archived with guarded transitions and an event per transition. Backend: transition table plus DB-level compare-and-set; UI: status badge and timeline.",
+      "users": [
+        "sender",
+        "system"
+      ],
+      "entities": [
+        "contract"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "guarded_transitions",
+        "transition_events",
+        "terminal_states"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "workflow",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.document_management",
+      "name": "Document management",
+      "classification": "core",
+      "description": "[CORE] Store, hash, version and serve the PDFs and attachments of a contract behind a file abstraction; immutable versions once sent. Backend: StorageObject + DocumentFile, metadata, upload validation; UI: upload with progress and validation errors.",
+      "users": [
+        "sender"
+      ],
+      "entities": [
+        "document",
+        "document_file",
+        "storage_object"
+      ],
+      "workflows": [
+        "document_processing"
+      ],
+      "capabilities": [
+        "file_abstraction",
+        "file_metadata",
+        "upload_validation",
+        "immutable_versions"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "backend",
+        "core"
+      ],
+      "integrations": [
+        "object_storage"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high",
+        "notes": "Common to all four e-signature repositories inspected."
+      }
+    },
+    {
+      "id": "e-signature.upload_security",
+      "name": "Upload validation and malware scanning",
+      "classification": "core",
+      "description": "[CORE] Reject non-PDF/allow-listed types by magic-byte sniffing, size/page caps, quarantine until a ClamAV scan is clean, PDF preflight rejecting JavaScript/OpenAction/Launch/EmbeddedFiles. Runs in a sandboxed worker with time and memory limits.",
+      "users": [
+        "sender",
+        "system"
+      ],
+      "entities": [
+        "document_file",
+        "storage_object"
+      ],
+      "workflows": [
+        "document_processing"
+      ],
+      "capabilities": [
+        "mime_sniffing",
+        "virus_scan",
+        "pdf_preflight",
+        "quarantine",
+        "decompression_limits"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "identity",
+        "core"
+      ],
+      "integrations": [
+        "virus_scanner"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "pdfjs"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned from the OWASP ASVS file-upload section and PDF attack surface; single unfetched authoritative source."
+      }
+    },
+    {
+      "id": "e-signature.document_processing_pipeline",
+      "name": "Document processing pipeline",
+      "classification": "core",
+      "description": "[CORE] Queue-driven stages: preflight, scan, render thumbnails, extract text, flatten, stamp, seal, generate certificate. Idempotent BullMQ jobs with deterministic jobId; DB state, not the queue, is the source of truth.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "document_file",
+        "contract"
+      ],
+      "workflows": [
+        "document_processing",
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "job_stages",
+        "retries",
+        "dead_letter",
+        "thumbnails",
+        "text_extraction"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "low",
+      "tags": [
+        "core",
+        "backend",
+        "document",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "cantoo-pdf-lib",
+          "pdfjs",
+          "pdfkit",
+          "mupdf-js"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned architecture; parts verified against library docs only."
+      }
+    },
+    {
+      "id": "e-signature.pdf_viewer",
+      "name": "PDF viewer",
+      "classification": "core",
+      "description": "[CORE] Render pages with zoom, page navigation, rotation, thumbnails and minimap. Browser-only pdfjs-dist via react-pdf with a worker; mobile uses PDFium-based pdfrx. Large documents render lazily per page.",
+      "users": [
+        "sender",
+        "signer",
+        "cc_recipient",
+        "witness"
+      ],
+      "entities": [
+        "document"
+      ],
+      "workflows": [
+        "document_preparation",
+        "signing_flow"
+      ],
+      "capabilities": [
+        "zoom",
+        "thumbnails",
+        "page_navigation",
+        "rotation",
+        "lazy_page_render"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "web",
+        "document",
+        "mobile",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "pdfjs",
+          "react-pdf",
+          "documenso",
+          "docuseal",
+          "embedpdf"
+        ],
+        "confidence": "high",
+        "notes": "Two independent viewer libraries plus 2 implementations."
+      }
+    },
+    {
+      "id": "e-signature.document_preparation",
+      "name": "Document preparation",
+      "classification": "core",
+      "description": "[CORE] Sender workspace: page thumbnails, field palette, recipient colour coding, properties panel, contextual toolbar, save/resume. Resizable panels layout; autosave with optimistic version.",
+      "users": [
+        "sender",
+        "template_manager"
+      ],
+      "entities": [
+        "contract",
+        "field",
+        "recipient"
+      ],
+      "workflows": [
+        "document_preparation"
+      ],
+      "capabilities": [
+        "prep_sidebar",
+        "properties_panel",
+        "autosave",
+        "preview_as_recipient"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "web",
+        "document",
+        "workflow",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.field_placement",
+      "name": "Field placement",
+      "classification": "core",
+      "description": "[CORE] Drag fields from a palette onto pages, then move, resize, duplicate, snap and align. Store page-relative 0–1 fractions in the unrotated CropBox space; convert to PDF points server-side. dnd-kit for palette drops, pointer events for move/resize.",
+      "users": [
+        "sender"
+      ],
+      "entities": [
+        "field",
+        "document"
+      ],
+      "workflows": [
+        "document_preparation"
+      ],
+      "capabilities": [
+        "drag_drop",
+        "resize",
+        "snap_to_grid",
+        "duplicate",
+        "relative_coordinates",
+        "multi_page"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "web",
+        "document",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "pdfme",
+          "iso-32000"
+        ],
+        "confidence": "medium",
+        "notes": "Coordinate model from the PDF specification; UX from open-source editors."
+      }
+    },
+    {
+      "id": "e-signature.field_types",
+      "name": "Field types and validation",
+      "classification": "core",
+      "description": "[CORE] Signature, initials, text, long text, email, phone, date, date/time, checkbox, radio, dropdown, number, currency, company, job title, attachment; each with a Zod-validated schema, required flag and recipient binding. Normalised field storage with a typed JSON config column for extensibility.",
+      "users": [
+        "sender",
+        "signer"
+      ],
+      "entities": [
+        "field"
+      ],
+      "workflows": [
+        "document_preparation",
+        "signing_flow"
+      ],
+      "capabilities": [
+        "field_schema",
+        "validation_rules",
+        "recipient_binding",
+        "field_versioning"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high",
+        "notes": "Field/tab vocabulary matches across Documenso, DocuSeal, OpenSign and the DocuSign SDK."
+      }
+    },
+    {
+      "id": "e-signature.recipient_management",
+      "name": "Recipient management",
+      "classification": "core",
+      "description": "[CORE] Add signers, approvers, CCs and witnesses with role, order, status, internal/external flag and identity requirements; resend, reminder and per-recipient activity. Recipient status derived from events, not edited by hand.",
+      "users": [
+        "sender",
+        "signer",
+        "cc_recipient",
+        "witness"
+      ],
+      "entities": [
+        "recipient",
+        "signature_request"
+      ],
+      "workflows": [
+        "recipient_status",
+        "signing_flow"
+      ],
+      "capabilities": [
+        "roles",
+        "status_tracking",
+        "resend",
+        "recipient_activity",
+        "internal_external"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "workflow",
+        "customer",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.signing_order",
+      "name": "Signing order and routing",
+      "classification": "core",
+      "description": "[CORE] Sequential, parallel and mixed routing groups; optional recipients; the next group is notified only when the previous completes. Advance in the same transaction that records the signature.",
+      "users": [
+        "sender"
+      ],
+      "entities": [
+        "recipient",
+        "signature_request"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "sequential",
+        "parallel",
+        "routing_groups",
+        "optional_recipients"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "workflow",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.signature_capture",
+      "name": "Signature capture",
+      "classification": "core",
+      "description": "[CORE] Adopt a signature by drawing (signature_pad), typing (font rendering) or uploading an image; reuse it across fields in one session; store as an image plus the method used. Touch-optimised on mobile.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "signature"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "drawn",
+        "typed",
+        "uploaded",
+        "adopt_once_reuse",
+        "signature_appearance"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "web",
+        "mobile",
+        "identity",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "signature-pad",
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.initials_capture",
+      "name": "Initials capture",
+      "classification": "common",
+      "description": "[IMPORTANT] Separate adopted initials reused on per-page initial fields with the same draw/type/upload methods.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "signature",
+        "field"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "initials",
+        "per_page_initials"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "web",
+        "mobile",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.consent",
+      "name": "Electronic signing consent",
+      "classification": "core",
+      "description": "[CORE] Capture explicit consent to sign electronically and to receive records electronically before any field is shown; store text version, timestamp, IP and user agent. Consent text is versioned per jurisdiction.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "consent",
+        "signing_session"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "consent_text_versioning",
+        "consent_record",
+        "withdraw_consent"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "compliance",
+        "identity",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [
+        "esign_act",
+        "eidas",
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "esign-act",
+          "eidas-910-2014",
+          "documenso",
+          "ueta"
+        ],
+        "confidence": "low",
+        "notes": "Engineering implication only; statutes not fetched this session. Human legal review required."
+      }
+    },
+    {
+      "id": "e-signature.signing_session",
+      "name": "Signing session",
+      "classification": "core",
+      "description": "[CORE] Short-lived server session created after token exchange and any verification; carries recipient, contract version, assurance level and device signals; single active session per recipient; next-required-field navigation, progress and completion screen.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "signing_session",
+        "recipient"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "session_binding",
+        "required_field_navigation",
+        "progress",
+        "completion_screen",
+        "device_ip_signals"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "workflow",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.secure_tokens",
+      "name": "Secure signing tokens",
+      "classification": "core",
+      "description": "[CORE] 32-byte CSPRNG base64url tokens; only the SHA-256 is stored; per-recipient expiry, single purpose, revocation and rotation (issue new, revoke old); constant-time compare.",
+      "users": [
+        "signer",
+        "system"
+      ],
+      "entities": [
+        "signing_session",
+        "recipient"
+      ],
+      "workflows": [
+        "signing_flow",
+        "token_lifecycle"
+      ],
+      "capabilities": [
+        "hashed_storage",
+        "expiry",
+        "revocation",
+        "rotation",
+        "replay_protection"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "identity",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "owasp-asvs"
+        ],
+        "confidence": "medium",
+        "notes": "OWASP token guidance verified; storage design is reasoned."
+      }
+    },
+    {
+      "id": "e-signature.otp_verification",
+      "name": "One-time-code verification",
+      "classification": "common",
+      "description": "[IMPORTANT] Email/SMS OTP challenge: randomInt 6 digits, HMAC-SHA256 with server secret and challenge id, 10-minute TTL, 5 attempts, resend cooldown, per-IP and per-link Redis rate limits, lock the challenge not the account. Do not use a TOTP library for this.",
+      "users": [
+        "signer",
+        "system"
+      ],
+      "entities": [
+        "otp_challenge",
+        "recipient"
+      ],
+      "workflows": [
+        "otp_flow"
+      ],
+      "capabilities": [
+        "challenge_hash",
+        "attempt_limits",
+        "resend_cooldown",
+        "rate_limits",
+        "audit_events"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "backend",
+        "important"
+      ],
+      "integrations": [
+        "sms_gateway",
+        "transactional_email"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "owasp-asvs"
+        ],
+        "confidence": "medium",
+        "notes": "OWASP reset-token guidance verified; specific TTL/attempt numbers are defaults, not standards."
+      }
+    },
+    {
+      "id": "e-signature.identity_verification",
+      "name": "Signer identity verification levels",
+      "classification": "common",
+      "description": "[IMPORTANT] Assurance ladder per recipient: link-only, email OTP, SMS OTP, access code, then ID document/KYC (see kyc_id_verification). Level recorded in signing evidence and shown on the certificate. Extends shared.identity_verification.",
+      "users": [
+        "signer",
+        "sender"
+      ],
+      "entities": [
+        "recipient",
+        "otp_challenge",
+        "signing_session"
+      ],
+      "workflows": [
+        "otp_flow",
+        "signing_flow"
+      ],
+      "capabilities": [
+        "assurance_levels",
+        "access_code",
+        "level_evidence"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "compliance",
+        "important"
+      ],
+      "integrations": [
+        "idv_provider"
+      ],
+      "compliance": [
+        "eidas"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.email_delivery",
+      "name": "Email delivery abstraction",
+      "classification": "core",
+      "description": "[CORE] Provider-independent EmailProvider interface (SMTP, SES, Postmark, Resend, SendGrid, Mailgun) with template rendering, idempotent sends, retries, and normalised delivery/bounce/complaint events verified per provider signature. Never mark delivered without a provider confirmation.",
+      "users": [
+        "system",
+        "org_admin"
+      ],
+      "entities": [
+        "email_message",
+        "email_event"
+      ],
+      "workflows": [
+        "message_delivery"
+      ],
+      "capabilities": [
+        "provider_interface",
+        "template_rendering",
+        "delivery_events",
+        "bounce_complaint_handling",
+        "idempotency",
+        "open_click_tracking"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "communication",
+        "backend",
+        "core"
+      ],
+      "integrations": [
+        "transactional_email",
+        "smtp_provider"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "low",
+        "notes": "Provider event schemas were not verified this session."
+      }
+    },
+    {
+      "id": "e-signature.email_notifications",
+      "name": "Signing email notifications",
+      "classification": "core",
+      "description": "[CORE] Invitations, viewed, signed, completed, declined, voided and expiring emails from versioned, localised templates with variable insertion, sender branding and preview; completed-document delivery with certificate.",
+      "users": [
+        "sender",
+        "signer",
+        "cc_recipient"
+      ],
+      "entities": [
+        "email_message",
+        "recipient"
+      ],
+      "workflows": [
+        "signing_flow",
+        "message_delivery"
+      ],
+      "capabilities": [
+        "invitation",
+        "completion_email",
+        "template_variables",
+        "branding",
+        "preview"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "communication",
+        "core"
+      ],
+      "integrations": [
+        "transactional_email"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.sms_notifications",
+      "name": "SMS notifications and OTP delivery",
+      "classification": "common",
+      "description": "[IMPORTANT] SmsProvider interface (Twilio, Vonage, MessageBird, SNS) for OTP and invitation texts; per-recipient consent, country rules, delivery receipts normalised like email, cost/volume limits.",
+      "users": [
+        "sender",
+        "signer",
+        "system"
+      ],
+      "entities": [
+        "sms_message"
+      ],
+      "workflows": [
+        "message_delivery",
+        "otp_flow"
+      ],
+      "capabilities": [
+        "provider_interface",
+        "delivery_receipts",
+        "rate_limits",
+        "country_controls"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "communication",
+        "backend",
+        "important"
+      ],
+      "integrations": [
+        "sms_gateway"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign"
+        ],
+        "confidence": "low",
+        "notes": "Provider receipt schemas not verified; only two repositories inspected."
+      }
+    },
+    {
+      "id": "e-signature.notification_centre",
+      "name": "In-app notification centre",
+      "classification": "common",
+      "description": "[IMPORTANT] Activity inbox for senders: signed, viewed, declined, expiring, bounced, with read state and deep links. Builds on shared.notifications.",
+      "users": [
+        "sender",
+        "org_admin"
+      ],
+      "entities": [
+        "notification"
+      ],
+      "workflows": [
+        "message_delivery"
+      ],
+      "capabilities": [
+        "inbox",
+        "read_state",
+        "deep_links",
+        "preferences"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "communication",
+        "web",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.reminders_expiry",
+      "name": "Reminders and expiry",
+      "classification": "common",
+      "description": "[IMPORTANT] Scheduled reminder cadence per contract and automatic expiry with a final warning; scheduler creates uniquely-keyed jobs so a reminder is sent at most once per recipient per slot; cancellable on completion.",
+      "users": [
+        "sender",
+        "system"
+      ],
+      "entities": [
+        "reminder",
+        "contract"
+      ],
+      "workflows": [
+        "reminder_expiry"
+      ],
+      "capabilities": [
+        "cadence",
+        "expiry",
+        "dedupe_keys",
+        "stop_on_complete",
+        "resend"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.versioning",
+      "name": "Document and contract versioning",
+      "classification": "common",
+      "description": "[IMPORTANT] Immutable ContractVersion and DocumentFile rows; edits before send create a new draft version, after send require void-and-recreate or a corrected copy; version list and diff metadata.",
+      "users": [
+        "sender"
+      ],
+      "entities": [
+        "contract_version",
+        "document_file"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "immutable_versions",
+        "version_list",
+        "corrected_copy"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned; behaviour across repositories not compared file by file."
+      }
+    },
+    {
+      "id": "e-signature.document_hashing",
+      "name": "Document hashing and integrity",
+      "classification": "core",
+      "description": "[CORE] SHA-256 over exact stored bytes on upload, at send, and for the final sealed PDF, streamed; hashes go into the audit trail and certificate; hash verified on every download.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "document_file",
+        "verification_record"
+      ],
+      "workflows": [
+        "completion_sealing",
+        "public_verification"
+      ],
+      "capabilities": [
+        "sha256_streaming",
+        "hash_on_download",
+        "hash_in_evidence"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "document",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "cantoo-pdf-lib",
+          "signpdf",
+          "documenso"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.final_pdf_generation",
+      "name": "Final PDF generation",
+      "classification": "core",
+      "description": "[CORE] After the last signature, flatten fields, stamp signature images and values, append the completion certificate, then seal once. Runs in exactly one job guarded by a row-level completion claim; uses @cantoo/pdf-lib server-side, never in the browser.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "contract",
+        "document_file",
+        "signature"
+      ],
+      "workflows": [
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "flatten",
+        "stamp",
+        "merge",
+        "coordinate_conversion",
+        "single_flight"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "cantoo-pdf-lib",
+          "documenso",
+          "docuseal",
+          "opensign",
+          "iso-32000"
+        ],
+        "confidence": "high",
+        "notes": "Repositories all produce a final stamped PDF; library choice verified in npm."
+      }
+    },
+    {
+      "id": "e-signature.immutable_signed_documents",
+      "name": "Immutable signed documents",
+      "classification": "core",
+      "description": "[CORE] Sealed PDFs are write-once: object-lock or no-overwrite key policy, new hash on any change, corrected copies are new versions. Deletion only through retention policy.",
+      "users": [
+        "system",
+        "compliance_officer"
+      ],
+      "entities": [
+        "document_file",
+        "storage_object"
+      ],
+      "workflows": [
+        "completion_sealing",
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "write_once",
+        "object_lock",
+        "hash_pinning"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "compliance",
+        "backend",
+        "core"
+      ],
+      "integrations": [
+        "object_storage"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "libresign"
+        ],
+        "confidence": "low",
+        "notes": "S3 object-lock behaviour to be verified against the chosen provider."
+      }
+    },
+    {
+      "id": "e-signature.completion_certificate",
+      "name": "Completion certificate",
+      "classification": "core",
+      "description": "[CORE] Appended PDF listing signers, emails, authentication level, IPs, user agents, timestamps, the event list and document hashes, generated with pdfkit. Vendor layouts are unverified; design the layout independently.",
+      "users": [
+        "signer",
+        "sender",
+        "compliance_officer"
+      ],
+      "entities": [
+        "completion_certificate",
+        "audit_event"
+      ],
+      "workflows": [
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "certificate_layout",
+        "signer_evidence",
+        "event_list",
+        "hash_summary"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "compliance",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "pdfkit",
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium",
+        "notes": "Vendor certificate contents recalled, not fetched."
+      }
+    },
+    {
+      "id": "e-signature.audit_trail",
+      "name": "Immutable audit trail",
+      "classification": "core",
+      "description": "[CORE] Append-only audit events with actor, IP, user agent, correlation id and document hash; REVOKE UPDATE/DELETE/TRUNCATE plus a BEFORE UPDATE/DELETE trigger; per-contract hash chain (prev_hash, hash over canonical JSON) serialised by locking the contract row; no global chain. Extends shared.audit_log.",
+      "users": [
+        "compliance_officer",
+        "sender",
+        "system"
+      ],
+      "entities": [
+        "audit_event",
+        "contract"
+      ],
+      "workflows": [
+        "contract_lifecycle",
+        "signing_flow"
+      ],
+      "capabilities": [
+        "append_only",
+        "per_contract_hash_chain",
+        "export",
+        "retention",
+        "correlation_ids"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "compliance",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "medium",
+        "notes": "Chain design is reasoned; global chain rejected for write hotspot."
+      }
+    },
+    {
+      "id": "e-signature.public_verification",
+      "name": "Public verification page",
+      "classification": "common",
+      "description": "[IMPORTANT] Public page/API where anyone with the document or a QR code can upload or look up a sealed PDF and see whether its hash matches a stored VerificationRecord, without exposing content. Rate-limited, no enumeration.",
+      "users": [
+        "public_verifier",
+        "signer"
+      ],
+      "entities": [
+        "verification_record",
+        "completion_certificate"
+      ],
+      "workflows": [
+        "public_verification"
+      ],
+      "capabilities": [
+        "hash_lookup",
+        "qr_code",
+        "no_enumeration",
+        "signature_validation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": true,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "web",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "libresign",
+          "documenso"
+        ],
+        "confidence": "low",
+        "notes": "Two repositories; details reasoned."
+      }
+    },
+    {
+      "id": "e-signature.download_security",
+      "name": "Secure downloads",
+      "classification": "core",
+      "description": "[CORE] Short-lived pre-signed URLs or a streaming proxy after an authorisation check; Content-Disposition attachment, nosniff, hash check, download audit event; recipients get only their permitted files.",
+      "users": [
+        "sender",
+        "signer",
+        "cc_recipient"
+      ],
+      "entities": [
+        "download",
+        "storage_object"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "signed_urls",
+        "streaming",
+        "download_audit",
+        "object_authorisation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "identity",
+        "core"
+      ],
+      "integrations": [
+        "object_storage"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.storage_abstraction",
+      "name": "Storage abstraction (S3-compatible)",
+      "classification": "core",
+      "description": "[CORE] StorageProvider interface over S3/R2/MinIO with tenant-prefixed keys, server-side encryption, multipart uploads, lifecycle policies and object lock support; builds on shared.file_storage.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "storage_object"
+      ],
+      "workflows": [
+        "document_processing"
+      ],
+      "capabilities": [
+        "provider_interface",
+        "tenant_prefix",
+        "multipart",
+        "lifecycle",
+        "encryption"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "infrastructure",
+        "core"
+      ],
+      "integrations": [
+        "object_storage"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.webhooks",
+      "name": "Webhooks",
+      "classification": "common",
+      "description": "[IMPORTANT] Per-organisation endpoints and event subscriptions; Standard Webhooks signing (id.timestamp.payload HMAC-SHA256), whsec_ secrets, dual secrets during rotation, SSRF-safe URL validation.",
+      "users": [
+        "api_integrator",
+        "org_admin"
+      ],
+      "entities": [
+        "webhook_endpoint",
+        "webhook_delivery"
+      ],
+      "workflows": [
+        "webhook_delivery_flow"
+      ],
+      "capabilities": [
+        "standard_webhooks_signing",
+        "secret_rotation",
+        "event_catalog",
+        "ssrf_guard",
+        "endpoint_verification"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "backend",
+        "important"
+      ],
+      "integrations": [
+        "webhook_consumers"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks",
+          "documenso"
+        ],
+        "confidence": "high",
+        "notes": "Spec verified; Svix and Documenso independent implementations."
+      }
+    },
+    {
+      "id": "e-signature.webhook_retry",
+      "name": "Webhook retry and dead-letter",
+      "classification": "common",
+      "description": "[IMPORTANT] BullMQ exponential backoff with jitter over days, per-attempt delivery log, terminal failed state as dead-letter, manual redrive, replay protection with a 5-minute timestamp tolerance (spec sets none).",
+      "users": [
+        "api_integrator",
+        "system"
+      ],
+      "entities": [
+        "webhook_delivery"
+      ],
+      "workflows": [
+        "webhook_delivery_flow"
+      ],
+      "capabilities": [
+        "backoff_jitter",
+        "delivery_log",
+        "dead_letter",
+        "redrive",
+        "replay_window"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.search_filtering",
+      "name": "Search and filtering",
+      "classification": "common",
+      "description": "[IMPORTANT] Contract search by name, number, recipient, email, company, reference and metadata using Postgres tsvector + GIN and pg_trgm; filter by status, date, owner, template; URL-state filters. External engine only if measured too slow. Builds on shared.search.",
+      "users": [
+        "sender",
+        "org_admin"
+      ],
+      "entities": [
+        "contract",
+        "recipient"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "fulltext",
+        "trigram",
+        "gin_index",
+        "saved_filters",
+        "tenant_scoped_search"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "search",
+        "web",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Postgres adequacy is reasoned, not benchmarked."
+      }
+    },
+    {
+      "id": "e-signature.exports",
+      "name": "Exports and reports",
+      "classification": "common",
+      "description": "[IMPORTANT] CSV/PDF export of contracts, audit events and activity with tenant scoping, async jobs for large sets and expiring download links. Extends shared.import_export.",
+      "users": [
+        "org_admin",
+        "compliance_officer"
+      ],
+      "entities": [
+        "contract",
+        "audit_event",
+        "download"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "csv_export",
+        "audit_export",
+        "async_export"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "reporting",
+        "admin",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.templates",
+      "name": "Templates",
+      "classification": "common",
+      "description": "[IMPORTANT] Reusable documents with named recipient roles, pre-placed fields and variables; draft/published/archived workflow, versioning, variable picker and preview; create contract from template.",
+      "users": [
+        "template_manager",
+        "sender"
+      ],
+      "entities": [
+        "template",
+        "template_version",
+        "field"
+      ],
+      "workflows": [
+        "template_publish"
+      ],
+      "capabilities": [
+        "template_roles",
+        "variables",
+        "template_versions",
+        "publish_archive",
+        "preview"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "document",
+        "workflow",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.org_branding",
+      "name": "Organisation branding",
+      "classification": "common",
+      "description": "[IMPORTANT] Logo, colours, sender name and email domain applied to signing pages and emails with contrast checks; custom domain optional.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "organisation"
+      ],
+      "workflows": [
+        "template_publish"
+      ],
+      "capabilities": [
+        "logo",
+        "brand_colours",
+        "email_from",
+        "signing_page_theme"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "web",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.rbac_permission_overrides",
+      "name": "RBAC and permission overrides",
+      "classification": "common",
+      "description": "[IMPORTANT] Organisation roles with per-contract or per-template overrides (view, edit, send, void); authorisation on every mutation at the object level, not only the route. Extends shared.permissions.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "role_permission",
+        "contract"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "roles",
+        "object_level_authorisation",
+        "overrides",
+        "policy_tests"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "identity",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.multi_tenancy",
+      "name": "Multi-tenancy and isolation",
+      "classification": "core",
+      "description": "[CORE] Tenant context via AsyncLocalStorage (nestjs-cls), one transactional wrapper that sets app.tenant_id with set_config(...,true) under a non-owner role, Postgres RLS as defence in depth, tenant in every job payload and storage/cache/search key, tenant scoped webhook secrets.",
+      "users": [
+        "org_admin",
+        "system"
+      ],
+      "entities": [
+        "organisation"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "tenant_context",
+        "rls",
+        "tenant_scoped_jobs",
+        "tenant_scoped_storage",
+        "tenant_scoped_cache"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "identity",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "drizzle-rls",
+          "owasp-asvs"
+        ],
+        "confidence": "medium",
+        "notes": "Drizzle RLS behaviour verified; pooling behaviour of set_config must be tested per driver."
+      }
+    },
+    {
+      "id": "e-signature.concurrency_idempotency",
+      "name": "Concurrency control and idempotency",
+      "classification": "core",
+      "description": "[CORE] Sign in a transaction with SELECT … FOR UPDATE on the contract, count remaining signers, so exactly one transaction sees last signer; unique(recipient_id) on signature; Idempotency-Key table unique(tenant,key); jobId dedupe is a hint, not the guarantee; optimistic version only for draft edits.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "contract",
+        "signature",
+        "recipient"
+      ],
+      "workflows": [
+        "signing_flow",
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "row_locking",
+        "unique_constraints",
+        "idempotency_keys",
+        "optimistic_version",
+        "single_flight_jobs"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "documenso"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned patterns; a single implementation read; needs concurrency tests."
+      }
+    },
+    {
+      "id": "e-signature.rate_limiting_anti_abuse",
+      "name": "Rate limiting and anti-abuse",
+      "classification": "core",
+      "description": "[CORE] Redis limits per IP, token, recipient, tenant and endpoint; OTP and public-verification throttling; upload quotas; bot challenge on public links; abuse events to security log.",
+      "users": [
+        "system",
+        "org_admin"
+      ],
+      "entities": [
+        "otp_challenge",
+        "audit_event"
+      ],
+      "workflows": [
+        "otp_flow"
+      ],
+      "capabilities": [
+        "sliding_window",
+        "per_token_limits",
+        "quota",
+        "bot_challenge"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "core",
+        "backend",
+        "identity",
+        "core"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "owasp-forgot-password"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.security_events",
+      "name": "Security events",
+      "classification": "common",
+      "description": "[IMPORTANT] Dedicated stream for failed OTPs, token reuse, revoked-link access, cross-tenant denials, webhook signature failures and admin actions with alerting hooks; feeds SIEM.",
+      "users": [
+        "compliance_officer",
+        "org_admin"
+      ],
+      "entities": [
+        "audit_event"
+      ],
+      "workflows": [
+        "otp_flow"
+      ],
+      "capabilities": [
+        "security_event_catalog",
+        "alerts",
+        "siem_export"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.admin_security",
+      "name": "Admin security settings",
+      "classification": "common",
+      "description": "[IMPORTANT] Organisation settings for allowed verification levels, MFA/SSO enforcement, IP allow-lists, session lifetime, API keys, retention and webhook secrets; changes audited.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "organisation",
+        "role_permission"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "security_policy",
+        "mfa_enforcement",
+        "ip_allowlist",
+        "api_keys"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "admin",
+        "identity",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.observability",
+      "name": "Observability",
+      "classification": "common",
+      "description": "[IMPORTANT] Structured logs with correlation ids, OpenTelemetry traces across API, queue and worker, queue depth and job-failure metrics, alerts on stuck completion jobs; never log tokens or document content. Extends shared.logging.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "audit_event"
+      ],
+      "workflows": [
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "structured_logging",
+        "tracing",
+        "metrics",
+        "stuck_job_alerts"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "infrastructure",
+        "backend",
+        "important"
+      ],
+      "integrations": [
+        "otel_observability"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "e-signature.i18n_rtl",
+      "name": "Internationalisation and RTL",
+      "classification": "common",
+      "description": "[IMPORTANT] English and Persian: next-intl, Tailwind logical utilities, Vazirmatn for Persian, Intl for numbers/dates/calendars (fa-IR-u-ca-persian), translated validation messages, per-recipient signing language; audit trail stays UTC/ISO. PDF field coordinates never flip with UI direction. Extends shared.i18n.",
+      "users": [
+        "signer",
+        "sender"
+      ],
+      "entities": [
+        "recipient",
+        "template"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "locale_per_recipient",
+        "rtl_layout",
+        "calendar_systems",
+        "translated_messages"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "web",
+        "mobile",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Library choices from a research agent; not verified against docs."
+      }
+    },
+    {
+      "id": "e-signature.gdpr_retention",
+      "name": "GDPR and retention",
+      "classification": "compliance",
+      "description": "[IMPORTANT] Per-tenant retention policy, scheduled deletion of documents and evidence, data export and erasure reconciled with audit retention, legal hold overrides, lawful-basis and consent records. Technical considerations only.",
+      "users": [
+        "compliance_officer",
+        "org_admin"
+      ],
+      "entities": [
+        "organisation",
+        "completion_certificate",
+        "audit_event"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "retention_policy",
+        "scheduled_deletion",
+        "erasure_requests",
+        "data_export"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low",
+        "notes": "Statute not fetched this session; requires human legal review."
+      }
+    },
+    {
+      "id": "e-signature.legal_hold",
+      "name": "Legal hold",
+      "classification": "compliance",
+      "description": "[OPTIONAL] Freeze deletion of selected contracts and evidence regardless of retention policy, with reason, actor and release audit.",
+      "users": [
+        "compliance_officer"
+      ],
+      "entities": [
+        "contract",
+        "audit_event"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "hold_flag",
+        "release",
+        "audit"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned inference."
+      }
+    },
+    {
+      "id": "e-signature.data_residency",
+      "name": "Data residency",
+      "classification": "premium",
+      "description": "[FUTURE] Per-tenant region for storage, database and processing; region-aware endpoints and job routing.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "organisation",
+        "storage_object"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "region_selection",
+        "region_routing"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "infrastructure",
+        "future"
+      ],
+      "integrations": [],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "e-signature.billing_readiness",
+      "name": "Billing readiness",
+      "classification": "common",
+      "description": "[IMPORTANT] Metering of sent envelopes, SMS and storage per tenant, plan entitlements and quota enforcement hooks so billing can be attached later. Builds on shared.billing.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "organisation"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "usage_events",
+        "entitlements",
+        "quota_checks"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "billing",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.api_documentation",
+      "name": "Public API, API keys and sandbox",
+      "classification": "platform",
+      "description": "[IMPORTANT] Versioned REST API with OpenAPI, scoped hashed API keys, idempotency keys, cursor pagination, error envelope, sandbox tenant and SDK examples; webhooks documented alongside.",
+      "users": [
+        "api_integrator"
+      ],
+      "entities": [
+        "api_key",
+        "idempotency_key"
+      ],
+      "workflows": [
+        "api_key_lifecycle"
+      ],
+      "capabilities": [
+        "openapi",
+        "scoped_keys",
+        "idempotency",
+        "cursor_pagination",
+        "sandbox"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.testing_strategy",
+      "name": "Domain testing strategy",
+      "classification": "infrastructure",
+      "description": "[IMPORTANT] Reusable tests and fixtures for tenant isolation, authorisation, state transitions, concurrent signing, idempotency, token reuse, OTP abuse, upload attacks, webhook replay, PDF correctness (rotated and CropBox-offset PDFs), email/SMS retries and job failures.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "contract",
+        "signature"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "isolation_tests",
+        "race_tests",
+        "pdf_fixtures",
+        "replay_tests"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "infrastructure",
+        "backend",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "owasp-asvs",
+          "pdfjs"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "e-signature.backup_recovery",
+      "name": "Backup and disaster recovery",
+      "classification": "infrastructure",
+      "description": "[IMPORTANT] Database PITR plus object-storage versioning and cross-region copy of sealed documents; documented restore drills and integrity re-verification of hashes after restore.",
+      "users": [
+        "system"
+      ],
+      "entities": [
+        "storage_object",
+        "audit_event"
+      ],
+      "workflows": [
+        "retention_deletion"
+      ],
+      "capabilities": [
+        "pitr",
+        "cross_region_copy",
+        "restore_drill",
+        "hash_reverify"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "infrastructure",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "gdpr-2016-679"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "e-signature.mobile_signing",
+      "name": "Mobile signing",
+      "classification": "common",
+      "description": "[IMPORTANT] Responsive web signing and a Flutter signing flow: touch signature, sticky bottom actions, progress, field-to-field navigation, OTP entry, biometric app unlock, secure token storage, completion screen.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "signing_session",
+        "signature"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "touch_signature",
+        "sticky_actions",
+        "field_navigation",
+        "biometric_unlock",
+        "secure_storage"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": true,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "mobile",
+        "web",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "signature-pad",
+          "pdfjs",
+          "documenso"
+        ],
+        "confidence": "low",
+        "notes": "Flutter package maintenance was not verified."
+      }
+    },
+    {
+      "id": "e-signature.decline_void_correct",
+      "name": "Decline, void and correct",
+      "classification": "common",
+      "description": "[IMPORTANT] Signer declines with a reason; sender voids with reason and notifies recipients; corrections create a new version and re-route. All are terminal transitions with audit events and webhooks.",
+      "users": [
+        "signer",
+        "sender"
+      ],
+      "entities": [
+        "contract",
+        "recipient"
+      ],
+      "workflows": [
+        "contract_lifecycle",
+        "decline_void"
+      ],
+      "capabilities": [
+        "decline_reason",
+        "void",
+        "corrected_copy"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "important"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "e-signature.delegation_reassign",
+      "name": "Delegation and reassign",
+      "classification": "optional",
+      "description": "[OPTIONAL] A recipient delegates to another person or the sender reassigns before signing; old token revoked, new identity checked, chain of custody recorded.",
+      "users": [
+        "sender",
+        "signer"
+      ],
+      "entities": [
+        "recipient"
+      ],
+      "workflows": [
+        "decline_void"
+      ],
+      "capabilities": [
+        "reassign",
+        "delegate",
+        "token_rotation"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "identity",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.witness_signing",
+      "name": "Witness and in-person signing",
+      "classification": "optional",
+      "description": "[OPTIONAL] Witness recipients countersign; in-person mode hands the device to a signer on the sender's session with host authentication.",
+      "users": [
+        "witness",
+        "sender",
+        "signer"
+      ],
+      "entities": [
+        "recipient",
+        "signing_session"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "witness_role",
+        "in_person",
+        "host_session"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": true,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "identity",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "docusign-esign-node",
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.bulk_send",
+      "name": "Bulk send",
+      "classification": "optional",
+      "description": "[OPTIONAL] Send one template to many recipients from a CSV with per-row validation, throttled queue and a batch report.",
+      "users": [
+        "sender"
+      ],
+      "entities": [
+        "template",
+        "contract"
+      ],
+      "workflows": [
+        "bulk_send"
+      ],
+      "capabilities": [
+        "csv_import",
+        "throttling",
+        "batch_report"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "reporting",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "opensign",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.public_signing_links",
+      "name": "Public signing links",
+      "classification": "optional",
+      "description": "[OPTIONAL] Self-service link/QR where anyone fills and signs a template (forms, waivers), with bot protection and per-link quotas; each submission becomes a contract.",
+      "users": [
+        "signer",
+        "sender"
+      ],
+      "entities": [
+        "template",
+        "contract"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "public_link",
+        "qr_code",
+        "submission_quota"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": true,
+        "backend": false,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "web",
+        "workflow",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "docuseal",
+          "opensign",
+          "docusign-esign-node",
+          "papermark"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.conditional_calculated_fields",
+      "name": "Conditional and calculated fields",
+      "classification": "optional",
+      "description": "[OPTIONAL] Show/require fields based on other values; computed numbers and formulas evaluated with a safe expression evaluator, never eval.",
+      "users": [
+        "sender",
+        "signer"
+      ],
+      "entities": [
+        "field"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "conditions",
+        "formulas",
+        "safe_evaluator"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "docuseal",
+          "docusign-esign-node"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.attachment_requests",
+      "name": "Attachment requests",
+      "classification": "optional",
+      "description": "[OPTIONAL] Signer uploads supporting documents (ID, proof) into the contract through an attachment field with the same upload security as sender files.",
+      "users": [
+        "signer"
+      ],
+      "entities": [
+        "field",
+        "document_file"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "attachment_field",
+        "upload_security"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "document",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "docuseal",
+          "docusign-esign-node"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.embedded_signing",
+      "name": "Embedded signing",
+      "classification": "optional",
+      "description": "[OPTIONAL] Signing UI embeddable in a customer app via short-lived session URL and postMessage events, with CSP frame-ancestors allow-list.",
+      "users": [
+        "api_integrator",
+        "signer"
+      ],
+      "entities": [
+        "signing_session"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "embed_url",
+        "postmessage",
+        "frame_ancestors"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "integration",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "docusign-esign-node"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "e-signature.sso_scim",
+      "name": "SSO and SCIM provisioning",
+      "classification": "optional",
+      "description": "[OPTIONAL] SAML/OIDC login and SCIM user provisioning for organisations. Depends on shared.auth; connectors delegated to an existing SSO layer.",
+      "users": [
+        "org_admin"
+      ],
+      "entities": [
+        "organisation",
+        "role_permission"
+      ],
+      "workflows": [
+        "api_key_lifecycle"
+      ],
+      "capabilities": [
+        "saml",
+        "oidc",
+        "scim"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "admin",
+        "optional"
+      ],
+      "integrations": [
+        "sso_idp"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.approval_workflow",
+      "name": "Approval workflow",
+      "classification": "optional",
+      "description": "[OPTIONAL] Internal approvers review a draft before it is sent to external signers; approve/reject with comments as a routing step.",
+      "users": [
+        "approver",
+        "sender"
+      ],
+      "entities": [
+        "recipient",
+        "contract"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "approval_step",
+        "reject_with_comment"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "docusign-esign-node",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.comments_collaboration",
+      "name": "Comments and collaboration",
+      "classification": "optional",
+      "description": "[OPTIONAL] Threaded comments on a contract or a field between internal users, mentions and notifications; never visible to external signers unless shared.",
+      "users": [
+        "sender",
+        "approver"
+      ],
+      "entities": [
+        "contract",
+        "notification"
+      ],
+      "workflows": [
+        "contract_lifecycle"
+      ],
+      "capabilities": [
+        "comments",
+        "mentions",
+        "visibility_scope"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": false,
+        "ai": false,
+        "real_time": true
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "medium",
+      "tags": [
+        "web",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.contract_repository",
+      "name": "Contract repository and renewals",
+      "classification": "optional",
+      "description": "[OPTIONAL] Metadata (counterparty, value, dates), expiry and renewal reminders, folders and tags for completed contracts: a light CLM layer over the signed archive.",
+      "users": [
+        "sender",
+        "org_admin"
+      ],
+      "entities": [
+        "contract"
+      ],
+      "workflows": [
+        "reminder_expiry"
+      ],
+      "capabilities": [
+        "metadata_schema",
+        "renewal_reminders",
+        "folders"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": true,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "workflow",
+        "search",
+        "optional"
+      ],
+      "integrations": [],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.advanced_signatures",
+      "name": "Advanced and qualified signatures",
+      "classification": "premium",
+      "description": "[FUTURE] Interface-only extension point for AdES/QES: SignatureProvider, KMS/HSM key custody, trust-service-provider integration, PAdES-B-B via signpdf, RFC 3161 timestamps via pkijs, B-LT/LTA as custom work. No fake certificates or hand-rolled crypto.",
+      "users": [
+        "compliance_officer",
+        "sender"
+      ],
+      "entities": [
+        "signature",
+        "completion_certificate"
+      ],
+      "workflows": [
+        "completion_sealing"
+      ],
+      "capabilities": [
+        "signature_provider_interface",
+        "kms_hsm",
+        "tsa",
+        "pades_levels"
+      ],
+      "platforms": {
+        "web": false,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "compliance",
+        "identity",
+        "future"
+      ],
+      "integrations": [
+        "tsa",
+        "kms_hsm",
+        "trust_service_provider"
+      ],
+      "compliance": [
+        "eidas",
+        "pades",
+        "rfc_3161",
+        "uk_eidas",
+        "uae_46_2021"
+      ],
+      "provenance": {
+        "sources": [
+          "signpdf",
+          "pkijs",
+          "etsi-pades",
+          "rfc-3161",
+          "eidas-910-2014",
+          "libresign"
+        ],
+        "confidence": "low",
+        "notes": "Interfaces only. Legal level (SES/AdES/QES) must be decided with counsel."
+      }
+    },
+    {
+      "id": "e-signature.kyc_id_verification",
+      "name": "Document and KYC verification",
+      "classification": "premium",
+      "description": "[FUTURE] Provider-based ID document and liveness check before signing, result stored as evidence reference not raw images; consent and retention limits. Extends shared.identity_verification.",
+      "users": [
+        "signer",
+        "compliance_officer"
+      ],
+      "entities": [
+        "recipient",
+        "otp_challenge"
+      ],
+      "workflows": [
+        "signing_flow"
+      ],
+      "capabilities": [
+        "idv_adapter",
+        "evidence_reference",
+        "retention_limits"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": false,
+        "real_time": false
+      },
+      "ai_relevance": "none",
+      "ai_opportunities": [],
+      "real_time_relevance": "none",
+      "tags": [
+        "identity",
+        "compliance",
+        "future"
+      ],
+      "integrations": [
+        "idv_provider"
+      ],
+      "compliance": [
+        "gdpr"
+      ],
+      "provenance": {
+        "sources": [
+          "docusign-esign-node",
+          "gdpr-2016-679"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "e-signature.ai_contract_intelligence",
+      "name": "AI contract intelligence",
+      "classification": "premium",
+      "description": "[FUTURE] Optional capabilities using the kit's ai/ layer: summarisation, clause extraction, risk flags, metadata and template-variable extraction, OCR, classification, semantic search, comparison, missing-signature detection, anomaly detection. Off by default, per-tenant opt-in, no training on tenant content.",
+      "users": [
+        "sender",
+        "org_admin"
+      ],
+      "entities": [
+        "contract",
+        "document"
+      ],
+      "workflows": [
+        "document_processing"
+      ],
+      "capabilities": [
+        "summarisation",
+        "clause_extraction",
+        "ocr",
+        "semantic_search",
+        "comparison"
+      ],
+      "platforms": {
+        "web": true,
+        "mobile": false,
+        "admin": false,
+        "customer_portal": false,
+        "backend": true,
+        "ai": true,
+        "real_time": false
+      },
+      "ai_relevance": "core",
+      "ai_opportunities": [
+        "summarise contracts",
+        "extract clauses",
+        "flag risky terms",
+        "extract metadata and template variables",
+        "OCR scans",
+        "classify documents",
+        "semantic search",
+        "compare versions",
+        "detect missing signatures",
+        "detect anomalies"
+      ],
+      "real_time_relevance": "none",
+      "tags": [
+        "ai",
+        "document",
+        "future"
+      ],
+      "integrations": [
+        "ocr_llm"
+      ],
+      "compliance": [],
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned product ideas; no implementation source."
+      }
+    }
+  ]
+}

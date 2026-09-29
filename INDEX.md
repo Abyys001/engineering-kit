@@ -6,7 +6,14 @@ Lookup: promoted items below → [`sources/CURATION.md`](sources/CURATION.md) (b
 
 ## Promoted items
 
-None yet. Record each item under an area heading (Web components, Features, Backend, Mobile, AI, Starters, Patterns) in this shape:
+### Backend (e-signature building blocks) — original code, strict-typed, tested with `node --test`
+- **signing-tokens** `backend/signing-tokens` — hashed single-use signing links · **otp** `backend/otp` — HMAC'd codes, attempts, replay · **webhooks** `backend/webhooks` — Standard Webhooks signing, SSRF guard, backoff · **audit-log** `backend/audit-log` — per-contract hash chain + Postgres hardening · **contracts** `backend/contracts` — lifecycle state machine · **tenancy** `backend/tenancy` — tenant context, job payloads, tx-local tenant · **pdf** `backend/pdf` — relative field geometry ↔ PDF points
+- **Use when:** building e-signature/contract/document workflow products. **Avoid when:** you need cryptographic PDF sealing (not included; see `backend/pdf/README.md`). Domain knowledge: `domains/e-signature/`. Research: `docs/research/contract-platform/`.
+
+### Web components
+- **signature-capture**, **field-overlay** `components/web/signing` · **contract-status-badge** `components/web/contract` · **typography** `components/web/typography` (Google Sans Flex, Google Sans, Vazirmatn — OFL-1.1, official google/fonts; read its README before shipping)
+
+Record each further item under an area heading (Web components, Features, Backend, Mobile, AI, Starters, Patterns) in this shape:
 
 ```markdown
 ### <Name>

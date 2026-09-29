@@ -1,0 +1,1020 @@
+{
+  "schema": 1,
+  "domain": "e-signature",
+  "last_reviewed": "2026-09-29",
+  "entities": [
+    {
+      "id": "organisation",
+      "name": "Organisation",
+      "description": "Tenant boundary; owns every other row.",
+      "relationships": [
+        {
+          "type": "has_many",
+          "target": "user"
+        },
+        {
+          "type": "has_many",
+          "target": "contract"
+        },
+        {
+          "type": "has_many",
+          "target": "template"
+        },
+        {
+          "type": "has_many",
+          "target": "webhook_endpoint"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "slug",
+        "region",
+        "retention_policy",
+        "branding"
+      ],
+      "related_features": [
+        "e-signature.multi_tenancy",
+        "e-signature.org_branding"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "user",
+      "name": "User",
+      "description": "Internal member of an organisation who sends and manages contracts.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "has_many",
+          "target": "role_permission"
+        }
+      ],
+      "important_fields": [
+        "email",
+        "name",
+        "locale"
+      ],
+      "related_features": [
+        "e-signature.rbac_permission_overrides"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "role_permission",
+      "name": "Role and permission",
+      "description": "Role assignment with optional per-object overrides.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "belongs_to",
+          "target": "user"
+        }
+      ],
+      "important_fields": [
+        "role",
+        "resource_type",
+        "resource_id",
+        "permission"
+      ],
+      "related_features": [
+        "e-signature.rbac_permission_overrides"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "contract",
+      "name": "Contract",
+      "description": "The envelope: one or more documents routed to recipients.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "has_many",
+          "target": "contract_version"
+        },
+        {
+          "type": "has_many",
+          "target": "recipient"
+        },
+        {
+          "type": "has_many",
+          "target": "audit_event"
+        },
+        {
+          "type": "has_one",
+          "target": "completion_certificate"
+        }
+      ],
+      "important_fields": [
+        "number",
+        "title",
+        "status",
+        "owner_id",
+        "expires_at",
+        "version",
+        "completed_at",
+        "metadata"
+      ],
+      "related_features": [
+        "e-signature.contracts",
+        "e-signature.contract_state_machine"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "draft",
+        "sent",
+        "in_progress",
+        "completed",
+        "declined",
+        "voided",
+        "expired",
+        "archived"
+      ]
+    },
+    {
+      "id": "contract_version",
+      "name": "Contract version",
+      "description": "Immutable snapshot of documents and fields at send time.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contract"
+        },
+        {
+          "type": "has_many",
+          "target": "document"
+        }
+      ],
+      "important_fields": [
+        "sequence",
+        "content_hash",
+        "created_by"
+      ],
+      "related_features": [
+        "e-signature.versioning"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "document",
+      "name": "Document",
+      "description": "A PDF inside a contract; holds pages and fields.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contract_version"
+        },
+        {
+          "type": "has_many",
+          "target": "document_file"
+        },
+        {
+          "type": "has_many",
+          "target": "field"
+        }
+      ],
+      "important_fields": [
+        "title",
+        "page_count",
+        "order"
+      ],
+      "related_features": [
+        "e-signature.document_management"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "document_file",
+      "name": "Document file",
+      "description": "Immutable stored bytes of a document (original, prepared, sealed).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "document"
+        },
+        {
+          "type": "belongs_to",
+          "target": "storage_object"
+        }
+      ],
+      "important_fields": [
+        "kind",
+        "sha256",
+        "size",
+        "mime"
+      ],
+      "related_features": [
+        "e-signature.document_management",
+        "e-signature.document_hashing",
+        "e-signature.immutable_signed_documents"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned split of file from document."
+      }
+    },
+    {
+      "id": "storage_object",
+      "name": "Storage object",
+      "description": "Pointer to an object in S3-compatible storage.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        }
+      ],
+      "important_fields": [
+        "bucket",
+        "key",
+        "etag",
+        "encryption",
+        "retain_until"
+      ],
+      "related_features": [
+        "e-signature.storage_abstraction"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "template",
+      "name": "Template",
+      "description": "Reusable document with roles, fields and variables.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "has_many",
+          "target": "template_version"
+        }
+      ],
+      "important_fields": [
+        "name",
+        "status"
+      ],
+      "related_features": [
+        "e-signature.templates"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "draft",
+        "published",
+        "archived"
+      ]
+    },
+    {
+      "id": "template_version",
+      "name": "Template version",
+      "description": "Immutable published state of a template.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "template"
+        },
+        {
+          "type": "has_many",
+          "target": "field"
+        }
+      ],
+      "important_fields": [
+        "sequence",
+        "published_at"
+      ],
+      "related_features": [
+        "e-signature.templates"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Reasoned."
+      }
+    },
+    {
+      "id": "recipient",
+      "name": "Recipient",
+      "description": "Person in a contract with a role, routing order and identity requirement.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contract"
+        },
+        {
+          "type": "has_many",
+          "target": "field"
+        },
+        {
+          "type": "has_many",
+          "target": "signing_session"
+        },
+        {
+          "type": "has_one",
+          "target": "signature_request"
+        }
+      ],
+      "important_fields": [
+        "email",
+        "name",
+        "role",
+        "routing_order",
+        "auth_level",
+        "status",
+        "locale"
+      ],
+      "related_features": [
+        "e-signature.recipient_management",
+        "e-signature.signing_order"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      },
+      "states": [
+        "pending",
+        "sent",
+        "opened",
+        "signed",
+        "declined",
+        "bounced"
+      ]
+    },
+    {
+      "id": "signature_request",
+      "name": "Signature request",
+      "description": "The ask made of one recipient: which fields, deadline, reminders.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        },
+        {
+          "type": "has_many",
+          "target": "reminder"
+        }
+      ],
+      "important_fields": [
+        "expires_at",
+        "sent_at",
+        "completed_at"
+      ],
+      "related_features": [
+        "e-signature.recipient_management",
+        "e-signature.reminders_expiry"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "field",
+      "name": "Field",
+      "description": "A typed input placed on a page and bound to a recipient.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "document"
+        },
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "page",
+        "x",
+        "y",
+        "width",
+        "height",
+        "required",
+        "config",
+        "value"
+      ],
+      "related_features": [
+        "e-signature.field_types",
+        "e-signature.field_placement"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high",
+        "notes": "Coordinates stored as 0–1 page fractions in the unrotated CropBox space."
+      }
+    },
+    {
+      "id": "signature",
+      "name": "Signature",
+      "description": "Captured signature or initials image plus method and evidence.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "field"
+        },
+        {
+          "type": "belongs_to",
+          "target": "signing_session"
+        }
+      ],
+      "important_fields": [
+        "method",
+        "image_ref",
+        "signed_at",
+        "ip",
+        "user_agent",
+        "doc_hash"
+      ],
+      "related_features": [
+        "e-signature.signature_capture",
+        "e-signature.initials_capture"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "signing_session",
+      "name": "Signing session",
+      "description": "Server session created after token exchange and verification.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        },
+        {
+          "type": "has_many",
+          "target": "signature"
+        },
+        {
+          "type": "has_one",
+          "target": "consent"
+        }
+      ],
+      "important_fields": [
+        "assurance_level",
+        "started_at",
+        "expires_at",
+        "ip",
+        "user_agent"
+      ],
+      "related_features": [
+        "e-signature.signing_session",
+        "e-signature.secure_tokens"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "created",
+        "verified",
+        "signing",
+        "finished",
+        "expired"
+      ]
+    },
+    {
+      "id": "otp_challenge",
+      "name": "OTP challenge",
+      "description": "One verification attempt series for a recipient.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        }
+      ],
+      "important_fields": [
+        "channel",
+        "code_hmac",
+        "attempts",
+        "expires_at",
+        "consumed_at"
+      ],
+      "related_features": [
+        "e-signature.otp_verification"
+      ],
+      "provenance": {
+        "sources": [
+          "owasp-forgot-password",
+          "owasp-asvs"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "issued",
+        "consumed",
+        "locked",
+        "expired"
+      ]
+    },
+    {
+      "id": "consent",
+      "name": "Consent",
+      "description": "Stored electronic-signing consent record.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "signing_session"
+        }
+      ],
+      "important_fields": [
+        "text_version",
+        "accepted_at",
+        "ip",
+        "user_agent"
+      ],
+      "related_features": [
+        "e-signature.consent"
+      ],
+      "provenance": {
+        "sources": [
+          "esign-act",
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "audit_event",
+      "name": "Audit event",
+      "description": "Append-only event with actor, IP, hash and chain link.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contract"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "actor",
+        "ip",
+        "user_agent",
+        "doc_hash",
+        "prev_hash",
+        "hash",
+        "correlation_id",
+        "occurred_at"
+      ],
+      "related_features": [
+        "e-signature.audit_trail",
+        "e-signature.security_events"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "libresign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "email_message",
+      "name": "Email message",
+      "description": "Outbound email with provider id, idempotency key and status.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "has_many",
+          "target": "email_event"
+        }
+      ],
+      "important_fields": [
+        "template",
+        "to",
+        "provider",
+        "provider_message_id",
+        "status",
+        "idempotency_key"
+      ],
+      "related_features": [
+        "e-signature.email_delivery",
+        "e-signature.email_notifications"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "email_event",
+      "name": "Email event",
+      "description": "Normalised provider event (delivered, bounced, complained, opened).",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "email_message"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "provider_event_id",
+        "occurred_at",
+        "raw"
+      ],
+      "related_features": [
+        "e-signature.email_delivery"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low",
+        "notes": "Provider event schemas unverified."
+      }
+    },
+    {
+      "id": "sms_message",
+      "name": "SMS message",
+      "description": "Outbound text for OTP or invitation with provider receipt.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        }
+      ],
+      "important_fields": [
+        "provider",
+        "status",
+        "segments",
+        "country"
+      ],
+      "related_features": [
+        "e-signature.sms_notifications"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "reminder",
+      "name": "Reminder",
+      "description": "Scheduled nudge with a unique slot key so it fires once.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "signature_request"
+        }
+      ],
+      "important_fields": [
+        "slot_key",
+        "due_at",
+        "sent_at"
+      ],
+      "related_features": [
+        "e-signature.reminders_expiry"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "notification",
+      "name": "Notification",
+      "description": "In-app notification for an internal user.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "user"
+        }
+      ],
+      "important_fields": [
+        "type",
+        "read_at",
+        "link"
+      ],
+      "related_features": [
+        "e-signature.notification_centre"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "webhook_endpoint",
+      "name": "Webhook endpoint",
+      "description": "Customer URL with subscribed events and up to two active secrets.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        },
+        {
+          "type": "has_many",
+          "target": "webhook_delivery"
+        }
+      ],
+      "important_fields": [
+        "url",
+        "events",
+        "secret_hash_current",
+        "secret_previous",
+        "enabled"
+      ],
+      "related_features": [
+        "e-signature.webhooks"
+      ],
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks",
+          "documenso"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "webhook_delivery",
+      "name": "Webhook delivery",
+      "description": "One event attempt series with log and terminal state.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "webhook_endpoint"
+        }
+      ],
+      "important_fields": [
+        "event_id",
+        "attempts",
+        "last_status",
+        "next_attempt_at",
+        "state"
+      ],
+      "related_features": [
+        "e-signature.webhook_retry"
+      ],
+      "provenance": {
+        "sources": [
+          "standard-webhooks",
+          "svix-webhooks"
+        ],
+        "confidence": "medium"
+      },
+      "states": [
+        "pending",
+        "delivered",
+        "retrying",
+        "failed"
+      ]
+    },
+    {
+      "id": "download",
+      "name": "Download",
+      "description": "Audited access to a stored file.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "recipient"
+        },
+        {
+          "type": "belongs_to",
+          "target": "storage_object"
+        }
+      ],
+      "important_fields": [
+        "actor",
+        "ip",
+        "expires_at"
+      ],
+      "related_features": [
+        "e-signature.download_security"
+      ],
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "completion_certificate",
+      "name": "Completion certificate",
+      "description": "Generated evidence PDF and its hash.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "contract"
+        },
+        {
+          "type": "belongs_to",
+          "target": "document_file"
+        }
+      ],
+      "important_fields": [
+        "sha256",
+        "generated_at",
+        "layout_version"
+      ],
+      "related_features": [
+        "e-signature.completion_certificate"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "verification_record",
+      "name": "Verification record",
+      "description": "Public lookup entry mapping a sealed-PDF hash to a contract without exposing content.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "completion_certificate"
+        }
+      ],
+      "important_fields": [
+        "sha256",
+        "public_id",
+        "created_at"
+      ],
+      "related_features": [
+        "e-signature.public_verification"
+      ],
+      "provenance": {
+        "sources": [
+          "libresign",
+          "documenso"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "api_key",
+      "name": "API key",
+      "description": "Scoped hashed key for programmatic access.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        }
+      ],
+      "important_fields": [
+        "prefix",
+        "hash",
+        "scopes",
+        "last_used_at",
+        "revoked_at"
+      ],
+      "related_features": [
+        "e-signature.api_documentation"
+      ],
+      "provenance": {
+        "sources": [
+          "documenso",
+          "docuseal",
+          "opensign",
+          "docusign-esign-node"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "idempotency_key",
+      "name": "Idempotency key",
+      "description": "Stored request key and response for safe retries.",
+      "relationships": [
+        {
+          "type": "belongs_to",
+          "target": "organisation"
+        }
+      ],
+      "important_fields": [
+        "key",
+        "request_hash",
+        "response",
+        "expires_at"
+      ],
+      "related_features": [
+        "e-signature.concurrency_idempotency",
+        "e-signature.api_documentation"
+      ],
+      "provenance": {
+        "sources": [
+          "owasp-asvs"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}
